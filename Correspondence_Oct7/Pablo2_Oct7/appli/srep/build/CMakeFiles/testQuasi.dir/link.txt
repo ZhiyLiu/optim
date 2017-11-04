@@ -1,0 +1,1 @@
+/usr/bin/c++     -O3 -DNDEBUG    CMakeFiles/testQuasi.dir/testQuasi.cxx.o  -o testQuasi -rdynamic -lvtkFiltering -lvtkCommon -lvtkRendering -litkvnl -lSRep -lSRepInterpolation -lSRepVisualization -lregister 

@@ -1,0 +1,10 @@
+K 10
+svn:ignore
+V 120
+Debug
+Release
+include___Win32_Binary_Debug
+include___Win32_Binary_Pablo_External_Product
+include___Win32_Binary_Release
+
+END

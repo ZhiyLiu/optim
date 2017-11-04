@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>Home</title>
+</head>
+<body>
+<div style="text-align: center;">
+<big><span style="font-weight: bold;">
+User Project documentation<br>
+</big></span><br>
+
+<div style="text-align: left;">Follow <a
+ href="./install.html">this link</a> User Install Instructions<br>
+<br>
+Read the <a href="../bbtkUsersGuide/bbtkUsersGuide.html">users' guide</a> if you
+want to learn how to use bbtk development environnement (bbStudio) and
+how to write black box scripts.<br>
+<br>
+Read the <a
+ href="../bbtkPackageDevelopersGuide/bbtkPackageDevelopersGuide.html">package
+developers' guide</a> to learn how to create your own black boxes and
+packages.<br>
+<br>
+Developers might also be interested in <a
+ href="../doxygen/bbtk/main.html">doxygen documentation</a> of the
+source code of bbtk library.<br>
+<br>
+The boxes lists contain the boxes of bbtk <a
+ href="../bbdoc/index-package.html">core packages</a> (std,wx,vtk...)
+for current version.<br>
+<br>
+All this documentation is also available from bbStudio.<br>
+<br>
+<br>
+</div>
+</body>
+</html>

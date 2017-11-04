@@ -1,0 +1,4703 @@
+#include <math.h>
+#include <assert.h>
+
+#include "globalBuildParms.h"
+#include "ImageDistanceMap.h"
+//#include "snapshot.h"
+#include "M3DPrimitiveCorrector.h"
+#include "ccl.h"
+#include "Mask.h"
+//#include "MaskFile.h"
+#include "SurfacePatchEnsemble.h"
+#include "DQFMatch.h"
+#include "ObjectRelativeSampling.h"
+
+#define D_PLIST_SUBDIVCOMP
+#include "Shapedepend.h"
+
+#define _BP_MATCH
+
+#include "ImageResample3D.h"
+#include "DistanceVectorList.h"
+#include "M3DMainFigureProblem.h"
+#include "M3DAtomPredictor.h"
+#include "Tuning.h"
+#include "OptimizerBase.h"
+#include "Match.h"
+#include "P3DControl.h"
+#include "DistanceToPointSetFunction.h"
+#ifdef SURFACE_VISUALIZER
+#include "M3DObjectSurfaceVisualizer.h"
+#endif
+
+#define WEIGHTED
+
+//#define DEBUG_GREY_ATOM_TUBE
+//#define DEBUG
+
+// Uncomment to eliminate use of the match penalty in regular Pablo
+//#define NO_MATCH_PENALTY
+
+
+using namespace std;
+
+const double FAILED = 1.0e100;
+const double WORST_MATCH = -1.0e100;
+
+const double MASK_CUTOFF = 0.3;
+
+#ifndef BINARY
+const double DEFAULT_NORMAL_PENALTY_WEIGHT = 0.5;
+const double DEFAULT_SLIDING_PENALTY_WEIGHT = 0.5;
+const double DEFAULT_PENETRATION_PENALTY_WEIGHT = 1.0;
+const double DEFAULT_CREASING_PENALTY_WEIGHT = 0.0005;
+const double TUBE_GREY_ATOM_SRAD_PENALTY_WEIGHT = 2;
+const double TUBE_GREY_ATOM_CURVINESS_PENALTY_WEIGHT = 10;
+const double TUBE_GREY_ATOM_MODEL_PENALTY_WEIGHT = 1000;
+#endif
+
+extern int globalVerbosity;
+
+
+#ifdef BINARY
+Match::Match(M3DObject * landmarkObj) : landmarkObject(landmarkObj)
+#else
+Match::Match(bool adaptive)
+#endif
+{
+	int i;
+
+#ifndef BINARY
+	adapt = adaptive;
+#endif
+	referenceObject = NULL;
+
+	// Dibyendu
+	refObjectAfterScale = NULL ;
+
+	constrainedPointLists = NULL;
+	numPointLists = 0;
+
+	targetImage = NULL;
+	contourMatch = NULL;
+
+#ifdef BINARY
+	atomPredictor = NULL;
+	surface_level_for_match = 1;
+
+	numMedialSubdivisions = MASK_MEDIAL_SUBDIVISIONS;
+	maxDist[0] = 0;
+	maxDist[1] = 0;
+	maxDist[2] = 0;
+
+	distanceVectorList = new DistanceVectorList;
+
+#else
+	constraints_surface_level = 0;
+	surface_level_for_match = MATCH_POINT_CLOUD_SUBDIVISIONS;
+
+	numMedialSubdivisions = MASK_MEDIAL_SUBDIVISIONS;
+
+	normalPenaltyWeight = DEFAULT_NORMAL_PENALTY_WEIGHT;
+	slidingPenaltyWeight = DEFAULT_SLIDING_PENALTY_WEIGHT;
+	penetrationPenaltyWeight = DEFAULT_PENETRATION_PENALTY_WEIGHT;
+	creasingPenaltyWeight = DEFAULT_CREASING_PENALTY_WEIGHT;
+
+	spe = NULL;
+#endif
+	atomMahamPenalty = NULL;
+	nAtomsMax = 0;
+	pList = NULL;
+	pListCount = 0;
+
+	binaryDistanceMap = NULL;
+
+#ifdef BINARY
+
+	assert( 11 == MAX_NUM_FIG_MATCH_RESULTS );
+	figureResults[0].tuningParm = BpFigureImageMatch;
+	figureResults[0].fnClass	= Components::ROUGH;
+	figureResults[0].name = "Image";
+	figureResults[1].tuningParm = BpFigureLandmarkMatch;
+	figureResults[1].fnClass	= Components::SMOOTH;
+	figureResults[1].name = "Landmark";
+	figureResults[2].tuningParm = BpFigureModelMatch;
+	figureResults[2].fnClass	= Components::SMOOTH;
+	figureResults[2].name = "Model";	
+	figureResults[3].tuningParm = BpFigureInterpenetrationMatch;
+	figureResults[3].fnClass	= Components::ROUGH;
+	figureResults[3].name = "Penetration";
+	figureResults[4].tuningParm = FigureMahalanobisMatch;
+	figureResults[4].fnClass	= Components::SMOOTH;
+	figureResults[4].name = "Mahalanobis";
+	figureResults[5].tuningParm = BpFigureRSradPenalty;
+	figureResults[5].fnClass	= Components::SMOOTH;
+	figureResults[5].name = "R*Srad";
+	figureResults[6].tuningParm	= BpFigureCurvinessPenalty;
+	figureResults[6].fnClass	= Components::SMOOTH;
+	figureResults[6].name = "Curviness";
+	figureResults[7].tuningParm = FigureContourMatch;
+	figureResults[7].fnClass	= Components::SMOOTH;
+	figureResults[7].name = "Contours";
+	//Xiaojie
+	//fnClass not sure
+	figureResults[8].tuningParm = BpFigureImageNormalMatch;
+	figureResults[8].fnClass	= Components::ROUGH;
+	figureResults[8].name = "Normal";
+	figureResults[9].tuningParm = BpFigureImagePlaneOrienAtEnd;
+	figureResults[9].fnClass	= Components::ROUGH;
+	figureResults[9].name = "Plane";
+	figureResults[10].tuningParm = BpFigureImageVertexMatch;
+	figureResults[10].fnClass	= Components::ROUGH;
+	figureResults[10].name = "Vertex";
+
+
+	assert( 12 == MAX_NUM_ATOM_MATCH_RESULTS );
+	atomResults[0].tuningParm	= BpAtomAverageNeighborMatch;
+	atomResults[0].fnClass		= Components::SMOOTH;
+	atomResults[1].tuningParm	= BpAtomImageMatch;
+	atomResults[1].fnClass		= Components::ROUGH;
+	atomResults[2].tuningParm	= AtomMahalanobisMatch;
+	atomResults[2].fnClass		= Components::SMOOTH;
+	atomResults[3].tuningParm	= BpAtomLandmarkMatch;
+	atomResults[3].fnClass		= Components::SMOOTH;
+	atomResults[4].tuningParm	= BpAtomModelMatch;
+	atomResults[4].fnClass		= Components::SMOOTH;
+	atomResults[5].tuningParm	= BpAtomInterpenetrationMatch;
+	atomResults[5].fnClass		= Components::ROUGH;
+	atomResults[6].tuningParm	= BpAtomRSradPenalty;
+	atomResults[6].fnClass		= Components::SMOOTH;
+	atomResults[7].tuningParm	= BpAtomDeltaNeighborMatch;
+	atomResults[7].fnClass		= Components::SMOOTH;
+	atomResults[8].tuningParm	= BpAtomCurvinessPenalty;
+	atomResults[8].fnClass		= Components::SMOOTH;
+	//Xiaojie
+	//fnClass not sure
+	atomResults[9].tuningParm = BpAtomImageNormalMatch;
+	atomResults[9].fnClass	= Components::ROUGH;
+	atomResults[10].tuningParm = BpAtomImagePlaneOrienAtEnd;
+	atomResults[10].fnClass	= Components::ROUGH;
+	atomResults[11].tuningParm = BpAtomImageVertexMatch;
+	atomResults[11].fnClass	= Components::ROUGH;
+
+	// dibyendu 
+	//srep stage results
+
+	assert( 12 == MAX_NUM_SREP_MATCH_RESULTS );
+	sRepResults[0].tuningParm	= BpSRepAverageNeighborMatch;
+	sRepResults[0].fnClass		= Components::SMOOTH;
+	sRepResults[1].tuningParm	= BpSRepImageMatch;
+	sRepResults[1].fnClass		= Components::ROUGH;
+	sRepResults[2].tuningParm	= SRepRadiusMatch;
+	sRepResults[2].fnClass		= Components::ROUGH;
+	sRepResults[3].tuningParm	= BpSRepLandmarkMatch;
+	sRepResults[3].fnClass		= Components::SMOOTH;
+	sRepResults[4].tuningParm	= BpSRepModelMatch;
+	sRepResults[4].fnClass		= Components::SMOOTH;
+	sRepResults[5].tuningParm	= BpSRepInterpenetrationMatch;
+	sRepResults[5].fnClass		= Components::ROUGH;
+	sRepResults[6].tuningParm	= BpSRepRSradPenalty;
+	sRepResults[6].fnClass		= Components::SMOOTH;
+	sRepResults[7].tuningParm	= BpSRepDeltaNeighborMatch;
+	sRepResults[7].fnClass		= Components::SMOOTH;
+	sRepResults[8].tuningParm	= BpSRepCurvinessPenalty;
+	sRepResults[8].fnClass		= Components::SMOOTH;
+	//Xiaojie
+	//fnClass not sure
+	sRepResults[9].tuningParm = BpSRepImageNormalMatch;
+	sRepResults[9].fnClass	= Components::ROUGH;
+	sRepResults[10].tuningParm = BpSRepImagePlaneOrienAtEnd;
+	sRepResults[10].fnClass	= Components::ROUGH;
+	sRepResults[11].tuningParm = BpSRepImageVertexMatch;
+	sRepResults[11].fnClass	= Components::ROUGH;
+
+	assert( 7 == MAX_NUM_SPOKE_MATCH_RESULTS );
+	spokeResults[0].tuningParm	= BpSpokeAverageNeighborMatch;
+	spokeResults[0].fnClass		= Components::SMOOTH;
+	spokeResults[1].tuningParm	= BpSpokeImageMatch;
+	spokeResults[1].fnClass		= Components::ROUGH;
+	spokeResults[2].tuningParm	= SpokeMahalanobisMatch;
+	spokeResults[2].fnClass		= Components::SMOOTH;
+	spokeResults[3].tuningParm	= BpSpokeLandmarkMatch;
+	spokeResults[3].fnClass		= Components::SMOOTH;
+	spokeResults[4].tuningParm	= BpSpokeModelMatch;
+	spokeResults[4].fnClass		= Components::SMOOTH;
+	spokeResults[5].tuningParm	= BpSpokeInterpenetrationMatch;
+	spokeResults[5].fnClass		= Components::ROUGH;
+	spokeResults[6].tuningParm	= BpSpokeRSradPenalty;
+	spokeResults[6].fnClass		= Components::SMOOTH;
+
+#else
+
+	// The order or parameters should be (ideally) from smallest to largest,
+	// after the weights are applied, so that arithmetic errors are minimized.
+
+	assert( 8 == MAX_NUM_FIG_MATCH_RESULTS );
+	// Set the default values of penalties for figure and mainFigure stages
+	figureResults[0].tuningParm = GpFigureInterObjectWeight;
+	figureResults[0].fnClass	= Components::SMOOTH;
+	figureResults[0].weight = tuningWt(GpFigureInterObjectWeight);
+	figureResults[0].name = "cnstr";
+
+	figureResults[1].tuningParm = GpFigureGeometryWeight;
+	figureResults[1].fnClass	= Components::SMOOTH;
+	figureResults[1].weight = tuningWt(GpFigureGeometryWeight);
+	figureResults[1].name = "dsq";
+
+	figureResults[2].tuningParm = FigureMahalanobisMatch;
+	figureResults[2].fnClass	= Components::SMOOTH;
+	figureResults[2].weight = tuningWt(FigureMahalanobisMatch);
+	figureResults[2].name = "mahal";
+
+	figureResults[3].tuningParm = FigureContourMatch;
+	figureResults[3].fnClass = Components::SMOOTH;
+	figureResults[3].weight = tuningWt(FigureContourMatch);
+	figureResults[3].name = "contours";
+
+	// The image match penalties go below here
+#define FIRST_IMAGE_MATCH_FIGURE_TERM	4
+
+	figureResults[4].tuningParm = GpFigureHistogramMatch;
+	figureResults[4].fnClass	= Components::ROUGH;
+	figureResults[4].weight = tuningWt(GpFigureHistogramMatch);
+	figureResults[4].name = "hist";
+
+	// Note: figureResults[4].tuningParm is never used.
+	// GpFigureProfileMatch is only defined for calls to getWeightedPenalty().
+	figureResults[5].tuningParm = GpFigureProfileMatch;	// Mask-based image match
+	figureResults[5].fnClass	= Components::ROUGH;
+	figureResults[5].weight = 1.0;	// See comment above
+	figureResults[5].name = "prof";
+
+	figureResults[6].tuningParm = FigureDQFMatch;
+	figureResults[6].fnClass	= Components::ROUGH;
+	figureResults[6].weight = tuningWt(FigureDQFMatch);
+	figureResults[6].name = "dqf";
+
+	figureResults[7].tuningParm = GpFigureMultiPatchMatch;
+	figureResults[7].fnClass	= Components::ROUGH;
+	figureResults[7].weight = tuningWt(GpFigureMultiPatchMatch);
+	figureResults[7].name = "mp";
+
+
+
+	// --------------------------------------
+	// Set the default values of penalties for atom (deformation) stage
+
+	assert( 7 == MAX_NUM_ATOM_MATCH_RESULTS );
+	// Note: atomResults[4].tuningParm is never used.
+	// GpFigureProfileMatch is only defined for calls to getWeightedPenalty().
+	atomResults[0].tuningParm = GpAtomProfileMatch;	// Mask-based image match
+	atomResults[0].fnClass	= Components::ROUGH;
+	atomResults[0].weight = 1.0;	// See comment above
+	atomResults[0].name = "prof";
+
+	atomResults[1].tuningParm = GpAtomHistogramMatch;
+	atomResults[1].fnClass	= Components::ROUGH;
+	atomResults[1].weight = tuningWt(GpAtomHistogramMatch);
+	atomResults[1].name = "hist";
+
+	atomResults[2].tuningParm = GpAtomMultiPatchMatch;
+	atomResults[2].fnClass	= Components::ROUGH;
+	atomResults[2].weight = tuningWt(GpAtomMultiPatchMatch);
+	atomResults[2].name = "mp";
+
+	// The image match penalties go above here
+#define LAST_IMAGE_MATCH_ATOM_TERM	2
+
+	atomResults[3].tuningParm = AtomMahalanobisMatch;
+	atomResults[3].fnClass	= Components::SMOOTH;
+	atomResults[3].weight = tuningWt(AtomMahalanobisMatch);
+	atomResults[3].name = "mahal";
+
+	atomResults[4].tuningParm = GpAtomGeometryWeight;
+	atomResults[4].fnClass	= Components::SMOOTH;
+	atomResults[4].weight = tuningWt(GpAtomGeometryWeight);
+	atomResults[4].name = "dsq";
+
+	// Note: atomResults[4] is not an ordinary matchResult entry.
+	// Its weight is passed to computeAtomPenalty(), which is used
+	// compute the GpAtomGeometryWeight, and atomResults[4].useIt
+	// is never set to true.
+	atomResults[5].tuningParm = GpAtomNeighborWeight;
+	atomResults[5].fnClass	= Components::SMOOTH;
+	atomResults[5].weight = tuningWt(GpAtomNeighborWeight);
+	atomResults[5].name = "neigh";
+
+	atomResults[6].tuningParm = GpAtomInterWeight;
+	atomResults[6].fnClass	= Components::SMOOTH;
+	atomResults[6].weight = tuningWt(GpAtomInterWeight);
+	atomResults[6].name = "cnstr";
+
+	// --------------------------------------
+	// Set the default values of penalties for spoke (deformation) stage
+
+	assert( 6 == MAX_NUM_SPOKE_MATCH_RESULTS );
+	// Note: spokeResults[4].tuningParm is never used.
+	// GpFigureProfileMatch is only defined for calls to getWeightedPenalty().
+	spokeResults[0].tuningParm = GpSpokeProfileMatch;	// Mask-based image match
+	spokeResults[0].fnClass	= Components::ROUGH;
+	spokeResults[0].weight = 1.0;	// See comment above
+	spokeResults[0].name = "prof";
+
+	spokeResults[1].tuningParm = GpSpokeHistogramMatch;
+	spokeResults[1].fnClass	= Components::ROUGH;
+	spokeResults[1].weight = tuningWt(GpSpokeHistogramMatch);
+	spokeResults[1].name = "hist";
+
+	// The image match penalties go above here
+#define LAST_IMAGE_MATCH_SPOKE_TERM	1
+
+	spokeResults[2].tuningParm = SpokeMahalanobisMatch;
+	spokeResults[2].fnClass	= Components::SMOOTH;
+	spokeResults[2].weight = tuningWt(SpokeMahalanobisMatch);
+	spokeResults[2].name = "mahal";
+
+	spokeResults[3].tuningParm = GpSpokeGeometryWeight;
+	spokeResults[3].fnClass	= Components::SMOOTH;
+	spokeResults[3].weight = tuningWt(GpSpokeGeometryWeight);
+	spokeResults[3].name = "dsq";
+
+	// Note: spokeResults[4] is not an ordinary matchResult entry.
+	// Its weight is passed to computeAtomPenalty(), which is used
+	// compute the GpSpokeGeometryWeight, and spokeResults[4].useIt
+	// is never set to true.
+	spokeResults[4].tuningParm = GpSpokeNeighborWeight;
+	spokeResults[4].fnClass	= Components::SMOOTH;
+	spokeResults[4].weight = tuningWt(GpSpokeNeighborWeight);
+	spokeResults[4].name = "neigh";
+
+	spokeResults[5].tuningParm = GpSpokeInterWeight;
+	spokeResults[5].fnClass	= Components::SMOOTH;
+	spokeResults[5].weight = tuningWt(GpSpokeInterWeight);
+	spokeResults[5].name = "cnstr";
+
+#endif
+
+	for (i = 0; i < MAX_NUM_FIG_MATCH_RESULTS; i++) {
+		figureResults[i].value = 0.0;
+		figureResults[i].useIt = false;
+	}
+	for (i = 0; i < MAX_NUM_ATOM_MATCH_RESULTS; i++) {
+		atomResults[i].value = 0.0;
+		atomResults[i].useIt = false;
+	}
+
+	// dibyendu
+
+	for (i = 0; i < MAX_NUM_SREP_MATCH_RESULTS; i++) {
+		sRepResults[i].value = 0.0;
+		sRepResults[i].useIt = false;
+	}
+
+	for (i = 0; i < MAX_NUM_SPOKE_MATCH_RESULTS; i++) {
+		spokeResults[i].value = 0.0;
+		spokeResults[i].useIt = false;
+	}
+
+	targetSurfacePoints.numPoints = 0;
+	targetSurfacePoints.points = 0;
+	lmBpointIndices[0] = -1;
+}
+
+Match::~Match()
+{
+	int i;
+
+	if (constrainedPointLists != NULL) {
+		for (i = 0; i < numPointLists; i++) {
+			if (constrainedPointLists[i] != NULL) {
+				for (int j = 0; j < numPointLists; j++)
+					constrainedPointLists[i][j].clear();        // Not strictly needed
+			}
+			delete [] constrainedPointLists[i];
+		}
+	}
+	delete [] constrainedPointLists;
+
+	for (i = 0; i < distanceMaps.size(); i++)
+		delete distanceMaps[i];
+
+	for (i = 0; i < masks.size(); i++) {
+		if (masks[i] != NULL)
+			delete masks[i];
+	}
+	masks.clear();			// Not strictly needed
+
+	for (i = 0; i < dmasks.size(); i++) {
+		if (dmasks[i] != NULL)
+			delete dmasks[i];
+	}
+	dmasks.clear();			// Not strictly needed
+
+	if (referenceObject != NULL)
+		delete referenceObject;
+
+	// Dibyendu
+	if ( refObjectAfterScale != NULL )
+		delete refObjectAfterScale ;
+
+	for (i = 0; i < surfacePoints.size(); i++) {
+		if (surfacePoints[i].points != NULL)
+			delete[] surfacePoints[i].points;
+	}
+
+	for (i = 0; i < pListCount; i++) {
+		if (pList[i] != NULL)
+			delete pList[i];
+	}
+	delete [] pList;
+
+	if (binaryDistanceMap != NULL)
+		delete binaryDistanceMap;
+
+#ifdef BINARY
+	if (distanceVectorList != NULL)
+		delete distanceVectorList;
+
+	if (atomPredictor != NULL)
+		delete atomPredictor;
+#endif
+
+	if (atomMahamPenalty != NULL)
+		delete [] atomMahamPenalty;
+
+	// spe doesn't belong to Match
+
+	// cleaning up list of surface bpoints
+	if (targetSurfacePoints.points) {
+		delete [] targetSurfacePoints.points;
+		targetSurfacePoints.points = 0;
+		targetSurfacePoints.numPoints = 0;
+	}
+
+	if (contourMatch)
+		delete contourMatch;
+}
+
+#ifndef BINARY
+void Match::setWeight(int optimizerType, int tuningParm, double weight)
+{
+	OptimizerBase::optimizer_t type = (OptimizerBase::optimizer_t) optimizerType;
+	if (type == OptimizerBase::MainFigure) {
+		for (int i = 0; i < MAX_NUM_FIG_MATCH_RESULTS; i++)
+			if (tuningParm == figureResults[i].tuningParm)
+				figureResults[i].weight = weight;
+	}
+	else if (type == OptimizerBase::Deformation) {
+		for (int i = 0; i < MAX_NUM_ATOM_MATCH_RESULTS; i++)
+			if (tuningParm == atomResults[i].tuningParm)
+				atomResults[i].weight = weight;
+	}
+	else if (type == OptimizerBase::Spoke) {
+		for (int i = 0; i < MAX_NUM_SPOKE_MATCH_RESULTS; i++)
+			if (tuningParm == spokeResults[i].tuningParm)
+				spokeResults[i].weight = weight;
+	}
+	else
+		cout << "Warning: ignoring attempt to set weights for optimizer type"
+		<< optimizerType << endl;
+}
+
+double Match::getWeightedPenalty(int optimizerType, int tuningParm)
+{
+	OptimizerBase::optimizer_t type = (OptimizerBase::optimizer_t) optimizerType;
+	if (type == OptimizerBase::MainFigure) {
+		for (int i = 0; i < MAX_NUM_FIG_MATCH_RESULTS; i++)
+			if (tuningParm == figureResults[i].tuningParm)
+				return figureResults[i].value*figureResults[i].weight;
+	}
+	else if (type == OptimizerBase::Deformation) {
+		for (int i = 0; i < MAX_NUM_ATOM_MATCH_RESULTS; i++)
+			if (tuningParm == figureResults[i].tuningParm)
+				return figureResults[i].value*figureResults[i].weight;
+	}
+	return -1.0;
+}
+#endif
+
+void Match::setInitialTransform(const SimilarityTransform3D * initXform)
+{
+	if (initXform)
+		initialTransform = *initXform;
+	else	// P3DControl::objectSimTransform can be NULL
+		initialTransform.setToIdentity();
+}
+
+void Match::definePLists(M3DObject * object, int subdivLevel)
+{
+	int i;
+	Xferlist * xferList;
+	M3DFigure *figure;
+
+#ifdef DEBUG
+	cout << "Match::definePLists()" << endl;
+#endif
+
+	if (pList != NULL) {
+		for (i = 0; i < pListCount; i++) {
+			if (pList[i] != NULL)
+				delete pList[i];
+		}
+		delete [] pList;
+	}
+
+	int figureCount = object->getFigureCount();
+	pListCount = figureCount + figureCount;
+
+	pList = new ThallCode::Pointlist_server2*[pListCount];
+
+	if (subdivLevel < 0)
+		subdivLevel = surface_level_for_match;
+
+	for (i = 0; i < figureCount; i++) {
+		figure = object->getFigurePtr(i);
+		// Rohit: Why should figure ever be NULL?
+		assert( figure != NULL );
+		//if (figure == NULL)
+		//	continue;
+		xferList = convertM3DtoXfer(figure);
+
+		pList[i] = new ThallCode::Pointlist_server2;
+		pList[i]->init(xferList);
+		pList[i]->ComputeSubdivPointCloud(subdivLevel);
+
+		pList[figureCount + i] = new ThallCode::Pointlist_server2;
+		pList[figureCount + i]->init(xferList);
+		pList[figureCount + i]->ComputeSubdivPointCloud(subdivLevel);
+
+		delete [] (xferList->atomlist);
+		delete xferList;
+	}
+}
+
+#ifdef BINARY
+
+bool Match::initialize(M3DObject * _referenceObject, Image3D * _targetImage,
+					   ImageDistanceMap * _binaryDistanceMap, bool buildMasks, Image3D * trainingImage,
+					   bool useWindowing, MatchType _type, int surfaceLevel, const char * templateFilename, 
+					   const char * profileFilename)
+{
+	int figureCount, i;
+	DMask * newDMask;
+
+#ifdef DEBUG
+	cout << "Match::initialize() called" << endl;
+#endif
+
+	windowIntensities = useWindowing;
+	initialTransform = *(_referenceObject->getTransformation());
+	resetReferenceObject(_referenceObject);
+	targetImage = _targetImage;
+	type = _type;
+	//surface_level_for_match = surfaceLevel;
+
+	for (i = 0; i < masks.size(); i++) {
+		if (masks[i] != NULL)
+			delete masks[i];
+		if (dmasks[i] != NULL)
+			delete dmasks[i];
+	}
+
+	masks.erase(masks.begin(), masks.end());
+	dmasks.clear();
+
+	if (type == BINARY_IMAGE_MATCH) {
+		if (referenceObject->getFigureCount() <= tuningWt(BpFigureId)) {
+			cout << "Binary image match was requested for figure " << tuningWt(BpFigureId) 
+				<< " but the model has only " << referenceObject->getFigureCount() << " figures" << endl;
+			return false;
+		}
+		if (!_binaryDistanceMap) {
+			cout << "Warning: Binary image matching requires you to load or calc a distance map; remember to disable image match!" << endl;
+			//return false;	// NO! image match might be disabled
+		}
+
+		binaryDistanceMap = _binaryDistanceMap;    // Take ownership	
+		// Figure stage is responsible for method of moments initialization
+	}
+	else if (type == SIMPLE_MASK_MATCH) {
+		simpleMask = new SimpleMaskFile;
+		simpleMask->readBinary(profileFilename);
+	}
+
+	figureCount = referenceObject->getFigureCount();
+	for (i = 0; i < figureCount; i++) {
+		masks.push_back(NULL);
+		if (buildMasks)
+			buildMask(i, type, trainingImage, surfaceLevel, templateFilename,
+			profileFilename);
+
+		newDMask = new DMask(referenceObject, i, MASK_CUTOFF, type, surfaceLevel, 
+			templateFilename, profileFilename);
+		dmasks.push_back(newDMask);
+	}
+
+	return true;
+}
+
+bool Match::initContourMatch(const char * filename)
+{
+	// Initialize contour match
+	if (contourMatch) {
+		delete contourMatch;
+		contourMatch = NULL;
+	}
+
+	if (tuningWt(FigureContourMatch) == 0.0)
+		return false;
+
+	if (filename) {
+		if (globalVerbosity >= 1) {
+			if (targetImage)
+				cout << "Setting image for contourMatch." << endl;
+			else
+				cout << "No image for contourMatch." << endl;
+		}
+		contourMatch = new DistanceToPointSetFunction(filename,
+			DistanceToPointSetFunction::Full,
+			(int) tuningWt(FigureContourLevel),
+			(int) tuningWt(FigureContourFigureId), targetImage,
+			(int) tuningWt(BpFigureContourPadding)); 
+		contourMatch->setClosenessLimit(tuningWt(FigureContourCloseness));
+		contourMatch->setSizeWeight(tuningWt(BpFigureContourSizeWeight));
+	}
+	return true;
+}
+
+#else	/* BINARY */
+
+bool Match::initContourMatch(const char * filename)
+{
+	Image3D * image;
+
+	// Initialize contour match
+	if (contourMatch) {
+		delete contourMatch;
+		contourMatch = NULL;
+	}
+	if (! filename)
+		return false;
+
+	if (tuningWt(FigureContourMatch) == 0.0)
+		return false;
+
+	if (0 == (int) tuningWt(GpFigureContourCoords))
+		image = NULL;
+	else
+		image = targetImage;
+
+	if (globalVerbosity >= 1) {
+		cout << "Using contour penalty for figure "
+			<< (int) tuningWt(FigureContourFigureId) << '\n';
+		cout << "Contour points are in ";
+		if (image)
+			cout << "world";
+		else
+			cout << "model";
+		cout << " coordinates" << endl;
+	}
+
+	contourMatch = new DistanceToPointSetFunction(filename,
+		DistanceToPointSetFunction::Full,
+		(int) tuningWt(FigureContourLevel),
+		(int) tuningWt(FigureContourFigureId), image);
+	contourMatch->setClosenessLimit(tuningWt(FigureContourCloseness));
+	return true;
+}
+
+bool Match::initialize(M3DObject * _referenceObject, Image3D * _targetImage,
+					   bool buildMasks, Image3D * trainingImage, bool useWindowing,
+					   MatchType _type, int surfaceLevel, const char * templateFilename, 
+					   const char * profileFilename)
+{
+	int figureCount,
+		i;
+	DMask * newDMask;
+
+#ifdef DEBUG
+	cout << "Match::initialize() called" << endl;
+#endif
+
+	windowIntensities = useWindowing;
+	resetReferenceObject(_referenceObject);
+
+	targetImage = _targetImage;
+	type = _type;
+	surface_level_for_match = surfaceLevel;
+
+	if (_type == HISTO_IMAGE_MATCH)
+		return true;
+
+	if (_type == MULTIPATCH_MATCH)
+	{
+		mp->initializePatches(_referenceObject, _targetImage);
+		return true;
+	}
+
+	for (i = 0; i < masks.size(); i++) {
+		if(masks[i] != NULL)
+			delete masks[i];
+	}
+	masks.clear();
+	for (i = 0; i < dmasks.size(); i++) {
+		if (dmasks[i] != NULL)
+			delete dmasks[i];
+	}
+	dmasks.clear();
+
+	if (type == BINARY_IMAGE_MATCH) {
+
+		if (_referenceObject->getFigureCount() != 1) {
+			cout << "Binary image matching only works on a single figure" << endl;
+			return false;
+		}
+
+		// Create a distance map from the image
+		binaryDistanceMap = new ImageDistanceMap(targetImage);
+		(void) binaryDistanceMap->createMap();
+		const int * map_size = binaryDistanceMap->getMapSize();
+		if (map_size[0] <= 0) {
+			cout << "Image distance map_size of 0!" << endl;
+			return false;
+		}
+		if (binaryDistanceMap->status() == false) {
+			cout << "Warning: Binary image matching requires you to load or calc a distance map; remember to disable image match!" << endl;
+			return false;
+		}
+
+		/*		{	// Create snapshot image of the distance map extrapolated over the full input image
+		GreyValue * img = new GreyValue[map_size[0]*map_size[1]*map_size[2]];
+		for (int k = 0; k < map_size[2]; k++)
+		for (int j = 0; j < map_size[1]; j++)
+		for (i = 0; i < map_size[0]; i++) {
+		float d = binaryDistanceMap->getWorldDistance(i, j, k);
+		img[i + map_size[0]*(j + map_size[1]*k)] = (GreyValue) (0.5 + d);
+		}
+		Image3D im;
+		im.setVoxels(img, map_size[0], map_size[1], map_size[2]);
+		im.setSpacing(1.0, 1.0, 1.0);
+		snapshot("../../../data/images/extrap_map.raw3", im);
+		}
+		*/
+	}
+	else if (type == SIMPLE_MASK_MATCH) {
+		simpleMask = new SimpleMaskFile;
+		if (profileFilename == NULL)
+			return false;
+		simpleMask->readBinary(profileFilename);
+	}
+
+	figureCount = referenceObject->getFigureCount();
+	for (i = 0; i < figureCount; i++) {
+		masks.push_back(NULL);
+		if (buildMasks)
+			if (! buildMask(i, type, trainingImage, surfaceLevel, templateFilename,
+				profileFilename))
+			{
+				cout << "Mask constructor failed" << endl;
+				return false;
+			}
+
+			newDMask = new DMask(referenceObject, i, MASK_CUTOFF, type, surfaceLevel, 
+				templateFilename, profileFilename);
+			dmasks.push_back(newDMask);
+	}
+	initializeAtomStage();
+	return true;
+}
+
+#endif	/* BINARY */
+
+// This must be used after initialize() is called and before each atom stage
+void Match::initializeAtomStage()
+{
+	int figureCount, i, nAtoms;
+	M3DQuadFigure * figure;
+
+	figureCount = referenceObject->getFigureCount();
+	nAtoms = 0;
+	for (i = 0; i < figureCount; i++) {
+		figure = (M3DQuadFigure *) referenceObject->getFigurePtr(i);
+		int n = figure->getPrimitiveCount();
+		if (n > nAtoms)
+			nAtoms = n;
+	}
+
+	if (atomMahamPenalty != NULL && nAtoms > nAtomsMax) {
+		delete [] atomMahamPenalty;
+		atomMahamPenalty = NULL;
+	}
+	if (atomMahamPenalty == NULL) {
+		// Allocate one time for all atom stages
+		nAtomsMax = nAtoms;
+		atomMahamPenalty = new double[nAtomsMax];
+	}
+
+	// Initialize for later recording the maham distance for each atom
+	memset(atomMahamPenalty, 0, nAtomsMax*sizeof(double));
+
+	lmBpointIndices[0] = -1;
+}
+
+/*  Resets the reference object; penalties are computed relative to it
+(this should be called at the start of a new optimizer stage).
+Atoms to be used in the optimization stages must be selected in
+the reference object before this function is called.  This is also
+true if this function is called from one of the initialize() functions
+above.
+
+This function builds the surfacePoints object, which contains one
+SurfacePointList entry per figure.  The surface points are computed
+using a transformed copy of the mrep model.
+*/
+void Match::resetReferenceObject(M3DObject * _referenceObject)
+{
+	M3DFigure * figure;
+	Xferlist * xferList;
+	SurfacePointList surfacePointList;    
+	int i, figureCount;
+	M3DObject * tempObject;
+
+
+#ifdef DEBUG
+	cout << "Match resetReferenceObject called" << endl;
+#endif
+	if (_referenceObject == NULL)
+		return;
+
+	if (referenceObject != NULL)
+		delete referenceObject;
+
+	for (i = 0; i < surfacePoints.size(); i++) {
+		if(surfacePoints[i].points != NULL)
+			delete[] surfacePoints[i].points;
+	}
+	surfacePoints.clear();
+
+	referenceObject = _referenceObject->assign();
+	tempObject = referenceObject->assign();
+	tempObject->select();	// For applySimilarityAboutCOG()
+
+	// Transform object by initial transform
+#ifdef UNFLIPPED
+	tempObject->applySimilarity(initialTransform, Vector3D(0.0, 1.0, 0.0));
+#else
+	tempObject->applySimilarity(initialTransform, Vector3D(0.0, 0.0, 0.0));
+#endif
+
+	figureCount = referenceObject->getFigureCount();
+	for (i = 0; i < figureCount; i++) {
+		figure = tempObject->getFigurePtr(i);
+
+		if (figure == NULL)
+			continue;
+
+		xferList = convertM3DtoXfer(figure);
+
+#ifdef BINARY
+		int surface_level_for_match = (int) tuningWt(BpAtomSurfaceLevel);					// AGG: This probably should be put in the constructor
+		// AGG: There is an error here: the above definition hides Match::surface_level_for_match
+#endif
+		pList[i]->UpdateSubdivPointCloud(surface_level_for_match, xferList);
+
+		pList[i]->copySubdivBoundaryInfo(&(surfacePointList.numPoints),
+			&(surfacePointList.points));		
+		surfacePoints.insert(surfacePoints.end(), surfacePointList);
+
+		delete [] (xferList->atomlist);
+		delete xferList;
+	}
+	delete tempObject;
+
+	initializeAtomStage();
+}
+
+bool Match::buildMask(int figureId, MatchType _type, Image3D * trainingImage, 
+					  int surfaceLevel, const char * templateFilename, const char * profileFilename)
+{
+	if (figureId < 0 || figureId >= masks.size())
+		return false;
+
+	if (masks[figureId] != NULL)
+		delete masks[figureId];
+
+	// Types NOTCH_MATCH, PROFILE_MATCH, TRAINING_IMAGE_WITH_INTERIOR_MATCH.
+	// and TRAINING_IMAGE_WITHOUT_INTERIOR_MATCH were deleted June 16, 2006.
+	switch(_type)
+	{
+	case GAUSSIAN_DERIVATIVE_MATCH:
+		masks[figureId] = new Mask(referenceObject, figureId, MASK_CUTOFF,
+			GAUSSIAN_DERIVATIVE_MATCH, NULL, windowIntensities,
+			surfaceLevel, templateFilename);
+		break;
+
+	case NEG_GAUSSIAN_DERIVATIVE_MATCH:
+		masks[figureId] = new Mask(referenceObject, figureId, MASK_CUTOFF,
+			NEG_GAUSSIAN_DERIVATIVE_MATCH, NULL, windowIntensities,
+			surfaceLevel, templateFilename);
+		break;
+
+	case SIMPLE_MASK_MATCH:
+		masks[figureId] = new Mask(referenceObject, figureId, MASK_CUTOFF,
+			SIMPLE_MASK_MATCH, NULL, windowIntensities, surfaceLevel,
+			templateFilename, profileFilename, simpleMask);
+		break;
+
+	default:
+		masks[figureId] = NULL;
+		return false;
+	};
+	return masks[figureId]->status();
+}
+
+void Match::setConstrainedPointLists(std::vector<referencePoint> **
+									 _constrainedPointLists)
+{
+	int i;
+
+	if (referenceObject == NULL)
+		return;
+
+	if (constrainedPointLists != NULL) {
+		for (i = 0; i < numPointLists; i++) {
+			if (constrainedPointLists[i] != NULL)
+				delete [] constrainedPointLists[i];
+		}
+	}
+	delete [] constrainedPointLists;
+
+	constrainedPointLists = _constrainedPointLists;
+	numPointLists = referenceObject->getFigureCount();
+}
+
+#ifndef BINARY
+
+// A function to calculate the new image match given a new target object
+double Match::computeModelMatch(M3DObject * targetObject)
+{
+	int i, figureCount;
+	Vector3D coord, newCoord;
+	double figuralMatchValue;
+	double matchValue;
+
+	if (targetImage == NULL) {
+		cout << "Error: No target image\n" << endl;
+		return FAILED;
+	}
+
+	// The match of each object(figure) will contribute to the overall image
+	// match by the same ratio they take in the sense of volume, but
+	// still, this is to be proved to be better than the simple average
+	figureCount = masks.size();
+	double * maskVolumes = new double[figureCount];
+	double * maskVolumeRatios = new double [figureCount];
+	double maskVolumeTotal = 0.0;
+	Mask * matchMask;
+
+	for (i = 0; i < figureCount; i++) {
+		matchMask = masks[i];
+		if (matchMask == NULL) {
+			maskVolumes[i] = 0;
+			continue;
+		}
+		maskVolumes[i] = matchMask->getTotalVolume();
+		maskVolumeTotal += maskVolumes[i];
+	}
+
+	for (i = 0; i < figureCount; i++)
+		maskVolumeRatios[i] = maskVolumes[i]/maskVolumeTotal;
+
+	matchValue = 0.0;
+	for (i = 0; i < figureCount; i++) {
+		// If the target image is stacked, we want to set the mask here,
+		// according to which image we want.  Since no other information
+		// seems to be available here right now, we make the simplifying
+		// assumptions that all objects are single figures, and thus the
+		// the figure index (or id I guess) tells which image to use...
+
+		matchMask = masks[i];
+
+		if (targetImage->getIsImageStacked())
+			targetImage->setStackedMask((GreyValue) matchMask->getStackedImageMask());
+
+		// CL: assume each object is single figure
+		// TO DO: needs to loop through figure tree to deal with
+		// multi-object, multi-figure models
+		if (i == 0 || isAdaptive())
+			figuralMatchValue = computeMainFigureMatch(targetObject, i);
+		else
+			figuralMatchValue = computeSubfigureMatch(targetObject, i);
+
+		matchValue += maskVolumeRatios[i] * figuralMatchValue;
+	}
+
+#ifdef DEBUG
+	printf("Match Value: %f\n", matchValue);
+#endif
+
+	delete [] maskVolumes;
+	delete [] maskVolumeRatios;
+
+	return -matchValue;
+}
+
+double Match::computeModelMatch(const SimilarityTransform3D & newTransformation)
+{
+	double x, y, z;
+	int i, j, figureCount;
+	SimilarityTransform3D transformation;
+	MaskElement * maskElement;
+	Vector3D coord, newCoord;
+	double val1, val2;
+	double figuralMatchValue;
+	double matchValue;
+	double mu, totval2Sqr, rms;
+	double maskVolume;
+
+	if(targetImage == NULL)
+		return WORST_MATCH;
+
+	transformation = initialTransform;
+	transformation.multiplyBy(newTransformation);
+
+	matchValue = 0.0;
+
+	figureCount = masks.size();
+	for (i = 0; i < figureCount; i++) {
+		Mask * matchMask = masks[i];
+		if (matchMask == NULL)
+			continue;
+
+		// If the target image is stacked, we want to set the mask here,
+		// according to which image we want.  Since no other information
+		// seems to be available here right now, we make the simplifying
+		// assumptions that all objects are single figures, and thus the
+		// the figure index (or id I guess) tells which image to use...
+
+		if (targetImage->getIsImageStacked())
+			targetImage->setStackedMask((GreyValue) matchMask->getStackedImageMask());
+
+		maskVolume = matchMask->getTotalVolume();
+
+		figuralMatchValue = 0.0;
+
+		mu = 0.0;
+		totval2Sqr = 0.0;
+
+		for (j = 0; j < matchMask->getSize(); j++) {
+			maskElement = matchMask->getElement(j);
+
+			if (maskElement == NULL) {
+				printf("NULL mask element.\n");
+				continue;
+			}
+			if (maskElement->inBlendRegion)
+				continue;
+
+			x = maskElement->x;
+			y = maskElement->y;
+			z = maskElement->z;
+
+			newCoord.set(x, y, z);
+
+			transformation.transformVector(newCoord);
+
+			targetImage->modelToImageCoordinates(newCoord);
+
+			if (windowIntensities)
+				val2 = targetImage->mapDisplayToRelative(
+				targetImage->getWindowedInterpolatedVoxelValue(
+				newCoord.getX(), newCoord.getY(), newCoord.getZ()));
+			else
+				val2 = targetImage->mapDisplayToRelative(
+				targetImage->getInterpolatedVoxelValue(
+				newCoord.getX(), newCoord.getY(), newCoord.getZ()));
+
+			mu += val2 * maskElement->volelem;
+			totval2Sqr += val2 * val2 * maskElement->volelem;
+		}
+
+		mu /= maskVolume;
+		rms = (totval2Sqr / maskVolume) - (mu * mu);
+		if (rms <= R_SMALL_TOLERANCE)
+			rms = 0.0;
+		else
+			rms = sqrt(rms);
+
+		if (rms <= R_SMALL_TOLERANCE)
+			continue;
+
+		for (j = 0; j < matchMask->getSize(); j++) {
+			maskElement = matchMask->getElement(j);
+			if (maskElement == NULL) {
+				printf("NULL mask element\n");
+				continue;
+			}
+			if (maskElement->inBlendRegion)
+				continue;
+
+			x = maskElement->x;
+			y = maskElement->y;
+			z = maskElement->z;
+
+			newCoord.set(x, y, z);
+
+			transformation.transformVector(newCoord);
+
+			targetImage->modelToImageCoordinates(newCoord);
+
+			val1 = maskElement->tempVal;
+			if (windowIntensities)
+				val2 = targetImage->mapDisplayToRelative(
+				targetImage->getWindowedInterpolatedVoxelValue(
+				newCoord.getX(), newCoord.getY(), newCoord.getZ()));
+			else
+				val2 = targetImage->mapDisplayToRelative(
+				targetImage->getInterpolatedVoxelValue(
+				newCoord.getX(), newCoord.getY(), newCoord.getZ()));
+
+			figuralMatchValue += val1*((val2 - mu) / rms)*maskElement->volelem;
+		}
+
+		matchValue += (figuralMatchValue / maskVolume);
+	}
+
+	if (figureCount > 0)
+		matchValue /= ((double) figureCount);
+
+#ifdef DEBUG
+	printf("Match Value mod: %f\n", matchValue);
+#endif
+	return matchValue;
+}
+
+#else	/* BINARY */
+
+
+// RET: unit cube distance^2 summed over all landmarks.
+//   Each Euclidian distance is from (first atom of
+//   figure named "LM-*") to (tip of b-vector of
+//   same-named atom in targetmodeObject).
+// Larger values mean a worse fit.
+// Values [0..1] mean all landmarks are reasonably well fit.
+// [1..] means worse fits.
+double Match::computeLandmarkPenalty(M3DObject * targetObject, int figureId,
+									 M3DObject * liObject, const double dilationFactorInModelUnits, 
+									 int subdivLevel)
+{
+	double penalty = 0;
+	if (!targetObject || ! liObject)
+		return 0;
+
+	static int complainedAlready = 0;	// don't be too chatty next call
+	int complaining = 0;				// was chatty this call
+
+	// foreach landmark figure ilm,
+	//  - mlm = find model-space position of corresponding landmark in targetObject
+	//  - pen += ((ilm - mlm) / mlm.tolerance) ^ 2;
+
+	M3DFigure * targetFigure;
+
+	if (figureId < 0 || targetObject == NULL || liObject == NULL)
+		return 0;		// nothing to match
+
+	targetFigure = targetObject->getFigurePtr(figureId);
+
+	if (!targetSurfacePoints.points) {
+
+		Xferlist * xferList = convertM3DtoXfer(targetFigure);
+
+		pList[figureId]->UpdateSubdivPointCloud(subdivLevel, xferList);
+		pList[figureId]->copySubdivBoundaryInfo(&targetSurfacePoints.numPoints, &targetSurfacePoints.points);
+
+		delete [] (xferList->atomlist);
+		delete xferList;
+
+	}
+
+
+
+
+	// "li"-style values are the position of the landmark in the image, which is fixed.
+	// "lm" are the position of the model landmark, which is moved during optimization.
+
+	// Loop over model lm
+	// Each model lm is associated with a Bpoint that comes from seurat.
+	// The indices into that list of Bpoints are stored in lmBpointIndices
+	// so that the linear search (to match a bpoint to a landmark)
+	// only gets performed once, rather than for every model
+	int nlm = targetFigure->getLandmarkCount();
+	int nilm = liObject->getFigureCount();
+
+	int foundNumLM = 0;
+
+	bool needToComputeIdx = (lmBpointIndices[0] == -1);
+	for (int lm = 0; lm < nlm; lm++) {
+		char * lmName = targetFigure->getLandmarkName(lm);
+
+		// HACK!! negating the LM T value to match the T's in Bpoint
+		// which seem to be inverted from the ones in M3DPrimitiveRenderer
+		double lmT = -targetFigure->getLandmarkAtomT(lm);
+
+		double lmU = targetFigure->getLandmarkAtomU(lm);
+		double lmV = targetFigure->getLandmarkAtomV(lm);
+		if (needToComputeIdx) {
+			//need to compute u,v from lmIndex
+			// to be in sync with what happens in quad mesh,
+			// u column, v is row
+			lmBpointIndices[lm] = -1;
+
+			/*  BUG: This is too slow... a faster method to get the bpoint is 
+			Pointlist_server2::subdivBPosition */
+			Bpoint bpnt; 
+			lmBpointIndices[lm] = pList[figureId]->subdivNearestBPosition(&bpnt, lmU, lmV, lmT );
+			if (lmBpointIndices[lm] != -1)
+				cout << "Info: bpoint for landmark:  " << lmName << " is: " << lmBpointIndices[lm] << endl;
+			else
+				cout<<"Info: bpoint for landmark:  " << lmName << " not found!" << endl;
+			/*for (int idx = 0; idx < targetSurfacePoints.numPoints; idx++) {
+			if ( 
+			(targetSurfacePoints.points[idx].u == lmU) && 
+			(targetSurfacePoints.points[idx].v == lmV) &&
+			(targetSurfacePoints.points[idx].t == lmT) 
+			) {
+
+			lmBpointIndices[lm] = idx;
+			cout << "Info: bpoint for landmark:  " << lmName << " is: " << lmBpointIndices[lm] << endl;
+			break;
+			}
+			}*/
+		}
+
+		// li has 1 landmark per figure (use only the 1st atom of each figure);
+		// find that figure by matching it's name against model lm's name
+		int gotOne = 0;
+		M3DFigure * liFigure;
+		for (int li = 0; li < nilm && !gotOne; li++) {
+			liFigure = liObject->getFigurePtr(li);
+			// HACK: skip optional "LM-" part of name
+			int offset = 0;
+			if (! strncmp(liFigure->getName(), "LM-", 3))
+				offset = 3;
+			if (! strcmp(liFigure->getName() + offset, lmName))
+				gotOne = 1;
+		}
+
+		// Warn user that the corresponding image lm was not found
+		if (! gotOne) {
+			complaining = 1;
+			if (! complainedAlready) {
+				cout << "Warning: cannot find image landmark for model landmark "
+					<< lmName << " -- ignoring landmark" << endl;
+			}
+			continue;		// Skip to next model lm
+		}
+
+		M3DPrimitive * liAtom = liFigure->getPrimitivePtr(0);
+		Vector3D liPosition = liAtom->getX();
+		double tolerance = liAtom->getR();
+
+
+		if (lmBpointIndices[lm] == -1) {
+			cout << "Error: could not find bpoint for landmark:  " << lmName << endl;
+			continue;
+		}
+		else {
+			foundNumLM++;
+		}
+
+		/*
+		b allows us to put the landmark anywhere on the subdivision surface.
+		the correction by dilationFactor * the unit surface normal
+		is to support thin objects (where the distance map is actually measuring
+		distance to the boundary of a dilated version of the model)
+		*/
+		Bpoint b = targetSurfacePoints.points[lmBpointIndices[lm]];
+		Vector3D lmPosition(b.pnt);
+		if (dilationFactorInModelUnits != 0.0) {
+			lmPosition -= (dilationFactorInModelUnits * Vector3D(b.norm));
+		}   
+
+		// Update penalty
+		double weightedDist = sqrt(liPosition.distSquare(lmPosition)) / tolerance;
+		double weightedDistSquared = weightedDist * weightedDist;
+		if (globalVerbosity >= 1)
+			cout << " atom [col: " << lmU << ", row: " << lmV << "] (" << lmName << ")^2 = " << weightedDistSquared;
+		penalty += weightedDistSquared;
+	}
+
+	if (complaining) complainedAlready = 1;	// silent on next call
+
+	if (foundNumLM) penalty /= foundNumLM;		// Average over all landmarks
+
+	if (globalVerbosity >= 1)
+		cout << "\n     lmAvg = " << penalty << endl;
+	return penalty;
+
+}
+
+void Match::setUpAtomPredictor(int figureId)
+{
+	if (referenceObject == NULL)
+		return;
+
+	M3DFigure * figure = referenceObject->getFigurePtr(figureId);
+	// FIXME: tubes: need setInitialTubeFigure and supporting code -GST/RSS
+	delete atomPredictor;
+	if (typeid(*figure) == typeid(M3DQuadFigure)) {
+		M3DAtomPredictorQuad* atomPredictor = new M3DAtomPredictorQuad;
+		atomPredictor->setInitialFigures(referenceObject->getFigurePtr(figureId), 
+			referenceObject->getFigurePtr(figureId));
+		this->atomPredictor	= atomPredictor;
+	}
+	else if(typeid(*figure) == typeid(M3DTubeFigure)) {
+		M3DAtomPredictorTube* atomPredictor	= new M3DAtomPredictorTube;
+		this->atomPredictor	= atomPredictor;
+	}
+}
+
+#endif	/* BINARY */
+
+Components Match::computeAtomMatchAndPenaltiesAsComponents(M3DObject * targetObject, int figureId,
+														   int atomId, const Vector& x, double & geomPenalty)
+{
+#ifdef BINARY
+	DistanceType distType;
+#endif
+	double penalty;
+	Components totalPenalty;
+	totalPenalty.smooth		= 0.0;
+	totalPenalty.rough		= 0.0;
+	totalPenalty.smoothSet	= false;
+	totalPenalty.roughSet	= false;
+	int nTerms, i;
+
+	nTerms = 0;
+
+	// cleaning up list of surface bpoints
+	if (targetSurfacePoints.points) {
+		delete [] targetSurfacePoints.points;
+		targetSurfacePoints.points = 0;
+		targetSurfacePoints.numPoints = 0;
+	}
+
+	if (type == BINARY_IMAGE_MATCH) {
+#ifdef BINARY
+		geomPenalty	= 0.0;
+		if (globalVerbosity >= 1)
+			cout << "   ";
+
+		distType = (enum DistanceType) (int) tuningWt(BpAtomDistanceType);
+		// Convert units for dilationFactor.
+		// (Distance map needs to have uniform imageToModelScale)
+		// FIXME: Check for this condition.
+		double dilationFactorInModelUnits = 0;
+		if(tuningWt(BpDilationFactor) > 0) {
+			const Vector3D imageToModelScale(
+				1.0/binaryDistanceMap->getModelToImageScale()[0],
+				1.0/binaryDistanceMap->getModelToImageScale()[1],
+				1.0/binaryDistanceMap->getModelToImageScale()[2] );
+			dilationFactorInModelUnits = tuningWt(BpDilationFactor) * imageToModelScale.getX();
+		}
+		if (tuningWt(BpAtomAverageNeighborMatch) != 0.0) {
+			PrimNeighborhoodDefn neiType = (enum PrimNeighborhoodDefn)
+				(int) tuningWt(BpAtomNeighborhood);
+			penalty = targetObject->dist2FromAveOfNeighbors(neiType,
+				(int) tuningWt(BpFigureId), distType);	//MultiObject
+			atomResults[0].value = penalty;
+			atomResults[0].useIt = true;
+			geomPenalty	+= tuningWt(atomResults[0].tuningParm) * penalty;
+		}
+		if (tuningWt(BpAtomImageMatch) != 0.0) {
+			penalty = computeBinaryImageMatch(targetObject, figureId,
+				int(tuningWt(BpDDMEnable)), tuningWt(BpDDMAngleTolerance),
+				int(tuningWt(BpAtomSurfaceLevel)));
+			atomResults[1].value = penalty;
+			atomResults[1].useIt = true;
+		}
+		if (tuningWt(AtomMahalanobisMatch) != 0.0) {
+			penalty = computeAtomMahamPenalties(x, figureId, atomId);
+			atomResults[2].value = penalty;
+			atomResults[2].useIt = true;
+			geomPenalty	+= tuningWt(atomResults[2].tuningParm) * penalty;
+		}
+		if (tuningWt(BpAtomLandmarkMatch) != 0.0) {
+			penalty = computeLandmarkPenalty(targetObject, figureId, landmarkObject, 
+				dilationFactorInModelUnits, int(tuningWt(BpAtomSurfaceLevel)));
+			atomResults[3].value = penalty;
+			atomResults[3].useIt = true;
+			geomPenalty	+= tuningWt(atomResults[3].tuningParm) * penalty;
+		}
+		if (tuningWt(BpAtomModelMatch) != 0.0) {
+			penalty = targetObject->dist2FromObject(targetObject->loadedObject(),
+				(int) tuningWt(BpFigureId), distType);
+			atomResults[4].value = penalty;
+			atomResults[4].useIt = true;
+			geomPenalty	+= tuningWt(atomResults[4].tuningParm) * penalty;
+		}
+		if (tuningWt(BpAtomInterpenetrationMatch) != 0.0) {
+			penalty = computeInterpenetrationPenalty(targetObject, figureId);
+			atomResults[5].value = penalty;
+			atomResults[5].useIt = true;
+			geomPenalty	+= tuningWt(atomResults[5].tuningParm) * penalty;
+		}
+		if (tuningWt(BpAtomRSradPenalty) != 0.0) {
+			M3DFigure * figure = targetObject->getFigurePtr(figureId);
+			if (tuningWt(BpAtomSumMatch) != 0.0)
+				// Sum over all atoms.
+				penalty = atomPredictor->getFigureRSradPenalty(
+				figure, -1, PEL_BOTH, tuningWt(RSradPenaltyNorm), tuningWt(RSradPenaltyThreshold) );
+			else
+				penalty = atomPredictor->getFigureRSradPenalty(
+				figure, atomId, PEL_BOTH, tuningWt(RSradPenaltyNorm), tuningWt(RSradPenaltyThreshold) );
+			atomResults[6].value = penalty;
+			atomResults[6].useIt = true;
+			geomPenalty	+= tuningWt(atomResults[6].tuningParm) * penalty;
+		} 
+		if (tuningWt(BpAtomDeltaNeighborMatch) != 0.0) {
+			M3DQuadFigure * figure = dynamic_cast<M3DQuadFigure*>( targetObject->getFigurePtr(figureId));
+			if (tuningWt(BpAtomSumMatch) != 0.0) {
+				// Sum over all atoms
+				for (int i = 0; i < figure->getPrimitiveCount(); i++)
+					penalty = dynamic_cast<M3DAtomPredictorQuad*>(atomPredictor)->getAtomPenaltyWithoutOpt(figure, i);
+				penalty /= figure->getPrimitiveCount();
+			}
+			else 
+				penalty = dynamic_cast<M3DAtomPredictorQuad*>(atomPredictor)->getAtomPenaltyWithoutOpt(figure, atomId);
+			atomResults[7].value = penalty;
+			atomResults[7].useIt = true;
+			geomPenalty	+= tuningWt(atomResults[7].tuningParm) * penalty;
+		}
+		if ( tuningWt(BpAtomCurvinessPenalty) != 0.0) {
+			penalty	= targetObject->getFigurePtr(figureId)->curviness();
+			atomResults[8].value = penalty;
+			atomResults[8].useIt = true;
+			geomPenalty	+= tuningWt(atomResults[8].tuningParm) * penalty;
+		}
+
+		//Xiaojie
+		if (tuningWt(BpAtomImageNormalMatch) != 0.0) {
+			penalty = computeAtomBinaryImageNormalMatch(targetObject, figureId, atomId);
+			atomResults[9].value = penalty;
+			atomResults[9].useIt = true;
+		}
+		if (tuningWt(BpAtomImagePlaneOrienAtEnd) != 0.0) {
+			penalty = computeAtomBinaryImagePlaneOrienMatchAtEnd(targetObject, figureId, atomId);
+			atomResults[10].value = penalty;
+			atomResults[10].useIt = true;
+		}
+		if (tuningWt(BpAtomImageVertexMatch) != 0.0) {
+			penalty = computeAtomBinaryImageVertexMatch(targetObject, figureId, atomId);
+			atomResults[11].value = penalty;
+			atomResults[11].useIt = true;
+		}
+
+		for (i = 0; i < MAX_NUM_ATOM_MATCH_RESULTS; i++) {
+			double wtMatch;
+
+			if (atomResults[i].useIt) {
+				atomResults[i].useIt = false;
+				wtMatch = tuningWt(atomResults[i].tuningParm)*atomResults[i].value;
+				switch(atomResults[i].fnClass) {
+					case Components::ROUGH:
+						totalPenalty.rough		+= wtMatch;
+						totalPenalty.roughSet	= true;
+						break;
+					case Components::SMOOTH:
+						totalPenalty.smooth		+= wtMatch;
+						totalPenalty.smoothSet	= true;
+						break;
+					default:
+						assert(false);
+				}
+				if (globalVerbosity >= 1) {
+					cout << tuningShortName(atomResults[i].tuningParm) << ':'
+						<< tuningWt(atomResults[i].tuningParm) << '*'
+						<< atomResults[i].value << ' ';
+				}
+			}
+		}
+
+		if (globalVerbosity >= 1)
+			cout << " = " << totalPenalty << endl;
+#else
+		cout << "Binary image match is not implemented\n";
+		return Components(FAILED);
+#endif
+	}
+#ifdef BINARY
+	else {
+		cout << "Error: computeAtomMatchAndPenalties failed\n";
+		return Components(FAILED);
+	}
+#else	/* BINARY */
+	else {	// Greyscale Pablo
+		if (type != HISTO_IMAGE_MATCH && type != MULTIPATCH_MATCH) {
+			// Mask-based image match
+#ifdef NO_MATCH_PENALTY
+			penalty = 0.0;
+#else
+			penalty = computeMainFigureMatch(targetObject, figureId);
+#endif
+			atomResults[0].value = penalty;
+			atomResults[0].useIt = true;
+		}
+		else if (type == HISTO_IMAGE_MATCH) {
+			// Histogram image match
+			if (atomResults[1].weight != 0.0) {
+				if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+					cout << "Warning: worst histogram match being returned\n";
+					return Components(FAILED);
+				}
+				if (spe == NULL) {
+					cout << "Error: no spe\n";
+					return Components(FAILED);
+				}
+				if (! spe->update(targetImage, targetObject, figureId, -1))
+				{
+					//	cout << "Error: surface patch (histogram) image match failed\n";
+					return Components(FAILED);
+				}				
+				penalty = spe->getMatchValue(figureId, -1);
+
+
+				//printf("Histogram match value %.4lf\n", penalty);
+				atomResults[1].value = penalty;
+				atomResults[1].useIt = true;
+
+			}
+		}
+		else if (type == MULTIPATCH_MATCH)
+		{
+			if (atomResults[2].weight != 0.0) {
+				if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+					cout << "Warning: worst MutliPatch match being returned\n";
+					return Components(FAILED);
+				}
+				if (mp == NULL) {
+					cout << "Error: no MultiPatch mp \n";
+					return Components(FAILED);
+				}
+
+				penalty = mp->getYourMatch(targetObject, targetImage, figureId, NULL);
+
+				//printf("MutliPatch match value %.4lf\n", penalty);
+				//I'm piggybacking on Eli's histo match, cause it looks like a hassle to put in my own.
+				atomResults[2].value = penalty;
+				atomResults[2].useIt = true;
+
+			}
+		}
+		else
+		{
+			cout << "ERROR: not sure what match you want...";
+			return Components(FAILED);
+		}
+
+		if (atomResults[3].weight != 0.0) {
+			// Mahalanobis penalty
+			penalty = computeAtomMahamPenalties(x, figureId, atomId);
+			atomResults[3].value = penalty;
+			atomResults[3].useIt = true;
+		}
+		else {
+			// Geometric penalty
+			if (atomResults[4].weight != 0.0) {
+				penalty = computeAtomPenalty(*targetObject, figureId,
+					atomId, atomResults[4].weight);
+				atomResults[4].value = penalty;
+				atomResults[4].useIt = true;
+			}
+		}
+
+		// Constraints penalty
+		if (atomResults[6].weight > 0.0) {
+			penalty = computeConstraintsPenalty(*targetObject, figureId);
+			atomResults[6].value = penalty;
+			atomResults[6].useIt = true;
+		}
+
+		// Now collect the terms
+		if (globalVerbosity >= 2)
+			cout << "  ";
+		geomPenalty = 0.0;
+		for (i = 0; i < MAX_NUM_ATOM_MATCH_RESULTS; i++) {
+			double wtMatch;
+
+			if (atomResults[i].useIt) {
+#ifndef OPTIMIZATION_VISUALIZER
+				atomResults[i].useIt = false;
+#endif
+				wtMatch = atomResults[i].value*atomResults[i].weight;
+				switch(atomResults[i].fnClass) {
+					case Components::ROUGH:
+						totalPenalty.rough		+= wtMatch;
+						totalPenalty.roughSet	= true;
+						break;
+					case Components::SMOOTH:
+						totalPenalty.smooth		+= wtMatch;
+						totalPenalty.smoothSet	= true;
+						break;
+					default:
+						assert(false);
+				}
+				// The image match entries do not contribute to geomPenalty
+				if (i > LAST_IMAGE_MATCH_ATOM_TERM)
+					geomPenalty += wtMatch;
+
+				if (globalVerbosity >= 1) {
+					cout << atomResults[i].name << ':' << atomResults[i].weight
+						<< '*' << atomResults[i].value << ' ';
+				}
+			}
+		}
+
+		if (globalVerbosity >= 1)
+			cout << "= " << totalPenalty << endl;
+	}
+#endif	/* BINARY */
+
+	return totalPenalty;
+}
+
+
+Components Match::computeSRepMatchAndPenaltiesAsComponents(M3DObject * targetObject, int figureId,
+														   int atomId, const Vector& x, double & geomPenalty)
+{
+#ifdef BINARY
+	DistanceType distType;
+#endif
+	double penalty;
+	Components totalPenalty;
+	totalPenalty.smooth		= 0.0;
+	totalPenalty.rough		= 0.0;
+	totalPenalty.smoothSet	= false;
+	totalPenalty.roughSet	= false;
+	int nTerms, i;
+
+	nTerms = 0;
+
+	// cleaning up list of surface bpoints
+	if (targetSurfacePoints.points) {
+		delete [] targetSurfacePoints.points;
+		targetSurfacePoints.points = 0;
+		targetSurfacePoints.numPoints = 0;
+	}
+
+	if (type == BINARY_IMAGE_MATCH) {
+#ifdef BINARY
+		geomPenalty	= 0.0;
+		if (globalVerbosity >= 1)
+			cout << "   ";
+
+		distType = (enum DistanceType) (int) tuningWt(BpSRepDistanceType);
+		// Convert units for dilationFactor.
+		// (Distance map needs to have uniform imageToModelScale)
+		// FIXME: Check for this condition.
+		double dilationFactorInModelUnits = 0;
+		if(tuningWt(BpDilationFactor) > 0) {
+			const Vector3D imageToModelScale(
+				1.0/binaryDistanceMap->getModelToImageScale()[0],
+				1.0/binaryDistanceMap->getModelToImageScale()[1],
+				1.0/binaryDistanceMap->getModelToImageScale()[2] );
+			dilationFactorInModelUnits = tuningWt(BpDilationFactor) * imageToModelScale.getX();
+		}
+
+
+		// No need of neighborhood penalty if the atom does not move in the SRep stage
+		if (tuningWt(SRepAtomRestrictMovement) == 1) {
+			sRepResults[0].value = 0;
+			sRepResults[0].useIt = true;			
+		}
+		else {
+			if (tuningWt(BpSRepAverageNeighborMatch) != 0.0) {
+				PrimNeighborhoodDefn neiType = (enum PrimNeighborhoodDefn)
+					(int) tuningWt(BpSRepNeighborhood);
+				penalty = targetObject->dist2FromAveOfNeighbors(neiType,
+					(int) tuningWt(BpFigureId), distType);	//MultiObject
+				sRepResults[0].value = penalty;
+				sRepResults[0].useIt = true;
+				geomPenalty	+= tuningWt(sRepResults[0].tuningParm) * penalty;
+			}
+		}
+		if (tuningWt(BpSRepImageMatch) != 0.0) {
+			penalty = computeBinaryImageMatch(targetObject, figureId,
+				int(tuningWt(BpDDMEnable)), tuningWt(BpDDMAngleTolerance),
+				int(tuningWt(BpSRepSurfaceLevel)));
+			sRepResults[1].value = penalty;
+			sRepResults[1].useIt = true;
+		}
+		if (tuningWt(SRepRadiusMatch) != 0.0) {
+			penalty = computeAtomRadiusMatch(targetObject, figureId, atomId);
+			sRepResults[2].value = penalty;
+			sRepResults[2].useIt = true;
+			geomPenalty	+= tuningWt(sRepResults[2].tuningParm) * penalty;
+		}
+		if (tuningWt(BpSRepLandmarkMatch) != 0.0) {
+			penalty = computeLandmarkPenalty(targetObject, figureId, landmarkObject, 
+				dilationFactorInModelUnits, int(tuningWt(BpSRepSurfaceLevel)));
+			sRepResults[3].value = penalty;
+			sRepResults[3].useIt = true;
+			geomPenalty	+= tuningWt(sRepResults[3].tuningParm) * penalty;
+		}
+		if (tuningWt(BpSRepModelMatch) != 0.0) {
+			penalty = targetObject->dist2FromObject(targetObject->loadedObject(),
+				(int) tuningWt(BpFigureId), distType);
+			sRepResults[4].value = penalty;
+			sRepResults[4].useIt = true;
+			geomPenalty	+= tuningWt(sRepResults[4].tuningParm) * penalty;
+		}
+		if (tuningWt(BpSRepInterpenetrationMatch) != 0.0) {
+			penalty = computeInterpenetrationPenalty(targetObject, figureId);
+			sRepResults[5].value = penalty;
+			sRepResults[5].useIt = true;
+			geomPenalty	+= tuningWt(sRepResults[5].tuningParm) * penalty;
+		}
+		if (tuningWt(BpSRepRSradPenalty) != 0.0) {
+			M3DFigure * figure = targetObject->getFigurePtr(figureId);
+			if (tuningWt(BpSRepSumMatch) != 0.0)
+				// Sum over all atoms.
+				penalty = atomPredictor->getFigureRSradPenalty(
+				figure, -1, PEL_BOTH, tuningWt(RSradPenaltyNorm), tuningWt(RSradPenaltyThreshold) );
+			else
+				penalty = atomPredictor->getFigureRSradPenalty(
+				figure, atomId, PEL_BOTH, tuningWt(RSradPenaltyNorm), tuningWt(RSradPenaltyThreshold) );
+			sRepResults[6].value = penalty;
+			sRepResults[6].useIt = true;
+			geomPenalty	+= tuningWt(sRepResults[6].tuningParm) * penalty;
+		} 
+		if (tuningWt(BpSRepDeltaNeighborMatch) != 0.0) {
+			M3DQuadFigure * figure = dynamic_cast<M3DQuadFigure*>( targetObject->getFigurePtr(figureId));
+			if (tuningWt(BpSRepSumMatch) != 0.0) {
+				// Sum over all atoms
+				for (int i = 0; i < figure->getPrimitiveCount(); i++)
+					penalty = dynamic_cast<M3DAtomPredictorQuad*>(atomPredictor)->getAtomPenaltyWithoutOpt(figure, i);
+				penalty /= figure->getPrimitiveCount();
+			}
+			else 
+				penalty = dynamic_cast<M3DAtomPredictorQuad*>(atomPredictor)->getAtomPenaltyWithoutOpt(figure, atomId);
+			sRepResults[7].value = penalty;
+			sRepResults[7].useIt = true;
+			geomPenalty	+= tuningWt(sRepResults[7].tuningParm) * penalty;
+		}
+		if ( tuningWt(BpSRepCurvinessPenalty) != 0.0) {
+			penalty	= targetObject->getFigurePtr(figureId)->curviness();
+			sRepResults[8].value = penalty;
+			sRepResults[8].useIt = true;
+			geomPenalty	+= tuningWt(sRepResults[8].tuningParm) * penalty;
+		}
+
+		//Xiaojie
+		if (tuningWt(BpSRepImageNormalMatch) != 0.0) {
+			penalty = computeAtomBinaryImageNormalMatch(targetObject, figureId, atomId);
+			sRepResults[9].value = penalty;
+			sRepResults[9].useIt = true;
+		}
+		if (tuningWt(BpSRepImagePlaneOrienAtEnd) != 0.0) {
+			penalty = computeAtomBinaryImagePlaneOrienMatchAtEnd(targetObject, figureId, atomId);
+			sRepResults[10].value = penalty;
+			sRepResults[10].useIt = true;
+		}
+		if (tuningWt(BpSRepImageVertexMatch) != 0.0) {
+			penalty = computeAtomBinaryImageVertexMatch(targetObject, figureId, atomId);
+			sRepResults[11].value = penalty;
+			sRepResults[11].useIt = true;
+		}
+
+		for (i = 0; i < MAX_NUM_SREP_MATCH_RESULTS; i++) {
+			double wtMatch;
+
+			if (sRepResults[i].useIt) {
+				sRepResults[i].useIt = false;
+				wtMatch = tuningWt(sRepResults[i].tuningParm)*sRepResults[i].value;
+				switch(sRepResults[i].fnClass) {
+					case Components::ROUGH:
+						totalPenalty.rough		+= wtMatch;
+						totalPenalty.roughSet	= true;
+						break;
+					case Components::SMOOTH:
+						totalPenalty.smooth		+= wtMatch;
+						totalPenalty.smoothSet	= true;
+						break;
+					default:
+						assert(false);
+				}
+				if (globalVerbosity >= 1) {
+					cout << tuningShortName(sRepResults[i].tuningParm) << ':'
+						<< tuningWt(sRepResults[i].tuningParm) << '*'
+						<< sRepResults[i].value << ' ';
+				}
+			}
+		}
+
+		if (globalVerbosity >= 1)
+			cout << " = " << totalPenalty << endl;
+#else
+		cout << "Binary image match is not implemented\n";
+		return Components(FAILED);
+#endif
+	}
+#ifdef BINARY
+	else {
+		cout << "Error: computeAtomMatchAndPenalties failed\n";
+		return Components(FAILED);
+	}
+#else	/* BINARY */
+	else {	// Greyscale Pablo
+		if (type != HISTO_IMAGE_MATCH && type != MULTIPATCH_MATCH) {
+			// Mask-based image match
+#ifdef NO_MATCH_PENALTY
+			penalty = 0.0;
+#else
+			penalty = computeMainFigureMatch(targetObject, figureId);
+#endif
+			sRepResults[0].value = penalty;
+			sRepResults[0].useIt = true;
+		}
+		else if (type == HISTO_IMAGE_MATCH) {
+			// Histogram image match
+			if (sRepResults[1].weight != 0.0) {
+				if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+					cout << "Warning: worst histogram match being returned\n";
+					return Components(FAILED);
+				}
+				if (spe == NULL) {
+					cout << "Error: no spe\n";
+					return Components(FAILED);
+				}
+				if (! spe->update(targetImage, targetObject, figureId, -1))
+				{
+					//	cout << "Error: surface patch (histogram) image match failed\n";
+					return Components(FAILED);
+				}				
+				penalty = spe->getMatchValue(figureId, -1);
+
+
+				//printf("Histogram match value %.4lf\n", penalty);
+				sRepResults[1].value = penalty;
+				sRepResults[1].useIt = true;
+
+			}
+		}
+		else if (type == MULTIPATCH_MATCH)
+		{
+			if (sRepResults[2].weight != 0.0) {
+				if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+					cout << "Warning: worst MutliPatch match being returned\n";
+					return Components(FAILED);
+				}
+				if (mp == NULL) {
+					cout << "Error: no MultiPatch mp \n";
+					return Components(FAILED);
+				}
+
+				penalty = mp->getYourMatch(targetObject, targetImage, figureId, NULL);
+
+				//printf("MutliPatch match value %.4lf\n", penalty);
+				//I'm piggybacking on Eli's histo match, cause it looks like a hassle to put in my own.
+				sRepResults[2].value = penalty;
+				sRepResults[2].useIt = true;
+
+			}
+		}
+		else
+		{
+			cout << "ERROR: not sure what match you want...";
+			return Components(FAILED);
+		}
+
+		if (sRepResults[3].weight != 0.0) {
+			// Mahalanobis penalty
+			penalty = computeAtomMahamPenalties(x, figureId, atomId);
+			sRepResults[3].value = penalty;
+			sRepResults[3].useIt = true;
+		}
+		else {
+			// Geometric penalty
+			if (sRepResults[4].weight != 0.0) {
+				penalty = computeAtomPenalty(*targetObject, figureId,
+					atomId, sRepResults[4].weight);
+				sRepResults[4].value = penalty;
+				sRepResults[4].useIt = true;
+			}
+		}
+
+		// Constraints penalty
+		if (sRepResults[6].weight > 0.0) {
+			penalty = computeConstraintsPenalty(*targetObject, figureId);
+			sRepResults[6].value = penalty;
+			sRepResults[6].useIt = true;
+		}
+
+		// Now collect the terms
+		if (globalVerbosity >= 2)
+			cout << "  ";
+		geomPenalty = 0.0;
+		for (i = 0; i < MAX_NUM_ATOM_MATCH_RESULTS; i++) {
+			double wtMatch;
+
+			if (sRepResults[i].useIt) {
+#ifndef OPTIMIZATION_VISUALIZER
+				sRepResults[i].useIt = false;
+#endif
+				wtMatch = sRepResults[i].value*sRepResults[i].weight;
+				switch(sRepResults[i].fnClass) {
+					case Components::ROUGH:
+						totalPenalty.rough		+= wtMatch;
+						totalPenalty.roughSet	= true;
+						break;
+					case Components::SMOOTH:
+						totalPenalty.smooth		+= wtMatch;
+						totalPenalty.smoothSet	= true;
+						break;
+					default:
+						assert(false);
+				}
+				// The image match entries do not contribute to geomPenalty
+				if (i > LAST_IMAGE_MATCH_ATOM_TERM)
+					geomPenalty += wtMatch;
+
+				if (globalVerbosity >= 1) {
+					cout << sRepResults[i].name << ':' << sRepResults[i].weight
+						<< '*' << sRepResults[i].value << ' ';
+				}
+			}
+		}
+
+		if (globalVerbosity >= 1)
+			cout << "= " << totalPenalty << endl;
+	}
+#endif	/* BINARY */
+
+	return totalPenalty;
+}
+
+double Match::computeAtomMahamPenalties(const Vector & x, int atomId, int figureId)
+{
+	double mahamPenaltyVal = 0.0;	
+	int i;
+
+	for (i = 0; i < x.size(); i++)
+		mahamPenaltyVal += x(i) * x(i);	
+
+#ifndef BINARY
+#ifdef WEIGHTED
+	// IF NORMALIZE TO ZERO MEAN UNIT STD/VAR 
+	mahamPenaltyVal -= x.size() ;
+	mahamPenaltyVal /= sqrt((double)(2*x.size()) );			
+#endif 
+#endif			
+	if (atomId >= 0 )
+		atomMahamPenalty[atomId] =  mahamPenaltyVal;
+
+	return mahamPenaltyVal;
+}
+
+
+/**
+* Spoke stage penalty computation
+*/
+Components Match::computeSpokeMatchAndPenaltiesAsComponents(M3DObject * targetObject, int figureId,
+															int atomId, const Vector& x, double & geomPenalty)
+{
+#ifdef BINARY
+	DistanceType distType;
+#endif
+	double penalty;
+	Components totalPenalty;
+	totalPenalty.smooth		= 0.0;
+	totalPenalty.rough		= 0.0;
+	totalPenalty.smoothSet	= false;
+	totalPenalty.roughSet	= false;
+	int nTerms, i;
+
+	nTerms = 0;
+
+	// cleaning up list of surface bpoints
+	if (targetSurfacePoints.points) {
+		delete [] targetSurfacePoints.points;
+		targetSurfacePoints.points = 0;
+		targetSurfacePoints.numPoints = 0;
+	}
+
+	if (type == BINARY_IMAGE_MATCH) {
+#ifdef BINARY
+		if (globalVerbosity >= 1)
+			cout << "   ";
+
+		distType = (enum DistanceType) (int) tuningWt(BpSpokeDistanceType);
+		// Convert units for dilationFactor.
+		// (Distance map needs to have uniform imageToModelScale)
+		// FIXME: Check for this condition.
+		double dilationFactorInModelUnits = 0;
+		if(tuningWt(BpDilationFactor) > 0) {
+			const Vector3D imageToModelScale(
+				1.0/binaryDistanceMap->getModelToImageScale()[0],
+				1.0/binaryDistanceMap->getModelToImageScale()[1],
+				1.0/binaryDistanceMap->getModelToImageScale()[2] );
+			dilationFactorInModelUnits = tuningWt(BpDilationFactor) * imageToModelScale.getX();
+		}
+		if (tuningWt(BpSpokeAverageNeighborMatch) != 0.0) {
+			PrimNeighborhoodDefn neiType = (enum PrimNeighborhoodDefn)
+				(int) tuningWt(BpSpokeNeighborhood);
+			penalty = targetObject->dist2FromAveOfNeighbors(neiType,
+				(int) tuningWt(BpFigureId), distType);	//MultiObject
+			spokeResults[0].value = penalty;
+			spokeResults[0].useIt = true;
+		}
+		if (tuningWt(BpSpokeImageMatch) != 0.0) {
+			penalty = computeBinaryImageMatch(targetObject, figureId,
+				int(tuningWt(BpDDMEnable)), tuningWt(BpDDMAngleTolerance),
+				int(tuningWt(BpSpokeSurfaceLevel)));
+			spokeResults[1].value = penalty;
+			spokeResults[1].useIt = true;
+		}
+		if (tuningWt(SpokeMahalanobisMatch) != 0.0) {
+			penalty = computeSpokeMahamPenalties(x, figureId, atomId);
+			spokeResults[2].value = penalty;
+			spokeResults[2].useIt = true;
+		}
+		if (tuningWt(BpSpokeLandmarkMatch) != 0.0) {
+			penalty = computeLandmarkPenalty(targetObject, figureId, landmarkObject, 
+				dilationFactorInModelUnits, int(tuningWt(BpSpokeSurfaceLevel)));
+			spokeResults[3].value = penalty;
+			spokeResults[3].useIt = true;
+		}
+		if (tuningWt(BpSpokeModelMatch) != 0.0) {
+			penalty = targetObject->dist2FromObject(targetObject->loadedObject(),
+				(int) tuningWt(BpFigureId), distType);
+			spokeResults[4].value = penalty;
+			spokeResults[4].useIt = true;
+		}
+		if (tuningWt(BpSpokeInterpenetrationMatch) != 0.0) {
+			penalty = computeInterpenetrationPenalty(targetObject, figureId);
+			spokeResults[5].value = penalty;
+			spokeResults[5].useIt = true;
+		}
+		if (tuningWt(BpSpokeRSradPenalty) != 0.0) {
+			M3DFigure * figure = targetObject->getFigurePtr(figureId);
+			if (tuningWt(BpSpokeSumMatch) != 0.0)
+				// Sum over all atoms.
+				penalty = atomPredictor->getFigureRSradPenalty(
+				figure, -1, PEL_BOTH, tuningWt(RSradPenaltyNorm), tuningWt(RSradPenaltyThreshold) );
+			else
+				penalty = atomPredictor->getFigureRSradPenalty(
+				figure, atomId, PEL_BOTH, tuningWt(RSradPenaltyNorm), tuningWt(RSradPenaltyThreshold) );
+			spokeResults[6].value = penalty;
+			spokeResults[6].useIt = true;
+		} 
+
+		for (i = 0; i < MAX_NUM_SPOKE_MATCH_RESULTS; i++) {
+			double wtMatch;
+
+			if (spokeResults[i].useIt) {
+				spokeResults[i].useIt = false;
+				wtMatch = tuningWt(spokeResults[i].tuningParm)*spokeResults[i].value;
+				switch(spokeResults[i].fnClass) {
+					case Components::ROUGH:
+						totalPenalty.rough		+= wtMatch;
+						totalPenalty.roughSet	= true;
+						break;
+					case Components::SMOOTH:
+						totalPenalty.smooth		+= wtMatch;
+						totalPenalty.smoothSet	= true;
+						break;
+					default:
+						assert(false);
+				}
+				if (globalVerbosity >= 1) {
+					cout << tuningShortName(spokeResults[i].tuningParm) << ':'
+						<< tuningWt(spokeResults[i].tuningParm) << '*'
+						<< spokeResults[i].value << ' ';
+				}
+			}
+		}
+
+		if (globalVerbosity >= 1)
+			cout << " = " << totalPenalty << endl;
+#else
+		cout << "Binary image match is not implemented\n";
+		return Components(FAILED);
+#endif
+	}
+#ifdef BINARY
+	else {
+		cout << "Error: computeSpokeMatchAndPenalties failed\n";
+		return Components(FAILED);
+	}
+#else	/* BINARY */
+	else {	// Greyscale Pablo
+		if (type != HISTO_IMAGE_MATCH && type != MULTIPATCH_MATCH) {
+			// Mask-based image match
+#ifdef NO_MATCH_PENALTY
+			penalty = 0.0;
+#else
+			penalty = computeMainFigureMatch(targetObject, figureId);
+#endif
+			spokeResults[0].value = penalty;
+			spokeResults[0].useIt = true;
+		}
+		else if (type == HISTO_IMAGE_MATCH) {
+			// Histogram image match
+			if (spokeResults[1].weight != 0.0) {
+				if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+					cout << "Warning: worst histogram match being returned\n";
+					return Components(FAILED);
+				}
+				if (spe == NULL) {
+					cout << "Error: no spe\n";
+					return Components(FAILED);
+				}
+				if (! spe->update(targetImage, targetObject, figureId, -1))
+				{
+					//	cout << "Error: surface patch (histogram) image match failed\n";
+					return Components(FAILED);
+				}
+				penalty = spe->getMatchValue(figureId, -1);
+				//printf("Histogram match value %.4lf\n", penalty);
+				spokeResults[1].value = penalty;
+				spokeResults[1].useIt = true;
+			}
+		}
+		else if (type == MULTIPATCH_MATCH)
+		{
+			// MultiPatch image match.  Again, I ride Eli's histo match so as til someone helps me 
+			// put in a new spokeResult.
+			if (spokeResults[1].weight != 0.0) {
+				if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+					cout << "Warning: worst multipatch match being returned\n";
+					return Components(FAILED);
+				}
+				if (mp == NULL) {
+					cout << "Error: no MultiPatch mp\n";
+					return Components(FAILED);
+				}
+
+				penalty = mp->getYourMatch(targetObject, targetImage, figureId, NULL);
+
+				//printf("MultiPatch match value %.4lf\n", penalty);
+				spokeResults[1].value = penalty;
+				spokeResults[1].useIt = true;
+			}
+		}
+		else
+		{
+			cout << "ERROR: Hmmm, no spoke match defined.\n";
+		}
+
+		if (spokeResults[2].weight != 0.0) {
+			// Mahalanobis penalty
+			penalty = computeSpokeMahamPenalties(x, figureId, atomId);
+			spokeResults[2].value = penalty;
+			spokeResults[2].useIt = true;
+		}
+		else {
+			// Geometric penalty
+			if (spokeResults[3].weight != 0.0) {
+				penalty = computeAtomPenalty(*targetObject, figureId,
+					atomId, spokeResults[4].weight);
+				spokeResults[3].value = penalty;
+				spokeResults[3].useIt = true;
+			}
+		}
+
+		// Constraints penalty
+		if (spokeResults[5].weight > 0.0) {
+			penalty = computeConstraintsPenalty(*targetObject, figureId);
+			spokeResults[5].value = penalty;
+			spokeResults[5].useIt = true;
+		}
+
+		// Now collect the terms
+		if (globalVerbosity >= 2)
+			cout << "  ";
+		geomPenalty = 0.0;
+		for (i = 0; i < MAX_NUM_SPOKE_MATCH_RESULTS; i++) {
+			double wtMatch;
+
+			if (spokeResults[i].useIt) {
+#ifndef OPTIMIZATION_VISUALIZER
+				spokeResults[i].useIt = false;
+#endif
+				wtMatch = spokeResults[i].value*spokeResults[i].weight;
+				switch(spokeResults[i].fnClass) {
+					case Components::ROUGH:
+						totalPenalty.rough		+= wtMatch;
+						totalPenalty.roughSet	= true;
+						break;
+					case Components::SMOOTH:
+						totalPenalty.smooth		+= wtMatch;
+						totalPenalty.smoothSet	= true;
+						break;
+					default:
+						assert(false);
+				}
+				// The image match entries do not contribute to geomPenalty
+				if (i > LAST_IMAGE_MATCH_SPOKE_TERM)
+					geomPenalty += wtMatch;
+				if (globalVerbosity >= 1) {
+					cout << spokeResults[i].name << ':' << spokeResults[i].weight
+						<< '*' << spokeResults[i].value << ' ';
+				}
+			}
+		}
+
+		//		if (globalVerbosity >= 2)
+		cout << "= " << totalPenalty << endl;
+	}
+#endif	/* BINARY */
+
+	return totalPenalty;
+}
+
+double Match::computeSpokeMahamPenalties(const Vector & x, int figureId, int atomId)
+{
+	double mahamPenaltyVal;
+	double penaltyVal =0.0;
+	M3DFigure * figure;
+	int i, nAtoms;
+
+	if (atomId < 0)
+		return FAILED;
+
+	figure = referenceObject->getFigurePtr(figureId);
+	nAtoms = figure->getPrimitiveCount();
+
+	mahamPenaltyVal = 0.0;
+	for (i = 0; i < x.size(); i++)
+		mahamPenaltyVal += x(i) * x(i);	
+
+	return mahamPenaltyVal;
+}
+
+
+
+Components Match::computeFigureMatchAndPenaltiesAsComponents(M3DObject * targetObject, int figureId,
+															 M3DObject * similarityObject, const std::vector<double>& x, double & geomPenalty )
+{
+#ifdef BINARY
+	DistanceType distType;
+#endif
+	double penalty;
+	Components totalPenalty;
+	totalPenalty.smooth		= 0.0;
+	totalPenalty.rough		= 0.0;
+	totalPenalty.smoothSet	= false;
+	totalPenalty.roughSet	= false;
+	int nTerms, i;
+
+	nTerms = 0;
+
+	// cleaning up list of surface bpoints
+	if (targetSurfacePoints.points) {
+		delete [] targetSurfacePoints.points;
+		targetSurfacePoints.points = 0;
+		targetSurfacePoints.numPoints = 0;
+	}
+
+#ifdef OPTIMIZATION_VISUALIZER
+	for (i = 0; i < MAX_NUM_FIG_MATCH_RESULTS; i++)
+		figureResults[i].useIt = false;
+#endif
+
+	if (type == BINARY_IMAGE_MATCH) {
+#ifdef BINARY
+		if (globalVerbosity >= 1)
+			cout << "  ";
+		// Convert units for dilationFactor.
+		// (Distance map needs to have uniform imageToModelScale)
+		// FIXME: Check for this condition.
+		double dilationFactorInModelUnits = 0;
+		if(tuningWt(BpDilationFactor) > 0){
+			const Vector3D imageToModelScale(
+				1.0/binaryDistanceMap->getModelToImageScale()[0],
+				1.0/binaryDistanceMap->getModelToImageScale()[1],
+				1.0/binaryDistanceMap->getModelToImageScale()[2] );
+
+			dilationFactorInModelUnits	= tuningWt(BpDilationFactor) * imageToModelScale.getX();
+		}
+
+		geomPenalty	= 0.0;
+		if (tuningWt(BpFigureImageMatch) != 0.0) {
+			penalty = computeBinaryImageMatch(targetObject, figureId,
+				int(tuningWt(BpDDMEnable)), tuningWt(BpDDMAngleTolerance),
+				int(tuningWt(BpFigureSurfaceLevel)));
+			figureResults[0].value = penalty;
+			figureResults[0].useIt = true;
+		}
+
+		if (tuningWt(BpFigureLandmarkMatch) != 0.0) {
+			penalty = computeLandmarkPenalty(targetObject, figureId, landmarkObject,
+				dilationFactorInModelUnits, int(tuningWt(BpFigureSurfaceLevel)));
+			figureResults[1].value = penalty;
+			figureResults[1].useIt = true;
+			geomPenalty	+= tuningWt(figureResults[1].tuningParm) * penalty;
+		}
+		if (tuningWt(BpFigureModelMatch) != 0.0) {
+			distType = (enum DistanceType) (int) tuningWt(BpFigureDistanceType);
+			penalty = targetObject->dist2FromObject(similarityObject, 
+				(int) tuningWt(BpFigureId), distType);
+			figureResults[2].value = penalty;
+			figureResults[2].useIt = true;
+			geomPenalty	+= tuningWt(figureResults[2].tuningParm) * penalty;
+		}
+		if (tuningWt(BpFigureInterpenetrationMatch) != 0.0) {
+			penalty = computeInterpenetrationPenalty(targetObject, figureId);
+			figureResults[3].value = penalty;
+			figureResults[3].useIt = true;
+			geomPenalty	+= tuningWt(figureResults[3].tuningParm) * penalty;
+		}
+		if (tuningWt(FigureMahalanobisMatch) != 0.0) {
+			penalty = 0.0;
+			for (int i = 0; i < x.size(); i++)						
+				penalty += x[i] * x[i];
+			figureResults[4].value = penalty;
+			figureResults[4].useIt = true;
+			geomPenalty	+= tuningWt(figureResults[4].tuningParm) * penalty;
+		}
+
+		if (tuningWt(BpFigureRSradPenalty) != 0.0) {
+			M3DFigure * figure = targetObject->getFigurePtr(figureId);
+			penalty = atomPredictor->getFigureRSradPenalty(
+				figure, -1, PEL_BOTH, tuningWt(RSradPenaltyNorm), tuningWt(RSradPenaltyThreshold) );
+			figureResults[5].value = penalty;
+			figureResults[5].useIt = true;
+			geomPenalty	+= tuningWt(figureResults[5].tuningParm) * penalty;
+		}
+		if (tuningWt(BpFigureCurvinessPenalty) != 0.0) {
+			penalty	= targetObject->getFigurePtr(figureId)->curviness();
+			figureResults[6].value = penalty;
+			figureResults[6].useIt = true;
+			geomPenalty	+= tuningWt(figureResults[6].tuningParm) * penalty;
+		}
+		if (tuningWt(FigureContourMatch) != 0.0) {
+			penalty = (contourMatch ? contourMatch->computeDistanceSqr(targetObject) : 0.0);
+			figureResults[7].value = penalty;
+			figureResults[7].useIt = true;
+			geomPenalty	+= tuningWt(figureResults[7].tuningParm) * penalty;
+		}
+
+		//Xiaojie
+		if (tuningWt(BpFigureImageNormalMatch) != 0.0) {
+			penalty = computeFigureBinaryImageNormalMatch(targetObject, figureId);
+			figureResults[8].value = penalty;
+			figureResults[8].useIt = true;
+		}
+		if (tuningWt(BpFigureImagePlaneOrienAtEnd) != 0.0) {
+			penalty = computeFigureBinaryImagePlaneOrienMatchAtEnd(targetObject, figureId);
+			figureResults[9].value = penalty;
+			figureResults[9].useIt = true;
+		}
+		if (tuningWt(BpFigureImageVertexMatch) != 0.0) {
+			penalty = computeFigureBinaryImageVertexMatch(targetObject, figureId);
+			figureResults[10].value = penalty;
+			figureResults[10].useIt = true;
+		}
+
+		// Now collect the terms
+		if (globalVerbosity >= 2)
+			cout << "   ";
+		for (i = 0; i < MAX_NUM_FIG_MATCH_RESULTS; i++) {
+			double wtMatch;
+
+			if (figureResults[i].useIt) {
+#ifndef OPTIMIZATION_VISUALIZER
+				figureResults[i].useIt = false;
+#endif
+				wtMatch = tuningWt(figureResults[i].tuningParm)*figureResults[i].value;
+				switch(figureResults[i].fnClass) {
+					case Components::ROUGH:
+						totalPenalty.rough		+= wtMatch;
+						totalPenalty.roughSet	= true;
+						break;
+					case Components::SMOOTH:
+						totalPenalty.smooth		+= wtMatch;
+						totalPenalty.smoothSet	= true;
+						break;
+					default:
+						assert(false);
+				}
+				if (globalVerbosity >= 1) {
+					cout << tuningShortName(figureResults[i].tuningParm) << ':'
+						<< tuningWt(figureResults[i].tuningParm) << '*'
+						<< figureResults[i].value << ' ';
+				}
+			}
+		}
+		if (globalVerbosity >= 1)
+			cout << "= " << totalPenalty << endl;
+#else
+		cout << "Binary image match is not implemented\n";
+		return Components(FAILED);
+#endif
+	}
+#ifdef BINARY
+	else {
+		cout << "Error: computeFigureMatchAndPenalties failed\n";
+		return Components(WORST_MATCH);
+	}
+#else	/* BINARY */
+	else {	// Greyscale Pablo
+		bool useInterpenetration;
+
+		if (type != HISTO_IMAGE_MATCH && type != MULTIPATCH_MATCH) {
+			// TOM: turn off match if constraint penalty is all the way up
+			useInterpenetration = true;
+			if (figureResults[0].weight == M3DMainFigureProblem::CONSTRAINT_PENALTY_SCALE_FACTOR)
+				useInterpenetration = false;
+			else {
+				// Mask-based image match
+#ifdef NO_MATCH_PENALTY
+				penalty = 0.0;
+#else
+				penalty = computeMainFigureMatch(targetObject, figureId);
+#endif
+				figureResults[5].value = penalty;
+				figureResults[5].useIt = true;
+			}
+		}
+		else if (type == HISTO_IMAGE_MATCH) {
+			// Histogram image match
+			if (figureResults[4].weight != 0.0) {
+				if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+					cout << "Warning: worst histogram match being returned\n";
+					return Components(FAILED);
+				}
+				if (spe == NULL) {
+					cout << "Error: no spe\n";
+					return Components(FAILED);
+				}
+				if (! spe->update(targetImage, targetObject, figureId, -1))
+				{
+					cout << "Error: surface patch (histogram) image match failed\n";
+					return Components(FAILED);
+				}
+				penalty = spe->getMatchValue(figureId, -1);
+				figureResults[4].value = penalty;
+				figureResults[4].useIt = true;
+			}
+		}
+		else if (type == MULTIPATCH_MATCH)
+		{
+			// Histogram image match
+			if (figureResults[7].weight != 0.0) {
+				if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+					cout << "Warning: worst MultiPatch match being returned\n";
+					return Components(FAILED);
+				}
+				if (mp == NULL) {
+					cout << "Error: no MultiPatch mp\n";
+					return Components(FAILED);
+				}
+
+				penalty = mp->getYourMatch(targetObject, targetImage, figureId, NULL);
+				figureResults[7].value = penalty;
+				figureResults[7].useIt = true;
+			}
+		}
+		else
+		{
+			cout << "ERROR: Hmmm...., no figure match defined?\n";
+		}
+
+		//This is the DQF Match term.
+		if (figureResults[6].weight != 0.0)
+		{
+			if (figureId < 0 || targetImage == NULL || targetObject == NULL) {
+				cout << "Warning: worst dqf match being returned\n";
+				return Components(FAILED);
+			}
+			if (dqf == NULL)
+			{
+				cout << "Error: no dqf\n";
+				return Components(FAILED);
+			}
+			penalty = dqf->computeDQFMatch(targetImage, targetObject, figureId);
+			figureResults[6].value = penalty;
+			figureResults[6].useIt = true;
+		}
+
+		if (figureResults[2].weight != 0.0) {
+			// Mahalanobis penalty
+			penalty = 0.0;
+			for (int i = 0; i < x.size(); i++)
+				penalty += x[i] * x[i];
+
+			if(spe && (spe->hmt == WEIGHTED_GAUSSIAN_HMT)) { // IF NORMALIZE TO ZERO MEAN UNIT STD/VAR 
+				penalty -= x.size();
+				penalty /= sqrt(2.0*x.size());
+				//printf("Geom penalty: %lf, after weighting of %d\n", penalty, sqrt(2*(x.size()  - start)));
+			}
+			figureResults[2].value = penalty;
+			figureResults[2].useIt = true;
+		}
+		else {
+			// Geometric penalty
+			if (figureResults[1].weight != 0.0) {
+				penalty = computeMainFigurePenalty(targetObject, figureId);
+				figureResults[1].value = penalty;
+				figureResults[1].useIt = true;
+			}
+		}
+
+		// Constraints penalty
+		if (figureResults[0].weight > 0.0) {
+			penalty = computeConstraintsPenalty(*targetObject, figureId,
+				useInterpenetration);
+			figureResults[0].value = penalty;
+			figureResults[0].useIt = true;
+		}
+
+		// Contour penalty
+		if (figureResults[3].weight >  0.0) {
+			penalty = contourMatch->computeDistanceSqr(targetObject);
+			// To make sense of what is happening, get the avg dist between the contour points
+			// and boundary points of the current model in units of voxels.  computeDistanceSqr
+			// returns the squared avg distance, so first get the total squared dist, take the
+			// root, and then divide by number of points.
+			//cout << "Avg distance to contour points in voxels: ";
+			//cout << targetImage->getXDim()*sqrt(penalty*contourMatch->getNumPoints())/contourMatch->getNumPoints() << endl;
+			penalty = pow(targetImage->getXDim()*sqrt(penalty*contourMatch->getNumPoints())
+				/ contourMatch->getNumPoints(),4);
+
+			figureResults[3].value = penalty;
+			figureResults[3].useIt = true;
+		}
+
+		// Now collect the terms
+		if (globalVerbosity >= 2)
+			cout << "  ";
+		geomPenalty = 0.0;
+		for (i = 0; i < MAX_NUM_FIG_MATCH_RESULTS; i++) {
+			double wtMatch;
+
+			if (figureResults[i].useIt) {
+#ifndef OPTIMIZATION_VISUALIZER
+				figureResults[i].useIt = false;
+#endif
+				wtMatch = figureResults[i].value*figureResults[i].weight;
+				switch(figureResults[i].fnClass) {
+					case Components::ROUGH:
+						totalPenalty.rough += wtMatch;
+						totalPenalty.roughSet = true;
+						break;
+					case Components::SMOOTH:
+						totalPenalty.smooth += wtMatch;
+						totalPenalty.smoothSet = true;
+						break;
+					default:
+						assert(false);
+				}
+				// The image match entries do not contribute to geomPenalty
+				if (i < FIRST_IMAGE_MATCH_FIGURE_TERM)
+					geomPenalty += wtMatch;
+				if (globalVerbosity >= 2) {
+					cout << figureResults[i].name << ':' << figureResults[i].weight
+						<< '*' << figureResults[i].value << ' ';
+				}
+			}
+		}
+
+		if (globalVerbosity >= 2)
+			cout << "= " << totalPenalty << endl;
+	}
+#endif	/* BINARY */
+
+	return totalPenalty;
+}
+
+#ifndef BINARY
+
+double Match::computeMainFigureMatch(M3DObject * targetObject, int figureId)
+{
+	int i;
+	MaskElement * maskElement;
+	M3DFigure * figure;
+	Vector3D coord;
+
+	double val1, val2;
+	double matchValue;
+	double mu, totval2Sqr, rms;
+	double maskVolume;
+
+	Mask * matchMask;
+
+	if (figureId < 0 || figureId >= masks.size())
+		return FAILED;
+
+	matchMask = masks[figureId];
+	if (targetImage == NULL || matchMask == NULL)
+		return FAILED;
+
+	if (matchMask->getSize() == 0)
+		return FAILED;
+
+	maskVolume = matchMask->getTotalVolume();
+
+	matchValue = 0.0;
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	// If the target image is stacked, we want to set the mask here,
+	// according to which image we want.  Since no other information
+	// seems to be available here right now, we make the simplifying
+	// assumptions that all objects are single figures, and thus the
+	// the figure index (or id I guess) tells which image to use...
+
+	if (targetImage->getIsImageStacked())
+		targetImage->setStackedMask((GreyValue) matchMask->getStackedImageMask());
+
+	Xferlist * xferList = convertM3DtoXfer(figure);
+
+	pList[figureId]->UpdateSubdivPointCloud(surface_level_for_match, xferList);
+
+	int j;
+	int numPoints;
+	Bpoint * surfacePointList2;
+	pList[figureId]->subdivboundaryinfo(&numPoints, &surfacePointList2);
+
+	delete [] (xferList->atomlist);
+	delete xferList;
+
+	//DEBUGGING, I'm going to output the current target image and weights.
+	//	FILE *f1, *f2;
+
+	//f1 = fopen("current_target.txt", "wb");
+	//f2 = fopen("current_volumes.txt", "wb");
+
+#ifdef SURFACE_VISUALIZER
+	objectSurfaceVisualizer->initializeSurfaceMap(0, "image intensities",
+		targetObject, figureId, surface_level_for_match, numPoints, pList, false);
+	objectSurfaceVisualizer->initializeSurfaceMap(1, "objective function",
+		targetObject, figureId, surface_level_for_match, numPoints, pList, true);
+	objectSurfaceVisualizer->initializeSurfaceMap(2, "vertex volume",
+		targetObject, figureId, surface_level_for_match, numPoints, pList, true);
+#endif
+
+	mu = 0.0;
+	totval2Sqr = 0.0;
+	for (i = 0; i < matchMask->getSize(); i++) {
+		maskElement = matchMask->getElement(i);
+		if (maskElement == NULL) {
+			printf("NULL mask element\n");
+			continue;
+		}
+		if (maskElement->inBlendRegion)
+			continue;
+
+		// Add the distance along the normal.
+		// Note that the distance is r Normalized.
+		j = i/(matchMask->getSamplesPerPoint());
+		coord.setX(surfacePointList2[j].pnt[0] + surfacePointList2[j].norm[0] *
+			maskElement->dist * surfacePointList2[j].rad);
+		coord.setY(surfacePointList2[j].pnt[1] + surfacePointList2[j].norm[1] *
+			maskElement->dist * surfacePointList2[j].rad);
+		coord.setZ(surfacePointList2[j].pnt[2] + surfacePointList2[j].norm[2] *
+			maskElement->dist * surfacePointList2[j].rad);
+
+		targetImage->modelToImageCoordinates(coord);
+
+		if (windowIntensities)
+			val2 = targetImage->mapDisplayToRelative(
+			targetImage->getWindowedInterpolatedVoxelValue(
+			coord.getX(), coord.getY(), coord.getZ()));
+		else
+			val2 = targetImage->mapDisplayToRelative(
+			targetImage->getInterpolatedVoxelValue(
+			coord.getX(), coord.getY(), coord.getZ()));
+
+		//fprintf(f1,"%lf ", val2);
+		//fprintf(f2,"%e ", maskElement->volelem);
+
+		mu += val2 * maskElement->volelem;
+		totval2Sqr += val2 * val2 * maskElement->volelem;
+	}
+
+	//fclose(f1);
+	//fclose(f2);
+
+	mu /= maskVolume;
+	rms = (totval2Sqr / maskVolume) - (mu * mu);
+	if(rms <= R_SMALL_TOLERANCE)
+		rms = 0.0;
+	else
+		rms = sqrt(rms);
+
+	if(rms <= R_SMALL_TOLERANCE)
+		return 0.0;
+
+	for (i = 0; i < matchMask->getSize(); i++) {
+		maskElement = matchMask->getElement(i);
+		if (maskElement == NULL) {
+			printf("NULL mask element\n");
+			continue;
+		}
+		if (maskElement->inBlendRegion)
+			continue;
+
+		// Add the distance along the normal.
+		// Note that the distance is r Normalized.
+		j=i/(matchMask->getSamplesPerPoint());
+		coord.setX(surfacePointList2[j].pnt[0] + surfacePointList2[j].norm[0] *
+			maskElement->dist * surfacePointList2[j].rad);
+		coord.setY(surfacePointList2[j].pnt[1] + surfacePointList2[j].norm[1] *
+			maskElement->dist * surfacePointList2[j].rad);
+		coord.setZ(surfacePointList2[j].pnt[2] + surfacePointList2[j].norm[2] *
+			maskElement->dist * surfacePointList2[j].rad);
+
+		targetImage->modelToImageCoordinates(coord);
+
+		val1 = maskElement->tempVal;
+		if (windowIntensities)
+			val2 = targetImage->mapDisplayToRelative(
+			targetImage->getWindowedInterpolatedVoxelValue(
+			coord.getX(), coord.getY(), coord.getZ()));
+		else
+			val2 = targetImage->mapDisplayToRelative(
+			targetImage->getInterpolatedVoxelValue(
+			coord.getX(), coord.getY(), coord.getZ()));
+
+#ifdef SURFACE_VISUALIZER
+		if ((i + 6) % 11 == 0)	// True for the 6th (middle) element of each profile
+		{
+			double intensity = targetImage->mapDisplayToRelative(
+				targetImage->getVoxelValue(
+				coord.getX(), coord.getY(), coord.getZ()));
+			objectSurfaceVisualizer->setSurfaceColor(figureId, j, intensity);
+
+			objectSurfaceVisualizer->setSurfaceColor(figureId, j,
+				val1 * ((val2 - mu) / rms) * maskElement->volelem, 1);
+
+			objectSurfaceVisualizer->setSurfaceColor(figureId, j,
+				maskElement->volelem, 2);
+		}
+#endif
+		matchValue += val1 * ((val2 - mu) / rms) * maskElement->volelem;
+	}
+	matchValue /= maskVolume;
+
+	//#ifdef DEBUG
+	printf("Match Value mfig: %lf\n", matchValue);
+	//#endif
+
+	// This negation is so that the objective function's terms may be added in
+	// computeFigureMatchAndPenalties() and computeAtomMatchAndPenalties().
+	// The image match is maximized, while other terms added there are
+	// minimized.
+	return -matchValue;		// This returns values in [-1.0, 1.0]
+}
+
+double Match::computeSubfigureMatch(M3DObject * targetObject, int figureId)
+{
+	int testFigureId;
+	int i;
+
+	MaskElement * maskElement;
+	M3DFigure * figure;
+	Vector3D coord;
+	double val1, val2;
+	double totval2Sqr, rms, mu;
+	double maskVolume;
+	double matchValue; 
+
+	Mask * matchMask;
+
+	if (figureId < 0 || figureId >= masks.size())
+		return FAILED;
+
+	matchMask = masks[figureId];
+
+	if (targetImage == NULL || matchMask == NULL)
+		return FAILED;
+
+	if (matchMask->getSize() == 0)
+		return FAILED;
+
+	matchValue = 0.0;
+
+	maskVolume = matchMask->getTotalVolume();
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	Xferlist * xferList = convertM3DtoXfer(figure);
+
+	pList[figureId]->UpdateSubdivPointCloud(surface_level_for_match, xferList);
+
+	int j;
+	int numPoints;
+	Bpoint * surfacePointList2;
+	pList[figureId]->subdivboundaryinfo(&numPoints, &surfacePointList2);
+
+	mu = 0.0;
+	totval2Sqr = 0.0;
+	for (i = 0; i < matchMask->getSize(); i++) {
+		maskElement = matchMask->getElement(i);
+		if (maskElement == NULL) {
+			printf("NULL mask element\n");
+			continue;
+		}
+		if (maskElement->inBlendRegion)
+			continue;
+
+		// Add the distance along the normal.
+		// Note that the distance is r Normalized.
+		j=i/(matchMask->getSamplesPerPoint());
+		coord.setX(surfacePointList2[j].pnt[0] + surfacePointList2[j].norm[0] *
+			maskElement->dist * surfacePointList2[j].rad);
+		coord.setY(surfacePointList2[j].pnt[1] + surfacePointList2[j].norm[1] *
+			maskElement->dist * surfacePointList2[j].rad);
+		coord.setZ(surfacePointList2[j].pnt[2] + surfacePointList2[j].norm[2] *
+			maskElement->dist * surfacePointList2[j].rad);
+
+		targetImage->modelToImageCoordinates(coord);
+
+		if (windowIntensities)
+			val2 = targetImage->mapDisplayToRelative(
+			targetImage->getWindowedInterpolatedVoxelValue(
+			coord.getX(), coord.getY(), coord.getZ()));
+		else
+			val2 = targetImage->mapDisplayToRelative(
+			targetImage->getInterpolatedVoxelValue(
+			coord.getX(), coord.getY(), coord.getZ()));
+
+		mu += val2 * maskElement->volelem;
+		totval2Sqr += val2 * val2 * maskElement->volelem;
+	}
+
+	mu /= maskVolume;
+	rms = (totval2Sqr / maskVolume) - (mu * mu);
+	if(rms <= R_SMALL_TOLERANCE)
+		rms = 0.0;
+	else
+		rms = sqrt(rms);
+
+	if(rms <= R_SMALL_TOLERANCE)
+		return 0.0;
+
+	int count = 0;
+	for (i = 0; i < matchMask->getSize(); i++) {
+		maskElement = matchMask->getElement(i);
+		if (maskElement == NULL) {
+			printf("NULL mask element\n");
+			continue;
+		}
+		if (maskElement->inBlendRegion)
+			continue;
+
+		testFigureId = maskElement->figureId;
+		if (testFigureId != figureId)
+			continue;
+
+		// Add the distance along the normal.
+		// Note that the distance is r Normalized.
+		count++;
+		j=i/(matchMask->getSamplesPerPoint());
+		coord.setX(surfacePointList2[j].pnt[0] + surfacePointList2[j].norm[0] *
+			maskElement->dist * surfacePointList2[j].rad);
+		coord.setY(surfacePointList2[j].pnt[1] + surfacePointList2[j].norm[1] *
+			maskElement->dist * surfacePointList2[j].rad);
+		coord.setZ(surfacePointList2[j].pnt[2] + surfacePointList2[j].norm[2] *
+			maskElement->dist * surfacePointList2[j].rad);
+
+		targetImage->modelToImageCoordinates(coord);
+
+		val1 = maskElement->tempVal;
+		if (windowIntensities)
+			val2 = targetImage->mapDisplayToRelative(
+			targetImage->getWindowedInterpolatedVoxelValue(
+			coord.getX(), coord.getY(), coord.getZ()));
+		else
+			val2 = targetImage->mapDisplayToRelative(
+			targetImage->getInterpolatedVoxelValue(
+			coord.getX(), coord.getY(), coord.getZ()));
+
+		matchValue += val1 * ((val2 - mu) / rms) * maskElement->volelem;
+	}
+	matchValue /= maskVolume;
+
+	delete [] (xferList->atomlist);
+	delete xferList;
+
+#ifdef DEBUG
+	printf("Match Value sub: %f\n", matchValue);
+#endif
+	return -matchValue;
+}
+
+#endif	/* ! BINARY */
+
+
+#ifdef BINARY
+
+// FEATURES:
+// - use the distance map, the "search along normal" distance, or a combination of both. The search
+//   is about 4x slower than the distance map, per surface evaluation. Of course the distance map
+//   takes some time to compute, initially.
+// - save distance vectors: a visualization of the distance map vectors and the "search along normal"
+//   methods which can show, for each surface point, the direction and distance and other parameters
+//   of the last method used. The data is saved in this routine, then displayed in the model display
+//   routines. The data can be saved to a file for latter display. Rename the file to disable it's
+//   display.
+
+double Match::computeBinaryImageMatch(M3DObject * targetObject, int figureId,
+									  int enableDDM, double angleTolerance, int subdivLevel)
+{
+	int i;
+	M3DFigure * figure;
+
+	if (figureId < 0 || targetImage == NULL || binaryDistanceMap == NULL)
+		return WORST_MATCH;
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	if (!targetSurfacePoints.points) {
+
+		Xferlist * xferList = convertM3DtoXfer(figure);
+
+		pList[figureId]->UpdateSubdivPointCloud(subdivLevel, xferList);
+		pList[figureId]->copySubdivBoundaryInfo(&targetSurfacePoints.numPoints, &targetSurfacePoints.points);
+
+		delete [] (xferList->atomlist);
+		delete xferList;
+
+	}
+
+	double match	= 0.0;
+	double avg_dist	= 0.0;
+
+	bool isOutside = false;
+
+	double max_dist	= 0.0, min_dist	= +1e20, dist;
+	// LATER: change this from voxels to cm
+
+	const bool save_dvec = (tuningWt(SaveDistanceVectors) != 0);
+	// Tells if "distance vectors" info should be saved
+
+	static int infoMsg = 0;	// print info message(s) once only, then set this flag
+	static int thinInfoMsg = 0;	// print info message(s) once only, then set this flag
+
+	const double dilationFactor = tuningWt(BpDilationFactor);
+	if (!thinInfoMsg && globalVerbosity > -1) {
+		if( dilationFactor != 0.0 )
+			cout << "INFO: Special handling for thin objects enabled."
+			<< "Dilation Factor = " << dilationFactor << " voxels"
+			<< endl;
+		thinInfoMsg = 1;
+	}
+
+	const double endWeight	= tuningWt(WeightMatchAtEnds);
+
+	double numPoints	= 0;
+
+	if (enableDDM == 1) {
+		// Sum distance map values (only)
+		if (! infoMsg && globalVerbosity > -1) {
+			cout << "Image-to-object distances enabled" << endl;
+			infoMsg = 1;
+		}
+
+		for (i = 0; i < targetSurfacePoints.numPoints; i++) {
+			const double weight	= (pList[figureId]->thisMesh->isEndMedcoord(targetSurfacePoints.points[i]))
+				? endWeight : 1.0;
+			numPoints	+= weight;
+			dist = fabs(binaryDistanceMap->getDistance(targetSurfacePoints.points[i].pnt)
+				- dilationFactor );
+
+			if (dist > max_dist)
+				max_dist	= dist;
+			if (dist < min_dist)
+				min_dist = dist;
+			match += weight * dist*dist;
+			avg_dist += weight * dist;	// average unsigned distance
+		}
+	}
+	else {
+		// Sum either "search normal" distance or distance map; decision is per surface-point
+		if (! infoMsg && globalVerbosity > -1) {
+			if (enableDDM == 0)
+				cout << "Object-to-image distances enabled"
+				<< ", distance threshold = " << tuningWt(BpDDMSearchThreshold) << " voxels"
+				<< endl;
+			else
+				cout << "Conditional object-to-image distances enabled"
+				<< ", angle tolerance = " << angleTolerance << " degrees"
+				<< ", distance threshold = " << tuningWt(BpDDMSearchThreshold) << " voxels"
+				<< endl;
+			infoMsg = 1;
+		}
+		int pointsHit = 0;	// Count # of surface points for either method
+
+		DistanceVectorList::DistVectorPList & pointlist = distanceVectorList->plist;
+		if (save_dvec)
+			pointlist.resize(targetSurfacePoints.numPoints);
+
+		const Vector3D imageToModelScale(
+			1.0/binaryDistanceMap->getModelToImageScale()[0],
+			1.0/binaryDistanceMap->getModelToImageScale()[1],
+			1.0/binaryDistanceMap->getModelToImageScale()[2] );
+
+		// dp is delta voxel in unit co-ordinates.
+		Vector3D dp = imageToModelScale;
+		dp = dp / 2.;	// halve the step size as an initial guess
+		double dpx = dp.getX();		// faster forms of dp
+		double dpy = dp.getY();
+		double dpz = dp.getZ();
+
+		// The length of the projection of a vector at angleTolerance onto the unit vector
+		const double toleranceLen = cos(angleTolerance*M_PI/180.0);
+
+		for (i = 0; i < targetSurfacePoints.numPoints; i++) {
+			const double weight	= (pList[figureId]->thisMesh->isEndMedcoord(targetSurfacePoints.points[i]))
+				? endWeight : 1.0;
+			numPoints	+= weight;
+			const double x	= targetSurfacePoints.points[i].pnt[0];
+			const double y	= targetSurfacePoints.points[i].pnt[1];
+			const double z	= targetSurfacePoints.points[i].pnt[2];
+			Vector3D norm = targetSurfacePoints.points[i].norm;
+			norm.normalize();
+			// Read distance map and adjust for dilation
+			double dist = binaryDistanceMap->getDistance(x, y, z)
+				- dilationFactor;	// start search here.
+
+			Vector3D grad;
+
+			// Save distance vector info to display later
+			DistanceVector & p = (save_dvec) ? pointlist[i] : *((DistanceVector *) NULL);
+
+			bool doNormalSearch = false;	// Should we search the normals?
+			if (enableDDM == 0)
+				doNormalSearch = true;
+			else if (enableDDM == 2) {
+				// The gradient is derived from the distance map, a piecewise-linear map which is tri-lerp'd by
+				// getDistance() at positions slightly around (x,y,z). The second term (weighted by .0532) helps
+				// decide cases in which getDistance(+dp) == getDistance(-dp).
+				// FIXME: Check for bounds
+				// (No need to adjust for dilation here, as we are only interested in differences)
+				grad = 0.9679 * Vector3D(
+					binaryDistanceMap->getDistance(x+dpx,y,z) - binaryDistanceMap->getDistance(x-dpx,y,z),
+					binaryDistanceMap->getDistance(x,y+dpy,z) - binaryDistanceMap->getDistance(x,y-dpy,z),
+					binaryDistanceMap->getDistance(x,y,z+dpz) - binaryDistanceMap->getDistance(x,y,z-dpz) )
+					+ 0.0532 * Vector3D(
+					binaryDistanceMap->getDistance(x+2*dpx,y,z) - binaryDistanceMap->getDistance(x-2*dpx,y,z),
+					binaryDistanceMap->getDistance(x,y+2*dpy,z) - binaryDistanceMap->getDistance(x,y-2*dpy,z),
+					binaryDistanceMap->getDistance(x,y,z+2*dpz) - binaryDistanceMap->getDistance(x,y,z-2*dpz) );
+				grad.normalize();
+
+				doNormalSearch = (grad*norm <= toleranceLen);
+			}
+
+			bool isOutside;	// Is surface point outside binary image?
+			if (dist > 0.0) {
+				// If (x,y,z) is outside the binary image boundary, then invert the normal & the gradient
+				norm = -norm;
+				grad = -grad;
+				isOutside = true;
+			}
+			else {
+				dist = -dist;	// Make distance positive
+				isOutside = false;
+			}
+
+			if (save_dvec) {
+				p.n	= Vector3D(norm).vprod(imageToModelScale);
+				p.p.set(x,y,z);
+				p.grad	= Vector3D(grad).vprod(imageToModelScale * dist);
+				p.dist	= dist;
+				p.method= 1 + doNormalSearch;
+			}
+
+			if (doNormalSearch) {
+				// Use "search normal" method for this surface point
+				pointsHit++;
+
+				const double ddm_dist = dist;		// ddm_dist should be positive
+
+				Vector3D from = Vector3D(x,y,z);
+				norm = norm.vprod(imageToModelScale); // a unit vector in image coords.
+				// dist's direction is now *along grad direction*
+				double step_size;
+#define MAX_STEPS 10	// number of times to sample along the normal;
+
+				Vector3D check	= from + dist*norm;
+
+				// Start looking for the boundary from the known distance for 10 voxels
+				int steps;
+				bool done	= false;
+				for (steps = 0; steps != MAX_STEPS; steps++ ) {
+					// read distance map and adjust for dilation :
+					const double intensity	= binaryDistanceMap->getDistance(check.getX(),check.getY(),check.getZ())
+						- dilationFactor;
+
+					// Ran outside the binary image -> stop early (pretend we ran out of steps) & use distance map
+					if (intensity > 1000) {
+						steps = MAX_STEPS;
+						break;
+					}
+					// If we're "close enough" to the boundary, trust the dist map &
+					// jump the rest of the way, then stop searching
+					if (fabs(intensity) < tuningWt(BpDDMSearchThreshold)) {
+						dist += (isOutside) ? intensity : -intensity;
+						done	= true;
+						break;
+					}
+
+					// If we passed the boundary, back up to the last place before the
+					// boundary and repeat the search with a finer sampling
+					if ((isOutside && intensity <= 0.0) || (! isOutside && intensity > 0.0)) {
+						dist += (isOutside) ? intensity : -intensity;	// adjust for overstep
+						break;
+					}
+
+					check = check + norm;
+					dist = dist + 1.0;	// step size is 1 voxel
+				}
+
+				if (steps == MAX_STEPS)
+					dist = ddm_dist;	// if we ran out of steps, just accept the dist map
+				else if (dist <= 3.0 && ! done) {
+					// earch small distances again, with a finer increment this time
+					step_size	= dist/(MAX_STEPS-2);
+					// (MAX_STEPS-2) has to be smaller than the number of iterations to
+					// guarantee that we search past the initial stopping point
+					check = from;
+					dist = 0.0;
+					for (steps = 0; steps != MAX_STEPS; steps++) {
+						// read distance map and adjust for dilation :
+						const double intensity	= binaryDistanceMap->getDistance(check.getX(),check.getY(),check.getZ())
+							- dilationFactor;
+						if(( isOutside && intensity <= 0.0)
+							|| (! isOutside && intensity > 0.0)
+							|| fabs(intensity) < tuningWt(BpDDMSearchThreshold)) {
+								dist += (isOutside) ? intensity : -intensity;	// trust the dist map & jump the rest of the way
+								break;
+						}
+						check = check + step_size*norm;
+						dist = dist + step_size;
+					}
+				}
+
+				// Now 'dist' is the furthest distance we searched, which might be short
+				if (save_dvec) {
+					p.n	= p.n*dist;
+					p.dist	= dist;	// Overwrite ddm distance
+				}
+			}
+
+			dist = fabs(dist);		// Might be negative if it was thresholded
+			if (dist > max_dist)
+				max_dist	= dist;
+			if (dist < min_dist)
+				min_dist = dist;
+			match += weight * dist*dist;
+			avg_dist += weight * dist;
+		}
+	}
+	match /= numPoints;
+	avg_dist /= numPoints;
+
+	MatchUtility::max_dist = max_dist;
+	MatchUtility::min_dist = min_dist;
+	MatchUtility::nPoints = numPoints;
+	MatchUtility::avg_dist = avg_dist;
+	MatchUtility::avg_dist_squared = match;
+
+	return match;
+}
+
+// Xiaojie
+
+double Match::computeFigureBinaryImageNormalMatch( M3DObject * targetObject, int figureId )
+{
+
+	M3DFigure * figure;
+
+	if (figureId < 0 || targetImage == NULL || binaryDistanceMap == NULL)
+		return WORST_MATCH;
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	double match	= 0.0;
+
+	double numPoints	= 0;
+
+	//TOFIX
+	//should take care link atom case
+	for (int atomId = 0; atomId != figure->getPrimitiveCount(); atomId++){
+
+		//TOCHECK
+		//use the BpAtomImageVertexMatch indirectly
+		match += computeAtomBinaryImageNormalMatch(targetObject, figureId,atomId );
+
+	}
+
+	match /= figure->getPrimitiveCount();
+	
+	return match;
+
+}
+
+// Xiaojie
+
+double Match::computeAtomBinaryImageNormalMatch( M3DObject * targetObject, int figureId,int atomId  )
+{
+
+	M3DFigure * figure;
+
+	if (figureId < 0 || targetImage == NULL || binaryDistanceMap == NULL)
+		return WORST_MATCH;
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	//atom
+	M3DPrimitive * atom;
+	atom = figure->getPrimitivePtr(atomId);
+
+	double match	= 0.0;
+
+	//double numPoints	= 0;
+
+	const double endMidWeight	= tuningWt(WeightNormalMatchAtEndMidSpoke);//ADD this weight
+
+	//TOFIX:should take care of the hinge atom case
+	//if not end atom
+	//TOCHECK
+	if(atom->type()==M3D_STANDARD_PRIMITIVE){
+		//do not consider tube model now
+		M3DQuadPrimitive* quadAtom = dynamic_cast<M3DQuadPrimitive*>(atom);
+
+		//two spoke ends
+		Vector3D SpokeEnd0 = quadAtom->getX()+quadAtom->getY0();
+		Vector3D SpokeEnd1 = quadAtom->getX()+quadAtom->getY1();
+		//get_graddistance???sign???
+		//gradient of distancemap at two spoke ends
+		Vector3D grad0 = binaryDistanceMap->getGradDistance(SpokeEnd0);grad0.normalize();
+		Vector3D grad1 = binaryDistanceMap->getGradDistance(SpokeEnd1);grad1.normalize();
+
+		//TOCHECK
+
+		double dot_product ; 
+
+		dot_product = min( double(1), quadAtom->getU0()*grad0 ) ;
+		dot_product = max( double(-1), dot_product ) ;
+
+		double dist0 = acos( dot_product ) ;
+
+		dot_product = min( double(1), quadAtom->getU1()*grad1 ) ;
+		dot_product = max( double(-1), dot_product ) ;
+
+		double dist1 = acos( dot_product ) ;
+
+		//TOFIX with weight and time R
+		match = (dist0 + dist1)/2;
+	}
+	//if end atom
+	else 
+	{
+
+		M3DQuadEndPrimitive* endAtom = dynamic_cast<M3DQuadEndPrimitive*>(atom);
+
+		//middle spoke end position
+		Vector3D midSpokeEnd = endAtom->getX()+endAtom->getYEnd();
+		//other two spoke ends
+		Vector3D SpokeEnd0 = endAtom->getX()+endAtom->getY0();
+		Vector3D SpokeEnd1 = endAtom->getX()+endAtom->getY1();
+		//get_graddistance???sign???
+		//gradient of distancemap at three spoke ends
+		Vector3D grad0 = binaryDistanceMap->getGradDistance(SpokeEnd0);grad0.normalize();
+		Vector3D grad1 = binaryDistanceMap->getGradDistance(SpokeEnd1);grad1.normalize();
+		Vector3D gradMid = binaryDistanceMap->getGradDistance(midSpokeEnd);gradMid.normalize();
+
+		//TOCHECK
+		//time r_init
+
+		double dot_product ; 
+
+		dot_product = min( double(1), endAtom->getU0()*grad0 ) ;
+		dot_product = max( double(-1), dot_product ) ;
+
+		double dist0 = acos( dot_product ) ;
+
+		dot_product = min( double(1), endAtom->getU1()*grad1 ) ;
+		dot_product = max( double(-1), dot_product ) ;
+
+		double dist1 = acos( dot_product ) ;
+
+		dot_product = min( double(1), endAtom->getB()*gradMid ) ;
+		dot_product = max( double(-1), dot_product ) ;
+
+		double distMid = acos( dot_product ) ;
+
+		//TOFIX with weight
+		match = (dist0 + dist1 + distMid * endMidWeight)/( 2 + endMidWeight );
+	}
+
+	return match;
+
+}
+
+//Xiaojie:
+//in Figure Stage
+//computeBinaryImagePlaneOrienMatchAtEnd:
+//To minimize the difference between the end atom spoke plane orientation and the plane orientations implied by the principal direction with larger principal 
+//(using the the level surface of ddm the spoke end is on as the binary image) 
+
+double Match::computeFigureBinaryImagePlaneOrienMatchAtEnd(M3DObject * targetObject, int figureId)
+{
+	M3DFigure * figure;
+
+	if (figureId < 0 || targetImage == NULL || binaryDistanceMap == NULL)
+		return WORST_MATCH;
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	double numPoints = 0;
+
+	double match	= 0.0;
+
+	//TOFIX
+	//should take care link atom case
+	for (int atomId = 0; atomId != figure->getPrimitiveCount(); atomId++){
+
+		M3DPrimitive * atom;
+	    atom = figure->getPrimitivePtr(atomId);
+		if(atom->type() == M3D_END_PRIMITIVE)
+			numPoints++;
+
+		//TOCHECK
+		//use the BpAtomImagePlaneOrienAtEnd indirectly
+		match += computeAtomBinaryImagePlaneOrienMatchAtEnd(targetObject, figureId, atomId );
+
+	}
+
+	match /= numPoints;
+
+	return match;
+
+}
+//Xiaojie:
+//in Atom Stage
+//computeAtomBinaryImagePlaneOrienMatchAtEnd:
+//To minimize the difference between the end atom spoke plane orientation and the plane orientations implied by the principal direction with larger principal 
+//(using the the level surface of ddm the spoke end is on as the binary image) 
+
+double Match::computeAtomBinaryImagePlaneOrienMatchAtEnd(M3DObject * targetObject, int figureId, int atomId)
+{
+	M3DFigure * figure;
+
+	if (figureId < 0 || targetImage == NULL || binaryDistanceMap == NULL)
+		return WORST_MATCH;
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	//atom
+	M3DPrimitive * atom;
+	atom = figure->getPrimitivePtr(atomId);
+
+	double match = 0;
+	//TOFIX:should take care of the hinge atom case
+	//if not end atom
+	//TOCHECK
+	if(atom->type()==M3D_STANDARD_PRIMITIVE)
+		return 0;
+	//if end atom
+	else 
+	{
+
+		//M3DQuadEndPrimitive * endAtom;
+		//endAtom = atom;
+
+		M3DQuadEndPrimitive* endAtom = dynamic_cast<M3DQuadEndPrimitive*>(atom);
+
+		//p1_spoke, p2_spoke
+		Vector3D p1_spoke = endAtom->getN();
+		Vector3D p2_spoke = endAtom->getBPerp();
+
+		////DEBUG
+		//cout<<"zhaoxN*B:"<<endAtom->getB()*endAtom->getN()<<endl;
+		//cout<<"zhaoxN*Bperb:"<<endAtom->getBPerp()*endAtom->getN()<<endl;
+		//cout<<"zhaoxB*Bperb:"<<endAtom->getBPerp()*endAtom->getB()<<endl;
+
+
+		//TOFIX M3DEndPrimitive abstract??
+		//middle spoke end position
+		Vector3D midSpokeEnd = endAtom->getX()+endAtom->getYEnd();
+
+		//p1_dist
+		Vector3D p1_dist = binaryDistanceMap->getCurvature(midSpokeEnd).p1;
+		Vector3D p2_dist = binaryDistanceMap->getCurvature(midSpokeEnd).p2;
+
+		////DEBUG
+		//cout<<atomId<<endl;
+		//cout<<midSpokeEnd.getX()<<" "<<midSpokeEnd.getY()<<" "<<midSpokeEnd.getZ()<<endl;
+		//   //kappa1_dist
+		//double kappa1_dist = binaryDistanceMap->getCurvature(midSpokeEnd).kappa1;
+		//double kappa2_dist = binaryDistanceMap->getCurvature(midSpokeEnd).kappa2;
+
+
+		//cout<<"kappa1_dist:"<<kappa1_dist<<"kappa2_dist:"<<kappa2_dist<<endl;
+
+		p1_spoke.normalize() ;
+		p1_dist.normalize() ;
+
+		double dot_product = (p1_spoke * p1_dist) ;
+
+		if(dot_product > 1.0)
+			dot_product = 1.0 ;
+		if(dot_product < -1.0)
+			dot_product = -1.0 ;
+
+		// ----------------  debugging  ---------------------------
+
+		//cout << "p1_spoke: " << p1_spoke.norm() ; 
+		//cout << " p1_dist: " << p1_dist.norm() ; 
+		//cout << " dot product: " << dot_product <<endl;
+
+		// ----------------  debugging  ---------------------------
+
+
+
+		//DEBUG
+		//cout<<"fabs(p1_spoke * p1_dist)"<<fabs(p1_spoke * p1_dist)<<endl;
+		//cout<<"acos(fabs(p1_spoke * p1_dist))"<<acos(dot_product)<<endl;
+
+        //cout<<"dot product"<< dot_product <<endl;
+
+		match = acos(dot_product);
+        
+	}
+
+	return match;
+
+}
+
+//Xiaojie:
+//Figure stage
+//computeBinaryVertexMatch:
+//To minimize the difference between the middle spoke end of the end atom and crest point of the image 
+//(using the the level surface of ddm the spoke end is on as the binary image) 
+double Match::computeFigureBinaryImageVertexMatch(M3DObject * targetObject, int figureId)
+{
+	M3DFigure * figure;
+
+	if (figureId < 0 || targetImage == NULL || binaryDistanceMap == NULL)
+		return WORST_MATCH;
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	double match	= 0.0;
+
+	double numPoints = 0;
+
+	//TOFIX
+	//should take care link atom case
+	for (int atomId = 0; atomId != figure->getPrimitiveCount(); atomId++){
+
+		M3DPrimitive * atom;
+	    atom = figure->getPrimitivePtr(atomId);
+		if(atom->type() == M3D_END_PRIMITIVE)
+			numPoints++;
+
+		//TOCHECK
+		//use the BpAtomImageVertexMatch indirectly
+		match += computeAtomBinaryImageVertexMatch(targetObject, figureId,atomId );
+
+	}
+
+	match /= numPoints;
+
+	return match;
+
+}
+//Xiaojie:
+//Atom stage
+//computeBinaryVertexMatch:
+//To minimize the difference between the middle spoke end of the end atom and crest point of the image 
+//(using the the level surface of ddm the spoke end is on as the binary image) 
+
+double Match::computeAtomBinaryImageVertexMatch(M3DObject * targetObject, int figureId, int atomId)
+{
+	M3DFigure * figure;
+
+	if (figureId < 0 || targetImage == NULL || binaryDistanceMap == NULL)
+		return WORST_MATCH;
+
+	figure = targetObject->getFigurePtr(figureId);
+
+	//atom
+	M3DPrimitive * atom;
+	atom = figure->getPrimitivePtr(atomId);
+
+	double match = 0;
+
+	//TOFIX:should take care of the hinge atom case
+	//if not end atom
+	//TOCHECK
+	if(atom->type()==M3D_STANDARD_PRIMITIVE)
+		return 0;
+	//if end atom
+	else 
+	{
+		M3DQuadEndPrimitive* endAtom = dynamic_cast<M3DQuadEndPrimitive*>(atom);
+		//p1_spoke, p2_spoke
+		Vector3D p1_spoke = endAtom->getN();
+		Vector3D p2_spoke = endAtom->getBPerp();
+
+		//TOFIX M3DEndPrimitive abstract??
+		//middle spoke end position
+		Vector3D midSpokeEnd = endAtom->getX()+endAtom->getYEnd();
+
+		//p1_dist
+		Vector3D p1_dist = binaryDistanceMap->getCurvature(midSpokeEnd).p1;
+		Vector3D p2_dist = binaryDistanceMap->getCurvature(midSpokeEnd).p2;
+
+		//gradient of kappa1 at middle spoke end
+		Vector3D grad_kappa1, grad_kappa2;
+		binaryDistanceMap->getGradCurvature(midSpokeEnd, grad_kappa1, grad_kappa2);
+
+		grad_kappa1.normalize() ;
+		p1_spoke.normalize() ;
+
+		//TOCHECK
+		//fabs?p1_spoke,p1_dist
+
+		match = fabs( p1_spoke * grad_kappa1 );
+	}
+
+	return match;
+
+}
+
+// dibyendu
+
+double Match::computeFigureRadiusMatch( M3DObject* targetObject, int figureId ) 
+{
+	if (figureId < 0 || targetImage == NULL || binaryDistanceMap == NULL)
+		return WORST_MATCH;
+
+	double match = 0.0 ;
+
+	M3DFigure * figure = targetObject->getFigurePtr(figureId);
+	
+	for (int atomId = 0; atomId != figure->getPrimitiveCount(); atomId++){
+
+		match += computeAtomRadiusMatch(targetObject, figureId, atomId );
+
+	}
+
+	match /= figure->getPrimitiveCount();
+
+	return match ;
+}
+
+// dibyendu
+
+double Match::computeAtomRadiusMatch( M3DObject* targetObject, int figureId, int atomId ) 
+{
+	if ( figureId < 0 || atomId <0 || targetImage == NULL || binaryDistanceMap == NULL )
+		return WORST_MATCH;
+
+	double match = 0.0 ;
+
+	double r0 = 0.0 , r1 = 0.0 ;
+
+	// get figure
+
+	M3DFigure * figure = targetObject->getFigurePtr( figureId ) ;
+
+	// get atom
+
+	M3DPrimitive * atom = figure->getPrimitivePtr( atomId ) ;
+
+	// pointers to store the actual derived class objects
+
+	M3DQuadPrimitive * quadAtom = NULL ;
+
+	M3DQuadEndPrimitive * quadEndAtom = NULL ;
+
+	// dynamic cast depending on atom type
+
+	switch( atom->type() ) {
+
+		case M3D_STANDARD_PRIMITIVE:	
+
+			quadAtom = dynamic_cast <M3DQuadPrimitive*>( atom );
+
+			r0 = quadAtom->getR0() ;
+			r1 = quadAtom->getR1() ;
+
+			break ;
+
+		case M3D_END_PRIMITIVE:
+
+			quadEndAtom = dynamic_cast <M3DQuadEndPrimitive*>( atom );
+
+			r0 = quadEndAtom->getR0() ;
+			r1 = quadEndAtom->getR1() ;
+
+			break ;
+	}
+
+	match = fabs( ( r0 - r1 ) / sqrt( r0 * r1 ) ) ;
+
+	return match ;
+}
+
+#endif	/* BINARY */
+
+#ifndef BINARY
+
+// Penalty computation of similarity transformation of full model
+double Match::computeModelPenalty(const SimilarityTransform3D & newTransformation)
+{
+	int figureCount;
+	int numSurfacePoints;
+	int i, j;
+
+	double x, y, z;
+
+	Bpoint * surfacePointPtr;
+	double penalty;
+
+	Vector3D coord,
+		newCoord;
+
+	SimilarityTransform3D transformation;
+
+
+	transformation = initialTransform;
+	transformation.multiplyBy(newTransformation);
+
+	figureCount = surfacePoints.size();
+	penalty = 0.0;
+	numSurfacePoints = 0;
+	for(i = 0; i < figureCount; i++)
+	{
+		surfacePointPtr = surfacePoints[i].points;
+		for(j = 0; j < surfacePoints[i].numPoints; j++)
+		{
+			x = (surfacePointPtr->pnt[0]);
+			y = (surfacePointPtr->pnt[1]);
+			z = (surfacePointPtr->pnt[2]);
+			surfacePointPtr++;
+
+			coord.set((double) x, (double) y, (double) z);
+			newCoord = coord;
+
+			transformation.transformVector(newCoord);
+
+			penalty += (newCoord - coord) * (newCoord - coord);
+		}
+
+		numSurfacePoints += surfacePoints[i].numPoints;
+	}
+
+	penalty = penalty / (double) numSurfacePoints;
+
+	return penalty;
+}
+/*
+// Penalty computation of similarity transform of object in multi-object case
+double Match::computeObjectPenalty(const SimilarityTransform3D & newTransformation,
+int treeIndex)
+{
+M3DFigureTreeNode * treeRoot;
+int figureId;
+int figureCount;
+int numSurfacePoints;
+int i;
+
+double x, y, z;
+
+Bpoint * surfacePointPtr;
+double penalty;
+
+Vector3D coord,
+newCoord;
+
+SimilarityTransform3D transformation;
+
+
+if(referenceObject == NULL)
+return FAILED;
+
+treeRoot = referenceObject->getFigureTreeRoot(treeIndex);
+if(treeRoot == NULL)
+return FAILED;
+
+figureId = treeRoot->getFigureId();
+figureCount = surfacePoints.size();
+
+if(figureId >= figureCount || figureId < 0)
+return FAILED;
+
+penalty = 0.0;
+numSurfacePoints = surfacePoints[figureId].numPoints;
+
+if(numSurfacePoints == 0)
+return 0.0;
+
+transformation = initialTransform;
+transformation.multiplyBy(newTransformation);
+
+surfacePointPtr = surfacePoints[figureId].points;
+for(i = 0; i < numSurfacePoints; i++)
+{
+x = (surfacePointPtr->pnt[0]);
+y = (surfacePointPtr->pnt[1]);
+z = (surfacePointPtr->pnt[2]);
+surfacePointPtr++;
+
+coord.set((double) x, (double) y, (double) z);
+newCoord = coord;
+
+transformation.transformVector(newCoord);
+
+penalty += (newCoord - coord) * (newCoord - coord);
+}
+
+penalty = penalty / (double) numSurfacePoints;
+
+return penalty;
+}
+*/
+// Penalty computation for main figure of object
+double Match::computeMainFigurePenalty(M3DObject * targetObject, int figureId)
+{
+	M3DFigure * figure;
+	int numSurfacePoints;
+	int j;
+
+	double x, y, z;
+
+	Xferlist * xferList;
+	Bpoint * surfacePointPtr;
+
+	double penalty;
+
+	Vector3D coord,
+		newCoord;
+
+
+	if(figureId >= surfacePoints.size())
+		return 0.0;
+
+	if(figureId < 0 || figureId >= surfacePoints.size())
+	{
+		printf("computePenalty - figure not saved in pointlists\n");
+		return FAILED;
+	}
+
+	figure = dynamic_cast<M3DQuadFigure*>( targetObject->getFigurePtr(figureId));
+	if(figure == NULL)
+	{
+		printf("computePenalty - figure == NULL.\n");
+		return FAILED;
+	}
+
+	xferList = convertM3DtoXfer(figure);
+	pList[figureId]->UpdateSubdivPointCloud(surface_level_for_match, xferList);
+
+	int numPoints;
+	Bpoint *surfacePointList2;
+	pList[figureId]->subdivboundaryinfo(&numPoints, &surfacePointList2);
+
+	penalty = 0.0;
+	numSurfacePoints = 0;
+	surfacePointPtr = surfacePoints[figureId].points;
+	for(j = 0; j < surfacePoints[figureId].numPoints; j++)
+	{
+		x = surfacePointPtr->pnt[0];
+		y = surfacePointPtr->pnt[1];
+		z = surfacePointPtr->pnt[2];
+
+		coord.set((double) x, (double) y, (double) z);
+
+		newCoord.setX(surfacePointList2[j].pnt[0]);
+		newCoord.setY(surfacePointList2[j].pnt[1]);
+		newCoord.setZ(surfacePointList2[j].pnt[2]);
+
+		penalty += (newCoord - coord) * (newCoord - coord);
+
+		surfacePointPtr++;
+	}
+
+	penalty = penalty / (double) surfacePoints[figureId].numPoints;
+
+	delete [] (xferList->atomlist);
+	delete xferList;
+
+	return penalty;
+}
+
+// Penalty computation for subfigure of object
+double Match::computeSubfigurePenalty(M3DObject * targetObject, int figureId)
+{
+	M3DFigure * figure;
+	Xferlist * xferList;    
+	SurfacePointList surfaceList;
+	int numPoints,
+		i;
+
+	Bpoint * savedPointsPtr;
+	Bpoint * targetPointsPtr;
+
+	double x1, y1, z1;
+	double x2, y2, z2;
+	double penalty;
+
+
+	if(figureId < 0 || figureId >= surfacePoints.size())
+	{
+		printf("computePenalty - figure not saved in pointlists\n");
+		return FAILED;
+	}
+
+	figure = targetObject->getFigurePtr(figureId);
+	if(figure == NULL)
+	{
+		printf("computePenalty - figure == NULL.\n");
+		return FAILED;
+	}
+
+	xferList = convertM3DtoXfer(figure);
+	pList[figureId]->UpdateSubdivPointCloud(surface_level_for_match, xferList);
+	pList[figureId]->subdivboundaryinfo(&numPoints, &targetPointsPtr);
+	surfaceList = surfacePoints[figureId];
+	if(surfaceList.numPoints != numPoints)
+	{
+		printf("computePenalty - number of surface points don't match.\n");
+		return FAILED;
+	}
+
+	savedPointsPtr = surfaceList.points;
+	penalty = 0.0;
+	for(i = 0; i < numPoints; i++)
+	{
+		x1 = savedPointsPtr->pnt[0];
+		y1 = savedPointsPtr->pnt[1];
+		z1 = savedPointsPtr->pnt[2];
+		savedPointsPtr++;
+
+		x2 = (targetPointsPtr->pnt[0]);
+		y2 = (targetPointsPtr->pnt[1]);
+		z2 = (targetPointsPtr->pnt[2]);
+		targetPointsPtr++;
+
+		penalty += (x2 - x1) * (x2 - x1) +
+			(y2 - y1) * (y2 - y1) +
+			(z2 - z1) * (z2 - z1);
+	}
+
+	if(numPoints != 0)
+		penalty /= (double) numPoints;
+
+	delete [] (xferList->atomlist);
+	delete xferList;
+
+	return penalty;
+}
+
+
+// Classic atom penalty computation
+
+// For an atom, the penalty is computed as the sum of the squares of the distances
+// from the position predicted by each of the atom's neighbors to the proposed
+// position of the atom.  Minimum penalty is attained if the atom moves to the
+// average of the predicted positions of the atom's neighbors.
+double Match::computeAtomPenalty(const M3DObject & targetObject,int figureId,
+								 int atomId, double neighborPenaltyWeight)
+{
+	M3DQuadFigure * targetFigure;
+	M3DQuadFigure * referenceFigure;
+	M3DQuadPrimitive referencePredictor;
+	M3DQuadPrimitive newPredictor;
+	M3DQuadPrimitive newPrimitive;
+	M3DQuadPrimitive referencePrimitive;
+	M3DQuadPrimitive PredictedPrimitive;
+	M3DQuadPrimitive averagePrimitive;
+	int i,j;
+	double penalty;
+	double penalty1, penalty2;
+	double numOfPred;
+	Xferlist * xferList;
+	Xferlist * xferList2;
+	Xferlist * xferList3;
+	int row, column;
+
+	// Interpolation doesn't work below level 2
+	int level = 3;
+
+	targetFigure = dynamic_cast<M3DQuadFigure*>( targetObject.getFigurePtr(figureId));
+	referenceFigure = dynamic_cast<M3DQuadFigure*>( referenceObject->getFigurePtr(figureId));
+	if( typeid(*targetObject.getFigurePtr(figureId)) == typeid(M3DTubeFigure) ) {
+		// FIXME:
+		//	cout << "computeAtomPenalty() only works for quads.\n";
+		//	assert(false);
+		//sRad penalty
+		M3DAtomPredictorTube atomPredictor;
+		penalty = TUBE_GREY_ATOM_SRAD_PENALTY_WEIGHT * atomPredictor.getFigureRSradPenalty(
+			targetObject.getFigurePtr(figureId), -1, PEL_BOTH, tuningWt(RSradPenaltyNorm), tuningWt(RSradPenaltyThreshold) );
+
+		penalty1 = TUBE_GREY_ATOM_MODEL_PENALTY_WEIGHT * targetObject.getFigurePtr(figureId)->dist2FromFigure(
+			referenceObject->getFigurePtr(figureId));
+
+		penalty2 = TUBE_GREY_ATOM_CURVINESS_PENALTY_WEIGHT*  targetObject.getFigurePtr(figureId)->curviness();
+#ifdef DEBUG_GREY_ATOM_TUBE
+		cout <<"srad:"<<penalty<<"   model:"<<penalty1<<"   curviness:"<<penalty2<<"\n";
+#endif
+
+		return (penalty+ penalty1 +penalty2);
+	}
+
+	penalty = 0;
+	numOfPred = 0;
+	xferList = convertM3DtoXfer(referenceFigure);
+	if (xferList == NULL) {
+		cout << "Error: NULL xferList in computePenalty\n";
+		return FAILED;
+	}
+	xferList2 = convertM3DtoXfer(targetFigure);
+	if (xferList2 == NULL) {
+		cout << "Error: NULL xferList(2) in computePenalty\n";
+		return FAILED;
+	}
+	xferList3 = NULL;
+
+	int figureCount = targetObject.getFigureCount();
+	int numRows = targetFigure->getRowCount();
+	int numColumns = targetFigure->getColumnCount();
+	targetFigure->figuralCoordinates(atomId, row, column);
+
+	pList[figureId]->UpdateSubdivBoundaryTiles(level, xferList);
+	pList[figureCount + figureId]->UpdateSubdivBoundaryTiles(level,
+		xferList2);
+
+	ThallCode::Plist_subdivcomp Pcomp;
+	Pcomp.init(pList[figureId]);
+
+	// penalty1 is the d/r distance between target and reference objects
+	// Stough: looking in comparemesh, it looks more like d^2/r.   Also, it seems to have 
+	// virtually no effect on the geometric deviation, because the creasing penalty
+	// dominates.  I'm changing the comparemesh to be (d/r)^2.
+	penalty1 = Pcomp.comparemesh(pList[figureCount + figureId], column, row);
+
+	// Now the neighbor penalty (penalty2)
+	M3DQuadFigure neighborFigure = (*targetFigure);
+	ThallCode::Plist_subdivcomp Pcomp2;
+	M3DPrimitive * ap;
+
+	penalty2 = 0.0;
+	int numNeighbors = 0;
+
+	referencePrimitive = *dynamic_cast<M3DQuadPrimitive*>(referenceFigure->getPrimitivePtr(atomId));
+	newPrimitive = *dynamic_cast<M3DQuadPrimitive*>(targetFigure->getPrimitivePtr(atomId));
+	for (i = -1; i <= 1; i = i + 2) {
+		if (((row + i) < 0) || ((row + i) >= numRows))
+			continue;
+		referencePredictor = *dynamic_cast<M3DQuadPrimitive*>(referenceFigure->getPrimitivePtr(row + i, column));
+		newPredictor = *dynamic_cast<M3DQuadPrimitive*>(targetFigure->getPrimitivePtr(row + i, column));
+		M3DPrimitiveCorrector::predictPrimitive(PredictedPrimitive,referencePredictor,
+			referencePrimitive, newPredictor);
+
+		ap = new M3DQuadPrimitive(PredictedPrimitive);
+		neighborFigure.setPrimitivePtr(row, column, ap);
+		if (xferList3) {
+			delete [] xferList3->atomlist;
+			delete xferList3;
+		}
+		xferList3 = convertM3DtoXfer(&neighborFigure);
+		if(xferList3 == NULL)
+		{
+			cout << "Error: xferList(3) in computePenalty\n";
+			return FAILED;
+		}
+
+		pList[figureId]->UpdateSubdivBoundaryTiles(level, xferList3);
+		Pcomp2.init(pList[figureId]);
+		penalty2 += Pcomp2.comparemesh(pList[figureId], column, row);
+
+		numNeighbors++;
+	}
+
+	for (j = -1; j <= 1; j = j + 2) {
+		if (((column + j) < 0) || ((column + j) >= numColumns))
+			continue;
+		referencePredictor = *dynamic_cast<M3DQuadPrimitive*>(referenceFigure->getPrimitivePtr(row, column + j));
+		newPredictor = *dynamic_cast<M3DQuadPrimitive*>(targetFigure->getPrimitivePtr(row, column + j));
+		M3DPrimitiveCorrector::predictPrimitive(PredictedPrimitive,referencePredictor,
+			referencePrimitive, newPredictor);
+
+		ap = new M3DQuadPrimitive(PredictedPrimitive);
+		neighborFigure.setPrimitivePtr(row, column, ap);
+		if (xferList3) {
+			delete [] xferList3->atomlist;
+			delete xferList3;
+		}
+		xferList3 = convertM3DtoXfer(&neighborFigure);
+		if(xferList3 == NULL)
+		{
+			cout << "Error: NULL xferList(3) in computePenalty\n";
+			return FAILED;
+		}
+
+		pList[figureId]->UpdateSubdivBoundaryTiles(level, xferList3);
+		Pcomp2.init(pList[figureCount + figureId]);
+		penalty2 += Pcomp2.comparemesh(pList[figureId], column, row);
+
+		numNeighbors++;
+	}
+
+	if(numNeighbors != 0)
+		penalty2 /= numNeighbors;
+
+	// Finally, penalty3 is the surface creasing (i.e., high curvature) penalty
+	double penalty3 = 0.0;
+	int count = 0;
+
+	int numPoints;
+	Bpoint * bPoints;
+	ThallCode::Tileneighbors * neighbors;
+	int index1, index2;
+	Vector3D p1, p2, v1, v2, norm1, norm2;
+
+	const static int MAX_NEIGHBOR_COUNT = 8;
+
+	pList[figureId]->UpdateSubdivPointCloud(surface_level_for_match, xferList2);
+
+	pList[figureId]->subdivboundaryinfo(&numPoints, &bPoints);
+	pList[figureId]->subdivvertexneighbors(&numNeighbors, &neighbors);
+	// qiong working
+	for(i = 0; i < numPoints; i++)
+	{
+		p1.set(bPoints[i].pnt);
+
+		index1 = neighbors[i][0];
+		index2 = neighbors[i][1];
+		if(index1 < 0 || index1>=numPoints || index2 < 0 || index2>=numPoints)//if(index1 < 0 || index2 < 0)
+		{
+			if(index1>=numPoints || index2>=numPoints)
+				cout << "Invalid vertex neighbor index " << index1 << "," << index2 \
+				<< " in Match::computeAtomPenalty(...)" << endl;
+			continue;
+		}   // 2003/07/07
+
+		p2.set(bPoints[index1].pnt);
+		v1 = p2 - p1;
+
+		p2.set(bPoints[index2].pnt);
+		v2 = p2 - p1;
+
+		norm1 = v1.cross(v2);
+		norm1.normalize();
+
+		v1 = v2;
+
+		for(j = 2; j < MAX_NEIGHBOR_COUNT; j++)
+		{
+			index2 = neighbors[i][j];
+
+			if(index2 < 0 || index2>=numPoints)
+			{
+				if(index2>=numPoints)
+					cout << "Invalid vertex neighbor index " << index2
+					<< " in Match::computeAtomPenalty(...)" << endl;
+				continue;
+			}   // 2003/07/07
+
+			p2.set(bPoints[index2].pnt);
+			v2 = p2 - p1;
+
+			norm2 = v1.cross(v2);
+			norm2.normalize();
+			penalty3 -= norm1 * norm2;
+
+
+			norm1 = norm2;
+			v1 = v2;
+
+			count++;
+		}
+	}
+
+	penalty = penalty1 * (1 - neighborPenaltyWeight) + 
+		penalty2 * neighborPenaltyWeight;
+
+	penalty += penalty3 * creasingPenaltyWeight;
+
+#ifdef DEBUG
+	cout << "Penalty1 = " << penalty1 << endl <<
+		"Penalty2 = " << penalty2 << endl <<
+		"Penalty3 = " << penalty3 << endl << 
+		"TOTAL = " << penalty << endl;
+#endif
+
+	delete [] (xferList->atomlist);
+	delete xferList;
+	delete [] (xferList2->atomlist);
+	delete xferList2;
+	delete [] (xferList3->atomlist);
+	delete xferList3; 
+
+	return penalty;
+} 
+
+// Compute the geometric constraint penalty for figure FigureID in targetObject.
+double Match::computeConstraintsPenalty(const M3DObject & targetObject,
+										int figureId, bool useInterpenetration)
+{
+	double penalty;
+	M3DFigure * targetFigure;
+	M3DFigure * referenceFigure;
+	bool validPoint;
+
+	int numInvalidPoints = 0;
+
+	referenceFigure = referenceObject->getFigurePtr(figureId);
+	targetFigure = targetObject.getFigurePtr(figureId);
+
+	using namespace ThallCode;
+
+	Xferlist * xferList = convertM3DtoXfer(targetFigure);
+	pList[figureId]->UpdateSubdivBoundaryTiles(CONSTRAINTS_RESOLUTION_BIAS +
+		constraints_surface_level, xferList);
+
+	delete [] (xferList->atomlist);
+	delete xferList;
+
+	penalty = 0.0;
+	if (constrainedPointLists[figureId] == NULL)
+		return penalty;		// This figure has no governors
+
+	double normalPenalty = 0.0,
+		penetrationPenalty = 0.0,
+		slidingPenalty = 0.0;
+	InterfiguralConstraints & governors = referenceFigure->inverseConstraints();
+	for (int j = 0; j < governors.size(); j++) {
+
+		int numConstrainedPoints;
+		double refDist, trgDist;
+		Vector3D targetPos, governorPos;
+		referencePoint * point;
+		double figuralPenalty;
+
+		int govId = governors.figure(j);
+		M3DFigure * govFigure = referenceObject->getFigurePtr(govId);
+
+		// Compute boundary points for the governor figure
+		xferList = convertM3DtoXfer(govFigure);
+
+		pList[govId]->UpdateSubdivBoundaryTiles(CONSTRAINTS_RESOLUTION_BIAS +
+			constraints_surface_level, xferList);
+
+		delete [] (xferList->atomlist);
+		delete xferList;
+
+		figuralPenalty = 0.0;
+		numConstrainedPoints = constrainedPointLists[figureId][govId].size();
+
+		for(int n = 0; n < numConstrainedPoints; n++)
+		{
+			// Distance of a point on the reference figure from the governor
+			point = &constrainedPointLists[figureId][govId][n];
+			refDist = point->distance;
+
+			Bpoint targetPoint, governorPoint;
+			validPoint = pList[figureId]->subdivBposition(&targetPoint,
+				point->u, point->v, point->t);
+			if(!validPoint)
+			{
+				numInvalidPoints++;
+				continue;
+			}
+
+			validPoint = pList[govId]->subdivBposition(&governorPoint,
+				point->pu, point->pv, point->pt);
+			if(!validPoint)
+			{
+				numInvalidPoints++;
+				continue;
+			}
+
+			targetPos.set(targetPoint.pnt);
+			Vector3D predPos;
+			Vector3D actualPos;
+			Vector3D normal;
+
+			predPos.set(governorPoint.pnt);
+			normal.set(governorPoint.norm);
+
+			predPos += (normal * governorPoint.rad * point->distance);
+
+			actualPos.set(targetPoint.pnt);
+
+			// Normal component of difference
+			Vector3D diff = predPos - actualPos;
+			double normalComponent = diff * normal;
+			double rSqr = governorPoint.rad * governorPoint.rad;
+			normalPenalty += (normalComponent * normalComponent) / rSqr;
+
+			// Tangential component of difference
+			diff = (diff - normalComponent * normal);
+			slidingPenalty += (diff * diff) / rSqr;
+
+			//bool inBounds;
+			trgDist = distanceMaps[govId]->getDistance(targetPos.getX(),
+				targetPos.getY(), targetPos.getZ()/*, inBounds*/);
+			double x = trgDist;
+			// Penetration penalty is exponential for negative distance
+			if(useInterpenetration && /*inBounds &&*/ x < 0.0)
+				penetrationPenalty += exp(x * x);
+		}
+		if (numConstrainedPoints - numInvalidPoints > 0)
+		{
+			normalPenalty /= (numConstrainedPoints - numInvalidPoints);
+			slidingPenalty /= (numConstrainedPoints - numInvalidPoints);
+		}
+
+		penalty += normalPenalty * normalPenaltyWeight +
+			penetrationPenalty * penetrationPenaltyWeight +
+			slidingPenalty * slidingPenaltyWeight;
+
+		if (numInvalidPoints)
+			cout << "Match::computeConstraintsPenalty() detected " << numInvalidPoints 
+			<< " out of " << numConstrainedPoints << " invalid points" << endl;
+	}
+
+#ifdef DEBUG
+	cout << "Geometric constraints penalty = " << penalty << endl;
+	cout << "Normal penalty = " << normalPenalty << endl;
+	cout << "Sliding penalty = " << slidingPenalty<< endl;
+	cout << "Penetration penalty = " << penetrationPenalty << endl << endl;
+#endif
+
+	return penalty;
+}
+
+#endif	/* BINARY */
+
+// This function computes a distance map for each governor used in computing
+//   the geometric constraints penalty.
+bool Match::initializeDistanceLists(M3DObject * object, int level)
+{
+	int figureId;
+	//	bool firstTime;
+	M3DFigure * figure;
+
+#ifdef DEBUG
+	cout << "Match::initializeDistanceLists() called" << endl;
+#endif
+	if (object == NULL)
+		return false;
+
+	if (level < 0) constraints_surface_level = 0;
+	else constraints_surface_level = level;
+
+	//	firstTime = true;
+	for (int i = 0; i < distanceMaps.size(); i++) {
+		if(distanceMaps[i] != NULL)
+			delete distanceMaps[i];
+		distanceMaps[i] = NULL;
+	}
+	distanceMaps.clear();
+
+	int num_figures = object->getFigureCount();
+	for (figureId = 0; figureId < num_figures; figureId++) {
+
+		figure = object->getFigurePtr(figureId);
+
+		InterfiguralConstraints & ifc = figure->constraints();
+		if (ifc.size() == 0) {
+			// Not a governor
+			distanceMaps.push_back(NULL);
+			continue;
+		}
+
+		// Create an object containing a copy of the governor
+		M3DObject * tmp_object = new M3DObject;
+		M3DFigure * tmp_figure = figure->assign();
+		tmp_object->addFigure(tmp_figure);
+
+		// Create a distance map from that object's boundary surface
+		DistanceMap3D * map;
+		BoundingBox bbox;
+		int mapSize[3];
+
+		// TOM: SET THE CUTOFF FOR THE DISTANCE MAP		AGG: Why set it to 2.0?
+		map = new DistanceMap3D;
+		map->defineBBox(tmp_object, bbox, mapSize,
+			CONSTRAINTS_RESOLUTION_BIAS + constraints_surface_level, 2.0); // HARDCODED
+		// AGG: if the cutoff could be given as a Euclidean distance, I could use
+		// the max distance stored in ifc, instead of 2.0*r.
+		map->initializeWithBBox(tmp_object, &bbox, mapSize,
+			CONSTRAINTS_RESOLUTION_BIAS + constraints_surface_level);
+		map->createMap(true);	// Produce an r-normalized map
+		const int * map_size_ptr = map->getMapSize();
+		if (map_size_ptr[0] <= 0) {
+			delete tmp_object;
+			cout << "map_size of 0!" << endl;
+			return false;
+		}
+		if (map->status() == false) {
+			delete tmp_object;
+			cout << "No distance map!" << endl;
+			return false;
+		}
+		else {
+			/*
+			if (firstTime) {
+			constraintsMapSize[0] = map_size_ptr[0];
+			constraintsMapSize[1] = map_size_ptr[1];
+			constraintsMapSize[2] = map_size_ptr[2];
+			firstTime = false;
+			}
+			else {
+			if (constraintsMapSize[0] != map_size_ptr[0] || constraintsMapSize[1] != map_size_ptr[1]
+			|| constraintsMapSize[2] != map_size_ptr[2])
+			cout << "Warning: distance maps are not commensurate!" << endl;
+			}
+			*/
+			distanceMaps.push_back(map);
+		}
+		delete tmp_object;
+	}
+	return true;
+}
+
+bool Match::updateDistanceList(M3DObject * object, int figureId) {
+	M3DFigure * figure;
+
+#ifdef DEBUG
+	cout << "Match::updateDistanceList() called" << endl;
+#endif
+	figure = object->getFigurePtr(figureId);
+
+	InterfiguralConstraints & ifc = figure->constraints();
+	if (ifc.size() == 0) {
+		// Not a governor
+		distanceMaps.push_back(NULL);
+		return true;
+	}
+
+	// Make sure we have enough distance maps
+	if(distanceMaps.size() <= figureId)
+		distanceMaps.resize(figureId + 1, NULL);
+
+	// Discard the old map
+	if(distanceMaps[figureId] != NULL)
+	{
+		delete distanceMaps[figureId];
+		distanceMaps[figureId] = NULL;
+	}
+
+	// Create an object containing a copy of the governor
+	M3DObject * tmp_object = new M3DObject;
+	M3DFigure * tmp_figure = figure->assign();
+	tmp_object->addFigure(tmp_figure);
+
+	// Create a distance map from that object's boundary surface
+	DistanceMap3D * map;
+	BoundingBox bbox;
+	int mapSize[3];
+
+	// TOM: SET THE CUTOFF FOR THE DISTANCE MAP		AGG: Why set it to 2.0?
+	map = new DistanceMap3D;
+	map->defineBBox(tmp_object, bbox, mapSize,
+		CONSTRAINTS_RESOLUTION_BIAS + constraints_surface_level, 2.0); // HARDCODED
+	// AGG: if the cutoff could be given as a Euclidean distance, I could use
+	// the max distance stored in ifc, instead of 2.0*r.
+	map->initializeWithBBox(tmp_object, &bbox, mapSize,
+		CONSTRAINTS_RESOLUTION_BIAS + constraints_surface_level);
+	map->createMap(true);	// Produce an r-normalized map
+	const int * map_size_ptr = map->getMapSize();
+	if (map_size_ptr[0] <= 0) {
+		delete tmp_object;
+		cout << "map_size of 0!" << endl;
+		return false;
+	}
+	if (map->status() == false) {
+		delete tmp_object;
+		cout << "No distance map!" << endl;
+		return false;
+	}
+
+	// Store the new map
+	distanceMaps[figureId] = map;
+
+	delete tmp_object;
+	return true;
+}
+
+// This function computes a list of points on the figural surface used in
+//   computing the geometric constraints penalty.  Member function
+//   initializeDistanceLists() must be called before using this function.
+bool Match::initializeConstraintPointsLists(M3DObject * object, bool calcFiguralCoord)
+{
+	int figureId;
+	M3DFigure * figure;
+	int i, j;
+
+#ifdef DEBUG
+	cout << "Match::initializeConstraintPointsLists() called" << endl;
+#endif
+	if (object == NULL)
+		return false;
+
+	int num_figures = object->getFigureCount();
+
+	//    if (constrainedPointLists == NULL) {
+	//    if (num_figures != numPointLists) {
+	if (constrainedPointLists != NULL) {
+		for (i = 0; i < numPointLists; i++) {
+			if (constrainedPointLists[i] != NULL) {
+				for (int j = 0; j < numPointLists; j++)
+					constrainedPointLists[i][j].clear();        // AGG: needed?
+			}
+			delete [] constrainedPointLists[i];
+		}
+		delete [] constrainedPointLists;
+	}
+
+	constrainedPointLists = new std::vector<referencePoint> *[num_figures];
+	numPointLists = num_figures;
+	for (figureId = 0; figureId < num_figures; figureId++)
+		constrainedPointLists[figureId] =
+		new std::vector<referencePoint> [num_figures];
+	//	}
+	//	else {
+	//		for (figureId = 0; figureId < numPointLists; figureId++) {
+	//			if (constrainedPointLists[figureId] != NULL) {
+	//				for (i = 0; i < numPointLists; i++)
+	//					constrainedPointLists[figureId][i].clear();
+	//			}
+	//		}
+	//	}
+
+	for (figureId = 0; figureId < num_figures; figureId++) {
+
+		figure = object->getFigurePtr(figureId);
+
+		InterfiguralConstraints & governors = figure->inverseConstraints();
+#ifdef DEBUG
+		cout << "Figure " << figureId << " has " << governors.size() << " governors\n";
+#endif
+		if (governors.size() == 0)
+			continue;	// This figure is not governed
+
+		using namespace ThallCode;
+
+		int numBPoints, govId;
+		Bpoint * bpoints;
+
+		// Compute boundary points for the governed figure.
+		// A dense point cloud is not used - just verticies of tiles.
+		Xferlist * xferList = convertM3DtoXfer(figure);
+
+		pList[figureId]->UpdateSubdivPointCloud(CONSTRAINTS_RESOLUTION_BIAS +
+			constraints_surface_level, xferList);
+		pList[figureId]->subdivboundaryinfo(&numBPoints, &bpoints);
+
+#ifdef DEBUG
+		cout << "Figure " << figureId << " has " << numBPoints
+			<< " boundary points." << endl;
+#endif
+
+		// Create a list per governor of distances from boundary points on the
+		// governed figure to the governor, that are inside the cut-off distance.
+		// These distances are the reference distances in computeConstraintsPenalty().
+		if (constrainedPointLists[figureId] == NULL)
+			constrainedPointLists[figureId] =
+			new std::vector<referencePoint>[numPointLists];
+		for (j = 0; j < governors.size(); j++) {
+			govId = governors.figure(j);
+
+			M3DFigure * govFigure = object->getFigurePtr(govId);
+
+			// Compute boundary points for the governor figure
+			Xferlist * xferList2 = convertM3DtoXfer(govFigure);
+
+			pList[govId]->UpdateSubdivBoundaryTiles(CONSTRAINTS_RESOLUTION_BIAS
+				+ constraints_surface_level, xferList2);
+
+			delete [] (xferList2->atomlist);
+			delete xferList2;
+
+			for (i = 0; i < numBPoints; i++) {
+				double x = bpoints[i].pnt[0];
+				double y = bpoints[i].pnt[1];
+				double z = bpoints[i].pnt[2];
+
+				Vector3D pos(x, y, z);
+
+				// For each boundary point that is close enough, store its distance to
+				// the governor and the u,v,t coordinates of the boundary point.
+				referencePoint point;
+				FiguralCoordinate figuralCoord;
+				bool inBounds;
+				double distance =
+					distanceMaps[govId]->getDistance(x, y, z, inBounds);
+				if (inBounds && distance < governors.distance(j)) {
+					point.u = bpoints[i].u;
+					point.v = bpoints[i].v;
+					point.t = bpoints[i].t;
+					if(calcFiguralCoord)
+					{
+						if (! distanceMaps[govId]->figuralCoordinates(figuralCoord, pos))
+							cout << "Bad figural coordinate\n";
+						point.pu = figuralCoord.u;
+						point.pv = figuralCoord.v;
+						point.pt = figuralCoord.t;
+
+						Bpoint governorPoint;
+
+						pList[govId]->subdivBposition(&governorPoint, point.pu,
+							point.pv, point.pt);
+
+						Vector3D govPos(governorPoint.pnt);
+
+						point.distance = (pos - govPos).norm()/governorPoint.rad;
+					}
+					constrainedPointLists[figureId][govId].push_back(point);
+				}
+			}
+		}
+		delete [] (xferList->atomlist);
+		delete xferList;
+#ifdef DEBUG
+		for (j = 0; j < governors.size(); j++) {
+			govId = governors.figure(j);
+			if (constrainedPointLists[figureId][govId].size() > 0)
+				cout << "Governor " << govId << " affects " <<
+				constrainedPointLists[figureId][govId].size()
+				<< " points of figure " << figureId << endl;
+		}
+#endif
+	}
+#ifdef DEBUG
+	for (i = 0; i < num_figures; i++) {
+		if (constrainedPointLists[i] != NULL)
+			for (int j = 0; j < num_figures; j++) {
+				if (constrainedPointLists[i][j].size() > 0)
+					cout << "constrainedPointLists(" << i << ", " << j << ") has " <<
+					constrainedPointLists[i][j].size() << " bpoints" << endl;
+			}
+	}
+#endif
+	return true;
+}
+
+void Match::testSeurat(M3DFigure * figure, int surf_level) const {
+
+	using namespace ThallCode;
+
+	Pointlist_server2 pL;
+	int numBPoints;
+	Bpoint * bpoints;
+	Bpoint bp;
+
+	Xferlist * xferList = convertM3DtoXfer(figure);
+	pL.init(xferList);
+	pL.ComputeSubdivBoundaryTiles(surf_level);
+	pL.subdivtileinfo(&numBPoints, &bpoints);
+
+	int count = 0;
+	cout << "numBPoints = " << numBPoints << endl;
+	for (int i = 0; i < numBPoints; i++) {
+		if (! pL.subdivBposition(&bp, bpoints[i].u, bpoints[i].v, bpoints[i].t)) {
+			bpoints[i].print();
+			cout << "^^^^^ Invalid ^^^^^" << endl;
+			count++;
+		}
+	}
+
+	Pointlist_server2 pList2;
+	int numBPoints2;
+	Bpoint * bpoints2;
+
+	pList2.init(xferList);
+	pList2.ComputeSubdivBoundaryTiles(surf_level);
+	pList2.subdivtileinfo(&numBPoints2, &bpoints2);
+
+	if (numBPoints != numBPoints2) {
+		if (count)
+			cout << "Pointlist contained " << count << " invalid results." << endl;
+		cout << "Pointlist computation is indeterminate: bpoints received = "
+			<< numBPoints << " and " << numBPoints2 << endl;
+	}
+	else {
+		int match = 0;
+		for (int i = 0; i < numBPoints; i++) {
+			if (bpoints[i].u != bpoints2[i].u && bpoints[i].v != bpoints2[i].v
+				&& bpoints[i].t != bpoints2[i].t && bpoints[i].pnt[0] != bpoints2[i].pnt[0]
+			&& bpoints[i].pnt[1] != bpoints2[i].pnt[1] && bpoints[i].pnt[2] != bpoints2[i].pnt[2]
+			&& bpoints[i].rad != bpoints2[i].rad && bpoints[i].norm[0] != bpoints2[i].norm[0]
+			&& bpoints[i].norm[1] != bpoints2[i].norm[1] && bpoints[i].norm[2] != bpoints2[i].norm[2])
+				match++;
+		}
+		if (match)
+			cout << "Identically computed Pointlists yielded " << match
+			<< " different Bpoints." << endl;
+		else {
+			if (count)
+				cout << "Pointlist contained " << count << " invalid results." << endl;
+			else
+				cout << "Passed." << endl;
+		}
+	}
+
+	delete [] (xferList->atomlist);
+	delete xferList;
+}
+
+#ifdef BINARY
+
+// Return sum(squared thickness) that penetrates inside image
+double Match::computeInterpenetrationPenalty(M3DObject * targetObject, int figureId) {
+	GreyValue mask = (GreyValue) tuningWt(RepulsionMask);
+	if (mask == 0 || targetImage == NULL)
+		return 0.0; 
+	targetImage->pushImageIsStacked(true, mask);
+
+	double penalty = 0;
+	int numPoints;
+	Bpoint * surfacePointList;
+	pList[figureId]->subdivboundaryinfo(&numPoints, &surfacePointList);
+
+	for (int i = 0; i < numPoints; i++) {
+		Vector3D v(surfacePointList[i].norm);
+		v.normalize();
+
+		// Find thickness of object inside model: walk back
+		// towards medial sheet integrating image intensities
+		// until outside of object is found
+		Vector3D boundary(surfacePointList[i].pnt);
+		targetImage->modelToImageCoordinates(boundary);
+		double x = boundary.getX();
+		double y = boundary.getY();
+		double z = boundary.getZ();
+		double localPenalty = 0;
+		double interpolatedValue = 0;
+		while ((interpolatedValue = targetImage->getInterpolatedVoxelValue(x, y, z)) != 0) {
+			// TODO: design penalty function
+			localPenalty += interpolatedValue;
+
+			// Probably need other bounds checks here
+			// Are we out of the image?
+			// Have we gotten back to the medial sheet of the object?
+			x -= v.getX();
+			y -= v.getY();
+			z -= v.getZ();
+		}
+		penalty += (localPenalty * localPenalty);
+	}
+	//use an average value so that the same weights can be used
+	//on different shapes and at different subdiv levels
+	penalty /= numPoints; 
+
+	targetImage->popImageIsStacked();
+	return penalty;	
+}
+
+#endif
+
+

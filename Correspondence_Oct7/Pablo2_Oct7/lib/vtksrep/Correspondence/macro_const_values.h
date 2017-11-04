@@ -1,0 +1,12 @@
+#ifndef MACRO_CONST_VALUES_H
+#define MACRO_CONST_VALUES_H
+
+
+
+
+
+
+
+
+
+#endif // MACRO_CONST_VALUES_H

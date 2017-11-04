@@ -1,0 +1,14 @@
+function val = get(srepQuadPrim, propName)
+
+switch propName
+    case 'pos'
+        val = [srepQuadPrim.pos];
+    case 'r'
+        val = [srepQuadPrim.r];
+    case 'U'
+        val = [srepQuadPrim.U];
+    case 'inTangentSpace'
+        val = [srepQuadPrim.inTangentSpace];
+    otherwise
+        error([propName,' Is not a valid SrepQuadPrimitive property'])
+end

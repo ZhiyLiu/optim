@@ -1,0 +1,32 @@
+
+        Instructions for Editing the *.fl Files of Pablo
+
+
+To minimize the number of changes when successive versions of the fluid
+control files in Pablo are saved in CVS, please save the files with all
+items except the first (outermost) one in the widget browser closed;
+that is, have no black arrows pointing down, except on the top line of
+the fluid display.  The top item displayed by fluid should also be
+selected.
+
+In P3DUserInterface.fl, the displayControlWindow and preferencesEditorWindow
+contain tabs.  The .fl file should be saved so the left-most tab in these is
+upper-most, contrary to fluid's natural inclination.  This can be achieved
+as follows:
+    1. Open the make_DisplayControl(...) and make_PreferencesEditor(...)
+        function definitions by selecting the black arrows next to them.
+    2. Double-click the two movable_Fl_Window definitions.  The windows
+        will appear.
+    3. Close the definitions of make_DisplayControl(...) and
+        make_PreferencesEditor(...) by again selecting the black arrows,
+        which now point down.
+    4. On the Display Control window, select the General tab.
+    5. On the Preferences Editor window, select the Display tab.
+    6. In the fluid window, click on the top line, "class P#DUserInterface".
+    7. Destroy the Preferences Editor and Display Control windows by
+        clicking the X in their upper right corners.
+    8. In fluid, select File/Write Code, File/Save and File/Quit.
+
+Please perform this sequence every time the fluid files are to be checked
+into CVS.
+

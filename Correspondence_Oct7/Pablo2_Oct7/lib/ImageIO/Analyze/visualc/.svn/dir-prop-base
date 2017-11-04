@@ -1,0 +1,10 @@
+K 10
+svn:ignore
+V 126
+Debug
+Release
+ioAnalyze___Win32_Binary_Debug
+ioAnalyze___Win32_Binary_Pablo_External_Product
+ioAnalyze___Win32_Binary_Release
+
+END

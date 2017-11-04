@@ -1,0 +1,13 @@
+SET ( LIBRARY_NAME vtkpowercrust)
+
+OPTION ( BUILD_${LIBRARY_NAME}  "Build ${LIBRARY_NAME} library ?" ON)
+
+IF ( BUILD_${LIBRARY_NAME} )
+
+  FILE(GLOB ${LIBRARY_NAME}_HEADERS "*.h" "*.txx")
+
+  FILE(GLOB ${LIBRARY_NAME}_SOURCES *.cxx *.cpp *.cc)
+
+  CREA_ADD_LIBRARY( ${LIBRARY_NAME} )
+
+ENDIF ( BUILD_${LIBRARY_NAME} )

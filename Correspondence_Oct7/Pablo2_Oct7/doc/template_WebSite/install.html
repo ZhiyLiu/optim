@@ -1,0 +1,869 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>User Project Documentation</title>
+</head>
+<body>
+<div style="text-align: center;"><big> build instructions</big><br>
+<div style="text-align: left;">
+<ol id="mozToc">
+<!--mozToc h1 1 h2 2 h3 3 h4 4 h5 5 h6 6-->
+  <li><a href="#mozTocId820435">Linux</a>
+    <ol>
+      <li><a href="#mozTocId745245">Requirements</a></li>
+      <li><a href="#mozTocId775505">Known working configurations</a></li>
+      <li><a href="#mozTocId410988">Install from sources</a></li>
+    </ol>
+  </li>
+  <li><a href="#mozTocId777026">Windows </a>
+    <ol>
+      <li><a href="#mozTocId761363">Requirements</a></li>
+      <li><a href="#mozTocId681503">Known working configurations</a></li>
+      <li><a href="#mozTocId618885">Steps </a></li>
+    </ol>
+  </li>
+  <li><a href="#mozTocId915759">CMake build options</a></li>
+</ol>
+<hr style="width: 100%; height: 2px;"></div>
+</div>
+<h1><a class="mozTocH2" name="mozTocId820435"></a><big><big><big><small><small><span
+ style="font-weight: normal;">Linux</span></small></small></big></big></big></h1>
+<h2><a class="mozTocH3" name="mozTocId745245"></a><big><big><big><small><small><span
+ style="font-weight: normal;">Requirements</span></small></small></big></big></big></h2>
+<ul>
+  <li><span style="font-weight: normal;">cmake &gt;= 2.4.6</span></li>
+  <li>crea &gt;= 0.2.0<br>
+    <span style="font-weight: normal;"></span></li>
+  <li><span style="font-weight: normal;">wxWidgets&nbsp; &gt;= &nbsp;
+2.6.3</span><span style="font-weight: normal;">&nbsp;</span></li>
+  <li><span style="font-weight: normal;">optional : <br>
+    </span></li>
+  <ul>
+    <li><span style="font-weight: normal;">L<sub>a</sub>T<sub>e</sub>X
+to generate the pdf guides</span><br>
+      <span style="font-weight: normal;"></span></li>
+    <li><span style="font-weight: normal;">tth to generate the html
+guides<br>
+      </span></li>
+    <li><span style="font-weight: normal;">itk to compile packages itk,
+itkvtk</span></li>
+    <li><span style="font-weight: normal;">vtk to compile package vtk,
+wxvtk</span></li>
+    <li><span style="font-weight: normal;">doxygen to build the sources
+documentation</span></li>
+    <li><span style="font-weight: normal;">graphviz/dot to generate the
+packages doc with pipeline graphs<br>
+      </span></li>
+    <ul>
+    </ul>
+  </ul>
+</ul>
+<big><big><big><small><small></small></small></big></big></big>
+<h2><a class="mozTocH3" name="mozTocId775505"></a><big><big><big><small><small><span
+ style="font-weight: normal;">Known working configurations</span></small></small></big></big></big></h2>
+<big><big><big><small><small><span style="font-weight: normal;">&nbsp;<small>
+- gcc: <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.3.0 (Fedora Core 9)<br>
+</small></span></small></small></big></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+4.2.0 (OpenSuse 10.3)<br style="font-weight: normal;">
+</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+4.1.2 20070925 (Red Hat 4.1.2-33)<br>
+</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.1.2
+20070626 (Red Hat 4.1.2-13)<br>
+</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4.1.1 20070105 (Red Hat 4.1.1-51)</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; 4.0.2 20051125 (Red Hat 4.0.2-8)</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;
+- cmake: </span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; 2.4-patch 6</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;">&nbsp;&nbsp;
+- wxGTK-devel: </span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;">&nbsp;</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2.8.6</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2.6.3</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;">&nbsp;</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;
+- InsightToolkit:</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; 3.4</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; 3.2</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; 2.8.1-5</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">&nbsp;&nbsp;
+- vtk:</span></small></small></big></big><small><br
+ style="font-weight: normal;">
+</small><big><big><small><small><span style="font-weight: normal;">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; 5.0.3-1</span></small></small></big></big><big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></big><br>
+<h2><a class="mozTocH3" name="mozTocId410988"></a><big><span
+ style="font-weight: normal;">Install from sources<span
+ style="font-weight: bold;"></span></span></big></h2>
+<span style="font-weight: normal;">&nbsp;&nbsp;&nbsp; Uncompress the
+archive or checkout the source from the cvs repository<br>
+&nbsp;&nbsp;&nbsp; In the parent folder of the bbtk sources type :<br>
+&nbsp;&nbsp;&nbsp; &gt; mkdir bbtkbin; cd bbtkbin<br>
+&nbsp;&nbsp;&nbsp; &gt; ccmake ../bbtk<br>
+&nbsp;&nbsp;&nbsp; <span style="font-style: italic;">Check the desired
+options. See </span><a style="font-style: italic;"
+ href="#mozTocId915759">CMake build options</a><span
+ style="font-style: italic;"> for a description. <br>
+<br>
+</span></span><span style="font-weight: normal;"><span
+ style="font-weight: bold;"><span style="color: rgb(204, 102, 0);">==&gt;
+IMPORTANT NOTE </span>:</span><br>
+<br>
+</span><span style="font-weight: normal;"><span
+ style="font-style: italic;"></span><span style="font-style: italic;">&nbsp;&nbsp;&nbsp;
+Type 'c' <span style="color: rgb(204, 102, 0);">many
+times</span> until no area is flagged with a '*' and three times more
+then type 'g', to generate.</span><br>
+&nbsp;&nbsp;&nbsp; &gt; make<br>
+&nbsp;&nbsp;&nbsp; &gt; sudo make install<br>
+&nbsp;&nbsp; Enjoy !<br>
+<br>
+</span>
+<h2><a class="mozTocH3" name="mozTocId410988"></a><big><span
+ style="font-weight: normal;">Uninstall<br>
+</span></big></h2>
+&nbsp;&nbsp;&nbsp; You can run <span style="font-style: italic;">bbtk-uninstall.sh</span>
+as root.<br>
+<span style="font-weight: bold;">&nbsp;&nbsp;&nbsp; WARNING : </span><br
+ style="font-weight: bold;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; This is a brute force **UNSAFE**
+uninstaller which removes all files and folders starting with 'bb' in :<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; INSTALL-PREFIX/bin <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; INSTALL-PREFIX/lib <br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; INSTALL-PREFIX/include<br>
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; INSTALL-PREFIX/share/bbtk<br>
+&nbsp;&nbsp;&nbsp; However it lists the files found and prompts you
+before proceeding...<br>
+<br>
+<br>
+<hr style="width: 100%; height: 2px;">
+<h1><a class="mozTocH2" name="mozTocId777026"></a><big><big><big><small><small><span
+ style="font-weight: normal;">Windows </span></small></small></big></big></big></h1>
+<big><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big></big>
+<h2><a class="mozTocH3" name="mozTocId761363"></a><big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></big><big><big><big><small><small><span
+ style="font-weight: normal;">Requirements</span></small></small></big></big></big></h2>
+<h3>Mandatory</h3>
+<ul>
+  <li><big><span style="font-weight: normal;"><small>.net V7</small> <small>to
+compile the kernel and the packages</small></span></big><br>
+    <big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big></li>
+  <li><big><big><small><small><span style="font-weight: normal;">CMake
+2.4 patch 6</span></small></small></big></big><big
+ style="font-weight: normal;"><big><big><small><small><small> to
+generate the project file for .net</small></small></small></big></big></big></li>
+  <li><big><big><small><small><span style="font-weight: normal;">wxWidgets-2.8.5&nbsp;
+to
+build graphical interface boxes</span></small></small></big></big></li>
+</ul>
+<h3><big><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big></big>Optional</h3>
+<ul>
+  <li><big><big><small><small><span style="font-weight: normal;">VTK
+5.0.3 source&nbsp; to build vtk boxes&nbsp;</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+  <li><big><big><small><small><span style="font-weight: normal;">InsightToolkit-3.4.0
+to build itk boxes</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+  <li><big><big><small><small><span style="font-weight: normal;">Miktex
+(TeX compiler
+and TeX-Pdf
+translation tool) to build documentations</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+  <li><big><big><small><small><span style="font-weight: normal;">TTH&nbsp;(TeX
+to HTML translation
+tool) to build html documentations</span></small></small></big></big></li>
+  <li><big><big><small><small><span style="font-weight: normal;">Doxygen
+to build the
+code documentations</span></small></small></big></big></li>
+  <li><big><big><small><small><span style="font-weight: normal;">Graphviz
+to generate the
+graphs in doxygen doc and black box pipelines graphs</span></small></small></big></big>&nbsp;
+    <br>
+  </li>
+</ul>
+<big><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big></big>
+<h2><a class="mozTocH2" name="mozTocId681503"></a><big><big><big><small><small><span
+ style="font-weight: normal;">Known working configurations</span></small></small></big></big></big></h2>
+<ul style="font-weight: bold;">
+  <li><big><big><small><small><span style="font-weight: normal;">.net V7<br>
+    </span></small></small></big></big></li>
+  <li><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">cmake</span></small></small></big></big></li>
+  <ul>
+    <li><big><big><small><small><span style="font-weight: normal;">2.4
+patch 6</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+  </ul>
+  <li><big><big><small><small><span style="font-weight: normal;">wxWidgets</span></small></small></big></big></li>
+  <ul>
+    <li><big><big><small><small><span style="font-weight: normal;">2.8.5</span></small></small></big></big></li>
+  </ul>
+  <li><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">InsightToolkit</span></small></small></big></big></li>
+  <ul>
+    <li><big style="font-weight: normal;"><big><small><small><span
+ style="font-weight: normal;">3.4.0</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+  </ul>
+  <li><big><big><small><small><span style="font-weight: normal;">vtk</span></small></small></big></big></li>
+  <ul>
+    <li><big><big><small><small><span style="font-weight: normal;">5.0.3</span></small></small></big></big><small><span
+ style="font-weight: bold;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      </span></small><br>
+    </li>
+  </ul>
+</ul>
+<big><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big></big>
+<h2><a class="mozTocH2" name="mozTocId618885"></a><big><big><big><small><small><span
+ style="font-weight: normal;">Steps<br>
+</span></small></small></big></big></big></h2>
+<big><big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big></big>
+<big><big><small><small><span style="font-weight: normal;"></span></small></small></big></big>
+<ul>
+  <ul>
+    <li><big><big><small><small><span style="font-weight: normal;">Uncompress
+the sources in <span style="font-style: italic;">yourSourceDirectory</span>
+or checkout the source from the cvs&nbsp;</span></small></small></big></big><span
+ style="font-weight: normal;"></span></li>
+    <li><big><big><small><small><span style="font-weight: normal;">Create
+the build folder </span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"><span style="font-style: italic;">yourSourceDirectory</span>\bin</span></small></small></big></big><span
+ style="font-weight: normal;"></span></li>
+    <li><span style="font-weight: normal;">Drag and drop the file </span><big><big><small><small><span
+ style="font-weight: normal;"><span style="font-style: italic;">yourSourceDirectory</span></span></small></small></big></big><span
+ style="font-weight: normal;">\CMakeLists.txt on the CMakeSetup icon</span><big
+ style="font-weight: bold;"><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+    <ul>
+      <li><big style="font-weight: bold;"><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big><span
+ style="font-weight: normal;">Check the desired
+options for the build. See </span><a style="font-weight: normal;"
+ href="install.html#mozTocId915759">CMake build options</a><span
+ style="font-weight: normal;"> for a description</span></li>
+      <li><span style="font-weight: normal;"><br>
+        </span></li>
+    </ul>
+    <li><big><big><small><small><span style="font-weight: normal;"><span
+ style="font-weight: bold;">To build with WxWidgets</span> : the .ddl
+must be accessible; either their names are in system PATH variable,
+either copy
+them in the current bin directory (bin/Debug or bin/Release, depending
+whether you compiled in Debug or Release mode) </span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+    <li><big><big><small><small><span style="font-weight: normal;"><span
+ style="font-weight: bold;">To build with VTK</span> : </span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">the .ddl must be accessible; either their
+names are in system PATH variable, either copy
+them in the current bin directory (bin/Debug or bin/Release, depending
+whether you compiled in Debug or Release mode)</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+    <li><big><big><small><small><span style="font-weight: normal;"><span
+ style="font-weight: bold;">To
+build with ITK</span> :&nbsp; </span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">the .ddl must be accessible; either their
+names are in system PATH variable, either copy
+them in the current bin directory (bin/Debug or bin/Release, depending
+whether you compiled in Debug or Release mode)</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+    <li><big><big><small><small><span style="font-weight: normal;">Open
+the solution created by cmake : </span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"><span style="font-style: italic;">ourSourceDirectory</span>\bin</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;">\BBTK.sln and build
+the entire solution.</span></small></small></big></big></li>
+    <ul>
+      <li><big><big><small><small><span style="font-weight: normal;">If
+you get dll error messages close the message(s) and after it's
+done, rebuild the complete solution.</span></small></small></big></big><big><big><small><small><span
+ style="font-weight: normal;"></span></small></small></big></big></li>
+      <li><big><big><small><small><span style="font-weight: normal;">If
+you get package intallation messages for missing and required
+files like <span style="font-style: italic;">fileName.sty</span>,
+install them all.</span></small></small></big></big></li>
+      <li style="font-weight: normal;">The packages correspond to
+on-line complements that the MikTex program
+needs to build the BBTK documentation.</li>
+    </ul>
+  </ul>
+</ul>
+Enjoy !<br>
+<div style="text-align: left;">
+<hr style="width: 100%; height: 2px;"></div>
+<div style="text-align: left;">
+<h1><a class="mozTocH1" name="mozTocId915759"></a>CMake build options</h1>
+<span style="font-weight: normal;">The options in grey only appear if
+the last non grey option is set to
+ON (e.g. itk_IMAGE_DIM_2 and the following ones in grey only appear if
+BUILD_BBTK_PACKAGE_itk is ON).<br>
+The variables in dark grey and italics are NOT options but are
+automatically set by cmake according to the options selected. In
+particular the variables 'USE_<span style="font-style: italic;">something</span>'
+indicate the dependencies on external libraries or utilities.<br
+ style="font-weight: normal;">
+</span><span style="font-weight: normal;">Advanced options are not
+shown
+here... </span><br>
+<br>
+<table style="width: 1274px; height: 1762px;" border="1" cellpadding="2"
+ cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Option</span><br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Explaination</span><br>
+      </td>
+      <td style="vertical-align: top;"><span style="font-weight: bold;">Default</span></td>
+    </tr>
+    <tr>
+      <td>--BUILD_ALL<br>
+      </td>
+      <td>Set to ON to build all the components of the toolkit<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BBTK_COMPILE_DEBUG_MESSAGES</td>
+      <td style="vertical-align: top;">Compile debug messages in bbtk ?<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BBTK_COMPILE_ERROR_MESSAGES</td>
+      <td style="vertical-align: top;">Compile error messages in bbtk ?<br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BBTK_COMPILE_MESSAGES</td>
+      <td style="vertical-align: top;">Compile normal messages in bbtk ?<br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BBTK_COMPILE_WARNING_MESSAGES</td>
+      <td style="vertical-align: top;">Compile warning messages in bbtk
+?<br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BBTK_USE_SHIPPED_BOOST<br>
+      </td>
+      <td style="vertical-align: top;">Use the boost C++ library
+provided with bbtk ?<br>
+If not set you need to have boost installed <br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BBTK_USE_WXWIDGETS<br>
+      </td>
+      <td style="vertical-align: top;">Build with the wxWidgets library
+? <br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td>BUILD_APPLICATIONS<br>
+      </td>
+      <td> Build bbtk applications : development studio (bbStudio),
+interpreter
+(bbi), xml to C++ code (bbfy), etc. ?<br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td>BUILD_BBS_APPLI_BINARIES<br>
+      </td>
+      <td>Build executables for all bbs applications of all packages ?<br>
+If set will compile all bbs of folder appli of all packages, using bbc<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_DOC<br>
+      </td>
+      <td style="vertical-align: top;">Build bbtk documentations ?<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">BUILD_BBTK_DOC_DOXYGEN<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">Build
+doxygen documentation for bbtk kernel?<br>
+Requires doxygen<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">BUILD_BBTK_DOC_GUIDES_HTML<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">Build
+html versions of the guides ?<br>
+Requires latex, pdftex, tth<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">BUILD_BBTK_DOC_GUIDES_PDF<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">Build
+pdf versions of the guides ?<br>
+Requires latex, pdftex<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">BUILD_BBTK_DOC_PACKAGE<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">Build
+packages html documentations ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(192, 192, 192);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_PACKAGE_demo<br>
+      </td>
+      <td style="vertical-align: top;">Build the package 'demo' ?<br>
+Requires : itk, vtk<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td>BUILD_BBTK_PACKAGE_itk<br>
+      </td>
+      <td>Build the package 'itk' ?<br>
+Requires : itk<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">&nbsp;BUILD_BBTK_PACKAGE_itkvtk<br>
+      </td>
+      <td style="vertical-align: top;">Build the package 'itkvtk ?<br>
+Requires : itk, vtk<br>
+      </td>
+      <td style="vertical-align: top;">OFF</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_PACKAGE_std<br>
+      </td>
+      <td style="vertical-align: top;">Build the package 'std' ?</td>
+      <td style="vertical-align: top;">ON</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_PACKAGE_toolsbbtk<br>
+      </td>
+      <td style="vertical-align: top;">Build the package 'toolsbbtk' ?</td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_PACKAGE_vtk <br>
+      </td>
+      <td style="vertical-align: top;">Build the package 'vtk' ?<br>
+Requires : vtk<br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_PACKAGE_wx<br>
+      </td>
+      <td style="vertical-align: top;">Build the package 'wx' ?<br>
+Requires : wxWidgets<br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_PACKAGE_wxvtk<br>
+      </td>
+      <td style="vertical-align: top;">Build the package 'wxvtk' ?<br>
+Requires : wxWidgets, vtk<br>
+      </td>
+      <td style="vertical-align: top;">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_DIM_2<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of dimension 2 ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_DIM_3</td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of dimension 3 ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_DIM_4 </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of dimension 4 ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_TYPE_CHAR<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of type char ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_TYPE_DOUBLE</td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of type double ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_TYPE_FLOAT<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of type float ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_TYPE_INT<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of type int ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_TYPE_SHORT<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of type short ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_TYPE_UCHAR<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of type unsigned char ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_TYPE_UINT<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of type unsigned int ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">&nbsp;&nbsp;
+itk_IMAGE_TYPE_USHORT<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">Compile
+itk images of type unsigned&nbsp; short ?<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(204, 204, 204);">ON<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_PACKAGE_demo</td>
+      <td style="vertical-align: top;">Build the package 'demo' ?<br>
+Requires : <span style="font-weight: bold;">ALL</span> the other
+packages<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td>BUILD_BBTK_PACKAGE_itkvtk<br>
+      </td>
+      <td>Build the package 'itkvtk' ?<br>
+Requires : itk, vtk<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td>BUILD_BBTK_PACKAGE_std<br>
+      </td>
+      <td>Build the package 'std ? </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">BUILD_BBTK_PACKAGE_toolsbbtk</td>
+      <td style="vertical-align: top;">Build the package 'toolsbbtk' ?</td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td>BUILD_BBTK_PACKAGE_vtk<br>
+      </td>
+      <td>Build the package 'vtk' ?<br>
+Requires : vtk<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td>BUILD_BBTK_PACKAGE_wx<br>
+      </td>
+      <td>Build the package 'wx' ?<br>
+Requires : wxWidgets<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td>BUILD_BBTK_PACKAGE_wxvtk<br>
+      </td>
+      <td>Build the package 'wxvtk' ?<br>
+Requires : wxWidgets, vtk<br>
+      </td>
+      <td style="vertical-align: top;">OFF<br>
+      </td>
+    </tr>
+    <tr>
+      <td>CMAKE_BUILD_TYPE<br>
+      </td>
+      <td>Set to "Debug" or "Release" <br>
+      </td>
+      <td style="vertical-align: top;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td>CMAKE_INSTALL_PREFIX<br>
+      </td>
+      <td> Set the install folder<br>
+      </td>
+      <td style="vertical-align: top;">/usr/local<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">EXECUTABLE_OUTPUT_PATH<br>
+      </td>
+      <td style="vertical-align: top;">Single output directory for
+building all the executables<br>
+      </td>
+      <td style="vertical-align: top;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">LIBRARY_OUTPUT_PATH</td>
+      <td style="vertical-align: top;">Single output directory for
+building all the libraries</td>
+      <td style="vertical-align: top;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">USE_BOOST<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">Automatically
+set to ON when boost C++ library is needed with the choices made<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">USE_DOXYGEN<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">Automatically
+set to ON when doxygen is needed with the choices made</td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">USE_ITK<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">Automatically
+set to ON when ITK library is needed with the choices made</td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">USE_LATEX<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">Automatically
+set to ON when LaTeX is needed with the choices made</td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">USE_TTH<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">Automatically
+set to ON when tth is needed with the choices made</td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">USE_VTK<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">Automatically
+set to ON when VTK library is needed with the choices made</td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">-<br>
+      </td>
+    </tr>
+    <tr>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">USE_WXWIDGETS<br>
+      </td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">Automatically
+set to ON when wxWidgets library is needed with the choices made</td>
+      <td
+ style="vertical-align: top; background-color: rgb(102, 102, 102); font-style: italic;">-<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</body>
+</html>

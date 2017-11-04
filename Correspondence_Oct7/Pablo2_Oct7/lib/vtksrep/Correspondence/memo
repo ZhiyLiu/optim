@@ -1,0 +1,137 @@
+Jan 10, 2014
+-------------------------------------
+Replace the area and volume compute method, using getAllSubQuadsUVCoordinateWithoutDeltaUV and getAllSubQuadsUVCoordinate instead the old one using u v each time.
+
+In the previous version, the area and volume was moved twice. One time in func moveSpokeByCoeffStep and one time in calculateareas & calculatevolume funcs. I delete the u v + deltau v part, just use the m3d primitive infor get from the moved spokes(move by moveSpokeByCoeffStep each time the optimizer generate a delatu and deltav). And change the name of the two old function to make it easy to remember. Here is the new function name:
+old				new
+calculateareas        		calculateAreas_method1
+calculatevolume			calculateVolumes_method1
+
+And in this version, add new method to calculate area and volume, they give the same result as the old method without considering small variations. The new function name is:
+calculateAreas_method2
+calculateVolumes_method2
+
+
+
+Jan 12, 2014
+-------------------------------------
+Rewrite the calculatesrepedge function, and change its name into:
+calculateEdges_method1(quadfig, 0, 0, upboundaryvertical, upboundaryhorizonal, 2);
+
+In the previous version(calculatesrepedge function), the edges was moved twice, just the same as the area and volume calculated before. In the new version, the edge was calculate
+using the info stored in the m3d file(Because the primitives has already been moved when start optimizer in function moveSpokeByCoeffStep).
+
+In calculateEdges_method1, you can draw out the lines to check, I test and commented the draw code. 
+
+To make sure, I write calculateEdges_method2, which give the same result as calculateEdges_method1. But pay attention: the horizonal lines sequence is diff in this two method(the vertical lines sequence is the same), which means:
+In calculateEdges_method1, the horizonaledges store edges in order: H1,H2,H3,H4,H5,H6.
+In calculateEdges_method2: the horizonaledges store edges in order: H1,H2,H5,H3,H4,H6.
+
+
+
+Jan 17, 2014
+-------------------------------------
+changed the folder, to rootDir.
+
+change the folder name testSet_Original to input_sreps; change the updateUV to moved_sreps.
+
+
+
+
+Feb 22, 2014
+-------------------------------------
+change the quad-quad volume compute method by divided it to 5 pieces of tetrahedron. Almost same value got as the privious method.
+
+change the registry object to a vector list, no need to read the same input models during the iteration, save time. No need to read moved m3d from file and then compute the regularity feature. Directly comptue it after move using member attribution quadfig...
+
+this version can save the moved srep in to new file.
+
+
+Feb 23, 3014
+-------------------------------------
+this version do not save the m3d file, to save time.
+The geometry entropy input is not m3d file, now use .txt which contain all the p r u value as the input, this can save lot of time especially large population of srep.
+because no need to read, parse and write to m3d file.
+
+
+
+
+The current iteration using a fast function, without saving the internal srep data to file.
+If want to save the intermedia sreps, using: 
+1. mSpoke.moveSpokes(iteratorCount, registryPointerList, this->quadFigList) instead of mSpoke.moveSpokesFast(this->quadFigList);
+
+2. uncomment: 
+//Initialized this if use moveSpokes function, if not using moveSpokes, no need initialize this parameter!!!
+       /* Registry *registry = new Registry();
+        registry->readFromFile(inputSrepPath.c_str(), false);
+        this->registryPointerList.push_back(registry); */
+and
+    /*for(int i=0;i<registryPointerList.size();i++){
+        delete registryPointerList[i];//does this can release the registry memory we new before??Maybe we nee ietration and check.
+    }*/
+
+
+
+
+3. In matlab, sift to use the following two lines:
+	%geoEntropyDir = '/NIRAL/work/ltu/WorkSpace/data_pablo/Pablo2/lib/vtksrep/Correspondence/models/moved_sreps/';
+	geoEntropyDir = '/NIRAL/work/ltu/WorkSpace/data_pablo/Pablo2/lib/vtksrep/Correspondence/temp_data/GEO_input_matrix.txt';
+
+
+	%geoEntropy = calculateGeoEntropy(geoEntropyDir, 1, side);
+	geoEntropy = geoEntropy(geoEntropyDir);
+
+
+	
+Apr 11, 2014
+--------------------------------------
+back up this code, because today will change the regularity compute method. By switch the old matlab regularity to c++ regularity, adding a class:
+regularityentropy.cpp
+
+
+
+Apr 22, 2014
+--------------------------------------
+In Pablo2_Apr22(entropytegether).rar version, sumRegEntropy += upRegEntropy + downRegEntropy + 4*crestRegEntropy;
+
+double w1 = 1;
+double w2 = 1;
+double objectFuc = w1*geoEntropy - w2*regEntropy;
+
+This is not good, because when optimize the up spokes, its not related to down spokes and crest spokes. So, we seperate the three party depedently.
+This version has a bug. when compute the crest entropy, no matter how you move the spoke, the entropy always keep the same, that's because the
+vtkSmartPointer<vtkSRep> srepfig;
+is passed to at the begaining, we only change the quadFig, but this won't change the srepfig, while crest interpolate only use srepfig...
+So, we can't use the old srepfig read into list at the begain, we should compute new srepfig using the changed quadFig before call
+computeRegularityEntropyOfCrest()...
+Fix this in next version.
+
+
+
+
+
+Apr 23, 2014
+------------------------------------
+Fix the srepfig bug mentioned above.
+Change movespokes.h file, those const int value was gone. By compute them at the constructor, save lot of work to set them each time for diff sreps.
+It can compute from the quadfig by themselves now.
+
+Modify calculateGeoEntropy.m, getCPNSDataMatrix.m. Make it can handle side=2, means compute entropy of crest.
+Compute the geo entropy using c++(read matrix) and matlab(read m3d files), give same results.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

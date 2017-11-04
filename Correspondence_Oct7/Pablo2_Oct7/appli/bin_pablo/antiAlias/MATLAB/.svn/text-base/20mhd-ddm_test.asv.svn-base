@@ -1,0 +1,2 @@
+filename = 'kkkkk';
+antiAliasWrapper( strcat('20mhd-ddm/',filename,'.mhd'), strcat('20mhd-antiAliase/',filename), [0.5 0.5] );

@@ -1,0 +1,1463 @@
+#include <iostream>
+#include "M3DQuadInterpolater.h"   //Jared's interpolation method to up and down spoke.
+#include "calregularityfeatures.h"
+#include "toolsfunc.h"
+#include <math.h>
+#include "visualization.h"
+
+
+
+using namespace std;
+
+calregularityfeatures::calregularityfeatures()
+{
+}
+
+
+calregularityfeatures::calregularityfeatures(quadfigattribution quadAtt, int side, DoubleVecVec subUs, DoubleVecVec subVs) {
+    this->quadAtt = quadAtt;
+
+    this->side = side;
+
+    this->subUs = subUs;
+    this->subVs = subVs;
+}
+
+
+
+
+
+calregularityfeatures::~calregularityfeatures()
+{
+}
+
+
+
+/* give four points, return its area.
+ * the four points is given in u, v coordinate
+ * the quad is in counter clockwise
+ * u0, v0 is the up-left corner point; u1, v1 is the down-left corner point; u2, v2 is the up-right corner point;
+ * u3, v3 is the down-right corner point.
+ * quadtype: 0 means boundary area; 1 means skeletal area.
+ * side: 0 means up; 1 means down.
+*/
+double calregularityfeatures::calculatequadarea(double u0, double v0, double u1, double v1, double u2, double v2, double u3, double v3, int quadtype){
+
+    M3DQuadFigure* curQuadFig = this->quadAtt.getQuadFig();
+
+    M3DQuadInterpolater *tpm = new M3DQuadInterpolater(curQuadFig);
+
+    //store the four points of a quad, each point is a 3D vector, which store the x, y, z coordinate of this point.
+    Vector3D point[4];
+
+    //quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+    switch(quadtype){
+        case 0:
+            //boundary quads(0)
+            point[0] = tpm->interpolateQuadSpoke(curQuadFig,u0,v0,side)->getB();
+            point[1] = tpm->interpolateQuadSpoke(curQuadFig,u1,v1,side)->getB();
+            point[2] = tpm->interpolateQuadSpoke(curQuadFig,u2,v2,side)->getB();
+            point[3] = tpm->interpolateQuadSpoke(curQuadFig,u3,v3,side)->getB();
+            break;
+        case 1:
+            //skeletal quads(1)
+            point[0] = tpm->interpolateQuadSpoke(curQuadFig,u0,v0,side)->getX();
+            point[1] = tpm->interpolateQuadSpoke(curQuadFig,u1,v1,side)->getX();
+            point[2] = tpm->interpolateQuadSpoke(curQuadFig,u2,v2,side)->getX();
+            point[3] = tpm->interpolateQuadSpoke(curQuadFig,u3,v3,side)->getX();
+            break;
+        default:
+            break;
+    }
+
+    //calculate the quad area. By divide the subquad into two triangles.
+    //the first method: diagonal of p0p2
+    double diagonalp0p2 = sqrt(pow(point[0].getX()-point[2].getX(), 2) + pow(point[0].getY()-point[2].getY(), 2) + pow(point[0].getZ()-point[2].getZ(), 2));
+    //the second method: diagonal of p1p3
+    double diagonalp1p3 = sqrt(pow(point[1].getX()-point[3].getX(), 2) + pow(point[1].getY()-point[3].getY(), 2) + pow(point[1].getZ()-point[3].getZ(), 2));
+
+    //the four sides of each sub-quad.
+    //left edge: p0p1
+    double p0p1 = sqrt(pow(point[0].getX()-point[1].getX(), 2) + pow(point[0].getY()-point[1].getY(), 2) + pow(point[0].getZ()-point[1].getZ(), 2));
+    //bottom edge: p1p2
+    double p1p2 = sqrt(pow(point[1].getX()-point[2].getX(), 2) + pow(point[1].getY()-point[2].getY(), 2) + pow(point[1].getZ()-point[2].getZ(), 2));
+    //right edge: p2p3
+    double p2p3 = sqrt(pow(point[2].getX()-point[3].getX(), 2) + pow(point[2].getY()-point[3].getY(), 2) + pow(point[2].getZ()-point[3].getZ(), 2));
+    //top edge: p0p3
+    double p0p3 = sqrt(pow(point[0].getX()-point[3].getX(), 2) + pow(point[0].getY()-point[3].getY(), 2) + pow(point[0].getZ()-point[3].getZ(), 2));
+
+    //calculate triangle area using Heron's formula
+    double s1 = (diagonalp0p2 + p0p1 + p1p2)/2; //half of the sum of three edges.
+    double s2 = (diagonalp0p2 + p0p3 + p2p3)/2;
+    double s3 = (diagonalp1p3 + p0p1 + p0p3)/2;
+    double s4 = (diagonalp1p3 + p1p2 + p2p3)/2;
+
+    //two triangle's area using the first method, diagonalp0p2
+    double size1 = sqrt(fabs(s1*(s1-p0p1)*(s1-p1p2)*(s1-diagonalp0p2)));
+    double size2 = sqrt(fabs(s2*(s2-p0p3)*(s2-p2p3)*(s2-diagonalp0p2)));
+    //two triangle's area using the second method, diagonalp1p3
+    double size3 = sqrt(fabs(s3*(s3-p0p1)*(s3-p0p3)*(s3-diagonalp1p3)));
+    double size4 = sqrt(fabs(s4*(s4-p1p2)*(s4-p2p3)*(s4-diagonalp1p3)));
+
+    delete tpm;
+    //the smaller one of the two method as the area for the sub-quad
+    return min(size1+size2, size3+size4);
+}
+
+
+
+
+
+
+/* Calculate the quad area by divide each of its subquads into two triangles.
+ * Input: Four points of a quad, each point contains the x, y, z coordinate.
+ * The four vetex point of the quad is in counter clockwise. whiche mean: point[0] is the top-left corner;
+ * point[1] is the bottom-left corner; point[2] is the bottom-right corner; point[3] is the top-right corner.
+ * There're two diagonal for each subquad, use each to calculate the sum of its two triangles. we can get two area,
+ * we want the smaller one as the area of this subquad.
+*/
+double calregularityfeatures::quadArea(Vector3D *point){
+    //the first method: diagonal of p0p2
+    double diagonalp0p2 = sqrt(pow(point[0].getX()-point[2].getX(), 2) + pow(point[0].getY()-point[2].getY(), 2) + pow(point[0].getZ()-point[2].getZ(), 2));
+    //the second method: diagonal of p1p3
+    double diagonalp1p3 = sqrt(pow(point[1].getX()-point[3].getX(), 2) + pow(point[1].getY()-point[3].getY(), 2) + pow(point[1].getZ()-point[3].getZ(), 2));
+
+    //the four sides of each sub-quad.
+    //left edge: p0p1
+    double p0p1 = sqrt(pow(point[0].getX()-point[1].getX(), 2) + pow(point[0].getY()-point[1].getY(), 2) + pow(point[0].getZ()-point[1].getZ(), 2));
+    //bottom edge: p1p2
+    double p1p2 = sqrt(pow(point[1].getX()-point[2].getX(), 2) + pow(point[1].getY()-point[2].getY(), 2) + pow(point[1].getZ()-point[2].getZ(), 2));
+    //right edge: p2p3
+    double p2p3 = sqrt(pow(point[2].getX()-point[3].getX(), 2) + pow(point[2].getY()-point[3].getY(), 2) + pow(point[2].getZ()-point[3].getZ(), 2));
+    //top edge: p0p3
+    double p0p3 = sqrt(pow(point[0].getX()-point[3].getX(), 2) + pow(point[0].getY()-point[3].getY(), 2) + pow(point[0].getZ()-point[3].getZ(), 2));
+
+    //calculate triangle area using Heron's formula
+    double s1 = (diagonalp0p2 + p0p1 + p1p2)/2; //half of the sum of three edges.
+    double s2 = (diagonalp0p2 + p0p3 + p2p3)/2;
+    double s3 = (diagonalp1p3 + p0p1 + p0p3)/2;
+    double s4 = (diagonalp1p3 + p1p2 + p2p3)/2;
+
+    //two triangle's area using the first method, diagonalp0p2
+    double size1 = sqrt(fabs(s1*(s1-p0p1)*(s1-p1p2)*(s1-diagonalp0p2)));
+    double size2 = sqrt(fabs(s2*(s2-p0p3)*(s2-p2p3)*(s2-diagonalp0p2)));
+
+    //two triangle's area using the second method, diagonalp1p3
+    double size3 = sqrt(fabs(s3*(s3-p0p1)*(s3-p0p3)*(s3-diagonalp1p3)));
+    double size4 = sqrt(fabs(s4*(s4-p1p2)*(s4-p2p3)*(s4-diagonalp1p3)));
+
+    //the smaller one of the two method as the area for the sub-quad
+    return min(size1+size2, size3+size4);
+}
+
+
+
+
+/* Get all the sub-quad position by given u v coordinates.
+ * quadtype: boundary quads(0), skeletal quads(1).
+*/
+vtkSmartPointer< vtkPoints > calregularityfeatures::getSubQuadsPosition(int quadtype){
+
+    int quadNum = this->quadAtt.getQuadNum();
+    vtkSmartPointer< vtkPoints > hubpos = vtkSmartPointer< vtkPoints >::New();    
+
+    M3DQuadInterpolater standsideintp;
+    M3DQuadFigure* curQuadFig = this->quadAtt.getQuadFig();
+
+    //store the all the position of points for a quad, each point is a 3D vector, which store the x, y, z coordinate of this point.
+    Vector3D point;
+
+    for(int i = 0; i < quadNum; i++){
+        //cout<<"Currently drawing quad: "<<i<<endl;
+        for(int j =0; j < this->quadAtt.getSubQuadVertexNum();j++){
+            M3DSpoke newspoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][j], subVs[i][j], side);
+            //std::cout<<"----subUs["<<i<<"]["<<j<<"] is: "<<subUs[i][j]<<"    subVs["<<i<<"]["<<j<<"] is: "<<subVs[i][j]<<std::endl;
+            //quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+            if(quadtype==0){ //boundary quads(0)
+                point = newspoke.getB();
+                //cout<<"point position on boundary: x is: "<<point.getX()<<" y is: "<<point.getY()<<" z is: "<<point.getZ()<<endl;
+            }
+            else { //skeletal quads(1)
+                point = newspoke.getX();
+            }
+
+            hubpos->InsertNextPoint(point.getX(),point.getY(),point.getZ());
+        }
+    }
+
+    return hubpos;
+}
+
+
+
+/* Get all the sub-quad position by given u v coordinates.
+ * quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+*/
+vector<vector<Vector3D> > calregularityfeatures::getSubQuadsPosition_2(int quadtype){
+
+    int quadNum = this->quadAtt.getQuadNum();
+
+    // holding the subdivided uvs, each row is a quad
+    vector<vector<Vector3D> > hubpositions;
+
+    M3DQuadInterpolater standsideintp;
+    M3DQuadFigure* curQuadFig = this->quadAtt.getQuadFig();
+
+    // for each quad
+    for(int i = 0; i < quadNum; i++){
+        vector<Vector3D> hubpos;
+
+        for(int j = 0; j < this->quadAtt.getSubQuadVertexNum();j++){
+            hubpos.push_back(Vector3D());
+            M3DSpoke newspoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][j], subVs[i][j], side);
+            //std::cout<<"----subUs["<<i<<"]["<<j<<"] is: "<<subUs[i][j]<<"    subVs["<<i<<"]["<<j<<"] is: "<<subVs[i][j]<<std::endl;
+
+            if(quadtype == 0) { //boundary quads(0)
+                hubpos[j] = newspoke.getB();
+            }
+            else { //skeletal quads(1)
+                hubpos[j] = newspoke.getX();
+            }
+        }
+
+        hubpositions.push_back(hubpos);
+    }
+
+    return hubpositions;
+}
+
+
+
+/* Do the same thing as getSubQuadsPosition_2, just use vtkPoints instead of Vector3D, want to get faster speed.
+*/
+vector<vtkSmartPointer< vtkPoints > > calregularityfeatures::getSubQuadsPosition_3(int quadtype){
+
+    int quadNum = this->quadAtt.getQuadNum();
+
+    // holding the subdivided uvs, each row is a quad
+    vector<vtkSmartPointer< vtkPoints > > hubpositions;
+
+    M3DQuadInterpolater standsideintp;
+    M3DQuadFigure* curQuadFig = this->quadAtt.getQuadFig();
+
+    Vector3D point;
+
+    // for each quad
+    for(int i = 0; i < quadNum; i++){
+        vtkSmartPointer< vtkPoints > hubpos = vtkSmartPointer< vtkPoints >::New();
+
+        for(int j = 0; j < this->quadAtt.getSubQuadVertexNum();j++){
+
+            M3DSpoke newspoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][j], subVs[i][j], side);
+            //std::cout<<"----subUs["<<i<<"]["<<j<<"] is: "<<subUs[i][j]<<"    subVs["<<i<<"]["<<j<<"] is: "<<subVs[i][j]<<std::endl;
+
+            if(quadtype == 0) { //boundary quads(0)
+                point = newspoke.getB();
+            }
+            else { //skeletal quads(1)
+                point = newspoke.getX();
+            }
+
+            hubpos->InsertNextPoint(point.getX(),point.getY(),point.getZ());
+        }
+
+        hubpositions.push_back(hubpos);
+    }
+
+    return hubpositions;
+}
+
+/* calculate the area of tetrahedron by its 6 edges using 海伦-秦九韶公式
+ * 任意一个三棱锥或者说四面体，其棱为a，b，c，d，e，f，其中a与d，b与e，c与f互为对边
+*/
+double calregularityfeatures::tetrahedronarea(double a, double b, double c, double d, double e, double f){
+
+    double D = pow(b,2) + pow(c,2) - pow(d,2);
+    double E = pow(a,2) + pow(c,2) - pow(e,2);
+    double F = pow(a,2) + pow(b,2) - pow(f,2);
+
+    double v = sqrt(4*pow(a,2)*pow(b,2)*pow(c,2)-pow(a,2)*pow(D,2)-pow(b,2)*pow(E,2)-pow(c,2)*pow(F,2)+D*E*F)/12;
+
+    return v;
+}
+
+/* given the 6 points of a triangular prism, calculate its volume.
+ * by divide a triangular prism into 3 triangular pyramid.
+ * use 海伦-秦九韶公式 to calculate the triangular pyramid volume.
+ * a, b, c, a1, b1, c1 are the 6 corner of the triangular prism.
+*/
+double calregularityfeatures::calculatetriangularprismvolume(Vector3D a, Vector3D b, Vector3D c, Vector3D a1, Vector3D b1, Vector3D c1 ){
+
+    //divide the triangular prism into 3 triangular pyramid: b1abc; aa1b1c; ca1b1c1
+    //triangular pyramid1 b1abc;
+    //calculate the 6 edges of pyramid1
+    double ab1 = sqrt(pow(a.getX()-b1.getX(), 2) + pow(a.getY()-b1.getY(), 2) + pow(a.getZ()-b1.getZ(), 2));
+    double ab = sqrt(pow(a.getX()-b.getX(), 2) + pow(a.getY()-b.getY(), 2) + pow(a.getZ()-b.getZ(), 2));
+    double ac = sqrt(pow(a.getX()-c.getX(), 2) + pow(a.getY()-c.getY(), 2) + pow(a.getZ()-c.getZ(), 2));
+    double bb1 = sqrt(pow(b.getX()-b1.getX(), 2) + pow(b.getY()-b1.getY(), 2) + pow(b.getZ()-b1.getZ(), 2));
+    double cb1 = sqrt(pow(c.getX()-b1.getX(), 2) + pow(c.getY()-b1.getY(), 2) + pow(c.getZ()-b1.getZ(), 2));
+    double bc = sqrt(pow(b.getX()-c.getX(), 2) + pow(b.getY()-c.getY(), 2) + pow(b.getZ()-c.getZ(), 2));
+
+    //calculate the area of tetrahedron by its 6 edges using 海伦-秦九韶公式
+    //ab1(=f); cb1(=d); ab(=a); ac(=e); bb1(=b); bc(=c)
+    double pyramid1 = tetrahedronarea(ab, bb1, bc, cb1, ac, ab1);
+
+    //triangular pyramid2 aa1b1c;
+    double a1b1 = sqrt(pow(a1.getX()-b1.getX(), 2) + pow(a1.getY()-b1.getY(), 2) + pow(a1.getZ()-b1.getZ(), 2));
+    double aa1 = sqrt(pow(a.getX()-a1.getX(), 2) + pow(a.getY()-a1.getY(), 2) + pow(a.getZ()-a1.getZ(), 2));
+    double a1c = sqrt(pow(a1.getX()-c.getX(), 2) + pow(a1.getY()-c.getY(), 2) + pow(a1.getZ()-c.getZ(), 2));
+    //ab1, b1c, ac is the same as pyramid1.
+
+    //a1b1(=f); cb1(=d); aa1(=a); a1c(=e); ab1(=b); ac(=c)
+    double pyramid2 = tetrahedronarea(aa1, ab1, ac, cb1, a1c, a1b1);
+
+    //triangular pyramid3 ca1b1c1
+    double cc1 = sqrt(pow(c.getX()-c1.getX(), 2) + pow(c.getY()-c1.getY(), 2) + pow(c.getZ()-c1.getZ(), 2));
+    double c1b1 = sqrt(pow(c1.getX()-b1.getX(), 2) + pow(c1.getY()-b1.getY(), 2) + pow(c1.getZ()-b1.getZ(), 2));
+    double a1c1 = sqrt(pow(a1.getX()-c1.getX(), 2) + pow(a1.getY()-c1.getY(), 2) + pow(a1.getZ()-c1.getZ(), 2));
+    //a1c, cb1, a1b1 is the same as above.
+
+    //a1c1(=f); cb1(=c); a1c(=a); a1b1(=e); cc1(=b); c1b1(=d)
+    double pyramid3 = tetrahedronarea(a1c, cc1, cb1, c1b1, a1b1, a1c1);
+
+    //Some volume were 0, Martin said I can check maybe one of the subvolume is not exist, if so, throw this, only sum the rest 2.
+    double totalvolume = 0;
+    if(pyramid1>0)
+        totalvolume += pyramid1;
+    //else
+        //cout<<"The pyramid1 not exist, has been throw away!"<<endl;
+    if(pyramid2>0)
+        totalvolume += pyramid2;
+    //else
+        //cout<<"The pyramid2 not exist, has been throw away!"<<endl;
+    if(pyramid3>0)
+        totalvolume += pyramid3;
+    //else
+        //cout<<"The pyramid3 not exist, has been throw away!"<<endl;
+
+    return totalvolume;
+}
+
+
+
+/* calculate the subquad volume. By divide the boundary and skeletal subquad into two triangles.
+ * that means, divide the subquad volume into 2 triangular prisms.
+ * we choose the minimum sum of the trangular prism volume as the subquad volume.
+*/
+double calregularityfeatures::calculatequadvolume(double u0, double v0, double u1, double v1, double u2, double v2, double u3, double v3){
+    M3DQuadFigure* curQuadFig = this->quadAtt.getQuadFig();
+
+    M3DQuadInterpolater standsideintp;
+
+    //store the four points of a quad, each point is a 3D vector, which store the x, y, z coordinate of this point.
+    //pointS is the four points on the skeletal sheet, pointB is on the boundary.
+    Vector3D pointS[4], pointB[4];
+
+    //two kinds of volumes: side=0: up volumes(up boundary-skeletal quad); side=1: down volumes(down boundary-skeletal quad).
+    M3DSpoke spoke0 = standsideintp.interpolateQuadSpoke2(curQuadFig,u0,v0,side);
+    M3DSpoke spoke1 = standsideintp.interpolateQuadSpoke2(curQuadFig,u1,v1,side);
+    M3DSpoke spoke2 = standsideintp.interpolateQuadSpoke2(curQuadFig,u2,v2,side);
+    M3DSpoke spoke3 = standsideintp.interpolateQuadSpoke2(curQuadFig,u3,v3,side);
+
+    //boundary quads
+    pointB[0] = spoke0.getB();
+    pointB[1] = spoke1.getB();
+    pointB[2] = spoke2.getB();
+    pointB[3] = spoke3.getB();
+
+    //skeletal quads
+    pointS[0] = spoke0.getX();
+    pointS[1] = spoke1.getX();
+    pointS[2] = spoke2.getX();
+    pointS[3] = spoke3.getX();
+
+    //calculate the subquad volume. By divide the boundary and skeletal subquad into two triangles.
+    //the divide method agree with each other for the S and B quad, we have 2 divide methods to seperate the quad.
+    //we choose the minimum sum of the trangular prism volume as the subquad volume.
+    //the first method: diagonal of s0s2, b0b2. Quad volume is divided into triangularprism1 and triangularprism2
+    double triangularprism1 = calculatetriangularprismvolume(pointS[0],pointS[1],pointS[2],pointB[0],pointB[1],pointB[2]);//s0, s1, s2, b0, b1, b2
+    double triangularprism2 = calculatetriangularprismvolume(pointS[0],pointS[3],pointS[2],pointB[0],pointB[3],pointB[2]);//s0, s3, s2, b0, b3, b2
+
+    //the second method: diagonal of s1s3, b1b3. Quad volume is divided into triangularprism3 and triangularprism4
+    //quad volume is divided into triangularprism3 and triangularprism4
+    double triangularprism3 = calculatetriangularprismvolume(pointS[1],pointS[2],pointS[3],pointB[1],pointB[2],pointB[3]);//s1, s2, s3, b1, b2, b3
+    double triangularprism4 = calculatetriangularprismvolume(pointS[1],pointS[0],pointS[3],pointB[1],pointB[0],pointB[3]);//s1, s0, s3, b1, b0, b3
+
+    //the smaller one of the two method as the volume for the sub-quad
+    return min(triangularprism1 + triangularprism2, triangularprism3 + triangularprism4);
+}
+
+
+
+
+
+
+double calregularityfeatures::quadVolume(Vector3D *pointB, Vector3D *pointS){
+
+    //calculate the subquad volume. By divide the boundary and skeletal subquad into two triangles.
+    //the divide method agree with each other for the S and B quad, we have 2 divide methods to seperate the quad.
+    //we choose the minimum sum of the trangular prism volume as the subquad volume.
+    //the first method: diagonal of s0s2, b0b2. Quad volume is divided into triangularprism1 and triangularprism2
+    double triangularprism1 = calculatetriangularprismvolume(pointS[0],pointS[1],pointS[2],pointB[0],pointB[1],pointB[2]);//s0, s1, s2, b0, b1, b2
+    double triangularprism2 = calculatetriangularprismvolume(pointS[0],pointS[3],pointS[2],pointB[0],pointB[3],pointB[2]);//s0, s3, s2, b0, b3, b2
+
+    //the second method: diagonal of s1s3, b1b3. Quad volume is divided into triangularprism3 and triangularprism4
+    //quad volume is divided into triangularprism3 and triangularprism4
+    double triangularprism3 = calculatetriangularprismvolume(pointS[1],pointS[2],pointS[3],pointB[1],pointB[2],pointB[3]);//s1, s2, s3, b1, b2, b3
+    double triangularprism4 = calculatetriangularprismvolume(pointS[1],pointS[0],pointS[3],pointB[1],pointB[0],pointB[3]);//s1, s0, s3, b1, b0, b3
+
+    //the smaller one of the two method as the volume for the sub-quad
+    return min(triangularprism1 + triangularprism2, triangularprism3 + triangularprism4);
+
+    //In fact, subdivided into tetrahedron, the above two methods should get a same result.
+    // which means, triangularprism1 + triangularprism2 = triangularprism3 + triangularprism4, always!
+}
+
+
+
+/* Calculate quad-quad volume, by given the 4 vertices on boundary and 4 vertices on skeletal.
+ * The quad-quad is a 12 faces, because it has 6*2 triangles. Each trigangle is a coplane.
+ * Subdivided this quad-quad into 5 tetrahedrons(pyramid), and then compute each tetrahedron's volume using Heron's formula.
+*/
+double calregularityfeatures::quadQuadVolume(Vector3D *pointB, Vector3D *pointS){
+
+    //Subdivided the quad-quad into 5 pyramids:B1S0S1S2; B3S0S2S3; B0B1S0B3; B2B1S2B3; B3B1S0S2.
+
+    double pyramid_1, pyramid_2, pyramid_3, pyramid_4, pyramid_5;
+
+    double B1S1 = sqrt(pow(pointB[1].getX()-pointS[1].getX(), 2) + pow(pointB[1].getY()-pointS[1].getY(), 2) + pow(pointB[1].getZ()-pointS[1].getZ(), 2));
+    double B1S2 = sqrt(pow(pointB[1].getX()-pointS[2].getX(), 2) + pow(pointB[1].getY()-pointS[2].getY(), 2) + pow(pointB[1].getZ()-pointS[2].getZ(), 2));
+    double B1S0 = sqrt(pow(pointB[1].getX()-pointS[0].getX(), 2) + pow(pointB[1].getY()-pointS[0].getY(), 2) + pow(pointB[1].getZ()-pointS[0].getZ(), 2));
+    double S1S0 = sqrt(pow(pointS[1].getX()-pointS[0].getX(), 2) + pow(pointS[1].getY()-pointS[0].getY(), 2) + pow(pointS[1].getZ()-pointS[0].getZ(), 2));
+    double S1S2 = sqrt(pow(pointS[1].getX()-pointS[2].getX(), 2) + pow(pointS[1].getY()-pointS[2].getY(), 2) + pow(pointS[1].getZ()-pointS[2].getZ(), 2));
+    double S0S2 = sqrt(pow(pointS[0].getX()-pointS[2].getX(), 2) + pow(pointS[0].getY()-pointS[2].getY(), 2) + pow(pointS[0].getZ()-pointS[2].getZ(), 2));
+
+    pyramid_1 = tetrahedronarea(B1S1, B1S2, B1S0, S0S2, S1S0, S1S2);
+
+    double B3S0 = sqrt(pow(pointB[3].getX()-pointS[0].getX(), 2) + pow(pointB[3].getY()-pointS[0].getY(), 2) + pow(pointB[3].getZ()-pointS[0].getZ(), 2));
+    double B3S2 = sqrt(pow(pointB[3].getX()-pointS[2].getX(), 2) + pow(pointB[3].getY()-pointS[2].getY(), 2) + pow(pointB[3].getZ()-pointS[2].getZ(), 2));
+    double B3S3 = sqrt(pow(pointB[3].getX()-pointS[3].getX(), 2) + pow(pointB[3].getY()-pointS[3].getY(), 2) + pow(pointB[3].getZ()-pointS[3].getZ(), 2));
+    double S0S3 = sqrt(pow(pointS[0].getX()-pointS[3].getX(), 2) + pow(pointS[0].getY()-pointS[3].getY(), 2) + pow(pointS[0].getZ()-pointS[3].getZ(), 2));
+    double S2S3 = sqrt(pow(pointS[2].getX()-pointS[3].getX(), 2) + pow(pointS[2].getY()-pointS[3].getY(), 2) + pow(pointS[2].getZ()-pointS[3].getZ(), 2));
+
+    pyramid_2 = tetrahedronarea(B3S0, B3S2, B3S3, S2S3, S0S3, S0S2);
+
+    double B0B1 = sqrt(pow(pointB[0].getX()-pointB[1].getX(), 2) + pow(pointB[0].getY()-pointB[1].getY(), 2) + pow(pointB[0].getZ()-pointB[1].getZ(), 2));
+    double B0S0 = sqrt(pow(pointB[0].getX()-pointS[0].getX(), 2) + pow(pointB[0].getY()-pointS[0].getY(), 2) + pow(pointB[0].getZ()-pointS[0].getZ(), 2));
+    double B0B3 = sqrt(pow(pointB[0].getX()-pointB[3].getX(), 2) + pow(pointB[0].getY()-pointB[3].getY(), 2) + pow(pointB[0].getZ()-pointB[3].getZ(), 2));
+    double B1B3 = sqrt(pow(pointB[1].getX()-pointB[3].getX(), 2) + pow(pointB[1].getY()-pointB[3].getY(), 2) + pow(pointB[1].getZ()-pointB[3].getZ(), 2));
+
+    pyramid_3 = tetrahedronarea(B0B1, B0S0, B0B3, B3S0, B1B3, B1S0);
+
+    double B1B2 = sqrt(pow(pointB[1].getX()-pointB[2].getX(), 2) + pow(pointB[1].getY()-pointB[2].getY(), 2) + pow(pointB[1].getZ()-pointB[2].getZ(), 2));
+    double B2B3 = sqrt(pow(pointB[2].getX()-pointB[3].getX(), 2) + pow(pointB[2].getY()-pointB[3].getY(), 2) + pow(pointB[2].getZ()-pointB[3].getZ(), 2));
+    double B2S2 = sqrt(pow(pointB[2].getX()-pointS[2].getX(), 2) + pow(pointB[2].getY()-pointS[2].getY(), 2) + pow(pointB[2].getZ()-pointS[2].getZ(), 2));
+
+    pyramid_4 = tetrahedronarea(B1B2, B2B3, B2S2, B3S2, B1S2, B1B3);
+
+    pyramid_5 = tetrahedronarea(B1B3, B3S0, B3S2, S0S2, B1S2, B1S0);
+
+
+    //Some volume were 0, check maybe one of the subvolume is not exist, if so, throw this, only sum the rest 2.
+    double totalvolume = 0;
+    if(pyramid_1>0)
+        totalvolume += pyramid_1;
+    //else
+        //cout<<"The pyramid1 not exist, has been throw away!"<<endl;
+    if(pyramid_2>0)
+        totalvolume += pyramid_2;
+    //else
+        //cout<<"The pyramid2 not exist, has been throw away!"<<endl;
+    if(pyramid_3>0)
+        totalvolume += pyramid_3;
+    //else
+        //cout<<"The pyramid3 not exist, has been throw away!"<<endl;
+    if(pyramid_4>0)
+        totalvolume += pyramid_4;
+    //else
+        //cout<<"The pyramid2 not exist, has been throw away!"<<endl;
+    if(pyramid_5>0)
+        totalvolume += pyramid_5;
+
+    //If one of the tetrahedron volume not exist, we use a same quad as skeletal quad and suppose the radius ara paraller, compare this volume with
+    //totalvolume, keep the smaller one.
+
+
+
+
+
+
+    return totalvolume;
+}
+
+
+
+/* Calculate the volume using given 8 vertexes. 4 points on the skeletal sheet(skeletalPoints[4]), 4 on the boundary(boundaryPoints[4]).
+ *side: 0 means up volume, 1 means down volume.
+*/
+vector<double> calregularityfeatures::calculateVolumes_method2(vtkSmartPointer< vtkPoints > boundaryHubpos, vtkSmartPointer< vtkPoints > skeletalHubpos){
+    int subQuadNum = this->quadAtt.getSubQuadNum();
+    int quadNum = this->quadAtt.getQuadNum();
+    int step = this->quadAtt.getStep();
+
+    int subQuadVetexNum = this->quadAtt.getSubQuadVertexNum();
+
+    vector<double> subquadvolumes;//store the 16 subquads area.
+    //store the sum of 16 subquad to get the quad area.
+    vector<double> quadvolume;
+
+    Vector3D boundaryPoints[4], skeletalPoints[4];
+    double subquadvolume;
+
+    //for each quad
+    for(int n=0; n<quadNum;n++){
+        //locate space for a new value, initial it to 0 ?
+        quadvolume.push_back(0);
+
+        //For each subQuadNum's sub-quad.
+        for(int m=0; m<step;m++){
+            for(int k = 0; k<step;k++){
+                int currentpoint = k + m*(step+1);
+                double p[3];
+                //Left-top point.
+                boundaryHubpos->GetPoint(n*subQuadVetexNum+currentpoint,p);  //m
+                boundaryPoints[0].setX(p[0]);
+                boundaryPoints[0].setY(p[1]);
+                boundaryPoints[0].setZ(p[2]);                
+                skeletalHubpos->GetPoint(n*subQuadVetexNum+currentpoint,p);  //m
+                skeletalPoints[0].setX(p[0]);
+                skeletalPoints[0].setY(p[1]);
+                skeletalPoints[0].setZ(p[2]);
+                //Bottom side
+                boundaryHubpos->GetPoint(n*subQuadVetexNum+currentpoint+1,p);//m+1
+                boundaryPoints[1].setX(p[0]);
+                boundaryPoints[1].setY(p[1]);
+                boundaryPoints[1].setZ(p[2]);
+                skeletalHubpos->GetPoint(n*subQuadVetexNum+currentpoint+1,p);//m+1
+                skeletalPoints[1].setX(p[0]);
+                skeletalPoints[1].setY(p[1]);
+                skeletalPoints[1].setZ(p[2]);
+                //Right side
+                boundaryHubpos->GetPoint(n*subQuadVetexNum+currentpoint+1+step+1,p);//m+6
+                boundaryPoints[2].setX(p[0]);
+                boundaryPoints[2].setY(p[1]);
+                boundaryPoints[2].setZ(p[2]);
+                skeletalHubpos->GetPoint(n*subQuadVetexNum+currentpoint+1+step+1,p);//m+6
+                skeletalPoints[2].setX(p[0]);
+                skeletalPoints[2].setY(p[1]);
+                skeletalPoints[2].setZ(p[2]);
+                //Top side
+                boundaryHubpos->GetPoint(n*subQuadVetexNum+currentpoint+step+1,p);//m+5
+                boundaryPoints[3].setX(p[0]);
+                boundaryPoints[3].setY(p[1]);
+                boundaryPoints[3].setZ(p[2]);
+                skeletalHubpos->GetPoint(n*subQuadVetexNum+currentpoint+step+1,p);//m+5
+                skeletalPoints[3].setX(p[0]);
+                skeletalPoints[3].setY(p[1]);
+                skeletalPoints[3].setZ(p[2]);
+                //cout<<"skeletalPoints input is: ------"<<skeletalPoints[0]<<"  "<<skeletalPoints[1]<<"  "<<skeletalPoints[2]<<"  "<<skeletalPoints[3]<<endl;
+                //each of the 16 subquads area.
+                //subquadvolume = quadVolume(boundaryPoints, skeletalPoints);
+                //cout<<"For quad "<<n<<", subquad "<<currentpoint<<": "<<endl;
+                //folded(skeletalPoints[1], skeletalPoints[2], boundaryPoints[2], boundaryPoints[1]);
+
+
+                subquadvolume = quadQuadVolume(boundaryPoints, skeletalPoints);
+                //cout<<"subquadvolume is:------------------"<<subquadvolume<<endl;
+
+                //put all the 16 sub areas into a vector subquadareas.
+                subquadvolumes.push_back(subquadvolume);
+            }
+        }
+
+        //sum the 16 subquads areas.
+        for(unsigned i =0; i<subQuadNum;i++){
+            quadvolume[n] += subquadvolumes[i];
+        }
+
+        //clear vector for next quad.
+        subquadvolumes.clear();
+    }
+
+    return quadvolume;
+}
+
+
+
+
+//calculate the distance between two points.
+double calregularityfeatures::lengthofedges(Vector3D point[2]){
+    double x0 = point[0].getX();
+    double y0 = point[0].getY();
+    double z0 = point[0].getZ();
+    //cout<<"point[0] is:"<<x0<<"; "<<y0<<"; "<<z0<<endl;
+
+    double x1 = point[1].getX();
+    double y1 = point[1].getY();
+    double z1 = point[1].getZ();
+    //cout<<"point[1] is:"<<x1<<"; "<<y1<<"; "<<z1<<endl;
+
+    double distance = sqrt(pow(x1-x0, 2) + pow(y1-y0, 2) + pow(z1-z0, 2));
+
+    //cout<<"distance between two edges is: "<<distance<<endl;
+
+    return distance;
+}
+
+//calculate the distance between two points.
+double calregularityfeatures::pointsDistance(double * p1, double * p2){
+
+    double distance = sqrt(pow(p2[0]-p1[0], 2) + pow(p2[1]-p1[1], 2) + pow(p2[2]-p1[2], 2));
+
+    return distance;
+}
+
+
+
+
+
+
+
+/* Swap the row and column of a matrix.
+ * matrix: with row is the case number; column is the feature number.
+ * output will be: row is the feature number, column is the case number.
+*/
+VectorTrainingSetFeaturesType calregularityfeatures::transposeMatrix(VectorTrainingSetFeaturesType oldmatrix){
+    int colnum, rownum;
+
+    //we want the case number as the new matrix's column.
+    colnum = oldmatrix.size(); //case number
+
+    rownum = oldmatrix[0].size();  //the feature numbers, the column size of matrix
+
+    double transposefeaturematrix[rownum][colnum];
+
+    //swap the row and column. store the new matrix in transposefeaturematrix.
+    for(unsigned i = 0; i < colnum; i++){
+        for(unsigned j = 0; j < rownum; j++){
+           transposefeaturematrix[j][i] = oldmatrix[i][j];
+
+           //cout<< "The oldmatrix["<<i<<","<<j<<"] is: "<<oldmatrix[i][j] <<" ";
+        }
+        //cout<<endl;
+    }
+
+    VectorTrainingSetFeaturesType traingsetfeaturematrix;
+
+    //copy the array transposefeaturematrix's values to traingsetfeaturematrix
+    for(unsigned m =0; m<rownum; m++){
+        //before we set value to traingsetfeaturematrix[m], we must create a space for it.
+        traingsetfeaturematrix.push_back(VectorSRepFeaturesType());
+
+        for(unsigned n=0; n<colnum; n++){
+            traingsetfeaturematrix[m].push_back(transposefeaturematrix[m][n]);
+            //cout<< "traingsetfeaturematrix["<<m<<","<<n<<"] is: "<< traingsetfeaturematrix[m][n] <<"  ";
+            //cout<<traingsetfeaturematrix[m][n] <<" ";
+        }
+        //cout<<endl;
+    }
+
+    return traingsetfeaturematrix;
+}
+
+
+
+/* Calculate the edge of the quads, each quad has four edges, each edge was divided into some small pieces, add these sub-line together is the
+ * length of the edge.
+*/
+void calregularityfeatures::calculateEdges_method2(vtkSmartPointer< vtkPoints > hubpos, vector<double> &verticaledges,
+                                                   vector<double> &horizonaledges){
+    int subQuadVetexNum = this->quadAtt.getSubQuadVertexNum();
+    int quadNum = this->quadAtt.getQuadNum();
+    int step = this->quadAtt.getStep();
+    int colNum = this->quadAtt.getColNum();
+
+    Vector3D point[2];
+    double p[3];
+
+    //For each quad, its left side is horizonal lines.
+    for(int m=0; m<quadNum;m++){
+        double sumOfSubLines = 0;
+        //left side. For each sub-line.
+        for(int n=0; n<step;n++){
+            hubpos->GetPoint(m*subQuadVetexNum+n,p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadVetexNum+n+1,p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+            sumOfSubLines += lengthofedges(point);
+        }
+        horizonaledges.push_back(sumOfSubLines);
+    }
+
+    //For the quads (colNum-1)*colNumIndex -1, its right side is also horizonal lines.
+    for(int m=0; m<quadNum;m++){
+        if((m+1)%(colNum-1)==0){
+            double sumOfSubLines = 0;
+            for(int n=subQuadVetexNum-(step+1); n<subQuadVetexNum-1;n++){
+                hubpos->GetPoint(m*subQuadVetexNum+n,p);
+                point[0].setX(p[0]);
+                point[0].setY(p[1]);
+                point[0].setZ(p[2]);
+
+                hubpos->GetPoint(m*subQuadVetexNum+n+1,p);
+                point[1].setX(p[0]);
+                point[1].setY(p[1]);
+                point[1].setZ(p[2]);
+
+                sumOfSubLines += lengthofedges(point);
+            }
+            horizonaledges.push_back(sumOfSubLines);
+        }
+    }
+
+    //Vertical lines.
+    //For each quad, its top side is vertical lines.
+    for(int m=0; m<quadNum;m++){
+        double sumOfSubLines = 0;
+        for(int k = 0; k<step;k++){
+            hubpos->GetPoint(m*subQuadVetexNum+0+k*(step+1),p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadVetexNum+(k+1)*(step+1),p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+           sumOfSubLines += lengthofedges(point);
+        }
+        verticaledges.push_back(sumOfSubLines);
+    }
+
+    //For the last colNum-1 quads, its bottom side is also vertical lines.
+    for(int m=quadNum-(colNum-1); m<quadNum;m++){
+        double sumOfSubLines = 0;
+        for(int k = 0; k<step;k++){
+            hubpos->GetPoint(m*subQuadVetexNum+step + k*(step+1),p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadVetexNum+step + (k+1)*(step+1),p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+           sumOfSubLines += lengthofedges(point);
+        }
+        verticaledges.push_back(sumOfSubLines);
+    }
+}
+
+
+void calregularityfeatures::calculateEdges_method3(vtkSmartPointer< vtkPoints > hubpos, MatrixType &horEdgeFeatureMatrix,
+                                                   MatrixType &verEdgeFeatureMatrix, int quadType){
+    int subQuadVetexNum = this->quadAtt.getSubQuadVertexNum();
+    int quadNum = this->quadAtt.getQuadNum();
+    int step = this->quadAtt.getStep();
+    int colNum = this->quadAtt.getColNum();
+
+    double p1[3];
+    double p2[3];
+
+    int horEdgeNum = 0;
+    //For each quad, its left side is horizonal lines.
+    for(int m=0; m<quadNum;m++){
+        double sumOfSubLines = 0;
+        //left side. For each sub-line.
+        for(int n=0; n<step;n++){
+            hubpos->GetPoint(m*subQuadVetexNum+n, p1);
+            hubpos->GetPoint(m*subQuadVetexNum+n+1, p2);
+
+            sumOfSubLines += pointsDistance(p1, p2);
+        }
+        horEdgeFeatureMatrix[quadType][horEdgeNum] =sumOfSubLines;
+        horEdgeNum++;
+    }
+
+    //For the quads (colNum-1)*colNumIndex -1, its right side is also horizonal lines.
+    for(int m=0; m<quadNum;m++){
+        if((m+1)%(colNum-1)==0){
+            double sumOfSubLines = 0;
+            for(int n=subQuadVetexNum-(step+1); n<subQuadVetexNum-1;n++){
+                hubpos->GetPoint(m*subQuadVetexNum+n, p1);
+                hubpos->GetPoint(m*subQuadVetexNum+n+1, p2);
+
+                sumOfSubLines += pointsDistance(p1, p2);
+            }
+            horEdgeFeatureMatrix[quadType][horEdgeNum] =sumOfSubLines;
+            horEdgeNum++;
+        }
+    }
+
+    //Vertical lines.
+    int verEdgeNum = 0;
+    //For each quad, its top side is vertical lines.
+    for(int m=0; m<quadNum;m++){
+        double sumOfSubLines = 0;
+        for(int k = 0; k<step;k++){
+            hubpos->GetPoint(m*subQuadVetexNum+0+k*(step+1), p1);
+            hubpos->GetPoint(m*subQuadVetexNum+(k+1)*(step+1), p2);
+
+           sumOfSubLines += pointsDistance(p1, p2);
+        }
+        verEdgeFeatureMatrix[quadType][verEdgeNum] = sumOfSubLines;
+        verEdgeNum++;
+    }
+
+    //For the last colNum-1 quads, its bottom side is also vertical lines.
+    for(int m=quadNum-(colNum-1); m<quadNum;m++){
+        double sumOfSubLines = 0;
+        for(int k = 0; k<step;k++){
+            hubpos->GetPoint(m*subQuadVetexNum+step + k*(step+1), p1);
+            hubpos->GetPoint(m*subQuadVetexNum+step + (k+1)*(step+1), p2);
+
+           sumOfSubLines += pointsDistance(p1, p2);
+        }
+        verEdgeFeatureMatrix[quadType][verEdgeNum] = sumOfSubLines;
+        verEdgeNum++;
+    }
+}
+
+
+/* Do the same things as calculateEdges_method3, but very slow than calculateEdges_method3()*/
+void calregularityfeatures::calculateEdgesLength(MatrixType &horEdgeFeatureMatrix, MatrixType &verEdgeFeatureMatrix){
+
+    // get current quadFig
+    M3DQuadFigure * curQuadFig = this->quadAtt.getQuadFig();
+    int subQuadVetexNum = this->quadAtt.getSubQuadVertexNum();
+    int quadNum = this->quadAtt.getQuadNum();
+    int step = this->quadAtt.getStep();
+    int colNum = this->quadAtt.getColNum();
+
+    M3DQuadInterpolater standsideintp;
+    Vector3D point[2];
+
+    // Vertical lines
+    int verEdgeNum = 0;
+    // for each quad
+    for(int i = 0; i < quadNum; i++){
+        double sumOfSubLines_b = 0.0;
+        double sumOfSubLines_s = 0.0;
+
+        // the top side edges are vertical lines
+        for(int k = 0; k < step; k++){
+            int currIndex = k*(step+1);
+            int nextIndex = currIndex + (step+1);
+
+            M3DSpoke currSpoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][currIndex], subVs[i][currIndex], side);
+            M3DSpoke nextSpoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][nextIndex], subVs[i][nextIndex], side);
+
+            // boundary line
+            point[0] = currSpoke.getB();
+            point[1] = nextSpoke.getB();
+            sumOfSubLines_b += lengthofedges(point);
+
+            // skeletal line
+            point[0] = currSpoke.getX();
+            point[1] = nextSpoke.getX();
+            sumOfSubLines_s += lengthofedges(point);
+        }
+        verEdgeFeatureMatrix[0][verEdgeNum] = sumOfSubLines_b;
+        verEdgeFeatureMatrix[1][verEdgeNum] = sumOfSubLines_s;
+        verEdgeNum++;
+    }
+
+    //For the last colNum-1 quads, its bottom side is also vertical lines.
+    for(int m = quadNum - (colNum-1); m < quadNum; m++){
+        double sumOfSubLines_b = 0.0;
+        double sumOfSubLines_s = 0.0;
+        for(int k = 0; k < step; k++){
+            int currIndex = step + k*(step+1);
+            int nextIndex = currIndex + (step+1);  //step + (k+1)*(step+1)
+
+            M3DSpoke currSpoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[m][currIndex], subVs[m][currIndex], side);
+            M3DSpoke nextSpoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[m][nextIndex], subVs[m][nextIndex], side);
+
+            // boundary line
+            point[0] = currSpoke.getB();
+            point[1] = nextSpoke.getB();
+            sumOfSubLines_b += lengthofedges(point);
+
+            // skeletal line
+            point[0] = currSpoke.getX();
+            point[1] = nextSpoke.getX();
+            sumOfSubLines_s += lengthofedges(point);
+        }
+        verEdgeFeatureMatrix[0][verEdgeNum] = sumOfSubLines_b;
+        verEdgeFeatureMatrix[1][verEdgeNum] = sumOfSubLines_s;
+        verEdgeNum++;
+    }
+
+
+    // Horizontal lines
+    int horEdgeNum = 0;
+    // for each quad. the left sides are Horizontal edges
+    for(int i = 0; i < quadNum; i++){
+        double sumOfSubLines_b = 0.0;
+        double sumOfSubLines_s = 0.0;
+
+        for(int k = 0; k < step; k++){
+
+            M3DSpoke currSpoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][k], subVs[i][k], side);
+            M3DSpoke nextSpoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][k+1], subVs[i][k+1], side);
+
+            // boundary line
+            point[0] = currSpoke.getB();
+            point[1] = nextSpoke.getB();
+            sumOfSubLines_b += lengthofedges(point);
+
+            // skeletal line
+            point[0] = currSpoke.getX();
+            point[1] = nextSpoke.getX();
+            sumOfSubLines_s += lengthofedges(point);
+        }
+        horEdgeFeatureMatrix[0][horEdgeNum] = sumOfSubLines_b;
+        horEdgeFeatureMatrix[1][horEdgeNum] = sumOfSubLines_s;
+        horEdgeNum++;
+    }
+
+    // For the quads (colNum-1)*colNumIndex -1, its right side is also horizonal lines.
+    for(int m = 0; m < quadNum; m++){
+        if((m+1)%(colNum-1)==0){
+            double sumOfSubLines_b = 0.0;
+            double sumOfSubLines_s = 0.0;
+
+            for(int k = subQuadVetexNum-(step+1); k < subQuadVetexNum-1; k++){
+
+                M3DSpoke currSpoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[m][k], subVs[m][k], side);
+                M3DSpoke nextSpoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[m][k+1], subVs[m][k+1], side);
+
+                // boundary line
+                point[0] = currSpoke.getB();
+                point[1] = nextSpoke.getB();
+                sumOfSubLines_b += lengthofedges(point);
+
+                // skeletal line
+                point[0] = currSpoke.getX();
+                point[1] = nextSpoke.getX();
+                sumOfSubLines_s += lengthofedges(point);
+            }
+            horEdgeFeatureMatrix[0][horEdgeNum] = sumOfSubLines_b;
+            horEdgeFeatureMatrix[1][horEdgeNum] = sumOfSubLines_s;
+            horEdgeNum++;
+        }
+    }
+}
+
+
+
+
+/* Compute the angles on each quad.
+ * use the avarage angle of the sub-quads.
+ */
+void calregularityfeatures::calculateAnglesForStandardSide(vtkSmartPointer< vtkPoints > hubpos, MatrixType &angleFeatureMatrix, int quadType) {
+
+    double p0[3];
+    double p1[3];
+    double p2[3];
+    double p3[3];
+
+    int subQuadNum = this->quadAtt.getQuadNum();
+    int subQuadVetexNum = this->quadAtt.getSubQuadVertexNum();
+    int quadNum = this->quadAtt.getQuadNum();
+
+    int brhpi = this->quadAtt.getBotRigHorPosIndex();
+    int brvpi = this->quadAtt.getBotRigVerPosIndex();
+
+    int step = this->quadAtt.getStep();
+
+    toolsfunc tools;
+
+    // For each quad
+    for(int n = 0; n < quadNum; n++){
+        double angle_subQuads_tl = 0.0; // top-left angle
+        double angle_subQuads_br = 0.0; // bottom-right angle
+
+        //For each sub-quad.
+        for(int m=0; m<step;m++){
+            for(int k = 0; k<step;k++){
+                int currentpoint = k + m*(step+1);
+                // top-left point.
+                hubpos->GetPoint(n*subQuadVetexNum+currentpoint,p0);  //m
+                // bottom-left point
+                hubpos->GetPoint(n*subQuadVetexNum+currentpoint+1,p1);//m+1
+                // bottom-right point
+                hubpos->GetPoint(n*subQuadVetexNum+currentpoint+1+step+1,p2);//m+6
+                // top-right point
+                hubpos->GetPoint(n*subQuadVetexNum+currentpoint+step+1,p3);//m+5
+
+                angle_subQuads_tl += tools.dotProductAngle(p0, p3, p1);
+                angle_subQuads_br += tools.dotProductAngle(p2, p1, p3);
+            }
+        }
+
+        // top-left corner trangular
+        hubpos->GetPoint(n*subQuadVetexNum,p0);
+        hubpos->GetPoint(n*subQuadVetexNum+(step+1),p3);
+        hubpos->GetPoint(n*subQuadVetexNum+1,p1);
+        Vector3D normal_tl = tools.trangularNormal_doublePot(p0, p3, p1);
+
+        // bottom-right corner trangular
+        hubpos->GetPoint(n*subQuadVetexNum+brvpi+1,p2);
+        hubpos->GetPoint(n*subQuadVetexNum+brhpi,p1);
+        hubpos->GetPoint(n*subQuadVetexNum+brvpi,p3);
+        Vector3D normal_br = tools.trangularNormal_doublePot(p2, p1, p3);
+
+        normal_tl.normalize();
+        normal_br.normalize();
+
+        if(quadType == 0){ // on boundary
+            // up-left angle
+            angleFeatureMatrix[0][n] = angle_subQuads_tl/subQuadNum;
+
+            // bot-right corner
+            angleFeatureMatrix[1][n] = angle_subQuads_br/subQuadNum;
+
+            // normal swing
+            angleFeatureMatrix[2][n] = normal_tl * normal_br;
+        }
+        else { // on skeletal
+            // up-left angle
+            angleFeatureMatrix[3][n] = angle_subQuads_tl/subQuadNum;
+
+            // bot-right corner
+            angleFeatureMatrix[4][n] = angle_subQuads_br/subQuadNum;
+
+            // normal swing
+            angleFeatureMatrix[5][n] = normal_tl * normal_br;
+        }
+    }
+}
+
+
+
+/* Compute the angles on each quad.
+ * use the avarage angle of the sub-quads.
+ * Do the same thing as calculateAnglesForStandardSide_3(), but slower than it... becasue of the vector<Vector3D>?
+ */
+void calregularityfeatures::calculateAnglesForStandardSide_2(vector<vector<Vector3D> > hubposition, MatrixType &angleFeatureMatrix, int quadType) {
+
+    Vector3D point[4];
+
+    int subQuadNum = this->quadAtt.getQuadNum();
+    int quadNum = this->quadAtt.getQuadNum();
+
+    int brhpi = this->quadAtt.getBotRigHorPosIndex();
+    int brvpi = this->quadAtt.getBotRigVerPosIndex();
+
+    int step = this->quadAtt.getStep();
+
+    toolsfunc tools;
+
+    // For each quad
+    for(int n = 0; n < quadNum; n++){
+        double angle_subQuads_tl = 0.0; // top-left angle
+        double angle_subQuads_br = 0.0; // bottom-right angle
+
+        //For each sub-quad.
+        for(int m=0; m<step;m++){
+            for(int k = 0; k<step;k++){
+                int currpoint = k + m*(step+1);
+                // top-left point.
+                point[0] = hubposition[n][currpoint];  //m
+                point[1] = hubposition[n][currpoint+1]; //m+1
+                point[2] = hubposition[n][currpoint+1+step+1]; //m+6
+                point[3] = hubposition[n][currpoint+step+1]; //m+5
+
+                angle_subQuads_tl += tools.dotProductAngle_2(point[0], point[3], point[1]);
+                angle_subQuads_br += tools.dotProductAngle_2(point[2], point[1], point[3]);
+            }
+        }
+
+        // top-left corner trangular
+        point[0] = hubposition[n][0];
+        point[1] = hubposition[n][1];
+        point[3] = hubposition[n][step+1];
+        Vector3D normal_tl = tools.trangularNormal_vec3D(point[0], point[3], point[1]);
+
+        // bottom-right corner trangular
+        int p1_index = (step+1)*step - 1;
+        point[3] = hubposition[n][p1_index+step];
+        point[1] = hubposition[n][p1_index];
+        point[2] = hubposition[n][p1_index+step+1];
+        Vector3D normal_br = tools.trangularNormal_vec3D(point[2], point[1], point[3]);
+
+        normal_tl.normalize();
+        normal_br.normalize();
+
+        if(quadType == 0){ // on boundary
+            // up-left angle
+            angleFeatureMatrix[0][n] = angle_subQuads_tl/subQuadNum;
+
+            // bot-right corner
+            angleFeatureMatrix[1][n] = angle_subQuads_br/subQuadNum;
+
+            // normal swing
+            angleFeatureMatrix[2][n] = normal_tl * normal_br;
+        }
+        else { // on skeletal
+            // up-left angle
+            angleFeatureMatrix[3][n] = angle_subQuads_tl/subQuadNum;
+
+            // bot-right corner
+            angleFeatureMatrix[4][n] = angle_subQuads_br/subQuadNum;
+
+            // normal swing
+            angleFeatureMatrix[5][n] = normal_tl * normal_br;
+        }
+    }
+}
+
+
+
+/* Do the same thing as calculateAnglesForStandardSide(), but more slower.....*/
+void calregularityfeatures::calculateAvarageAngle(MatrixType &angleFeatureMatrix) {
+
+    // get current quadFig
+    M3DQuadFigure * curQuadFig = this->quadAtt.getQuadFig();
+    int subQuadNum = this->quadAtt.getQuadNum();
+    int quadNum = this->quadAtt.getQuadNum();
+    int step = this->quadAtt.getStep();
+
+    M3DQuadInterpolater standsideintp;
+    toolsfunc tools;
+
+    // For each quad
+    for(int i = 0; i < quadNum; i++){
+        double angle_subQuads_tl_b = 0.0; // top-left angle
+        double angle_subQuads_br_b = 0.0; // bottom-right angle
+        double angle_subQuads_tl_s = 0.0; // top-left angle
+        double angle_subQuads_br_s = 0.0; // bottom-right angle
+
+        //For each sub-quad.
+        for(int m = 0; m < step; m++){
+            for(int k = 0; k < step; k++){
+                int p0_index = k + m*(step+1);
+
+                // top-left spoke. m
+                M3DSpoke p0_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][p0_index], subVs[i][p0_index], side);
+
+                // bottom-left spoke. m+1
+                M3DSpoke p1_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][p0_index+1], subVs[i][p0_index+1], side);
+
+                // bottom-right spoke. m+6
+                M3DSpoke p2_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][p0_index+step+2], subVs[i][p0_index+step+2], side);
+
+                // top-right spoke. m+5
+                M3DSpoke p3_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][p0_index+step+1], subVs[i][p0_index+step+1], side);
+
+                // boundary angle
+                angle_subQuads_tl_b += tools.dotProductAngle_2(p0_spoke.getB(), p3_spoke.getB(), p1_spoke.getB());
+                angle_subQuads_br_b += tools.dotProductAngle_2(p2_spoke.getB(), p1_spoke.getB(), p3_spoke.getB());
+
+                // skeletal angle
+                angle_subQuads_tl_s += tools.dotProductAngle_2(p0_spoke.getX(), p3_spoke.getX(), p1_spoke.getX());
+                angle_subQuads_br_s += tools.dotProductAngle_2(p2_spoke.getX(), p1_spoke.getX(), p3_spoke.getX());
+            }
+        }
+
+        // top-left corner trangular
+        M3DSpoke p0_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][0], subVs[i][0], side);
+        M3DSpoke p1_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][1], subVs[i][1], side);
+        M3DSpoke p3_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][step+1], subVs[i][step+1], side);
+
+        Vector3D normal_tl_b = tools.trangularNormal_vec3D(p0_spoke.getB(), p3_spoke.getB(), p1_spoke.getB());
+        Vector3D normal_tl_s = tools.trangularNormal_vec3D(p0_spoke.getX(), p3_spoke.getX(), p1_spoke.getX());
+
+        normal_tl_b.normalize();
+        normal_tl_s.normalize();
+
+        // bottom-right corner trangular.
+        int p1_index = (step+1)*step - 1;
+        M3DSpoke p2_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][p1_index + step+1], subVs[i][p1_index + step+1], side);
+        p1_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][p1_index], subVs[i][p1_index], side);
+        p3_spoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][p1_index + step], subVs[i][p1_index + step], side);
+
+        Vector3D normal_br_b = tools.trangularNormal_vec3D(p2_spoke.getB(), p1_spoke.getB(), p3_spoke.getB());
+        Vector3D normal_br_s = tools.trangularNormal_vec3D(p2_spoke.getX(), p1_spoke.getX(), p3_spoke.getX());
+
+        normal_br_b.normalize();
+        normal_br_s.normalize();
+
+        // on boundary
+        // up-left angle
+        angleFeatureMatrix[0][i] = angle_subQuads_tl_b/subQuadNum;
+
+        // bot-right corner
+        angleFeatureMatrix[1][i] = angle_subQuads_br_b/subQuadNum;
+
+        // normal swing
+        angleFeatureMatrix[2][i] = normal_tl_b * normal_br_b;
+
+        // on skeletal
+        // up-left angle
+        angleFeatureMatrix[3][i] = angle_subQuads_tl_s/subQuadNum;
+
+        // bot-right corner
+        angleFeatureMatrix[4][i] = angle_subQuads_br_s/subQuadNum;
+
+        // normal swing
+        angleFeatureMatrix[5][i] = normal_tl_s * normal_br_s;
+    }
+}
+
+
+/* Do the same thing as calculateEdgesLength_3(), but more slower...*/
+void calregularityfeatures::calculateEdgesLength_2(vector<vector<Vector3D> > hubposition, MatrixType &horEdgeFeatureMatrix,
+                                                 MatrixType &verEdgeFeatureMatrix, int quadType){
+
+    int subQuadVetexNum = this->quadAtt.getSubQuadVertexNum();
+    int quadNum = this->quadAtt.getQuadNum();
+    int step = this->quadAtt.getStep();
+    int colNum = this->quadAtt.getColNum();
+
+    Vector3D point[2];
+
+    // Vertical lines
+    int verEdgeNum = 0;
+    // for each quad
+    for(int i = 0; i < quadNum; i++){
+        double sumOfSubLines = 0.0;
+
+        // the top side edges are vertical lines
+        for(int k = 0; k < step; k++){
+            int currIndex = k*(step+1);
+            int nextIndex = currIndex + (step+1);
+
+            point[0] = hubposition[i][currIndex];
+            point[1] = hubposition[i][nextIndex];
+
+            sumOfSubLines += lengthofedges(point);
+        }
+        verEdgeFeatureMatrix[quadType][verEdgeNum] = sumOfSubLines;
+        verEdgeNum++;
+    }
+
+    //For the last colNum-1 quads, its bottom side is also vertical lines.
+    for(int i = quadNum - (colNum-1); i < quadNum; i++){
+        double sumOfSubLines = 0.0;
+
+        for(int k = 0; k < step; k++){
+            int currIndex = step + k*(step+1);
+            int nextIndex = currIndex + (step+1);  //step + (k+1)*(step+1)
+
+            point[0] = hubposition[i][currIndex];
+            point[1] = hubposition[i][nextIndex];
+
+            sumOfSubLines += lengthofedges(point);
+        }
+        verEdgeFeatureMatrix[quadType][verEdgeNum] = sumOfSubLines;
+        verEdgeNum++;
+    }
+
+
+    // Horizontal lines
+    int horEdgeNum = 0;
+    // for each quad. the left sides are Horizontal edges
+    for(int i = 0; i < quadNum; i++){
+        double sumOfSubLines = 0.0;
+
+        for(int k = 0; k < step; k++){
+            point[0] = hubposition[i][k];
+            point[1] = hubposition[i][k+1];
+
+            sumOfSubLines += lengthofedges(point);
+        }
+        horEdgeFeatureMatrix[quadType][horEdgeNum] = sumOfSubLines;
+        horEdgeNum++;
+    }
+
+    // For the quads (colNum-1)*colNumIndex -1, its right side is also horizonal lines.
+    for(int m = 0; m < quadNum; m++){
+        if((m+1)%(colNum-1)==0){
+            double sumOfSubLines = 0.0;
+
+            for(int k = subQuadVetexNum-(step+1); k < subQuadVetexNum-1; k++){
+
+                point[0] = hubposition[m][k];
+                point[1] = hubposition[m][k+1];
+
+                sumOfSubLines += lengthofedges(point);
+            }
+            horEdgeFeatureMatrix[quadType][horEdgeNum] = sumOfSubLines;
+            horEdgeNum++;
+        }
+    }
+}
+
+
+
+
+void calregularityfeatures::calculateEdgesLength_3(vector<vtkSmartPointer< vtkPoints > > hubposition, MatrixType &horEdgeFeatureMatrix,
+                                                 MatrixType &verEdgeFeatureMatrix, int quadType){
+
+    int subQuadVetexNum = this->quadAtt.getSubQuadVertexNum();
+    int quadNum = this->quadAtt.getQuadNum();
+    int step = this->quadAtt.getStep();
+    int colNum = this->quadAtt.getColNum();
+
+    double p1[3];
+    double p2[3];
+
+    // Vertical lines
+    int verEdgeNum = 0;
+    // for each quad
+    for(int i = 0; i < quadNum; i++){
+        // get the ith quad's vertexes
+        vtkSmartPointer< vtkPoints > hubpos = hubposition[i];
+        double sumOfSubLines = 0.0;
+
+        // the top side edges are vertical lines
+        for(int k = 0; k < step; k++){
+            int currIndex = k*(step+1);
+            int nextIndex = currIndex + (step+1);
+
+            hubpos->GetPoint(currIndex, p1);
+            hubpos->GetPoint(nextIndex, p2);
+
+            sumOfSubLines += pointsDistance(p1, p2);
+        }
+        verEdgeFeatureMatrix[quadType][verEdgeNum] = sumOfSubLines;
+        verEdgeNum++;
+    }
+
+    //For the last colNum-1 quads, its bottom side is also vertical lines.
+    for(int i = quadNum - (colNum-1); i < quadNum; i++){
+        vtkSmartPointer< vtkPoints > hubpos = hubposition[i];
+        double sumOfSubLines = 0.0;
+
+        for(int k = 0; k < step; k++){
+            int currIndex = step + k*(step+1);
+            int nextIndex = currIndex + (step+1);  //step + (k+1)*(step+1)
+
+            hubpos->GetPoint(currIndex, p1);
+            hubpos->GetPoint(nextIndex, p2);
+
+            sumOfSubLines += pointsDistance(p1, p2);
+        }
+        verEdgeFeatureMatrix[quadType][verEdgeNum] = sumOfSubLines;
+        verEdgeNum++;
+    }
+
+
+    // Horizontal lines
+    int horEdgeNum = 0;
+    // for each quad. the left sides are Horizontal edges
+    for(int i = 0; i < quadNum; i++){
+        vtkSmartPointer< vtkPoints > hubpos = hubposition[i];
+        double sumOfSubLines = 0.0;
+
+        for(int k = 0; k < step; k++){
+            hubpos->GetPoint(k, p1);
+            hubpos->GetPoint(k+1, p2);
+
+            sumOfSubLines += pointsDistance(p1, p2);
+        }
+        horEdgeFeatureMatrix[quadType][horEdgeNum] = sumOfSubLines;
+        horEdgeNum++;
+    }
+
+    // For the quads (colNum-1)*colNumIndex -1, its right side is also horizonal lines.
+    for(int i = 0; i < quadNum; i++){
+        if((i+1)%(colNum-1)==0){
+            vtkSmartPointer< vtkPoints > hubpos = hubposition[i];
+            double sumOfSubLines = 0.0;
+
+            for(int k = subQuadVetexNum-(step+1); k < subQuadVetexNum-1; k++){
+
+                hubpos->GetPoint(k, p1);
+                hubpos->GetPoint(k+1, p2);
+
+                sumOfSubLines += pointsDistance(p1, p2);
+            }
+            horEdgeFeatureMatrix[quadType][horEdgeNum] = sumOfSubLines;
+            horEdgeNum++;
+        }
+    }
+}
+
+/* Compute the angles on each quad.
+ * use the avarage angle of the sub-quads.
+ */
+void calregularityfeatures::calculateAnglesForStandardSide_3(vector<vtkSmartPointer< vtkPoints > > hubposition, MatrixType &angleFeatureMatrix, int quadType) {
+
+    double p0[3];
+    double p1[3];
+    double p2[3];
+    double p3[3];
+
+    int subQuadNum = this->quadAtt.getQuadNum();
+    int quadNum = this->quadAtt.getQuadNum();
+
+    int step = this->quadAtt.getStep();
+
+    toolsfunc tools;
+
+    // For each quad
+    for(int i = 0; i < quadNum; i++){
+        vtkSmartPointer< vtkPoints > hubpos = hubposition[i];
+        double angle_subQuads_tl = 0.0; // top-left angle
+        double angle_subQuads_br = 0.0; // bottom-right angle
+
+        //For each sub-quad.
+        for(int m=0; m<step;m++){
+            for(int k = 0; k<step;k++){
+                int currpoint = k + m*(step+1);
+
+                // top-left point.
+                hubpos->GetPoint(currpoint, p0); //m
+                hubpos->GetPoint(currpoint+1, p1); //m+1
+                hubpos->GetPoint(currpoint+1+step+1, p2); //m+6
+                hubpos->GetPoint(currpoint+step+1, p3); //m+5
+
+                angle_subQuads_tl += tools.dotProductAngle(p0, p3, p1);
+                angle_subQuads_br += tools.dotProductAngle(p2, p1, p3);
+            }
+        }
+
+        // top-left corner trangular
+        hubpos->GetPoint(0, p0);
+        hubpos->GetPoint(1, p1);
+        hubpos->GetPoint(step+1, p3);
+        Vector3D normal_tl = tools.trangularNormal_doublePot(p0, p3, p1);
+
+        // bottom-right corner trangular
+        int p1_index = (step+1)*step - 1;
+        hubpos->GetPoint(p1_index+step+1, p2);
+        hubpos->GetPoint(p1_index, p1);
+        hubpos->GetPoint(p1_index+step, p3);
+        Vector3D normal_br = tools.trangularNormal_doublePot(p2, p1, p3);
+
+        normal_tl.normalize();
+        normal_br.normalize();
+
+        if(quadType == 0){ // on boundary
+            // up-left angle
+            angleFeatureMatrix[0][i] = angle_subQuads_tl/subQuadNum;
+
+            // bot-right corner
+            angleFeatureMatrix[1][i] = angle_subQuads_br/subQuadNum;
+
+            // normal swing
+            angleFeatureMatrix[2][i] = normal_tl * normal_br;
+        }
+        else { // on skeletal
+            // up-left angle
+            angleFeatureMatrix[3][i] = angle_subQuads_tl/subQuadNum;
+
+            // bot-right corner
+            angleFeatureMatrix[4][i] = angle_subQuads_br/subQuadNum;
+
+            // normal swing
+            angleFeatureMatrix[5][i] = normal_tl * normal_br;
+        }
+    }
+}

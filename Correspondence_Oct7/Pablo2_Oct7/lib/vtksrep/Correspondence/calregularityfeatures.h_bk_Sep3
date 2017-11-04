@@ -1,0 +1,118 @@
+#ifndef CALREGULARITYFEATURES_H
+#define CALREGULARITYFEATURES_H
+
+
+#include <iostream>
+
+#include <vtkSmartPointer.h>
+
+#include <vtkCellArray.h>
+#include <vtkQuad.h>
+#include <vtkLine.h>
+#include <vtkLineSource.h>
+
+#include <vtkPolyDataMapper.h>
+#include <vtkActor.h>
+#include <vtkProperty.h>
+
+#include <vtkRenderer.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderWindow.h>
+
+#include "P3DControl.h"
+#include "ControlParms.h"
+
+#include "Vector3D.h"
+
+#include "toolsfunc.h"
+
+#include "uvmap.h"
+
+typedef vnl_matrix<double> MatrixType;
+
+class calregularityfeatures
+{
+public:
+    calregularityfeatures();
+    calregularityfeatures(M3DQuadFigure* curQuadFig, int interpolationLevel, int side, bool moved);
+    calregularityfeatures(M3DQuadFigure* shiftedQuadFig, int side, int rowNum, int colNum, int subQuadNum, int step, DoubleVecVec subUs,
+                          DoubleVecVec subVs);
+
+    ~calregularityfeatures();
+
+    double calculatequadarea(double u0, double v0, double u1, double v1, double u2, double v2, double u3, double v3, int quadtype);
+    void bilinearinterpolateoftwopoints(double point1, double point2, double (&resultpoints)[5]);
+    vector<double> splitquad(double p0, double p1, double p2, double p3);
+    vector<double> calculateAreas_method1(int quadtype);
+    double tetrahedronarea(double a, double b, double c, double d, double e, double f);
+    double calculatetriangularprismvolume(Vector3D a, Vector3D b, Vector3D c, Vector3D a1, Vector3D b1, Vector3D c1 );
+    double calculatequadvolume(double u0, double v0, double u1, double v1, double u2, double v2, double u3, double v3);
+    vector<double> calculateVolumes_method1();
+    double lengthofedges(Vector3D point[2]);
+
+    void calculatequadedges( vector<double> &quadedges, int quadtype);
+
+    VectorTrainingSetFeaturesType transposeMatrix(VectorTrainingSetFeaturesType matrix);
+
+    void calquadedgesforeachsrep( vector<double> &topquadedges, vector<double> &bottomquadedges, vector<double> &leftquadedges,
+                                  vector<double> &rightquadedges, int quadtype);
+
+
+    void calculateEdges_method1( vector<double> &verticaledges, vector<double> &horizonaledges,int quadtype);
+
+
+    //get all the vetex hub position of subquad.
+    vtkSmartPointer< vtkPoints > getSubQuadsPosition(int quadtype);
+    void getSubQuadsUVCoordinateUsingDeltaUV();
+    void getSubQuadsUVCoordinateNotUsingDeltaUV();
+    vtkSmartPointer< vtkPoints > getSubQuadsVertex(int quadtype);
+
+    vector<double> calculateAreas_method2(vtkSmartPointer< vtkPoints > hubPosition);
+    double quadArea(Vector3D *point);
+    vector<double> calculateVolumes_method2(vtkSmartPointer< vtkPoints > boundaryHubpos, vtkSmartPointer< vtkPoints > skeletalHubpos);
+    double quadVolume(Vector3D *pointB, Vector3D *pointS);
+
+    //calculate the vertical and horizonal edges' length. each length is sum of some sub-lines.
+    void calculateEdges_method2(vtkSmartPointer< vtkPoints > hubPosition, vector<double> &verticaledges, vector<double> &horizonaledges);
+    double quadQuadVolume(Vector3D *pointB, Vector3D *pointS);
+
+    //check if the subquads in this quad folded or not. true if folded.
+    bool folded(Vector3D a, Vector3D b, Vector3D c, Vector3D d);
+
+    void drawFrameOfQuadByIndex(vtkSmartPointer< vtkPoints > hubpos, int quadIndex, double quadColor[3],
+                                                    vtkSmartPointer<vtkRenderer> renderer);
+
+    void calculateAnglesForStandardSide(vtkSmartPointer< vtkPoints > hubpos, MatrixType &angleFeatureMatrix, int quadType);
+    void calculateEdges_method3(vtkSmartPointer< vtkPoints > hubpos, MatrixType &horEdgeFeatureMatrix,
+                                                       MatrixType &verEdgeFeatureMatrix, int quadType);
+
+
+
+
+private:
+    M3DQuadFigure* curQuadFig;
+    int side;
+    int interpolationLevel;
+    int rowNum;
+    int colNum;
+    int quadNum;
+    int step;
+    int subQuadPointsNum;
+    int subQuadNum;
+
+//    VectorQuadPoint quadpoints_u;   //store the u coordinate of all the sub-quad of quad[q].
+//    VectorQuadPoint quadpoints_v;   //store the v coordinate of all the sub-quad of quad[q].
+
+    //vtkSmartPointer< vtkPoints > hubPosition_b;   //all the 24*25 points xyz position on the boundary sheet.
+    //vtkSmartPointer< vtkPoints > hubPosition_s;   //all the 24*25 points xyz position on the skeletal sheet.
+
+    toolsfunc tools;
+
+    int brhpi; // the horizontal point used for computing the bottom-right trangular normal.
+    int brvpi; // the vertical point used for computing the bottom-right trangular normal.
+
+    DoubleVecVec subUs;
+    DoubleVecVec subVs;
+};
+
+#endif // CALREGULARITYFEATURES_H

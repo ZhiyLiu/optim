@@ -1,0 +1,42 @@
+
+CVS-Tagged Releases
+-------------------
+
+Pablo-1-0-0	Initial version of the merge of regular and Binary Pablos.
+
+Pablo-1-0-1	First runable version; contains bug fixes and scripting in
+		regular Pablo.
+
+Pablo-1-0-2	Last version before moving penalty calculations for the figure
+		stage into Match.
+
+Pablo-1-0-3	Histogram code probably working for figure stage.
+
+Pablo-1-1-0	Preparing to discard deprecated Mask Builder Window and
+		optimization methods Notch, Profile Per Boundary Point,
+		Training Image, and Load From File (buttons on Optimization
+		Window).
+
+SVN-Tagged Releases
+-------------------
+
+Pablo-1-2-0	This is a working Pablo2 after merging with Binary Pablo,
+		but before the handling of tubular objects was added.
+
+Pablo-1-2-1	This Pablo2 contains working code for fitting tubes.  It is
+		the last release before the world coordinate system in Image3D
+		was reworked, flipping of .raw3 images was eliminated, and
+		PlanIm I/O was made to work.  This corresponds to SVN revision
+		397.
+
+Pablo-1-3-0	This is a working Pablo2 made about 9 months after Morphormics
+		began operations.  It had the Ph.D. work of Joshua Stough and
+		Eli Broadhurst, and supports ConStruct as of July 1, 2009.  It
+		does not support S-Reps.
+
+Pablo-1-4-0	This is a working Pablo2 containing minor improvements and
+		changes from the previous tagged version.  It is the last
+		tagged version prior to changing the program to use the
+		Morphormics .m3d file format and providing a general skeleton
+		data structure for mreps.
+

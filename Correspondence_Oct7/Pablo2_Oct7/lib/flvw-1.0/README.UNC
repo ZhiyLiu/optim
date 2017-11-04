@@ -1,0 +1,13 @@
+
+This is a modified version of version 1.0 of flvw, obtained from
+http://flvw.sourceforge.net/.  The Flvt_* files were added.  They
+are an adaption of the original edit test program.  The visualc
+directory was also added and the makefiles were improved.  The old
+vc6 directory was retained for reference but may be ignored.  A few
+minor fixes were made to some of the original code.  The test
+directory was also reorganized.
+
+Directions for installing this software are contained in file INSTALL.
+
+A. G. Gash, 28 July 2001.
+

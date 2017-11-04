@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../../libSRepIO.a  CMakeFiles/SRepIO.dir/vtkreadsrep.cpp.o CMakeFiles/SRepIO.dir/vtkwritesrep.cpp.o
+/usr/bin/ranlib ../../../libSRepIO.a

@@ -1,0 +1,53 @@
+calculatePGA.m - matlab script to compute shape statistics of m-rep models 
+
+* RUNNING THE SCRIPT IN MATLAB
+
+1.Add to matlab search paths the paths to '/functions', '/ios',
+  '/output-plot', and the directory where the five class directories
+  (@QuadPrimitive, @QuadSymPrimitive, @SrepQuadPrimitive, @TubePrimitive,
+  @TubeSymPrimitive) are.
+
+2.Set the following parameters in the configuration file 'param.txt'
+
+ alignMode = 2;      	 % 0-Skip alignment, 1-translation, 2-rigid, 3-simXform
+ figNames = [Phantom];   % figure name stored in output mean m3d file
+ nComp = [5];            % number of pgs whose variances are displayed in
+                         % eigenvalue plot  
+ nProj = [5];            % number of pgs that will be stored in output pga file
+
+ Notes: 1) 'nComp' must not be smaller than 'nProj'.
+        2) Leave the rest of the fields as they are. 
+        3) If 'alignMode' is set to a value other than 0, the script will
+           make an 'M3dAligned' directory where aligned models are stored.
+
+3. Specifiy input parameters to the script
+    workingDir - output directory where mean/pga m3d file, eigenvalue
+                 plot, is stored
+    m3dDir     - input directory where training m3d files are stored
+    fileFilter - file specification to select only certain m3d files 
+		 in 'm3dDir' for training pga statistics
+                 ex) 'a*.m3d'- m3d files starting with 'a'
+    paramFile  - path to the configuration file for this script 
+    savePrefix - (optional) string to add in front of certain output files
+                 (recommended to avoid output files beginning with '.')
+    skipNumer  - (optional) number of m3d files to leave out in training 
+		 statistics(for leave-one-out experiment)
+    successiveDist - (optional) training from 1st fraction to i-th fraction 
+                     where i = 2 ... N, N is the size of training sample
+
+4. Run the script. 
+   calculatePGA(workingDir, m3dDir, fileFilter, paramFile, savePrefix, skipNumber)
+
+*OUTPUT FILES
+
+SymMean.m3d: mean m3d model
+Sym.pga:     pg statistics
+SymEVs.txt:  eigenvalues (eValsPGA_global.jpg-eigenvalue plot)
+Data.mat:    intermediate matlab data file in which mean and stats are stored.
+	     Note: You need to delete this file if you want to run the
+             script fresh on the same training data.
+
+
+
+
+ 

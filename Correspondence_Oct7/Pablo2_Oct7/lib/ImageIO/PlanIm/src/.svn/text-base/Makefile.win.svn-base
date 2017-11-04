@@ -1,0 +1,78 @@
+
+CPPFILES = \
+	get_accessory.cxx \
+	get_filter.cxx \
+	get_lantis_data.cxx \
+	get_plunc_root_dir.cxx \
+	get_phys_dat_dir.cxx \
+	get_time_calc.cxx \
+	get_slice.cxx \
+	get_tray.cxx \
+	get_unit.cxx \
+	getopt.cxx \
+	plan_xdr_defs.cxx \
+	read_2d_grid.cxx \
+	read_accessory.cxx \
+	read_anastruct.cxx \
+	read_beam.cxx \
+	read_byte.cxx \
+	read_contour.cxx \
+	read_filter.cxx \
+	read_grid.cxx \
+	read_image_header.cxx \
+	read_implant.cxx \
+	read_many.cxx \
+	read_map.cxx \
+	read_norm.cxx \
+	read_object.cxx \
+	read_objects.cxx \
+	read_plan.cxx \
+	read_points.cxx \
+	read_sar.cxx \
+	read_scan.cxx \
+	read_time_calc.cxx \
+	read_tray.cxx \
+	read_unit.cxx \
+	read_weights.cxx \
+	realloc.cxx \
+	sock_utils.cxx \
+	write_implant.cxx \
+	write_object.cxx \
+	write_objects.cxx \
+	xdr_fd.cxx \
+	xdr_ll_planio.cxx
+
+OBJECTS = $(CPPFILES:.cxx=.obj)
+
+CXXFLAGS = $(HFLAGS) -I$(UP)/src/include -DWIN32
+
+LIBRARY = libplanio.lib
+LIBDIR = ../lib/
+
+all:	$(LIBRARY)
+
+$(LIBRARY): $(OBJECTS)
+    lib $(OBJECTS) /out:$(LIBRARY)
+
+.SUFFIXES:	.cxx .h .obj
+
+.cxx.o :
+	$(CXX) -I. $(CXXFLAGS) -c $<
+.c.o :
+	$(CC) -I. $(CFLAGS) -c -o $@ $<
+
+clean :
+	-del *.obj
+	-del $(LIBRARY)
+
+################################################################
+
+install: $(LIBRARY)
+	@echo "Installing library..."
+	copy $(LIBRARY) $(UP)\lib\.
+    copy libplanio.h $(UP)\src\include\.
+    copy getopt.h $(UP)\src\include\.
+
+#
+# End of "$Id: Makefile.win,v 1.1.1.1 2001/11/12 18:08:31 bell Exp $".
+#

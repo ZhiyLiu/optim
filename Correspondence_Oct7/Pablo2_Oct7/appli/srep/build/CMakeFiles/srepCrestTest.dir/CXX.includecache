@@ -1,0 +1,44 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/NIRAL/work/ltu/data_pablo/Pablo2/appli/srep/srepCrestTest.cxx
+vtkSmartPointer.h
+-
+vtksrep.h
+-
+vtksrepinterpolatemedialsheet.h
+-
+vtksrepvisuprimitives.h
+-
+vtkCellArray.h
+-
+vtkQuad.h
+-
+vtkLine.h
+-
+vtkPolyDataMapper.h
+-
+vtkActor.h
+-
+vtkProperty.h
+-
+vtkRenderer.h
+-
+vtkRenderWindowInteractor.h
+-
+vtkRenderWindow.h
+-
+vtksrepinterpolatemedialcrestcurve.h
+-
+vtksrepinterpolatemedialspokes.h
+-
+vtksrepinterpolatecrestspokes.h
+-
+vtksrepinterpolatecrestspokesquartic.h
+-
+

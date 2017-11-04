@@ -1,0 +1,6 @@
+function diffQPrim = minus(qP2, qP1)
+
+diffQPrim = QuadPrimitive(qP2.pos - qP1.pos, qP2.r / qP1.r, ...
+    qP2.elongation / qP1.elongation, QuatProd(QuatInv(qP1.q), qP2.q), ...
+    qP2.theta - qP1.theta, false);
+

@@ -1,0 +1,32 @@
+PABLO = ../../Pablo
+include $(PABLO)/makeinclude
+
+INCLUDES = -I. -I$(PABLO)/paul_code/include -I$(PABLO)/m3d/include
+
+LIBS = -lregistry -lm3d
+
+GLDLIBS = 
+
+LIBDIRS = -L$(PABLO)/paul_code/lib -L$(PABLO)/m3d/lib
+
+CPPFILES = flat.cpp
+
+OBJECTS = $(CPPFILES:.cpp=.o)
+
+DEPEND = $(PABLO)/paul_code/lib/libregistry.a $(PABLO)/m3d/lib/libm3d.a
+
+.SUFFIXES: .cpp .h .o
+
+
+all:	../bin/flat 
+
+.cpp.o :
+	$(CXX) $(INCLUDES) $(CXXFLAGS) -c $<
+
+../bin/flat: $(DEPEND) $(OBJECTS)
+	$(CXX) -o ../bin/flat $(LINKFLAGS) $(OBJECTS) $(LIBDIRS) $(LIBS) $(GLDLIBS)
+
+clean:
+	rm -f *.o
+	rm -f ../bin/flat
+

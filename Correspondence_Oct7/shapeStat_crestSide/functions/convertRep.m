@@ -1,0 +1,69 @@
+% function retAtomMatrix = convertRep(atomMatrix, repflag)
+
+% atomMatrix: cell matrix of atoms
+% repflag: 2  - convert Lie group / Symmetric rep. to S-rep rep.
+%          1  - convert Lie group / S-rep rep. to Symmetric rep.
+%          0  - convert Symmetric / S-rep rep. to Lie group rep.
+
+function retAtomMatrix = convertRep(atomMatrix, repflag, header, origLieAtoms)
+
+global TUBE_FIGURE;
+
+[nSamps, nAtoms] = size(atomMatrix);
+
+
+retAtomMatrix = cell(size(atomMatrix));
+if (repflag == 0)
+    if( nSamps ~= 1 && nSamps ~= size(origLieAtoms,1) )
+        error('Size of atomMatrix and origLieAtoms should be the same or atomMatrix should have only 1 sample.');
+    end
+    for i=1:nSamps
+        for j=1:nAtoms
+            retAtomMatrix{i,j} = convert2Lie(atomMatrix{i,j});
+        end
+        % ===================================================
+        % if tube figures, align tube figures
+        % ===================================================
+        atomCount	= 1;
+        for ifig = 1:sum(header.nFigs)
+            if( header.figTypes(ifig) == TUBE_FIGURE )
+                if( nSamps == 1 )
+                    alignedAtoms = alignTube( ...
+                        [retAtomMatrix{i,atomCount:atomCount+header.nFigAtoms(ifig)-1}], ...
+                        reshape( [origLieAtoms{:,atomCount:atomCount+header.nFigAtoms(ifig)-1}], ...
+                            [ size(origLieAtoms,1), header.nFigAtoms(ifig) ]) );
+                else
+                    alignedAtoms = alignTube( ...
+                        [retAtomMatrix{i,atomCount:atomCount+header.nFigAtoms(ifig)-1}], ...
+                        [origLieAtoms{i,atomCount:atomCount+header.nFigAtoms(ifig)-1}] );
+                end
+                for c = 1:size(alignedAtoms,2)
+                    retAtomMatrix{i, atomCount+c-1} = alignedAtoms(c);
+                end
+            end
+            atomCount	= atomCount + header.nFigAtoms(ifig);
+        end
+    end
+elseif (repflag == 1)
+    for i=1:nSamps
+        for j=1:nAtoms
+            retAtomMatrix{i,j} = convert2Sym(atomMatrix{i,j});
+        end
+    end
+elseif (repflag == 2) 
+    if( isa(atomMatrix{1,1}, 'TubePrimitive') )
+        disp('Attempting to convert tube to s-rep.  Probably wrong.');
+    end
+    for i=1:nSamps
+        for j=1:nAtoms
+            retAtomMatrix{i,j} = convert2Srep(atomMatrix{i,j});
+        end
+    end
+else    
+    disp('     Error: Not a valid option');
+    disp('');
+    return;
+
+end
+
+return;

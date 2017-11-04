@@ -1,0 +1,37 @@
+
+This code is taken from PLUNC version 6700.  The files are a combination of
+those in libplanio and libxdr.  Most files have not been modified; a few were
+slightly modified to eliminate warnings.
+
+With this version, PLUNC supports compression of images using zlib.  The
+version of zlib required is more recent than that used previously for raw3
+files.  As there seemed to be no compatibility problems when upgrading zlib,
+the files in ../../zlib were also upgraded with this change.  Testing showed
+that at compression level 1, which is used in PLUNC, newly compressed raw3
+files can be read by old versions of Pablo2.
+
+The new zlib code is virtually identical to that in PLUNC.  Only one .h file
+had to be changed for WIN32 systems.
+
+When installing this new version of libplanio, it was discovered that the
+PLUNC code contained a bug in xdr_plan_defs.cxx.  This was fixed in the 6700
+branch, but not in the primary version, so it is possible that later comparison
+my not reflect the same changes.
+
+Another change was the addition of the in_place argument to write_scan_xy().
+Since PLUNC never uses an image array after it is written, it has no problem
+with corrupting the array by compressing it in place.  This is usually not
+the case in Pablo or in ConStruct, since the image is usually being displayed.
+The changes made correct this problem.
+
+Because of the new capability for compressing, file ../src/ImageIO.cpp was
+changed slightly to determine if output plan_im files were to be compressed,
+by examining the CompressImages setting in the globalControl object.  No
+capability for converting them automatically was added, however.
+
+One minor change was the addition of the O_BINARY definition to libplanio.h.
+
+
+AGG, June 9, 2008
+
+

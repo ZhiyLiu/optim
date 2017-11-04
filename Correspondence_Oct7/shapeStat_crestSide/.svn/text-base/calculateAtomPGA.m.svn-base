@@ -1,0 +1,647 @@
+% Modified from 'calculatePGA.m'
+% Xiaoxiao Liu
+% July, 2007
+
+function [globalStruct, varargout] = calculateAtomPGA(workingDir, m3dDir, fileFilter, paramFile, savePrefix, skipNumber,meanRadiiFileName);
+% to compile as a stand alone program, use:
+%    mcc -m calculatePGA -I Functions -d bin
+
+global QUAD_FIGURE;
+QUAD_FIGURE = 1;
+global TUBE_FIGURE;
+
+
+TUBE_FIGURE = 2;
+global FIG_TYPENAMES;
+FIG_TYPENAMES   = { 'QuadFigure', 'TubeFigure' };
+
+if(nargin < 1)
+    workingDir = pwd;
+end;
+
+if(nargin < 2)
+    m3dDir = fullfile(workingDir, 'M3dRaw');
+end;
+
+if(nargin < 3)
+    fileFilter = '*.m3d';
+end
+
+if(nargin < 4 || isempty(paramFile))
+    paramFile = fullfile(workingDir, 'param.txt');
+end
+
+
+if(nargin < 5)
+    savePrefix = '';
+end
+
+if(nargin < 6)
+    skipNumber = -1;
+end
+
+%create 'workingDir' if it doesn't exist
+if(exist(workingDir) ~= 7)     %if 'workingDir' is a directory
+    mkdir(workingDir);
+end;
+
+pack, close all
+% -------------------------------
+% Save a copy of run log
+% -------------------------------
+diary off;
+runLogFile = fullfile(workingDir, 'runPGA.log');
+if (~isempty(dir(runLogFile)))
+    delete(runLogFile);
+end
+diary(runLogFile);
+
+%% ======= 1) setting =====================================================
+
+% =======  Set these parameters to appropriate values  ====================
+Param = readParam(paramFile);
+
+statsFlag = Param.statsFlag;
+bReadData = Param.bReadData;
+PGAflag = Param.PGAflag;
+bOutput = Param.bOutput;
+bCleanUp = Param.bCleanUp;
+dependency.figureOrder = Param.figureOrder;
+dependency.depAtomTree = Param.depAtomTree;
+nComp = Param.nComp;
+nProj = Param.nProj;
+figNames = Param.figNames;
+%worldExtent = Param.worldExtent;
+endAtomNormalization =0;% Param.normalizeEndAtoms;
+
+prediction = Param.prediction;
+alignMode = Param.alignMode;
+
+writeOldFormat = 0;
+% =================  End of setting parameters  ===========================
+
+%% *************** 2) Working directory and file names ********************
+
+% Project name, used to generate output file names.  Set to be working dir
+% name.
+[pathstr, projName, ext, vers] = fileparts(workingDir);
+projName(1) = lower(projName(1));   % change the first char to lower case
+projName = fullfile(workingDir, projName);
+if (bCleanUp)
+    clear pathstr ext vers
+end
+
+disp('##################################################################');
+disp(['##  Current project: ' projName]);
+disp(['##    Started: ' datestr(now)]);
+disp(['##    M3D Files: ' fullfile(m3dDir, fileFilter)]);
+disp('##################################################################');
+disp(' ');
+
+% ******************* Set these file names if necessary *********************
+pgaFile  = fullfile(workingDir, sprintf('PGA%03d.mat', skipNumber) );
+% This file is only used when
+% storing individual pgas
+dataFile = fullfile(workingDir, 'Data.mat');	% data file
+alignedDir = ['M3dAligned'];					% aligned m-reps directory
+normalizedDir = ['M3dNormalized'];				% normalized m-reps directory
+normalizedDataFile = fullfile( [ workingDir filesep normalizedDir ], 'eaNormalized.mat');
+% end-atom normalized data file
+% ***************************************************************************
+
+PROJ = struct('name', projName, 'workingDir', workingDir, 'm3dDir', m3dDir,'fileFilter', fileFilter, ...
+    'dataFile', dataFile, 'figNames', {figNames}, 'alignedDir', alignedDir, ...
+    'normalizedDir', normalizedDir, 'normalizedDataFile', normalizedDataFile);
+if (bCleanUp)
+    clear projName m3dDir dataFile figNames alignedDir;
+end
+
+% =========================================================================
+%%  3) Read training m3d files, and store the information in structure arrays.
+% -------------------------------------------------------------------------
+
+disp('  ***********************************************');
+if (exist(PROJ.dataFile))
+    load(PROJ.dataFile);
+    disp('  * Pre-read data is loaded.                    *');
+    disp('  * Skip reading data.                          *');
+
+else
+    disp('  * Generating data files for matlab...         *');
+    disp('  *---------------------------------------------*');
+
+    [header, rawDataStruct] = readM3d(PROJ.m3dDir, fileFilter);
+    header.figNames = PROJ.figNames;
+    header.adaptive = false;
+
+    if (length(PROJ.figNames) ~= length(header.nFigs))
+        disp('    Error : mismatch in models and parameter setting!');
+        disp('    Check "param.txt"!');
+        disp('  ***********************************************');
+        return;
+    end
+
+    save(PROJ.dataFile, 'PROJ', 'header', 'rawDataStruct');
+
+    disp(' ');
+    disp(['    Done! Raw model data saved to ' PROJ.dataFile '.']);
+end
+disp('  ***********************************************');
+disp(' ');
+
+
+% ===================================================
+%% 4) a) Normalize end-atoms (tubes only)
+%   endAtomNormalization: 1 - normalize end atoms
+%                         0 - no normalization.
+% ---------------------------------------------------
+disp('  ***********************************************');
+if( endAtomNormalization == 1 )
+    disp('  * Normalizing tube end-atoms. *');
+    if(exist([ PROJ.workingDir filesep PROJ.normalizedDir] ) ~= 7)     %if normalizedDir exists
+        mkdir([ PROJ.workingDir filesep PROJ.normalizedDir ]);
+    end
+    if (exist(PROJ.normalizedDataFile))
+        load(PROJ.normalizedDataFile);
+        disp('  * Pre-computed normalized data is loaded.     *');
+        disp('  * Skip computation of end atom normalization. *');
+
+    else
+        %% FIXME: Check for several objects.
+        atomCount	= 1;
+        for i = 1:sum(header.nFigs)
+            % ===================================================
+            % if tube atoms, then do end atom normalization
+            % ===================================================
+            if( header.figTypes(i) == TUBE_FIGURE )
+                normalizedAtoms = normalizeEndAtoms( ...
+                    reshape([rawDataStruct.atoms{:,atomCount:atomCount+header.nFigAtoms(i)-1}], ...
+                    [ header.nSamps, header.nFigAtoms(i)]) );
+                for r = 1:size(normalizedAtoms,1)
+                    for c = 1:size(normalizedAtoms,2)
+                        rawDataStruct.atoms{r,atomCount+c-1}	= normalizedAtoms(r,c);
+                    end
+                end
+            end
+            atomCount	= atomCount + header.nFigAtoms(i);
+        end
+
+        %
+        % Save the end-atom normalized results.
+        %
+        save(PROJ.normalizedDataFile, 'rawDataStruct');
+
+        %
+        % Write each of the m-reps out.
+        %
+        [status, message] = mkdir(PROJ.normalizedDir);
+        if (status == 0)
+            disp(['    Error creating ' PROJ.normalizedDir '. End-atom normalized m-reps cannot be saved. ']);
+        else
+            h = waitbar(0, 'Saving end-atom normalized models...');
+            nSamps = header.nSamps;
+            for i = 1:nSamps
+                modelType = -1;
+                [pathstr, filename, ext, ver] = fileparts(rawDataStruct.rawFileNames{i});
+                if (isempty(rawDataStruct.maxDim))
+                    writeM3d([PROJ.workingDir filesep PROJ.normalizedDir filesep filename '.normalized' ext], ...
+                        header, modelType, squeeze(rawDataStruct.atoms(i, :)));
+                else
+                    writeM3d([PROJ.workingDir filesep PROJ.normalizedDir filesep filename '.normalized' ext], ...
+                        header, modelType, squeeze(rawDataStruct.atoms(i, :)), rawDataStruct.worldExtents{i});
+                end
+                waitbar(i/nSamps, h, [num2str(i) ' out of ' ...
+                    num2str(nSamps) ' normalized models saved.']);
+            end
+            close(h); drawnow;
+            disp(['    End-atom normalized m-reps saved to ' PROJ.workingDir filesep PROJ.normalizedDir '.']);
+        end
+    end
+else
+    disp('  * Skipping tube end-atom normalization. *');
+end
+disp('  ***********************************************');
+disp(' ');
+
+
+% ===================================================
+%% 4) Align m-reps
+%
+%   alignMode: 1 - translation only
+%              2 - translation and rotation
+%              3 - translation, rotation and scaling
+%              0 - skip alignment
+% ---------------------------------------------------
+disp('  ***********************************************');
+
+if (~ismember(alignMode, 0:3))
+    beep;
+    disp('  * Unknown alignment mode.  Abort.             *');
+
+elseif (alignMode == 0)
+    disp('  * Skip alignment. Use precomputed alignments*');
+    disp('  * or raw data is aligned... *');
+
+    if (~exist('rawDataStruct') )
+        disp('  * Error: data have not been read yet. Abort.  *');
+        disp('  ***********************************************');
+        return;
+    elseif (exist('rawDataStruct'))
+        alignedDataStruct = rawDataStruct;
+    end
+else
+    disp('  * Aligning models...                          *');
+    disp('  *---------------------------------------------*');
+    switch (alignMode)
+        case 1,
+            disp('    Alignment: translation only.');
+        case 2,
+            disp('    Alignment: translation and rotation.');
+        case 3,
+            disp('    Alignment: translation, rotation and scaling.');
+    end
+
+    if (~exist('rawDataStruct') && exist(PROJ.dataFile))
+        load(PROJ.dataFile);
+    end
+    if (~exist('rawDataStruct'))
+        disp('  * Error: data have not been read yet. Abort.  *');
+        disp('  ***********************************************');
+        return;
+    end
+    if (exist('alignedDataStruct'))
+        disp('  * Loading previously computed aligned models.  *');
+    else
+        % Get aligned m-reps
+        % jeong 11/5/04 : mrep in lie-rep not symm rep.
+        alignedDataStruct = alignModels(alignMode, header, rawDataStruct);
+        mySavedVersionOfAlignedDataStruct	= alignedDataStruct;
+        [status, message] = mkdir(PROJ.workingDir, PROJ.alignedDir);
+        if (status == 0)
+            disp(['    Error creating ' PROJ.alignedDir '. Aligned m-reps cannot be saved. ']);
+        else
+            h = waitbar(0, 'Saving aligned models...');
+            nSamps = header.nSamps;
+            xFormFilenames = cell(nSamps,1);
+            for i = 1:nSamps
+                modelType = -1;
+                [pathstr, filename, ext, ver] = fileparts(rawDataStruct.rawFileNames{i});
+                if (isempty(alignedDataStruct.maxDim))
+                    writeM3d([PROJ.workingDir filesep PROJ.alignedDir filesep filename '.aligned' ext], ...
+                        header, modelType, squeeze(alignedDataStruct.atoms(i, :)));
+                else
+                    writeM3d([PROJ.workingDir filesep PROJ.alignedDir filesep filename '.aligned' ext], ...
+                        header, modelType, squeeze(alignedDataStruct.atoms(i, :)), alignedDataStruct.worldExtents{i});
+                end
+                waitbar(i/nSamps, h, [num2str(i) ' out of ' ...
+                    num2str(nSamps) ' aligned models saved.']);
+                xFormFilenames{i} = [filename '.xform' ext];
+            end
+            close(h); drawnow;
+            disp(['    Aligned m-reps saved to ' PROJ.workingDir filesep PROJ.alignedDir '.']);
+
+
+            %
+            % FIXME: cannot find writeXform function - rohit
+            %
+            writeAlignmentXform = 0;
+            if (writeAlignmentXform)
+                % alignedDataStruct.alignTransf = [Aqr; Av];
+                mkdir(PROJ.workingDir, 'xforms');
+                outputXformDir = fullfile(PROJ.workingDir, 'xforms');
+                writeXform(outputXformDir, xFormFilenames, alignedDataStruct.alignTransf , 1);
+            end
+        end
+
+        save(PROJ.dataFile, 'alignedDataStruct', '-append');
+
+        disp(['    Aligned models saved to ' PROJ.dataFile '.']);
+    end
+    disp('    Done!');
+
+    if (bCleanUp)
+        clear status h nObjs i pathstr filename ext ver;
+    end
+end
+
+disp('  ***********************************************');
+disp(' ');
+
+% ===================================================
+%% 5) PGA of m-reps models
+%
+%   PGAflag:    0 - all scales
+%               From 1-4, pga on the object itself, not
+%               the residue from the previous stage.
+%               1 - object ensemble stage only
+%               2 - object stage only
+%               3 - figure stage only
+%               4 - atom stage only
+%              -1 - skip PGA
+% ---------------------------------------------------
+disp('  ***********************************************');
+
+if (PGAflag == -1)
+    disp('  * Skip PGA.                                   *');
+elseif (~ismember(PGAflag, 0:4))
+    beep;
+    disp('  * Unknown PGA type.  Abort.                    ');
+    return;
+else
+    switch (PGAflag)
+        case 0,
+            disp('  * PGA: all scales...                       ');
+        case 1,
+            disp('  * PGA: object ensemble scale only...       ');
+        case 2,
+            disp('  * PGA: object scale only...                ');
+        case 3,
+            disp('  * PGA: figure scale only...                ');
+        case 4,
+            disp('  * PGA: atom scale only...                  ');
+    end
+    disp('  *---------------------------------------------*');
+end
+
+if (~exist('alignedDataStruct'))
+    disp('  * Error: should do alignment first! Abort.    *');
+    disp('  ***********************************************');
+    return;
+end
+
+%% 5.1) convert dependency from m3d format to working format
+header.dependency.figureOrder = dependency.figureOrder + 1; %Matlab starts with index 1
+header.dependency.depAtomMatrix = cell(sum(header.nFigs));
+if (PGAflag == 0)
+    for kk = 1:length(header.dependency.figureOrder)
+        k = header.dependency.figureOrder(kk);
+        if ( ~isempty(dependency.depAtomTree{kk}) )
+            for j = 1:length(dependency.depAtomTree{kk})
+                figNum = dependency.depAtomTree{kk}{j}(1) + 1;
+                na = length(dependency.depAtomTree{kk}{j});
+                daIDs = cat(2, dependency.depAtomTree{kk}{j}(2:na));
+                header.dependency.depAtomMatrix(k, figNum) = { header.figIDs(figNum)+daIDs };
+            end
+        end
+    end
+end
+save(PROJ.dataFile, 'header', '-append');
+clear j k atomIDs na daIDs figNum
+
+%% 5.2) Convert atoms in lie group representation to sym representation
+lieAlignedDataStructAtoms	= alignedDataStruct.atoms;
+if (statsFlag == 1)
+    alignedDataStruct.atoms = convertRep(alignedDataStruct.atoms, statsFlag);
+end
+
+
+%% 5.3) Scale atom data to put models in World Extent
+% ***********************************************
+% World Coord is not handled in matlab script.  *
+% ***********************************************
+% checkMaxDim = isempty(alignedDataStruct.maxDim);
+%
+% if (checkMaxDim)
+%     disp('World extents of training models are not specified.');
+%     disp('No scaling to image space is done.');
+%     disp('');
+% elseif (~worldExtent)  % default - most freqent max extent
+%     freqDimVec = repmat(alignedDataStruct.freqDim(1), size(alignedDataStruct.maxDim));
+%     scaleVec = freqDimVec ./ alignedDataStruct.maxDim;
+%     alignedDataStruct.atoms = mrepToScale(alignedDataStruct.atoms, scaleVec);
+% else
+%     worldExtVec = repmat(worldExtent, size(alignedDataStruct.maxDim));
+%     scaleVec = alignedDataStruct.maxDim ./ worldExtVec ;
+%     alignedDataStruct.atoms = mrepToScale(alignedDataStruct.atoms, scaleVec);
+% end
+
+
+%% Need to change before merging tube and quad 3)
+% ****************************************************
+% Global statistics.  This is always the first step.
+% ****************************************************
+
+PGALevel = 1;  %indicate which object level of pga
+numFigs = sum(header.nFigs);
+numFigStats = length(header.dependency.figureOrder);
+
+%-----------------------------------------------------------------------
+% 1) Compute PGA for all stage or ensemble stage if input object has
+% multiple figures.
+% 2) In case for single figure, the object stage is the same as
+% the ensemble stage. Whether PGAflag is set to 0, 1, or 2, the output
+% result should be the same.
+%-----------------------------------------------------------------------
+
+
+% if ( PGAflag == 0 || PGAflag == 1)
+% 
+%     disp(' ');
+%     disp('  *---------------------------------------------*');
+%     disp('    Global statistics...');
+%     disp('  *---------------------------------------------*');
+%     disp(' ');
+% 
+%     %----------------------------------------------------------------------------------------
+%     % Global residue computation
+%     %----------------------------------------------------------------------------------------
+%     fileName = fullfile(workingDir, 'eValsPGA_global.jpg');
+%     if( skipNumber == -1 )
+%         globalStruct = getPGA(alignedDataStruct.atoms, nComp(PGALevel), nProj(PGALevel), statsFlag, fileName);
+%     else
+%         touse	= [1:(skipNumber-1) (skipNumber+1):size(alignedDataStruct.atoms,1)];
+%         globalStruct = getPGA(alignedDataStruct.atoms(touse,:), nComp(PGALevel), nProj(PGALevel), statsFlag, fileName);
+%     end
+% 
+%     %     globalStruct.projections = atomMult(reshape( repmat(tempStruct.stats.Mean, ...
+%     %         header.nSamps, 1), size(tempStruct.projections) ), tempStruct.projections);
+%     %     globalStruct.residues = atomDiff(globalStruct.projections, alignedDataStruct.atoms);
+%     %----------------------------------------------------------------------------------------
+% 
+%     % This is used to make the units commensurate.
+%     % DON'T FORGET : We put every components into a vector
+%     % and do statistics on it!!
+%     globalMean = globalStruct.stats.Mean;
+% 
+%     %    meanRadii = globalMean(4, :);
+%     prevStruct = globalStruct;
+% 
+%     if( skipNumber == -1 )
+%         save(PROJ.dataFile, 'globalStruct', '-append');
+%     else
+%         save(pgaFile, 'globalStruct');
+%     end
+%     disp(['      Global PGA results saved to ' PROJ.dataFile '.' ' Done!']);
+%     disp(' ');
+% 
+%     clear h tempStruct fileName;
+% end
+
+
+% ***********************************************************
+% AtomResidue statistics.
+% ***********************************************************
+if (PGAflag == 4 | PGAflag == 0) %old config file has pgaFlag ==0
+
+    if (numFigs ~= numFigStats)  %numFigs == numFigStats only if multi-object case
+        disp('    Error : mismatch in models and dependency setting!');
+        disp('    Check "param.txt"!');
+        disp('  ***********************************************');
+        return;
+    end
+
+    disp(' ');
+    disp('  *---------------------------------------------*');
+    disp('    Atom residue statistics ');
+    disp('  *---------------------------------------------*');
+    disp(' ');
+
+    %-----------------------xiaoxiao  Feb.11,2006---------------------------
+
+    %******** The first several lines of the atom PGA
+    meanFileName = fullfile(workingDir, [savePrefix, '-SymMean.txt']);
+    if( exist(meanFileName,'file')>0)
+        delete(meanFileName);
+    end
+
+    fd=fopen(meanFileName,'at');
+    fprintf(fd,'\n\n\n');
+    fprintf(fd,'atomPGAStats{ \n');
+    fprintf(fd,'     numFigs = %d; \n', numFigs);
+    fclose(fd);
+
+    startAtomNo=1;
+    for figNo = 1:numFigs
+        fd=fopen(meanFileName,'at');
+        %print the figure header
+        fprintf(fd,'     figure[%d]{\n',figNo-1);
+        fprintf(fd,'          figIndex = %d; \n',figNo-1);
+        fprintf(fd,'          numAtoms = %d; \n',header.nFigAtoms(figNo));
+        fclose(fd);
+
+        load(meanRadiiFileName);%xiaoxiao: computed from fig PGA
+        figMeanRadii = meanRadii;
+        clear meanRadii;
+
+        for atomNum = startAtomNo:(startAtomNo+header.nFigAtoms(figNo)-1)
+            fileName =  ['eModes_atom_',num2str(atomNum)]; 
+            pgaOptions = struct('meanRadii', figMeanRadii(atomNum),  'saveFlag', 1, 'weightMode', 1,'resPGA',1);
+            atomStruct = getPGA(alignedDataStruct.atoms(:,atomNum), nComp(PGALevel), nProj(PGALevel), ...
+                 workingDir,fileName, pgaOptions);%mean = 0
+ 
+                               
+          %  meanPrimitive = {QuadPrimitive([0,0,0],1,1,[1,0,0,0],0)};  % right now, this is working for Quads only , fix later: for both quads and tubes
+                   
+            % record all the EVS for atoms
+            eigenVals(atomNum,1:nComp)=atomStruct.stats.EVs;
+
+%            atomStruct.projections = (repmat(atomStruct.stats.Mean, header.nSamps, 1)+atomStruct.projections;
+            %atomMult(reshape( repmat(atomStruct.stats.Mean, ...
+               % header.nSamps, 1), size(atomStruct.projections) ), atomStruct.projections);
+
+            disp([' Atom ' num2str(atomNum) ' atom  residue PGA computed.']);
+            disp(' ');
+
+            if (bCleanUp)
+                clear fileName;
+            end
+
+
+            % ======================================================================
+            % Create mean m3d model file and PGA results to be used by Pablo
+            % ----------------------------------------------------------------------
+            if (bOutput)
+                disp('  ***********************************************');
+                disp('  * Generating pablo files...                   *');
+                disp('  *---------------------------------------------*');
+
+                % Load PGA results
+                if ( ~exist(PROJ.dataFile) )
+                    disp('Error: statistics not computed yet!');
+                    return;
+                end
+                load(PROJ.dataFile);
+
+                                
+                % ************************************
+                % Generate the mean m3d model file.  *
+                % ************************************
+               
+
+                modelType = 1;  %mean
+                % ***********************************************
+                % World Coord is not handled in matlab script.  *
+                % ***********************************************
+                %if (checkMaxDim)
+                %   freqDim = rawDataStruct.freqDim;
+                %   worldExts = rawDataStruct.worldExtents{freqDim(2)};
+                %   writeM3d(meanFileName, header, modelType, meanM3d, worldExts);
+                %else
+                %writePrimitivePGA(meanFileName, header, atomStruct.stats.Mean,atomNum,atomStruct);
+                writePrimitivePGA(atomStruct.stats.Mean{1},header,atomStruct, meanFileName, atomNum);
+                %end
+
+%                 % *****************************
+%                 % Output EVs to a text file.  *
+%                 % *****************************
+%                 if (statsFlag == 0)
+%                     EVsFileName = fullfile(workingDir, 'ProdEVs.txt');
+%                 elseif (statsFlag == 1)
+%                     EVsFileName = fullfile(workingDir, 'SymEVs.txt');
+%                 end
+% 
+%                 if( numFigs == 1) %TESTED OK
+%                     writeEVs(EVsFileName, header, globalStruct);
+%                 elseif( numFigs > 1)
+%                     if(PGAflag == 1) %TESTED OK
+%                         writeEVs(EVsFileName, header, globalStruct);
+%                     elseif(PGAflag == 0) %TESTED OK
+%                         writeEVs(EVsFileName, header, globalStruct, resStruct);
+%                     end
+%                 end
+%                 disp(['    Eigenvalues saved to ' EVsFileName]);
+%                 //xiaoxiao?? no need to calcualte resStruct?
+
+                % **********************************************
+                % Output the PGA results in Tom's old format.   *
+                % **********************************************
+                if (statsFlag == 0)
+                    PabloPGAFile = fullfile(workingDir, 'ProdPGA');
+                elseif (statsFlag == 1)
+                    PabloPGAFile = fullfile(workingDir, 'SymPGA');
+                end
+
+                if (bOutput == 1)
+                    PabloPGAFile = [PabloPGAFile '.dat'];
+                else
+                    PabloPGAFile = [PabloPGAFile '.txt'];
+                end
+
+                %             if (writeOldFormat)
+                %                 writePGAInOldFormat(PabloPGAFile, bOutput, statsFlag, header, globalStruct, resStruct);
+                %                 disp(['    Statistics in old Format saved to ' PabloPGAFile '.']);
+                %             end
+                disp('  ***********************************************');
+            end
+        end
+        fd=fopen(meanFileName,'at');
+        fprintf(fd,'     }\n');
+        fclose(fd);
+        %end of the figure
+        startAtomNo=startAtomNo+header.nFigAtoms(figNo);
+    end
+end
+%xiaoxiao: finish up the atomPGA file
+fd=fopen(meanFileName,'at');
+fprintf(fd,'}\n');
+fclose(fd);
+
+%save the eigenVals
+eigenValsFileName = fullfile(workingDir, [savePrefix, '-eigenVals.mat']);
+save(eigenValsFileName,'eigenVals');
+
+
+disp(' ');
+disp(['-------------    Finished: ' datestr(now) '    ------------']);
+disp(' ');
+diary off;

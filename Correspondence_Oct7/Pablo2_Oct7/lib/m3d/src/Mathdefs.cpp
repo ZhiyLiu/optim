@@ -1,0 +1,13 @@
+#include "Mathdefs.h"
+
+const Real R_PI      = (Real) 3.14159265358979323846264338327950L;
+const Real R_TWO_PI  = (Real) 6.28318530717958647692528676655901L;
+const Real R_HALF_PI = (Real) 1.57079632679489661923132169163975L;
+
+const Real R_DEGREES_TO_RADIANS = R_PI / 180.0;
+const Real R_RADIANS_TO_DEGREES = 180.0 / R_PI;
+
+const Real R_LARGE_REAL = (Real) 1.0e20;
+const Real R_SMALL_TOLERANCE = (Real) 0.000001;
+
+

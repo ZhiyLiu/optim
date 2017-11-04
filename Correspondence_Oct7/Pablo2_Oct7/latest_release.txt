@@ -1,0 +1,175 @@
+
+                    Status of the Latest Pablo Release
+
+
+This file contains a concise description of the latest official release of
+Pablo.  It is intended to provide a way of rapidly determining the unique
+characteristics of a particular released version of Pablo.  Releases are
+designated by the project leaders to correspond to a particular CVS revision
+of the code and thus to a particular version number as seen on the About Pablo
+Window.  Each time a new release is announced, a new version of this file is
+to be edited by the Pablo developers and checked into CVS.  The release number
+is to be recorded in the log message of the check-in, so that the history of
+this file can be examined to find a particular release.  Unless otherwise
+indicated here, all comments refer to the "Release" version, i.e. the
+optimized, production compilation.
+
+
+                           ---------------------
+
+
+
+Current Version:  2003/10/15 19:49:33
+
+Release Number:
+
+Release Date:
+
+CVS Tag:
+
+General Status:  This version of Pablo supports full single figure optimization.
+Multi-figure objects are supported, except that optimization of them is not
+possible in the atom stage.  Blending based on subdivison surfaces works for
+a main figure with a single subfigure, as long as main figure is figure number
+0.  PGA statistics may optionally be used during optimization.  All graphics
+are drawn with OpenGL, and windowing is done using FLTK.
+
+Most recent major changes:  Blending based on subdivision surface was added.
+Principal geodesic analysis (PGA) has been added to the optimizer in the main
+figure stage.  There is an option in the Optimizer Settings dialog to use PGA or
+not, and an interface to load a PGA file.
+
+
+
+                      Status of Various Components
+
+
+--- Boundary fitting (Conglin Lu).
+Input/output of boundary displacements works at all subdivision levels.
+
+
+
+--- Cut Planes Library (Graham Gash).
+The cut planes code generates image slices showing the surface boundary.
+These may be displayed in separate windows and in the Model Window, under
+control of the Cut Planes Control Window.  Currently only unblended surface
+boundaries are drawn on the cut plane slices; blends are not drawn.
+
+
+
+--- File I/O (Graham Gash).
+Most of the I/O code is in the m3d library.  The only image file format
+currently supported is raw3, which is described in file pablo_format.txt.  It
+supports automatic image compression using the zlib library.
+
+Model files are stored in m3d files, each of which begins with the
+version number of Pablo that produced the file.  The model then follows,
+first by specifying the tree and then by giving the figures.  Finally the
+file contains similarity transformation parameters, that is, a global
+translation, rotation, and scale.  The model files do not contain any
+information to relate their content to the real world coordinates of any image.
+
+Pablo records each user's preferences in a pablo.txt file.  This file is
+processed using the ControlFile.h and ControlParms.h classes in the m3d
+library.  All preferences are available through the globalControl object
+declared in pablo.cpp.
+
+
+
+--- M3d Library (Tom Fletcher and Graham Gash).
+The m3d library supports a fixed mesh of atoms for each figure.  Multiple
+indentation and protrusion figures can comprise an object, and multiple
+objects may comprise the model.  This hierarchy is encoded in a tree of
+M3DFigureTreeNode objects.  Two kinds of atoms are used, interior atoms (class
+M3DPrimitive) and crest atoms, which contain an elongation value (class
+MDEndPrimitive, derived from M3DPrimitive).  This library also contains basic
+math capabilities used in Pablo, particularly vector, quaternion, Bezier, and
+transformation matrix classes.  The classes for drawing atoms, figures and
+objects are provided.  Other classes store inter-figural constraints and
+similarity transforms.  Another important component of this library is the
+I/O and processing of images.  There is a Gaussian blurring class, for example.
+The storage and I/O of the user preferences is also here.
+
+
+
+--- Match Library (Joshua Stough and Tom Fletcher).
+Explanation of Mask class, profiles, statistics, etc. from Josh...
+
+The Match class contains routines to compute image match and geometry penalties
+for use as objective functions in the m-rep optimization routines described
+below.  There is a match routine (compute*Match) and a geometry penalty routine
+(compute*Penalty) for each stage of the optimization.
+
+Also included in the Match library are the Danielsson distance map routine and
+a connected components routine (ccl.c).  These are used to construct figural
+coordinates in the DistanceMap3D class.  Figural coordinates are the (u,v,t,tau)
+- u,v,t being coordinates on the figure, tau being the r-proportional signed
+distance from the figure surface.  Finally, the deltas.cpp file is (I believe)
+not used.
+
+
+
+--- Optimization (Tom Fletcher).
+The m-rep optimization code is in the register library.  All methods use the
+conjugate gradient method from the paul_code library to optimize an objective
+function.  There are several stages to the optimization: object ensemble,
+object, figure, main figure, subfigure, atom, and boundary.  Each stage has a
+problem class and a optimizer class with the exception of the boundary stage,
+which has no problem class.  The problem class defines the objective function
+to be optimized, and the optimizer class optimizes this objective function by
+calling the conjugate gradient methods.
+
+There is some confusion with different names used in the user interface and
+code for the same optimization stages.  So, here is a list of the stage names
+in various places:
+
+    User Interface Display     Register Classes (M3D*Problem, M3D*Optimizer)
+    ------------------------------------------------------------------------
+    Object Ensemble Stage      Registration
+    Object Stage               Registration
+    Figure Stage               MainFigure
+    Main Figure Stage          MainFigure
+    Subfigure Stage            Subfigure
+    Atom Stage                 Deformation
+    Boundary Stage             BoundaryDisplacement
+
+The MainFigure classes are abstract.  They have two derived child classes:
+SimilarityElongation and SimilarityPGA.  These can be switched (at runtime) to
+provide either the standard optimization (similarity + elongation) or a
+statistical optimization (similarity + PGA).
+
+
+
+--- The Paul_code Library (Tom Fletcher and Graham Gash).
+This code has been stable for a long time now.  It contains Paul Yushkevich's
+optimization library using conjugate gradient, Brent, simplex, and genetic
+algorithm methods.  This library also contains the Registry class used for I/O
+of the model and user preferences files.  There are also an N-dimensional vector
+and matrix classes, which wrap some linear algebra methods from CLAPACK.
+
+
+
+--- Seurat Rendering Library (Qiong Han).
+There are presently two Pointlist_server classes.  Blending requires the
+parent to be figure 0.  This code is still undergoing major development.
+
+
+
+--- Statistics (Joshua Stough).
+Note: This material should perhaps be within Match Library above.
+This code is still undergoing major development.
+
+
+
+--- User Interface (Graham Gash).
+The user interface is currently generated using fluid version 1.1.0, which was
+included in FLTK release 1.1.0rc5.  There are three principal windows, the
+8-button Main Window, with File, Edit, Windows and Tools menus, the Model
+Window, for display of the model and image, a Display Control Window for
+adjusting properties of the surface, image and tile set display, and a
+Visibility Control Window for individually turning on or off the atoms,
+figures, the mesh, constraints and landmarks.  A revised version of flvw-1.0
+is used for the editing of model, figure and landmark names.  The editing of
+the 130 user preferences is supported using a Preferences Editor Window.
+
+

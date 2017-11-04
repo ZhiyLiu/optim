@@ -1,0 +1,127 @@
+if(!srepPathNames.empty()){
+    for(int q =0; q<srepPathNames.size();q++){
+        cout<<"-------------there are: "<<srepPathNames.size()<<"sreps."<<endl;
+        this->figfilename = srepPathNames[q];
+        cout<<"Begain to read in srep: "<<this->figfilename<<endl;
+
+        this->quadFig = tls.GetQuadFigure(this->figfilename.c_str());
+
+        M3DQuadInterpolater *tpm = new M3DQuadInterpolater(this->quadFig);
+        //point, a 3D vector, which store the x, y, z coordinate of this point.
+        M3DSpoke* newspoke;
+        int mesh_b_index = 0;
+        int mesh_s_index =0;
+
+        //Per srep's boundary points compsite its own mesh.
+        this->mesh_b = MeshType::New();
+        // Create points
+        PointType point;
+        this->mesh_s = MeshType::New();
+
+        //Loop each primitive, get the x,y,z coordinate of this srep's boundary.
+        for(unsigned u =0; u<this->quadFig->getRowCount(); u++){
+            for(unsigned v =0; v<this->quadFig->getColumnCount(); v++){
+
+                //up side. Add up side boundary points to mesh_b.
+                newspoke = tpm->interpolateQuadSpoke(this->quadFig,u,v,0);
+                //cout<<"-------------------newspoke->getB() is: "<<newspoke->getB()<<endl;
+                point[0]= newspoke->getB().getX();
+                point[1]= newspoke->getB().getY();
+                point[2]= newspoke->getB().getZ();
+                this->mesh_b->SetPoint(mesh_b_index, point);
+                mesh_b_index++;
+
+                //Add down side boundary points to mesh_b.
+                newspoke = tpm->interpolateQuadSpoke(this->quadFig,u,v,1);
+                point[0]= newspoke->getB().getX();
+                point[1]= newspoke->getB().getY();
+                point[2]= newspoke->getB().getZ();
+                this->mesh_b->SetPoint(mesh_b_index, point);
+                mesh_b_index++;
+
+                //Add crest boundary points to mesh_b.
+                //newspoke = tpm->interpolateQuadSpoke(this->quadFig,u,v,2);
+
+                //Get the skeletal points and store in mesh_s.
+                point[0]= newspoke->getX().getX();
+                point[1]= newspoke->getX().getY();
+                point[2]= newspoke->getX().getZ();
+                this->mesh_s->SetPoint(mesh_s_index, point);
+                mesh_s_index++;
+
+
+
+            }
+        }
+
+        delete tpm;
+
+        std::cout << "Mesh points for each srep is: " << this->mesh_b->GetNumberOfPoints() << std::endl;
+        PointsIterator pointIterator = this->mesh_b->GetPoints()->Begin();
+
+        //Output these mesh points.
+        PointsIterator end = this->mesh_b->GetPoints()->End();
+        while( pointIterator != end )   {
+          MeshType::PointType p = pointIterator.Value();  // access the point
+          std::cout << p << std::endl;                    // print the point
+          ++pointIterator;                                // advance to next point
+        }
+
+        // Add the current srep's boundary mesh into procrustesFilter
+       /* procrustesFilter->SetInput(q, this->mesh_b);
+
+        //store this mesh_s into a vector.
+        this->mesh_s_list.push_back(this->mesh_s);*/
+    }
+
+/*        // Execute Procrustes alignment.
+    procrustesFilter->Update();
+
+    // Get the transforms of each srep, and aply it to its own skeletal sheet.
+    for(unsigned i =0; i<srepPathNames.size();i++){
+        // Create a Filter
+        FilterType::Pointer filter = FilterType::New();
+
+        // Get affineTransform used to align mesh_b i.
+        this->affineTransform = procrustesFilter->GetTransform(i);
+
+        // Connect the inputs. (Apply ith affineTransform to mesh_s i.)
+        filter->SetInput(this->mesh_s_list[i]);
+        filter->SetTransform(this->affineTransform);
+
+        // Execute the filter
+        filter->Update();
+        std::cout << "Filter: " << filter;
+
+        // Get the Smart Pointer to the Filter Output
+        MeshType::Pointer outputMesh = filter->GetOutput();
+
+        cout << "Output mesh_s has " << outputMesh->GetNumberOfPoints()<< " points." <<endl;
+
+        // Get the the point container
+        MeshType::PointsContainerPointer transformedPoints = outputMesh->GetPoints();
+        PointsContainerType::ConstIterator it = transformedPoints->Begin();
+        while( it != transformedPoints->End() )
+          {
+          PointType p = it.Value();
+          std::cout.width( 5 ); std::cout << p[0] << ", ";
+          std::cout.width( 5 ); std::cout << p[1] << ", ";
+          std::cout.width( 5 ); std::cout << p[2] << std::endl;
+          ++it;
+          }
+
+
+
+
+
+    }*/
+
+
+
+    return EXIT_SUCCESS;
+}
+else{
+    cout<<"You input a invalid srep file, please check the path or name of this srep!"<<endl;
+    return EXIT_FAILURE;
+}
+

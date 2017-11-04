@@ -1,0 +1,4609 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cpp}
+class P3DUserInterface {open selected
+} {
+  Function {P3DUserInterface(int windowPropsPosn[WIN_PROPS_LEN][2], bool windowPropsOpen[WIN_PROPS_LEN])} {open
+  } {
+    Fl_Window modelWindow {
+      label {Model Window}
+      callback {modelWindow->hide();}
+      xywh {774 162 605 700} type Double hide resizable
+      code0 {\#include "P3DUserInterfaceCallback.h"}
+      code1 {\#include "movable_Fl_Window.h"}
+      code2 {\#include "make_windows.h"}
+      class movable_Fl_Window
+    } {
+      Fl_Group taskDisplayGrp {
+        xywh {5 5 595 50}
+        class Fl_Aspect_Ratio_Group
+      } {
+        Fl_Text_Display taskDisplayText {
+          xywh {25 5 555 50} box EMBOSSED_FRAME align 0
+        }
+      }
+      Fl_Group modelDisplayGrp {
+        xywh {5 65 595 595} align 0
+        code0 {\#include "Fl_Aspect_Ratio_Group.h"}
+        class Fl_Aspect_Ratio_Group
+      } {
+        Fl_Box modelView {
+          xywh {5 65 595 595} box FLAT_BOX color 0 selection_color 0 labeltype NO_LABEL
+          code0 {\#include "P3DView.h"}
+          class P3DView
+        }
+      }
+      Fl_Group modelWindowButtonGrp {
+        xywh {0 660 605 40}
+        class Fl_Aspect_Ratio_Group
+      } {
+        Fl_Button axialViewBtn {
+          label A
+          callback {callback->setAxialView();}
+          xywh {5 670 30 25} box BORDER_BOX shortcut 0x61 color 4 selection_color 6 labelfont 1 labelsize 16 labelcolor 55
+        }
+        Fl_Button saggitalViewBtn {
+          label S
+          callback {callback->setSaggitalView();}
+          xywh {35 670 30 25} box BORDER_BOX shortcut 0x73 color 4 selection_color 6 labelfont 1 labelsize 16 labelcolor 55
+        }
+        Fl_Button coronalViewBtn {
+          label C
+          callback {callback->setCoronalView();}
+          xywh {65 670 30 25} box BORDER_BOX shortcut 0x63 color 4 selection_color 6 labelfont 1 labelsize 16 labelcolor 55
+        }
+        Fl_Button centerBtn {
+          label Center
+          callback {callback->setCenterThing();}
+          xywh {535 670 65 25} box BORDER_BOX shortcut 0x78 color 4 selection_color 6 labelfont 1 labelsize 16 labelcolor 55
+        }
+        Fl_Button rotateLeft90 {
+          label {@circle}
+          callback {callback->rotateLeft90();}
+          xywh {220 670 30 25} labelcolor 4 align 16
+        }
+        Fl_Button rotateHorizontal180 {
+          label {@<}
+          callback {callback->rotateHorizontal180();}
+          xywh {275 670 30 25} color 46 labelcolor 4 align 20
+        }
+        Fl_Button rotateVertical180 {
+          label {@2>}
+          callback {callback->rotateVertical180();}
+          xywh {325 670 30 25} color 52 labelcolor 4 align 18
+        }
+        Fl_Button rotateRight90 {
+          label {@circle}
+          callback {callback->rotateRight90();}
+          xywh {380 670 30 25} labelcolor 4 align 24
+        }
+      }
+    }
+    code {\#ifdef TASKING
+    modelWindow->size_range(285, 380, Fl::h(), Fl::w());
+  \#else
+    modelWindow->size_range(285, 320, Fl::h(), Fl::w());
+  \#endif} {}
+    Fl_Window mainWindow {
+      label Pablo
+      callback {callback->closeWindowsAndExit();}
+      xywh {472 25 503 90} type Double align 0 hide
+      code0 {\#include "ControlParms.h"}
+      class movable_Fl_Window
+    } {
+      Fl_Menu_Bar menuBar {
+        xywh {0 0 605 25} box ENGRAVED_BOX labelfont 4
+      } {
+        Submenu {} {
+          label {&File}
+          xywh {0 0 100 20} labelfont 5 labelsize 12
+        } {
+          MenuItem {} {
+            label {New Model}
+            callback {callback->newModel();}
+            xywh {0 0 100 20} shortcut 0x4006e labelsize 12
+          }
+          MenuItem {} {
+            label {Load Model(s)...}
+            callback {callback->loadModel();}
+            xywh {0 0 100 20} shortcut 0x4006c labelsize 12
+          }
+          MenuItem {} {
+            label {Load Similarity Transformation...}
+            callback {callback->loadSimTransform();}
+            xywh {0 0 100 20} shortcut 0x40078 labelsize 12
+          }
+          MenuItem {} {
+            label {Save Model}
+            callback {callback->saveModel();}
+            xywh {0 0 100 20} shortcut 0x40073 labelsize 12
+          }
+          MenuItem {} {
+            label {Save Model As...}
+            callback {callback->saveModelAs();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Export Model To Image...}
+            callback {callback->exportToImage();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Export Model To BYU Tiles...}
+            callback {callback->exportToBYUTiles();}
+            xywh {0 0 100 20} labelsize 12 divider
+          }
+          MenuItem {} {
+            label {Load Image...}
+            callback {callback->loadImage(true);}
+            xywh {0 0 100 20} shortcut 0x40069 labelsize 12
+          }
+          MenuItem {} {
+            label {Load Stacked Image...}
+            callback {callback->loadImage(true, true);}
+            xywh {0 0 100 20} shortcut 0x50069 labelsize 12
+          }
+          MenuItem {} {
+            label {Clear Image}
+            callback {callback->discardImage();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Save Blurred Image...}
+            callback {callback->saveBlur();}
+            xywh {0 0 100 20} labelsize 12 divider
+          }
+          MenuItem loadDistMap {
+            label {Load Distance Map}
+            callback {callback->loadDistMap();}
+            xywh {35 35 100 20} labelsize 12
+          }
+          MenuItem imageToDistanceMap {
+            label {Image to Distance Map}
+            callback {callback->distMapAs();}
+            xywh {45 45 100 20} labelsize 12
+          }
+          MenuItem loadLandMarkModel {
+            label {Load Image Landmark Model...}
+            callback {callback->loadLandmarkModel();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem clearLandMarkModel {
+            label {Clear Image Landmark Model...}
+            callback {callback->newLandmarkModel();}
+            xywh {0 0 100 20} labelsize 12 divider
+          }
+          MenuItem {} {
+            label {Load Tile Set...}
+            callback {callback->loadTileSet();}
+            xywh {0 0 100 20} shortcut 0x40074 labelsize 12
+          }
+          MenuItem {} {
+            label {Generate Tile Set From Image}
+            callback {callback->generateTileSet();}
+            xywh {0 0 100 20} shortcut 0x40067 labelsize 12
+          }
+          MenuItem {} {
+            label {Save Tile Set As...}
+            callback {callback->saveTileSetAs();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem fileMenuLoadPCASurface {
+            label {Load PCA Surface...}
+            callback {callback->loadAuxTileSet();
+  callback->viewAuxTileSet(1);}
+            xywh {0 0 100 20} labelsize 12 hide
+          }
+          MenuItem fileMenuLoadPCAResidues {
+            label {Load PCA Residues...}
+            callback {callback->loadPCAFile();}
+            xywh {20 20 100 20} labelsize 12 hide
+          }
+          MenuItem {} {
+            label Exit
+            callback {callback->closeWindowsAndExit();}
+            xywh {0 0 100 20} shortcut 0x40071 labelsize 12
+          }
+        }
+        Submenu {} {
+          label {&Edit}
+          xywh {0 0 100 20} labelfont 5 labelsize 12
+        } {
+          MenuItem {} {
+            label Undo
+            callback {callback->undo();}
+            xywh {0 0 100 20} shortcut 0x4007a labelsize 12
+          }
+          MenuItem {} {
+            label Redo
+            callback {callback->redo();}
+            xywh {0 0 100 20} shortcut 0x40079 labelsize 12 divider
+          }
+          MenuItem addQuadFigurePulldown {
+            label {Add Quad Figure}
+            callback {addQuadFigureDlg->show();
+  addQuadFigureDlg->activate();}
+            xywh {0 0 100 20} shortcut 0x40061 labelsize 12
+          }
+          MenuItem attachSubfigurePulldown {
+            label {Attach a Subfigure...}
+            callback {callback->initializeAttachSubfigureDialog();
+  attachSubfigureDialog->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem detachSubfigurePulldown {
+            label {Detach Marked Subfigure}
+            callback {callback->detachSubfigure();}
+            xywh {0 0 100 20} shortcut 0x80064 labelsize 12
+          }
+          MenuItem {} {
+            label {Remove Selected Figures}
+            callback {callback->removeSelectedFigures();}
+            xywh {0 0 100 20} shortcut 0x40072 labelsize 12
+          }
+          MenuItem {} {
+            label {Reorder Figures}
+            callback {callback->reorderModel();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem editLandmarksMenuItem {
+            label {Landmarks...}
+            callback {callback->startEditLandmarks();}
+            xywh {0 0 100 20} shortcut 0x4006b labelsize 12
+          }
+          MenuItem {} {
+            label {Model Properties...}
+            callback {modelNameCells = NULL;
+  callback->editModelProperties();}
+            xywh {0 0 100 20} shortcut 0x40070 labelsize 12 divider
+          }
+          MenuItem {} {
+            label {Select All}
+            callback {callback->selectAll();}
+            xywh {0 0 100 20} shortcut 0x50073 labelsize 12
+          }
+          MenuItem {} {
+            label {Deselect All}
+            callback {callback->deselectAll();}
+            xywh {0 0 100 20} shortcut 0x50064 labelsize 12
+          }
+          MenuItem {} {
+            label {Toggle All}
+            callback {callback->toggleAll();}
+            xywh {0 0 100 20} shortcut 0x50074 labelsize 12
+          }
+          MenuItem applyTransMenuItem {
+            label {Apply Loaded Similarity Transform}
+            callback {callback->applyLoadedTransformation();}
+            xywh {10 10 100 20} shortcut 0x50074 labelsize 12 deactivate
+          }
+          Submenu {} {
+            label {Selection Type}
+            xywh {0 0 100 20} labelsize 12 divider
+          } {
+            MenuItem {} {
+              label Atom
+              callback {callback->setSelectionType(SELECT_PRIMITIVE);}
+              xywh {0 0 100 20} type Radio value 1 labelsize 12
+            }
+            MenuItem {} {
+              label Figure
+              callback {callback->setSelectionType(SELECT_FIGURE);}
+              xywh {0 0 100 20} type Radio labelsize 12
+            }
+          }
+          MenuItem elongationPulldown {
+            label {Elongation...}
+            callback {callback->initializeElongater();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem atomEditorPulldown {
+            label {Atom Editor...}
+            callback {callback->showPrimitiveEditor();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label Copy
+            callback {callback->copy();}
+            xywh {0 0 100 20} shortcut 0x40063 labelsize 12
+          }
+          MenuItem {} {
+            label Paste
+            callback {callback->paste();}
+            xywh {0 0 100 20} shortcut 0x40076 labelsize 12
+          }
+          MenuItem {} {
+            label Mirror
+            callback {callback->mirror();}
+            xywh {0 0 100 20} shortcut 0x4006d labelsize 12 divider
+          }
+          MenuItem {} {
+            label {Gaussian Blur Image}
+            callback {callback->gaussBlur();}
+            xywh {0 0 100 20} shortcut 0x40062 labelsize 12
+          }
+          MenuItem constraintsPulldown {
+            label {Constraints...}
+            callback {if (callback->constraintsWindowSetup())
+      constraintsWindow->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Preferences...}
+            callback {preferencesEditorWindow->show();
+  callback->showPreferencesEditor();}
+            xywh {0 0 100 20} labelsize 12
+          }
+        }
+        Submenu {} {
+          label {&Windows}
+          xywh {0 0 100 20} labelfont 5 labelsize 12
+        } {
+          MenuItem {} {
+            label {Display Control}
+            callback {if (displayControlWindow != NULL)
+      displayControlWindow->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Model Window}
+            callback {if (modelWindow != NULL)
+      modelWindow->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Atom Cut Planes}
+            callback {cutPlanesControlWindow->show();
+  cutPlaneWindowCheckBox->value(1);}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Visibility Control}
+            callback {if (visibilityControlWindow != NULL) {
+      visibilityControlWindow->show();
+      visibilityWindowCheckBox->value(1);
+  }}
+            xywh {0 0 100 20} labelsize 12 divider
+          }
+          MenuItem windowsOptControlWin {
+            label {Optimizer Control}
+            callback {optimizerControlDialog->show();}
+            xywh {0 0 100 20} shortcut 0x4006f labelsize 12
+          }
+          MenuItem windowsOptSettingsWin {
+            label {Optimizer Settings}
+            callback {optimizerSettingsDialog->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem windowsOptVisWin {
+            label {Optimization Visualizer}
+            callback {callback->openOptimizationVisualizer();}
+            xywh {0 0 100 20} labelsize 12 hide
+          }
+          MenuItem {} {
+            label {About Pablo}
+            callback {callback->showAboutPabloWindow();}
+            xywh {0 0 100 20} labelsize 12
+          }
+        }
+        Submenu {} {
+          label {&Tools}
+          xywh {0 0 100 20} labelfont 5 labelsize 12
+        } {
+          MenuItem runScriptMenuItem {
+            label {Run Binary Pablo Script}
+            callback {callback->loadBinaryPabloScript();}
+            xywh {20 20 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Output Histogram...}
+            callback {callback->outputHistogram();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Export to POV-Ray...}
+            callback {callback->outputPOVRay();}
+            xywh {0 0 100 20} labelsize 12 divider
+          }
+          MenuItem {} {
+            label {Model Window Dump}
+            callback {callback->screenDump();}
+            xywh {0 0 100 20} shortcut 0x40064 labelsize 12
+          }
+          MenuItem makeMovieToggle {
+            label {Make Movie}
+            callback {callback->makeMovie();}
+            xywh {0 0 100 20} type Toggle labelsize 12
+          }
+          MenuItem {} {
+            label {Model/Tile Slide Show}
+            callback {callback->startModelTileSlideShow();
+  modelSlideShowDialog->show();}
+            xywh {0 0 100 20} shortcut 0x40068 labelsize 12 divider
+          }
+          MenuItem {} {
+            label {PGA Deformation...}
+            callback {callback->pgaInitDeformationWindow();
+  pgaDialog->show();}
+            xywh {5 5 100 20} labelsize 12
+          }
+          MenuItem toolsMenuPCA_Deformation {
+            label {PCA Deformation...}
+            callback {callback->initPCADeform();}
+            xywh {0 0 100 20} labelsize 12 hide
+          }
+          MenuItem {} {
+            label {Transformation Recording...}
+            callback {transformationRecordingTestDialog->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+        }
+        Submenu test_debug_menu {
+          label {Test/Debug}
+          xywh {0 0 100 20} labelfont 5 labelsize 12
+        } {
+          MenuItem {} {
+            label {Load Old Model...}
+            callback {callback->loadOldModel();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Export Distance Map...}
+            callback {callback->exportDistanceMap();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Regularize Model...}
+            callback {regularizerWindow->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Interpolate Atom...}
+            callback {interpolatedPrimitiveWindow->show();}
+            xywh {0 0 100 20} labelsize 12 divider
+          }
+          MenuItem debugSubfigureTransWin {
+            label {Subfigure Transformations...}
+            callback {subfigureTransformationTestDialog->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem debugTestConstrsWin {
+            label {Test Constraints...}
+            callback {testConstraintsDialog->show();}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Export seurat u v phi...}
+            callback {callback->exportSeuratUVPhi()}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Test Seurat...}
+            callback {testSeuratDialog->show();}
+            xywh {0 0 100 20} labelsize 12 divider
+          }
+          MenuItem useFlatTiles {
+            label {Render With Flat Tiles }
+            callback {callback->toggleTileType();}
+            xywh {0 0 100 20} type Toggle labelsize 12
+          }
+          MenuItem showBlendingRegion {
+            label {Display Blending Region }
+            callback {callback->toggleBlendingRegionDisplay();}
+            xywh {0 0 100 20} type Toggle labelsize 12 divider
+          }
+          MenuItem openLoadSurfaceValuesWindow {
+            label {Load Surface Values...}
+            callback {callback->importSurfaceValues()}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem openLoadSurfaceColormapWindow {
+            label {Load Surface Colormap...}
+            callback {callback->importSurfaceColorMap()}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem openSurfaceVisualizationWindow {
+            label {Surface Visualization Control...}
+            callback {callback->openMatchSurfacesWindow();}
+            xywh {0 0 100 20} labelsize 12 divider
+          }
+          MenuItem {} {
+            label {Print Model (Model Coords)}
+            callback {callback->printModel(0);}
+            xywh {0 0 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Print Model (World Coords)}
+            callback {callback->printModel(1);}
+            xywh {20 20 100 20} labelsize 12
+          }
+          MenuItem {} {
+            label {Print Image Properties}
+            callback {callback->printImage();}
+            xywh {30 30 100 20} labelsize 12 divider
+          }
+          MenuItem alignModel0Moment {
+            label {Align Model 0th Moment}
+            callback {callback->binaryPabloAlignModel();}
+            xywh {60 60 100 20} labelsize 12
+          }
+        }
+      }
+      Fl_Button secretButton {
+        callback {callback->secretAction();}
+        xywh {675 265 10 15} shortcut 0x50074
+      }
+    }
+    code {callback = new P3DUserInterfaceCallback;
+  callback->setUserInterface(this);
+  make_DisplayControl(windowPropsPosn[DISPLAY_CONTROL_WIN][0], windowPropsPosn[DISPLAY_CONTROL_WIN][1], windowPropsOpen[DISPLAY_CONTROL_WIN]);
+  make_VisibilityControl(windowPropsPosn[VISIBILITY_CONTROL_WIN][0], windowPropsPosn[VISIBILITY_CONTROL_WIN][1], windowPropsOpen[VISIBILITY_CONTROL_WIN]);
+  make_ConstraintsWindow(windowPropsPosn[CONSTRAINTS_WIN][0], windowPropsPosn[CONSTRAINTS_WIN][1]);
+  make_editLandmarksWindow(windowPropsPosn[EDIT_LANDMARKS_WIN][0], windowPropsPosn[EDIT_LANDMARKS_WIN][1]);
+  make_editModelWindow(windowPropsPosn[EDIT_MODEL_PROPERTIES_WIN][0], windowPropsPosn[EDIT_MODEL_PROPERTIES_WIN][1]);
+  make_PrimitiveEditor(windowPropsPosn[ATOM_EDITOR_WIN][0], windowPropsPosn[ATOM_EDITOR_WIN][1], windowPropsOpen[ATOM_EDITOR_WIN]);
+  make_addQuadFigureDlg(windowPropsPosn[ADD_QUAD_FIGURE_WIN][0], windowPropsPosn[ADD_QUAD_FIGURE_WIN][1], windowPropsOpen[ADD_QUAD_FIGURE_WIN]);
+  make_CutPlaneWindows(windowPropsPosn);
+  make_CutPlaneControl(windowPropsPosn[CUT_PLANES_CONTROL_WIN][0], windowPropsPosn[CUT_PLANES_CONTROL_WIN][1], windowPropsOpen[CUT_PLANES_CONTROL_WIN]);
+  make_AttachFigureDialog(windowPropsPosn[ATTACH_SUBFIGURE_WIN][0], windowPropsPosn[ATTACH_SUBFIGURE_WIN][1], windowPropsOpen[ATTACH_SUBFIGURE_WIN]);
+  make_ElongationDialog(windowPropsPosn[ELONGATION_WIN][0], windowPropsPosn[ELONGATION_WIN][1], windowPropsOpen[ELONGATION_WIN]);
+  make_OptimizerControlDialog(windowPropsPosn[OPTIMIZER_CONTROL_WIN][0], windowPropsPosn[OPTIMIZER_CONTROL_WIN][1], windowPropsOpen[OPTIMIZER_CONTROL_WIN]);
+  make_OptimizerSettingsDialog(windowPropsPosn[OPTIMIZER_SETTINGS_WIN][0], windowPropsPosn[OPTIMIZER_SETTINGS_WIN][1], windowPropsOpen[OPTIMIZER_SETTINGS_WIN]);
+  make_PreferencesEditor(windowPropsPosn[PREFERENCES_EDITOR_WIN][0], windowPropsPosn[PREFERENCES_EDITOR_WIN][1], windowPropsPosn[IMAGE_PREFS_EDITOR_WIN][0], windowPropsPosn[IMAGE_PREFS_EDITOR_WIN][1]);
+  make_ModelSlideShowWindow(windowPropsPosn[MODEL_SLIDE_SHOW_WIN][0], windowPropsPosn[MODEL_SLIDE_SHOW_WIN][1], windowPropsOpen[MODEL_SLIDE_SHOW_WIN]);
+  make_PGAWindow(windowPropsPosn[PGA_DEFORMATION_WIN][0], windowPropsPosn[PGA_DEFORMATION_WIN][1], windowPropsOpen[PGA_DEFORMATION_WIN]);
+  \#ifdef PCA_VISUALIZER
+  make_PCAWindow(windowPropsPosn[PCA_DEFORMATION_WIN][0], windowPropsPosn[PCA_DEFORMATION_WIN][1]);
+  \#endif
+  make_TransformationRecordingTestDialog();
+  make_ReorderPopup();
+  \#ifdef BINARY
+    make_AboutBinaryPabloWindow(windowPropsPosn[ABOUT_PABLO_WIN][0], windowPropsPosn[ABOUT_PABLO_WIN][1],
+      windowPropsOpen[ABOUT_PABLO_WIN]);
+  \#else
+    make_AboutPabloWindow(windowPropsPosn[ABOUT_PABLO_WIN][0], windowPropsPosn[ABOUT_PABLO_WIN][1],
+	windowPropsOpen[ABOUT_PABLO_WIN]);
+  \#endif
+  \#ifndef PRODUCTION_VERSION
+    make_InterpolatedPrimitiveWindow(windowPropsPosn[INTERPOLATED_PRIMITIVE_WIN][0],
+          windowPropsPosn[INTERPOLATED_PRIMITIVE_WIN][1],
+          windowPropsOpen[INTERPOLATED_PRIMITIVE_WIN]);
+    make_SubfigureTransformationTestDialog();
+    make_RegularizerWindow(windowPropsPosn[REGULARIZER_WIN][0], windowPropsPosn[REGULARIZER_WIN][1], windowPropsOpen[REGULARIZER_WIN]);
+    make_testConstraintsDialog();
+    make_testSeuratDialog();
+    make_MatchSurfacesDialog(windowPropsPosn[MATCH_SURFACES_WIN][0], windowPropsPosn[MATCH_SURFACES_WIN][1], windowPropsOpen[MATCH_SURFACES_WIN]);
+  \#endif
+  callback->init();
+  modelView->setUserInterfaceCallback(callback);
+  mainWindow->resize(windowPropsPosn[MAIN_WIN][0], windowPropsPosn[MAIN_WIN][1], 605, 27);
+  mainWindow->redraw();
+  \#ifdef TASKING
+    modelWindow->resize(windowPropsPosn[MODEL_WIN][0], windowPropsPosn[MODEL_WIN][1], 605, 700);
+  \#else
+    taskDisplayGrp->hide();
+    modelDisplayGrp->resize(5, 5, 595, 595);
+    modelWindowButtonGrp->resize(0, 600, 605, 640);
+    modelWindow->resize(windowPropsPosn[MODEL_WIN][0], windowPropsPosn[MODEL_WIN][1], 605, 640);
+  \#endif
+  modelWindow->redraw();
+  callback->initAboutPabloWindow();} {}
+  }
+  decl {// Note: before writing code, set the} {}
+  decl {// front tab of the next two windows.} {}
+  decl {// (See gui/src/fluid_instructions.txt).} {}
+  Function {make_DisplayControl(int win_X, int win_Y, bool open)} {} {
+    Fl_Window displayControlWindow {
+      label {Display Control}
+      callback {displayControlWindow->hide();}
+      xywh {597 283 375 239} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Tabs displayControlTabs {
+        xywh {5 5 473 208}
+      } {
+        Fl_Group displayControlGeneralTab {
+          label General
+          xywh {10 36 360 170} labelfont 1 labelsize 12
+        } {
+          Fl_Check_Button unitCubeCheckBox {
+            label {Unit cube}
+            callback {callback->toggleUnitCube(unitCubeCheckBox->value());}
+            xywh {15 46 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Check_Button stdAxesCheckBox {
+            label {Standard axes}
+            callback {callback->toggleStdAxes(stdAxesCheckBox->value());}
+            xywh {15 76 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Check_Button stdRockingCheckBox {
+            label {Rocking motion}
+            callback {callback->toggleRocking(stdRockingCheckBox->value());}
+            xywh {140 76 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Output modelPathOutput {
+            xywh {50 113 310 30} type Multiline box FLAT_BOX color 49 selection_color 49 labelsize 10 align 132 textfont 4 textsize 10
+          }
+          Fl_Output imagePathOutput {
+            xywh {50 173 310 28} type Multiline box FLAT_BOX color 49 selection_color 49 labelsize 10 align 132 textfont 4 textsize 10
+          }
+          Fl_Output tilesetPathOutput {
+            xywh {50 143 310 30} type Multiline box FLAT_BOX color 49 selection_color 49 labelsize 10 align 132 textfont 4 textsize 10
+          }
+          Fl_Box {} {
+            label {Image:}
+            xywh {15 166 35 25} labelsize 10 align 16
+          }
+          Fl_Box {} {
+            label {Tiles:}
+            xywh {15 136 35 25} labelsize 10 align 16
+          }
+          Fl_Box {} {
+            label {Model:}
+            xywh {15 106 35 25} labelsize 10 align 16
+          }
+          Fl_Check_Button visibilityWindowCheckBox {
+            label {Visibility window}
+            callback {if (visibilityWindowCheckBox->value()) {
+      visibilityControlWindow->show();
+      visibilityWindowCheckBox->value(1);
+  }
+  else {
+      visibilityControlWindow->hide();
+      visibilityWindowCheckBox->value(0);
+  }}
+            xywh {115 46 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Check_Button cutPlaneWindowCheckBox {
+            label {Atom cut planes}
+            callback {if (cutPlaneWindowCheckBox->value() == 1) {
+      cutPlanesControlWindow->show();
+      cutPlaneWindowCheckBox->value(1);
+  }
+  else {
+      cutPlanesControlWindow->hide();
+      cutPlaneWindowCheckBox->value(0);
+  }}
+            xywh {245 46 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+          }
+        }
+        Fl_Group displayControlSurfaceTab {
+          label Surface
+          xywh {10 36 360 170} labelfont 1 labelsize 12 hide
+        } {
+          Fl_Group {} {
+            label Subdivision
+            xywh {255 66 95 100} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setSurfaceLevelBtns(modelView->getSurfaceLevel());}
+          } {
+            Fl_Check_Button SurfaceLevel_0Btn {
+              label {Level 0}
+              callback {callback->setSurfaceLevel(0);}
+              xywh {260 66 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button SurfaceLevel_1Btn {
+              label {Level 1}
+              callback {callback->setSurfaceLevel(1);}
+              xywh {260 91 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button SurfaceLevel_2Btn {
+              label {Level 2}
+              callback {callback->setSurfaceLevel(2);}
+              xywh {260 116 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button SurfaceLevel_3Btn {
+              label {Level 3}
+              callback {callback->setSurfaceLevel(3);}
+              xywh {260 141 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+          Fl_Group {} {
+            label {Surface Type}
+            xywh {135 66 100 100} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setSurfaceTypeBtns(modelView->getSurfaceStyle());}
+          } {
+            Fl_Check_Button noneBtn {
+              label None
+              callback {callback->setSurfaceStyle(M3D_NONE);}
+              xywh {140 66 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button pointcloudBtn {
+              label {Point cloud}
+              callback {callback->setSurfaceStyle(M3D_POINTCLOUD);}
+              xywh {140 91 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button wireframeBtn {
+              label {Wire frame}
+              callback {callback->setSurfaceStyle(M3D_WIREFRAME);}
+              xywh {140 116 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button solidBtn {
+              label Solid
+              callback {callback->setSurfaceStyle(M3D_SOLID);}
+              xywh {140 141 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+          Fl_Check_Button blendFiguresBtn {
+            label {Blend subfigures to figures}
+            callback {callback->toggleBlendSubfigures(blendFiguresBtn->value());}
+            xywh {170 171 20 25} down_box EMBOSSED_BOX color 7 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Check_Button drawBoundaryBtn {
+            label Boundary
+            callback {callback->toggleDrawBoundary(drawBoundaryBtn->value());}
+            xywh {25 125 20 25} down_box EMBOSSED_BOX color 7 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Check_Button drawFigureNamesBtn {
+            label {Figure Names}
+            callback {callback->toggleDrawFigureNames(drawFigureNamesBtn->value());}
+            xywh {25 170 20 25} down_box EMBOSSED_BOX value 1 color 7 selection_color 1 labelsize 12 align 8
+          }
+        }
+        Fl_Group displayControlImageTab {
+          label Image
+          xywh {10 31 360 175} labelfont 1 labelsize 12 hide
+        } {
+          Fl_Box {} {
+            label {On/Off}
+            xywh {45 46 50 30} labelsize 12
+          }
+          Fl_Box {} {
+            label Position
+            xywh {105 46 60 30} labelsize 12
+          }
+          Fl_Box {} {
+            label Slice
+            xywh {325 46 40 30} labelsize 12
+          }
+          Fl_Check_Button drawBoundaryBtn2 {
+            label Boundary
+            callback {callback->toggleDrawBoundary(drawBoundaryBtn2->value());}
+            xywh {195 31 25 30} down_box EMBOSSED_BOX selection_color 1 align 8
+          }
+          Fl_Group xPosition {
+            xywh {15 66 355 29} labeltype NO_LABEL labelsize 12 align 5
+          } {
+            Fl_Check_Button xImagePlaneCheckBox {
+              label {Sagittal  }
+              callback {callback->viewXImagePlane(xImagePlaneCheckBox->value());}
+              xywh {70 69 25 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 4
+            }
+            Fl_Roller xImagePlanePositionRoller {
+              callback {callback->setXImagePlanePosition();}
+              xywh {195 71 120 15} type Horizontal box DOWN_BOX labeltype NO_LABEL labelsize 12 align 0 maximum 100 step 1 value 50
+            }
+            Fl_Button xImagePlaneSlice {
+              xywh {325 71 40 20} box DOWN_BOX labelsize 12 align 24
+            }
+            Fl_Button xImagePlanePosition {
+              xywh {95 71 90 20} box DOWN_BOX labelsize 12 align 16
+            }
+            Fl_Progress xImagePlanePositionGraph {
+              xywh {195 88 120 2} box FLAT_BOX color 49 selection_color 3 labeltype NO_LABEL align 0
+            }
+          }
+          Fl_Group yPosition {
+            xywh {15 91 355 29} labeltype NO_LABEL labelsize 12 align 5
+          } {
+            Fl_Check_Button yImagePlaneCheckBox {
+              label {Coronal  }
+              callback {callback->viewYImagePlane(yImagePlaneCheckBox->value());}
+              xywh {70 94 25 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 4
+            }
+            Fl_Roller yImagePlanePositionRoller {
+              callback {callback->setYImagePlanePosition();}
+              xywh {195 96 120 15} type Horizontal box DOWN_BOX labeltype NO_LABEL labelsize 12 align 0 maximum 100 step 1 value 50
+            }
+            Fl_Button yImagePlaneSlice {
+              xywh {325 96 40 20} box DOWN_BOX labelsize 12 align 24
+            }
+            Fl_Button yImagePlanePosition {
+              xywh {95 96 90 20} box DOWN_BOX labelsize 12 align 16
+            }
+            Fl_Progress yImagePlanePositionGraph {
+              xywh {195 113 120 2} box FLAT_BOX color 49 selection_color 3 labeltype NO_LABEL align 0
+            }
+          }
+          Fl_Group zPosition {
+            xywh {15 116 355 29} labeltype NO_LABEL labelsize 12 align 5
+          } {
+            Fl_Check_Button zImagePlaneCheckBox {
+              label {Axial  }
+              callback {callback->viewZImagePlane(zImagePlaneCheckBox->value());}
+              xywh {70 119 25 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 4
+            }
+            Fl_Roller zImagePlanePositionRoller {
+              callback {callback->setZImagePlanePosition();}
+              xywh {195 121 120 15} type Horizontal box DOWN_BOX labeltype NO_LABEL labelsize 12 align 0 maximum 100 step 1 value 50
+            }
+            Fl_Button zImagePlaneSlice {
+              xywh {325 121 40 20} box DOWN_BOX labelsize 12 align 24
+            }
+            Fl_Button zImagePlanePosition {
+              xywh {95 121 90 20} box DOWN_BOX labelsize 12 align 16
+            }
+            Fl_Progress zImagePlanePositionGraph {
+              xywh {195 138 120 2} box FLAT_BOX color 49 selection_color 3 labeltype NO_LABEL align 0
+            }
+          }
+          Fl_Group intensityMin {
+            xywh {10 148 360 25} labeltype NO_LABEL labelsize 12 align 5
+          } {
+            Fl_Button intensityMinOutput {
+              xywh {310 151 55 20} box DOWN_BOX labelsize 12 align 16
+            }
+            Fl_Slider intensityMinSlider {
+              callback {callback->intensityWindowSliderChanged();}
+              xywh {135 151 165 20} type {Horz Knob} labeltype NO_LABEL labelsize 12 align 0 maximum 1000 step 1
+            }
+            Fl_Value_Input intensityMinValuator {
+              label {Intensity min}
+              callback {callback->intensityWindowValuatorChanged();}
+              xywh {90 151 45 20} labelsize 12 maximum 1000 step 1 textsize 12
+            }
+          }
+          Fl_Group intensityMax {
+            xywh {10 174 360 25} labeltype NO_LABEL labelsize 12 align 5
+          } {
+            Fl_Button intensityMaxOutput {
+              xywh {310 176 55 20} box DOWN_BOX labelsize 12 align 16
+            }
+            Fl_Slider intensityMaxSlider {
+              callback {callback->intensityWindowSliderChanged();}
+              xywh {135 176 165 20} type {Horz Knob} labeltype NO_LABEL labelsize 12 align 0 maximum 1000 step 1
+            }
+            Fl_Value_Input intensityMaxValuator {
+              label {Intensity max}
+              callback {callback->intensityWindowValuatorChanged();}
+              xywh {90 176 45 20} labelsize 12 maximum 1000 step 1 textsize 12
+            }
+          }
+        }
+        Fl_Group displayControlTilesetTab {
+          label {Tile Set}
+          xywh {10 36 355 170} labelfont 1 labelsize 12 hide
+        } {
+          Fl_Check_Button viewTileSetCheckBox {
+            label {View tile set}
+            callback {callback->viewTileSet(viewTileSetCheckBox->value());}
+            xywh {25 56 20 25} down_box EMBOSSED_BOX value 1 color 55 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Check_Button tileSetColorCheckBox {
+            label {Use default color}
+            callback {callback->useDefaultColor(tileSetColorCheckBox->value());}
+            xywh {51 123 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Value_Slider tileAlphaSlider {
+            label Opacity
+            callback {callback->setTileAlpha(tileAlphaSlider->value());}
+            xywh {51 79 175 15} type {Horz Knob} labelsize 12 value 1
+          }
+          Fl_Check_Button tileSetSolidCheckBox {
+            label Solid
+            callback {callback->tileSetSolid(tileSetSolidCheckBox->value());}
+            xywh {51 106 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Group {} {
+            label {Opacity Range}
+            xywh {245 56 100 55} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+          } {
+            Fl_Round_Button tileSetBrightCheckBox {
+              label Brighter
+              callback {callback->tileSetBright(tileSetBrightCheckBox->value());}
+              xywh {260 56 20 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12 align 8
+            }
+            Fl_Round_Button tileSetNormalCheckBox {
+              label Normal
+              callback {callback->tileSetBright(0);}
+              xywh {260 71 20 25} type Radio down_box ROUND_DOWN_BOX value 1 selection_color 1 labelsize 12 align 8
+            }
+            Fl_Round_Button tileSetDarkCheckBox {
+              label Darker
+              callback {callback->tileSetDark(tileSetDarkCheckBox->value());}
+              xywh {260 86 20 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12 align 8
+            }
+          }
+          Fl_Check_Button tileSetMobileCheckBox {
+            label Mobile
+            callback {callback->tileSetMobile(tileSetMobileCheckBox->value());}
+            xywh {25 149 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+          }
+          Fl_Group {} {
+            label {Move Figs:}
+            xywh {48 173 302 23} box ENGRAVED_BOX labelsize 12 align 20
+          } {
+            Fl_Check_Button tileMobileFig0 {
+              label 0
+              callback {callback->tileMobileToggleFigure(0);}
+              xywh {120 179 40 11} down_box DOWN_BOX value 1 labelsize 12
+            }
+            Fl_Check_Button tileMobileFig1 {
+              label 1
+              callback {callback->tileMobileToggleFigure(1);}
+              xywh {159 179 40 11} down_box DOWN_BOX value 1 labelsize 12
+            }
+            Fl_Check_Button tileMobileFig2 {
+              label 2
+              callback {callback->tileMobileToggleFigure(2);}
+              xywh {198 179 40 11} down_box DOWN_BOX value 1 labelsize 12
+            }
+            Fl_Check_Button tileMobileFig3 {
+              label 3
+              callback {callback->tileMobileToggleFigure(3);}
+              xywh {237 179 40 11} down_box DOWN_BOX value 1 labelsize 12
+            }
+            Fl_Check_Button tileMobileFig4 {
+              label 4
+              callback {callback->tileMobileToggleFigure(4);}
+              xywh {276 179 40 11} down_box DOWN_BOX value 1 labelsize 12
+            }
+            Fl_Check_Button tileMobileFig5 {
+              label 5
+              callback {callback->tileMobileToggleFigure(5);}
+              xywh {315 179 35 11} down_box DOWN_BOX value 1 labelsize 12
+            }
+          }
+        }
+        Fl_Group displayControlClipTab {
+          label Clip
+          xywh {7 31 368 179} labelfont 1 labelsize 12 hide
+        } {
+          Fl_Group {} {
+            label {Clip Planes}
+            xywh {7 33 225 177} box UP_FRAME labelfont 1 align 17
+          } {
+            Fl_Box {} {
+              label {(Ax}
+              xywh {30 49 30 16} labelsize 12
+            }
+            Fl_Box {} {
+              label {+ By}
+              xywh {61 49 30 16} labelsize 12
+            }
+            Fl_Box {} {
+              label {+ Cz}
+              xywh {92 49 30 16} labelsize 12
+            }
+            Fl_Box {} {
+              label {<D)}
+              xywh {127 49 30 16} labelsize 12
+            }
+            Fl_Box {} {
+              label View
+              xywh {162 49 30 16} labelsize 12
+            }
+            Fl_Button clipCapture0 {
+              label Copy
+              callback {callback->clipCaptureView0();}
+              xywh {159 71 37 20} labelsize 12
+            }
+            Fl_Button clipCapture1 {
+              label Copy
+              callback {callback->clipCaptureView1();}
+              xywh {159 92 37 20} labelsize 12
+            }
+            Fl_Button clipCapture2 {
+              label Copy
+              callback {callback->clipCaptureView2();}
+              xywh {159 115 37 20} labelsize 12
+            }
+            Fl_Check_Button clipEnable0 {
+              label 0
+              callback {callback->clipToggleEnable(0);}
+              xywh {13 73 18 15} down_box DOWN_BOX labeltype NO_LABEL labelsize 12
+            }
+            Fl_Check_Button clipEnable1 {
+              label 1
+              callback {callback->clipToggleEnable(1);}
+              xywh {13 93 18 15} down_box DOWN_BOX labeltype NO_LABEL labelsize 12
+            }
+            Fl_Check_Button clipEnable2 {
+              label 2
+              callback {callback->clipToggleEnable(2);}
+              xywh {13 117 18 15} down_box DOWN_BOX labeltype NO_LABEL labelsize 12
+            }
+            Fl_Value_Input clipA0 {
+              callback {callback->clipAValuatorChanged(0);}
+              xywh {32 71 30 20} labelsize 10 align 0 minimum -3 maximum 3 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipB0 {
+              callback {callback->clipBValuatorChanged(0);}
+              xywh {64 71 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipC0 {
+              callback {callback->clipCValuatorChanged(0);}
+              xywh {96 71 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipD0 {
+              callback {callback->clipDValuatorChanged(0);}
+              xywh {127 71 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipA1 {
+              callback {callback->clipAValuatorChanged(1);}
+              xywh {32 93 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipB1 {
+              callback {callback->clipBValuatorChanged(1);}
+              xywh {64 93 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipC1 {
+              callback {callback->clipCValuatorChanged(1);}
+              xywh {96 93 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipD1 {
+              callback {callback->clipDValuatorChanged(1);}
+              xywh {127 93 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipA2 {
+              callback {callback->clipAValuatorChanged(2);}
+              xywh {32 114 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipB2 {
+              callback {callback->clipBValuatorChanged(2);}
+              xywh {64 114 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipC2 {
+              callback {callback->clipCValuatorChanged(2);}
+              xywh {96 114 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipD2 {
+              callback {callback->clipDValuatorChanged(2);}
+              xywh {127 114 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Button clipFlip0 {
+              label Flip
+              callback {callback->clipFlipView0();}
+              tooltip {View other side of clip plane} xywh {196 71 33 20} labelsize 12
+            }
+            Fl_Button clipFlip1 {
+              label Flip
+              callback {callback->clipFlipView1();}
+              tooltip {View other side of clip plane} xywh {196 92 33 20} labelsize 12
+            }
+            Fl_Button clipFlip2 {
+              label Flip
+              callback {callback->clipFlipView2();}
+              tooltip {View other side of clip plane} xywh {196 115 33 20} labelsize 12
+            }
+            Fl_Box {} {
+              label Vis
+              xywh {198 49 30 16} labelsize 12
+            }
+            Fl_Box {} {
+              label On
+              xywh {8 49 30 16} labelsize 12
+            }
+            Fl_Button clipCapture3 {
+              label Copy
+              callback {callback->clipCaptureView3();}
+              xywh {159 136 37 20} labelsize 12
+            }
+            Fl_Button clipCapture4 {
+              label Copy
+              callback {callback->clipCaptureView4();}
+              xywh {159 157 37 20} labelsize 12
+            }
+            Fl_Button clipCapture5 {
+              label Copy
+              callback {callback->clipCaptureView5();}
+              xywh {159 180 37 20} labelsize 12
+            }
+            Fl_Check_Button clipEnable3 {
+              label 0
+              callback {callback->clipToggleEnable(3);}
+              xywh {13 138 18 15} down_box DOWN_BOX labeltype NO_LABEL labelsize 12
+            }
+            Fl_Check_Button clipEnable4 {
+              label 1
+              callback {callback->clipToggleEnable(4);}
+              xywh {13 158 18 15} down_box DOWN_BOX labeltype NO_LABEL labelsize 12
+            }
+            Fl_Check_Button clipEnable5 {
+              label 2
+              callback {callback->clipToggleEnable(5);}
+              xywh {13 182 18 15} down_box DOWN_BOX labeltype NO_LABEL labelsize 12
+            }
+            Fl_Value_Input clipA3 {
+              callback {callback->clipAValuatorChanged(3);}
+              xywh {32 136 30 20} labelsize 10 align 0 minimum -3 maximum 3 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipB3 {
+              callback {callback->clipBValuatorChanged(3);}
+              xywh {64 136 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipC3 {
+              callback {callback->clipCValuatorChanged(3);}
+              xywh {96 136 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipD3 {
+              callback {callback->clipDValuatorChanged(3);}
+              xywh {127 136 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipA4 {
+              callback {callback->clipAValuatorChanged(4);}
+              xywh {32 158 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipB4 {
+              callback {callback->clipBValuatorChanged(4);}
+              xywh {64 158 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipC4 {
+              callback {callback->clipCValuatorChanged(4);}
+              xywh {96 158 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipD4 {
+              callback {callback->clipDValuatorChanged(4);}
+              xywh {127 158 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipA5 {
+              callback {callback->clipAValuatorChanged(5);}
+              xywh {32 179 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipB5 {
+              callback {callback->clipBValuatorChanged(5);}
+              xywh {64 179 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipC5 {
+              callback {callback->clipCValuatorChanged(5);}
+              xywh {96 179 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Value_Input clipD5 {
+              callback {callback->clipDValuatorChanged(5);}
+              xywh {127 179 30 20} labelsize 10 align 0 minimum -5 maximum 5 step 0.01 textsize 10
+            }
+            Fl_Button clipFlip3 {
+              label Flip
+              callback {callback->clipFlipView3();}
+              tooltip {View other side of clip plane} xywh {196 136 33 20} labelsize 12
+            }
+            Fl_Button clipFlip4 {
+              label Flip
+              callback {callback->clipFlipView4();}
+              tooltip {View other side of clip plane} xywh {196 157 33 20} labelsize 12
+            }
+            Fl_Button clipFlip5 {
+              label Flip
+              callback {callback->clipFlipView5();}
+              tooltip {View other side of clip plane} xywh {196 180 33 20} labelsize 12
+            }
+          }
+          Fl_Group {} {
+            label Objects open
+            xywh {233 34 140 176} box UP_FRAME labelfont 1 align 17
+          } {
+            Fl_Box {} {
+              label Model
+              xywh {234 49 45 17} labelsize 12
+            }
+            Fl_Box {} {
+              label Tile
+              xywh {257 61 28 17} selection_color 4 labelsize 12 labelcolor 4
+            }
+            Fl_Check_Button clipEnableModel0 {
+              callback {callback->clipToggleModel(0);}
+              xywh {238 78 16 15} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableModel1 {
+              callback {callback->clipToggleModel(1);}
+              xywh {238 99 16 16} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableModel2 {
+              callback {callback->clipToggleModel(2);}
+              xywh {238 119 16 15} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableTile0 {
+              callback {callback->clipToggleTile(0);}
+              xywh {262 78 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 4 labelsize 12 labelcolor 4
+            }
+            Fl_Check_Button clipEnableTile1 {
+              callback {callback->clipToggleTile(1);}
+              xywh {262 99 16 16} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 4 labelsize 12 labelcolor 4
+            }
+            Fl_Check_Button clipEnableTile2 {
+              callback {callback->clipToggleTile(2);}
+              xywh {262 119 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 4 labelsize 12 labelcolor 4
+            }
+            Fl_Box {} {
+              label Image
+              xywh {279 49 37 17} selection_color 66 labelsize 12 labelcolor 58
+            }
+            Fl_Check_Button clipEnableImagePlane0 {
+              callback {callback->clipToggleImagePlane(0);}
+              xywh {288 78 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 66 labelsize 12 labelcolor 58
+            }
+            Fl_Check_Button clipEnableImagePlane1 {
+              callback {callback->clipToggleImagePlane(1);}
+              xywh {288 99 16 16} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 66 labelsize 12 labelcolor 58
+            }
+            Fl_Check_Button clipEnableImagePlane2 {
+              callback {callback->clipToggleImagePlane(2);}
+              xywh {288 119 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 66 labelsize 12 labelcolor 58
+            }
+            Fl_Box {} {
+              label Scene
+              xywh {309 61 34 18} labelsize 12 labelcolor 80
+            }
+            Fl_Check_Button clipEnableScene0 {
+              callback {callback->clipToggleScene(0);}
+              xywh {318 78 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 88 labelsize 12 labelcolor 80
+            }
+            Fl_Check_Button clipEnableScene1 {
+              callback {callback->clipToggleScene(1);}
+              xywh {318 99 16 16} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 88 labelsize 12 labelcolor 80
+            }
+            Fl_Check_Button clipEnableScene2 {
+              callback {callback->clipToggleScene(2);}
+              xywh {318 119 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 88 labelsize 12 labelcolor 80
+            }
+            Fl_Box {} {
+              label View
+              xywh {339 49 34 18} selection_color 0 labelsize 12
+            }
+            Fl_Check_Button clipEnableView0 {
+              callback {callback->clipToggleView(0);}
+              xywh {348 78 16 15} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableView1 {
+              callback {callback->clipToggleView(1);}
+              xywh {348 99 16 16} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableView2 {
+              callback {callback->clipToggleView(2);}
+              xywh {348 119 16 15} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableModel3 {
+              callback {callback->clipToggleModel(3);}
+              xywh {238 140 16 15} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableModel4 {
+              callback {callback->clipToggleModel(4);}
+              xywh {238 161 16 16} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableModel5 {
+              callback {callback->clipToggleModel(5);}
+              xywh {238 181 16 15} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableTile3 {
+              callback {callback->clipToggleTile(3);}
+              xywh {262 140 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 4 labelsize 12 labelcolor 4
+            }
+            Fl_Check_Button clipEnableTile4 {
+              callback {callback->clipToggleTile(4);}
+              xywh {262 161 16 16} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 4 labelsize 12 labelcolor 4
+            }
+            Fl_Check_Button clipEnableTile5 {
+              callback {callback->clipToggleTile(5);}
+              xywh {262 181 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 4 labelsize 12 labelcolor 4
+            }
+            Fl_Check_Button clipEnableImagePlane3 {
+              callback {callback->clipToggleImagePlane(3);}
+              xywh {288 140 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 66 labelsize 12 labelcolor 58
+            }
+            Fl_Check_Button clipEnableImagePlane4 {
+              callback {callback->clipToggleImagePlane(4);}
+              xywh {288 161 16 16} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 66 labelsize 12 labelcolor 58
+            }
+            Fl_Check_Button clipEnableImagePlane5 {
+              callback {callback->clipToggleImagePlane(5);}
+              xywh {288 181 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 66 labelsize 12 labelcolor 58
+            }
+            Fl_Check_Button clipEnableScene3 {
+              callback {callback->clipToggleScene(3);}
+              xywh {318 140 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 88 labelsize 12 labelcolor 80
+            }
+            Fl_Check_Button clipEnableScene4 {
+              callback {callback->clipToggleScene(4);}
+              xywh {318 161 16 16} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 88 labelsize 12 labelcolor 80
+            }
+            Fl_Check_Button clipEnableScene5 {
+              callback {callback->clipToggleScene(5);}
+              xywh {318 181 16 15} box EMBOSSED_BOX down_box OFLAT_BOX selection_color 88 labelsize 12 labelcolor 80
+            }
+            Fl_Check_Button clipEnableView3 {
+              callback {callback->clipToggleView(3);}
+              xywh {348 140 16 15} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableView4 {
+              callback {callback->clipToggleView(4);}
+              xywh {348 161 16 16} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+            Fl_Check_Button clipEnableView5 {
+              callback {callback->clipToggleView(5);}
+              xywh {348 181 16 15} box EMBOSSED_BOX down_box OFLAT_BOX labelsize 12
+            }
+          }
+        }
+      }
+      Fl_Button {} {
+        label {Reset View}
+        callback {callback->resetView();}
+        xywh {272 217 100 20} box ROUND_UP_BOX labelfont 1 labelsize 12
+      }
+    }
+    code {xImagePlanePositionGraph->minimum(0.0f);
+  xImagePlanePositionGraph->maximum(1.0f);
+  xImagePlanePositionGraph->hide();
+  yImagePlanePositionGraph->minimum(0.0f);
+  yImagePlanePositionGraph->maximum(1.0f);
+  yImagePlanePositionGraph->hide();
+  zImagePlanePositionGraph->minimum(0.0f);
+  zImagePlanePositionGraph->maximum(1.0f);
+  zImagePlanePositionGraph->hide();
+  displayControlWindow->position(win_X, win_Y);
+  if (open) displayControlWindow->show();} {}
+  }
+  declblock {\#ifndef BINARY} {after {\#endif}
+  } {
+    Function {make_AboutPabloWindow(int win_X, int win_Y, bool open)} {} {
+      Fl_Window aboutPabloWindow {
+        label {About Pablo}
+        callback {aboutPabloWindow->hide();}
+        xywh {586 30 250 249} type Double hide
+        class movable_Fl_Window
+      } {
+        Fl_Button aboutPabloHeader {
+          xywh {20 5 210 90} box FLAT_BOX labelfont 3 labelsize 12 align 20 when 0
+        }
+        Fl_Button aboutPabloAuthors {
+          xywh {5 95 240 85} box FLAT_BOX labelsize 11 align 20 when 0
+        }
+        Fl_Check_Button aboutPabloDontShowButton {
+          label {Don't show this window again}
+          callback {callback->setPrefsAboutWindow(0 == aboutPabloDontShowButton->value());}
+          xywh {230 220 15 25} down_box EMBOSSED_BOX selection_color 1 labelsize 10 align 4
+        }
+        Fl_Button aboutPabloRelease {
+          xywh {60 190 155 20} box FLAT_BOX labelsize 11 align 20 when 0
+        }
+        Fl_Button {} {
+          label {Release:}
+          xywh {10 190 45 20} box FLAT_BOX labelsize 11 align 20 when 0
+        }
+        Fl_Button aboutPabloVersion {
+          xywh {60 205 155 20} box FLAT_BOX labelsize 11 align 20 when 0
+        }
+        Fl_Button {} {
+          label {Version:}
+          xywh {10 205 45 20} box FLAT_BOX labelsize 11 align 20 when 0
+        }
+      }
+      code {aboutPabloWindow->position(win_X, win_Y);
+    if (open) aboutPabloWindow->show();} {}
+    }
+  }
+  declblock {\#ifdef BINARY} {after {\#endif}
+  } {
+    Function {make_AboutBinaryPabloWindow(int win_X, int win_Y, bool open)} {} {
+      Fl_Window aboutBinaryPabloWindow {
+        label {About Binary Pablo}
+        callback {aboutBinaryPabloWindow->hide();}
+        xywh {910 422 645 456} type Double hide
+        class movable_Fl_Window
+      } {
+        Fl_Group aboutBinaryPabloSplashGrp {
+          label Splash
+          xywh {3 5 640 450} box ENGRAVED_BOX labelsize 12 align 16
+        } {
+          Fl_Button aboutBinaryPabloVersionLabel {
+            label {Version:}
+            xywh {240 430 55 20} box FLAT_BOX color 7 labelsize 11 align 24 when 0
+          }
+          Fl_Button aboutBinaryPabloVersion {
+            label {code base}
+            xywh {295 430 185 20} box FLAT_BOX color 7 labelsize 11 align 20 when 0
+          }
+          Fl_Button aboutBinaryPabloRelease {
+            label {release  string}
+            xywh {60 430 155 20} box FLAT_BOX color 7 labelsize 11 align 20 when 0
+          }
+          Fl_Button aboutBinaryPabloReleaseLabel {
+            label {Release:}
+            xywh {10 430 50 20} box FLAT_BOX color 7 labelsize 11 align 24 when 0
+          }
+        }
+        Fl_Check_Button aboutBinaryPabloDontShowButton {
+          label {Don't show this window again}
+          callback {callback->setPrefsAboutWindow(0 == aboutBinaryPabloDontShowButton->value());}
+          xywh {610 410 15 25} down_box EMBOSSED_BOX color 7 selection_color 1 labelsize 10 align 4
+        }
+      }
+      code {aboutBinaryPabloWindow->position(win_X, win_Y);
+    if (open) aboutBinaryPabloWindow->show();
+    aboutBinaryPabloVersion->clear_visible_focus();
+    aboutBinaryPabloRelease->clear_visible_focus();} {}
+    }
+  }
+  Function {make_PreferencesEditor(int win_X, int win_Y, int subwin_X, int subwin_Y)} {} {
+    Fl_Window preferencesEditorWindow {
+      label {Preferences Editor}
+      callback {preferencesEditorWindow->hide();}
+      xywh {548 582 524 269} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Return_Button {} {
+        label Close
+        callback {preferencesEditorWindow->hide();}
+        xywh {395 235 90 30}
+      }
+      Fl_Tabs prefsEditorTabsGrp {
+        xywh {0 15 520 215}
+      } {
+        Fl_Group {} {
+          label Display
+          xywh {5 40 495 185}
+        } {
+          Fl_Value_Slider displayPrefsRockingAngle {
+            label {Rocking angle}
+            callback {callback->setPrefsRockingAngle(displayPrefsRockingAngle->value())}
+            xywh {160 165 165 20} type {Horz Knob} labelsize 12 align 4 maximum 359 step 1
+          }
+          Fl_Value_Slider displayPrefsRockingIncrement {
+            label {Rocking angle increment}
+            callback {callback->setPrefsRockingIncrement(displayPrefsRockingIncrement->value())}
+            xywh {160 195 155 20} type {Horz Knob} labelsize 12 align 4 minimum 0.1 maximum 5 step 0.1
+          }
+          Fl_Check_Button displayPrefsRememberPosn {
+            label {Remember window positions}
+            callback {callback->setPrefsRememberPositions(displayPrefsRememberPosn->value());}
+            xywh {295 50 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button displayPrefsRememberPosnText {
+            label {yes/no}
+            xywh {320 50 80 25} box FLAT_BOX align 20
+          }
+          Fl_Check_Button displayPrefsRememberOpen {
+            label {Remember open windows}
+            callback {callback->setPrefsRememberOpen(displayPrefsRememberOpen->value());}
+            xywh {295 70 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button displayPrefsRememberOpenText {
+            label {yes/no}
+            xywh {320 70 80 25} box FLAT_BOX align 20
+          }
+          Fl_Menu_Button {} {
+            label {Background Color}
+            xywh {25 100 165 25} align 20
+          } {
+            MenuItem {} {
+              label Black
+              callback {callback->setPrefsBackgroundColor(FL_BLACK);}
+              xywh {15 15 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label White
+              callback {callback->setPrefsBackgroundColor(FL_WHITE);}
+              xywh {15 15 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Slate
+              callback {callback->setPrefsBackgroundColor(FL_DARK3);}
+              xywh {65 65 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Indigo
+              callback {callback->setPrefsBackgroundColor((enum Fl_Color) INDIGO);}
+              xywh {65 65 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Custom
+              callback {callback->setPrefsBackgroundColor();}
+              xywh {15 15 100 20} labelsize 12
+              code0 {\#include <FL/Fl_Color_Chooser.H>}
+            }
+          }
+          Fl_Box displayPrefsCurrentBkgColor {
+            label {current color}
+            xywh {205 100 115 25} box BORDER_BOX color 7 labelsize 10 align 16
+          }
+          Fl_Check_Button displayPrefsStandardAxes {
+            label {Show standard axes}
+            callback {callback->setPrefsStandardAxes(displayPrefsStandardAxes->value());}
+            xywh {145 130 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button displayPrefsStandardAxesText {
+            label {yes/no}
+            xywh {170 130 80 25} box FLAT_BOX align 20
+          }
+          Fl_Group {} {
+            label {Iconify all windows:}
+            xywh {355 125 130 80} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsIconifyBtns(globalControl->readInt(IconifyMode));}
+          } {
+            Fl_Check_Button displayPrefsIconifyIndepButton {
+              label Independently
+              callback {callback->setPrefsIconifyWindow(0);}
+              xywh {365 130 100 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button displayPrefsIconifyMainButton {
+              label {By main window}
+              callback {callback->setPrefsIconifyWindow(1);}
+              xywh {365 155 110 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button displayPrefsIconifyAnyButton {
+              label {By any window}
+              callback {callback->setPrefsIconifyWindow(2);}
+              xywh {365 180 105 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+        }
+        Fl_Group {} {
+          label Atoms
+          xywh {10 45 460 180} hide
+        } {
+          Fl_Check_Button atomPrefsShowAtomVectors {
+            label {Show spoke vectors}
+            callback {callback->setPrefsShowAtomVectors(atomPrefsShowAtomVectors->value());}
+            xywh {285 130 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button atomPrefsShowAtomVectorsText {
+            label {yes/no}
+            xywh {310 130 50 25} box FLAT_BOX align 20
+          }
+          Fl_Check_Button atomPrefsUseFigureColors {
+            label {Color atoms like figures}
+            callback {callback->setPrefsUseFigureColors(atomPrefsUseFigureColors->value());}
+            xywh {285 75 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button atomPrefsUseFigureColorsText {
+            label {yes/no}
+            xywh {310 75 50 25} box FLAT_BOX align 20
+          }
+          Fl_Check_Button atomPrefsAtomVectorsType {
+            label {Atom vectors type}
+            callback {callback->setPrefsAtomVectorsType(atomPrefsAtomVectorsType->value());}
+            xywh {285 105 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button atomPrefsAtomVectorsTypeText {
+            label {yes/no}
+            xywh {310 105 140 25} box FLAT_BOX align 20
+          }
+          Fl_Check_Button atomPrefsExtraAtomVectors {
+            label {Show extra atom vectors}
+            callback {callback->setPrefsExtraAtomVectors(atomPrefsExtraAtomVectors->value());}
+            xywh {285 160 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button atomPrefsExtraAtomVectorsText {
+            label {yes/no}
+            xywh {310 160 50 25} box FLAT_BOX align 20
+          }
+          Fl_Value_Slider atomPrefsAtomVectorsWidth {
+            label {Atom vectors line width  }
+            callback {callback->setPrefsAtomVectorsWidth((int) atomPrefsAtomVectorsWidth->value());}
+            xywh {290 195 120 20} type {Horz Knob} labelsize 12 align 4 minimum 1 maximum 10 step 1 value 1
+          }
+          Fl_Check_Button atomPrefsShowAtoms {
+            label {Show atoms}
+            callback {callback->setPrefsShowAtoms(atomPrefsShowAtoms->value());}
+            xywh {285 50 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button atomPrefsShowAtomsText {
+            label {yes/no}
+            xywh {310 50 50 25} box FLAT_BOX align 20
+          }
+          Fl_Group {} {
+            label {B vector type:}
+            xywh {25 90 95 80} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsIconifyBtns(globalControl->readInt(IconifyMode));}
+          } {
+            Fl_Check_Button atomPrefsNoBVectorsButton {
+              label None
+              callback {callback->setPrefsAtomBVectorsType(0);}
+              xywh {35 95 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button atomPrefsCrestBVectorsButton {
+              label {Crest only}
+              callback {callback->setPrefsAtomBVectorsType(2);}
+              xywh {35 120 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button atomPrefsAllBVectorsButton {
+              label {All atoms}
+              callback {callback->setPrefsAtomBVectorsType(1);}
+              xywh {35 145 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+        }
+        Fl_Group {} {
+          label Mesh
+          xywh {25 45 385 175} hide
+        } {
+          Fl_Check_Button meshPrefsShowMesh {
+            label {Show medial mesh connectors}
+            callback {callback->setPrefsShowMesh(meshPrefsShowMesh->value());}
+            xywh {215 105 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Check_Button meshPrefsMeshType {
+            label {Medial mesh connectors type}
+            callback {callback->setPrefsMeshType(meshPrefsMeshType->value());}
+            xywh {215 135 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button meshPrefsMeshTypeText {
+            label {yes/no}
+            xywh {240 135 90 25} box FLAT_BOX align 20
+          }
+          Fl_Button meshPrefsShowMeshText {
+            label {yes/no}
+            xywh {240 105 90 25} box FLAT_BOX align 20
+          }
+          Fl_Value_Slider meshPrefsMeshConnectorsWidth {
+            label {Mesh connectors line width  }
+            callback {callback->setPrefsMeshConnectorsWidth((int) meshPrefsMeshConnectorsWidth->value());}
+            xywh {220 175 120 20} type {Horz Knob} labelsize 12 align 4 minimum 1 maximum 10 step 1 value 1
+          }
+          Fl_Menu_Button {} {
+            label {Connectors Color}
+            xywh {65 65 165 25} align 20
+          } {
+            MenuItem {} {
+              label Red
+              callback {callback->setPrefsMeshColor(FL_RED);}
+              xywh {35 35 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Green
+              callback {callback->setPrefsMeshColor(FL_GREEN);}
+              xywh {35 35 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Blue
+              callback {callback->setPrefsMeshColor(FL_BLUE);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Yellow
+              callback {callback->setPrefsMeshColor(FL_YELLOW);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Magenta
+              callback {callback->setPrefsMeshColor(FL_MAGENTA);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Cyan
+              callback {callback->setPrefsMeshColor(FL_CYAN);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Gray
+              callback {callback->setPrefsMeshColor(FL_GRAY);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Custom
+              callback {callback->setPrefsMeshColor();}
+              xywh {35 35 100 20} labelsize 12
+              code0 {\#include <FL/Fl_Color_Chooser.H>}
+            }
+          }
+          Fl_Box meshPrefsCurrentMeshColor {
+            label {current color}
+            xywh {245 65 120 25} box BORDER_BOX color 7 labelsize 10 align 16
+          }
+        }
+        Fl_Group {} {
+          label Surface
+          xywh {10 45 475 175} hide
+        } {
+          Fl_Group {} {
+            label {Surface Type}
+            xywh {40 85 100 105} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsSurfaceTypeBtns(globalControl->readInt(SurfaceStyle));}
+          } {
+            Fl_Check_Button surfacePrefsNoneBtn {
+              label None
+              callback {callback->setPrefsSurfaceStyle(M3D_NONE);}
+              xywh {45 90 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button surfacePrefsPointcloudBtn {
+              label {Point cloud}
+              callback {callback->setPrefsSurfaceStyle(M3D_POINTCLOUD);}
+              xywh {45 115 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button surfacePrefsWireframeBtn {
+              label {Wire frame}
+              callback {callback->setPrefsSurfaceStyle(M3D_WIREFRAME);}
+              xywh {45 140 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button surfacePrefsSolidBtn {
+              label Solid
+              callback {callback->setPrefsSurfaceStyle(M3D_SOLID);}
+              xywh {45 165 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+          Fl_Group {} {
+            label Subdivision
+            xywh {175 85 100 105} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsSurfaceLevelBtns(globalControl->readInt(SurfaceLevel));}
+          } {
+            Fl_Check_Button surfacePrefsLevel_0Btn {
+              label {Level 0}
+              callback {callback->setPrefsSurfaceLevel(0);}
+              xywh {180 90 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button surfacePrefsLevel_1Btn {
+              label {Level 1}
+              callback {callback->setPrefsSurfaceLevel(1);}
+              xywh {180 115 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button surfacePrefsLevel_2Btn {
+              label {Level 2}
+              callback {callback->setPrefsSurfaceLevel(2);}
+              xywh {180 140 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button surfacePrefsLevel_3Btn {
+              label {Level 3}
+              callback {callback->setPrefsSurfaceLevel(3);}
+              xywh {180 165 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+          Fl_Value_Slider surfacePrefsLineWidth {
+            label { Line/dot width  }
+            callback {callback->setPrefsSurfaceLineWidth((int) surfacePrefsLineWidth->value());}
+            xywh {320 170 120 20} type {Horz Knob} labelsize 12 align 5 minimum 1 maximum 10 step 1 value 1
+          }
+          Fl_Value_Input surfacePrefsSmoothness {
+            label {Smoothness: }
+            callback {callback->setPrefsSurfaceSmoothness((int) surfacePrefsSmoothness->value());}
+            xywh {395 120 30 25} labelsize 12 textsize 12
+          }
+          Fl_Check_Button surfacePrefsUseTwoLights {
+            label {Use two lights}
+            callback {callback->setPrefsUseTwoLights(surfacePrefsUseTwoLights->value());}
+            xywh {395 85 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button surfacePrefsUseTwoLightsText {
+            label {yes/no}
+            xywh {420 85 45 25} box FLAT_BOX align 20
+          }
+        }
+        Fl_Group prefsEditorImageTab {
+          label Image
+          xywh {5 45 490 180} hide
+        } {
+          Fl_Check_Button imagePrefsSmoothImages {
+            label {Smooth images}
+            callback {callback->setPrefsSmoothImages(imagePrefsSmoothImages->value())}
+            xywh {170 95 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button imagePrefsSmoothImagesText {
+            label {yes/no}
+            xywh {195 95 50 25} box FLAT_BOX align 20
+          }
+          Fl_Button imagePrefsCutPlaneBoundaryText {
+            label {yes/no}
+            xywh {195 125 45 25} box FLAT_BOX align 20
+          }
+          Fl_Check_Button imagePrefsCutPlaneBoundary {
+            label {Draw cut plane boundary}
+            callback {callback->setPrefsCutPlaneBoundary(imagePrefsCutPlaneBoundary->value());}
+            xywh {170 125 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Value_Slider imagePrefsCutPlaneBdryWidth {
+            label {Cut plane boundary width}
+            callback {callback->setPrefsCutPlaneBdryWidth((int) imagePrefsCutPlaneBdryWidth->value())}
+            xywh {170 155 165 20} type {Horz Knob} labelsize 12 align 4 minimum 1 maximum 6 step 1 value 1
+          }
+          Fl_Check_Button imagePrefsXSliceDefault {
+            label {Show sagittal slice}
+            callback {callback->setPrefsSliceDefault(1, imagePrefsXSliceDefault->value())}
+            xywh {470 95 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Check_Button imagePrefsYSliceDefault {
+            label {Show coronal slice}
+            callback {callback->setPrefsSliceDefault(2, imagePrefsYSliceDefault->value())}
+            xywh {470 75 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Check_Button imagePrefsZSliceDefault {
+            label {Show axial slice}
+            callback {callback->setPrefsSliceDefault(3, imagePrefsZSliceDefault->value())}
+            xywh {470 55 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button imagePrefsCutPlaneMode {
+            label 2
+            callback {callback->incrementPrefsCutPlaneMode()}
+            xywh {25 180 25 25}
+          }
+          Fl_Button imagePrefsCutPlaneModeText {
+            label {Show both cut plane views}
+            xywh {55 180 250 25} box FLAT_BOX align 20
+          }
+          Fl_Check_Button imagePrefsRangeDisplayed {
+            label {Intensity range displayed}
+            callback {callback->setPrefsRangeDisplayed(imagePrefsRangeDisplayed->value())}
+            xywh {170 55 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button imagePrefsRangeDisplayedText {
+            label percent
+            xywh {195 55 90 25} box FLAT_BOX align 20
+          }
+          Fl_Check_Button imagePrefsCoordsDisplayed {
+            label {Coordinates displayed}
+            callback {callback->setPrefsCoordsDisplayed(imagePrefsCoordsDisplayed->value())}
+            xywh {170 75 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button imagePrefsCoordsDisplayedText {
+            label world
+            xywh {195 75 50 25} box FLAT_BOX align 20
+          }
+          Fl_Check_Button imagePrefsDrawBoundary {
+            label {Draw boundary on image}
+            callback {callback->setPrefsDrawBoundary(imagePrefsDrawBoundary->value())}
+            xywh {470 120 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button {} {
+            label {Image File Properties}
+            callback {prefsImageFilesWindow->show()}
+            xywh {345 195 140 25} labelsize 12 align 16
+          }
+        }
+        Fl_Group {} {
+          label Tiles
+          xywh {20 45 485 180} hide
+        } {
+          Fl_Menu_Button {} {
+            label {Tiles Color}
+            xywh {65 65 165 25} align 20
+          } {
+            MenuItem {} {
+              label {Deep pink}
+              callback {callback->setPrefsTilesColor(FL_RED);}
+              xywh {35 35 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label {Forest green}
+              callback {callback->setPrefsTilesColor(FL_GREEN);}
+              xywh {35 35 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label {Slate blue}
+              callback {callback->setPrefsTilesColor(FL_BLUE);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Gold
+              callback {callback->setPrefsTilesColor(FL_YELLOW);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Brick
+              callback {callback->setPrefsTilesColor(FL_MAGENTA);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Aquamarine
+              callback {callback->setPrefsTilesColor(FL_CYAN);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Beige
+              callback {callback->setPrefsTilesColor(FL_GRAY);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Custom
+              callback {callback->setPrefsTilesColor();}
+              xywh {35 35 100 20} labelsize 12
+              code0 {\#include <FL/Fl_Color_Chooser.H>}
+            }
+          }
+          Fl_Box tilePrefsCurrentTilesColor {
+            label {current color}
+            xywh {245 65 120 25} box BORDER_BOX color 7 labelsize 10 align 16
+          }
+          Fl_Group tilePrefsBYUOutput {
+            label {Type of BYU output:}
+            xywh {65 140 215 55} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsBYUOutputBtns(globalControl->readInt(BYUOutputType));}
+            code1 {setPrefsBYUOutputBtns(2 + globalControl->readInt(BYUOutputCoords));}
+          } {
+            Fl_Group BYUTileGrp {
+              xywh {180 145 90 45}
+            } {
+              Fl_Check_Button otherPrefsBYUTrianglesButton {
+                label Triangles
+                callback {callback->setPrefsBYUOutputType(0);}
+                xywh {180 145 75 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+              }
+              Fl_Check_Button otherPrefsBYUQuadsButton {
+                label Quadrangles
+                callback {callback->setPrefsBYUOutputType(1);}
+                xywh {180 165 90 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+              }
+            }
+            Fl_Group BYUCoordsGrp {
+              xywh {70 145 105 45}
+            } {
+              Fl_Check_Button otherPrefsBYUModelCoordButton {
+                label {Model coords.}
+                callback {callback->setPrefsBYUOutputType(2);}
+                xywh {155 145 15 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12 align 4
+              }
+              Fl_Check_Button otherPrefsBYUWorldCoordButton {
+                label {World coords.}
+                callback {callback->setPrefsBYUOutputType(3);}
+                xywh {155 165 15 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12 align 4
+              }
+            }
+          }
+        }
+        Fl_Group prefsEditorConstraintsTab {
+          label Constraints
+          xywh {15 45 475 180} hide
+        } {
+          Fl_Check_Button constraintPrefsShowConstraints {
+            label {Show constraints}
+            callback {callback->setPrefsShowConstraints(constraintPrefsShowConstraints->value());}
+            xywh {140 195 25 30} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button constraintPrefsShowConstraintsText {
+            label {yes/no}
+            xywh {165 195 135 30} box FLAT_BOX align 20
+          }
+          Fl_Group {} {
+            label {Surface Type}
+            xywh {30 80 100 105} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsPartialSurfaceTypeBtns(globalControl->readInt(PartialSurfaceStyle));}
+          } {
+            Fl_Check_Button constraintPrefsNoneBtn {
+              label None
+              callback {callback->setPrefsPartialSurfaceStyle(M3D_NONE);}
+              xywh {35 85 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button constraintPrefsPointcloudBtn {
+              label {Point cloud}
+              callback {callback->setPrefsPartialSurfaceStyle(M3D_POINTCLOUD);}
+              xywh {35 110 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button constraintPrefsWireframeBtn {
+              label {Wire frame}
+              callback {callback->setPrefsPartialSurfaceStyle(M3D_WIREFRAME);}
+              xywh {35 135 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button constraintPrefsSolidBtn {
+              label Solid
+              callback {callback->setPrefsPartialSurfaceStyle(M3D_SOLID);}
+              xywh {35 160 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+          Fl_Group {} {
+            label Subdivision
+            xywh {160 80 105 105} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsPartialSurfaceLevelBtns(globalControl->readInt(PartialSurfaceLevel));}
+          } {
+            Fl_Check_Button constraintPrefsLevel_0Btn {
+              label {Level 0}
+              callback {callback->setPrefsPartialSurfaceLevel(0);}
+              xywh {165 85 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button constraintPrefsLevel_1Btn {
+              label {Level 1}
+              callback {callback->setPrefsPartialSurfaceLevel(1);}
+              xywh {165 110 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button constraintPrefsLevel_2Btn {
+              label {Level 2}
+              callback {callback->setPrefsPartialSurfaceLevel(2);}
+              xywh {165 135 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button constraintPrefsLevel_3Btn {
+              label {Level 3}
+              callback {callback->setPrefsPartialSurfaceLevel(3);}
+              xywh {165 160 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+          Fl_Group {} {
+            label {Render Selected Figures}
+            xywh {300 160 170 25} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+          } {
+            Fl_Check_Button constraintPrefsPartiallyBtn {
+              label Partially
+              callback {callback->setPrefsPartialRendering(0);}
+              xywh {315 165 70 20} type Radio down_box ROUND_DOWN_BOX value 1 selection_color 1 labelsize 12
+            }
+            Fl_Check_Button constraintPrefsFullyBtn {
+              label Fully
+              callback {callback->setPrefsPartialRendering(1);}
+              xywh {405 165 50 20} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+          Fl_Menu_Button {} {
+            label {Partial Surface Color}
+            xywh {300 100 170 25} align 20
+          } {
+            MenuItem {} {
+              label Pink
+              callback {callback->setPrefsPartialSurfaceColor(FL_RED);}
+              xywh {25 25 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Tan
+              callback {callback->setPrefsPartialSurfaceColor(FL_GREEN);}
+              xywh {25 25 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label {Light blue}
+              callback {callback->setPrefsPartialSurfaceColor(FL_BLUE);}
+              xywh {75 75 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Lime
+              callback {callback->setPrefsPartialSurfaceColor(FL_YELLOW);}
+              xywh {75 75 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Olive
+              callback {callback->setPrefsPartialSurfaceColor(FL_MAGENTA);}
+              xywh {75 75 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Orange
+              callback {callback->setPrefsPartialSurfaceColor(FL_CYAN);}
+              xywh {75 75 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Gray
+              callback {callback->setPrefsPartialSurfaceColor(FL_GRAY);}
+              xywh {75 75 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Custom
+              callback {callback->setPrefsPartialSurfaceColor();}
+              xywh {25 25 100 20} labelsize 12
+              code0 {\#include <FL/Fl_Color_Chooser.H>}
+            }
+          }
+          Fl_Box constraintPrefsPartialSurfaceColor {
+            label {current color}
+            xywh {330 65 115 25} box BORDER_BOX color 7 labelsize 10 align 16
+          }
+        }
+        Fl_Group {} {
+          label Landmarks
+          xywh {10 45 465 180} hide
+        } {
+          Fl_Check_Button landmarkPrefsShowLandmarks {
+            label {Show landmarks}
+            callback {callback->setPrefsShowLandmarks(landmarkPrefsShowLandmarks->value());}
+            xywh {205 125 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button landmarkPrefsShowLandmarksText {
+            label {yes/no}
+            xywh {230 125 135 25} box FLAT_BOX align 20
+          }
+          Fl_Value_Slider landmarkPrefsNarrowWidth {
+            label {Unmarked landmark line width  }
+            callback {callback->setPrefsLandmarksNarrowWidth((int) landmarkPrefsNarrowWidth->value());}
+            xywh {230 160 120 20} type {Horz Knob} labelsize 12 align 4 minimum 1 maximum 10 step 1 value 1
+          }
+          Fl_Value_Slider landmarkPrefsWideWidth {
+            label {Marked landmark line width  }
+            callback {callback->setPrefsLandmarksWideWidth((int) landmarkPrefsWideWidth->value());}
+            xywh {230 195 120 20} type {Horz Knob} labelsize 12 align 4 minimum 1 maximum 10 step 1 value 1
+          }
+          Fl_Menu_Button {} {
+            label {Landmarks Color}
+            xywh {50 60 165 25} align 20
+          } {
+            MenuItem {} {
+              label Orange
+              callback {callback->setPrefsLandmarksColor(FL_RED);}
+              xywh {35 35 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label {Sea green}
+              callback {callback->setPrefsLandmarksColor(FL_GREEN);}
+              xywh {35 35 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label {Cornflower blue}
+              callback {callback->setPrefsLandmarksColor(FL_BLUE);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label {Rosy brown}
+              callback {callback->setPrefsLandmarksColor(FL_YELLOW);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Purple
+              callback {callback->setPrefsLandmarksColor(FL_MAGENTA);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Chartreuse
+              callback {callback->setPrefsLandmarksColor(FL_CYAN);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Gray
+              callback {callback->setPrefsLandmarksColor(FL_GRAY);}
+              xywh {85 85 100 20} labelsize 12
+            }
+            MenuItem {} {
+              label Custom
+              callback {callback->setPrefsLandmarksColor();}
+              xywh {35 35 100 20} labelsize 12
+              code0 {\#include <FL/Fl_Color_Chooser.H>}
+            }
+          }
+          Fl_Box landmarkPrefsLandmarksColor {
+            label {current color}
+            xywh {230 60 115 25} box BORDER_BOX color 7 labelsize 10 align 16
+          }
+          Fl_Box {} {
+            label {(Used on image planes and when the}
+            xywh {230 85 185 15} box FLAT_BOX labelsize 10 align 20
+          }
+          Fl_Box {} {
+            label {surface is drawn with points or lines)}
+            xywh {230 100 245 15} box FLAT_BOX labelsize 10 align 20
+          }
+        }
+        Fl_Group {} {
+          label Other
+          xywh {10 45 495 180} hide
+        } {
+          Fl_Value_Input otherPrefsUndoLength {
+            label {Length of undo list:}
+            callback {callback->setUndoLength((int) otherPrefsUndoLength->value());}
+            xywh {420 145 40 25} labelsize 12 maximum 1000 value 250 textsize 12
+          }
+          Fl_Check_Button otherPrefsLeftHandedButton {
+            label {Left-handed mouse}
+            callback {callback->setPrefsMouseButtonOrder(0 != otherPrefsLeftHandedButton->value());}
+            xywh {155 155 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button otherPrefsLeftHandedText {
+            label {yes/no}
+            xywh {180 155 45 25} box FLAT_BOX align 20
+          }
+          Fl_Output otherPrefsLeftComment {
+            label {output:}
+            xywh {40 175 340 20} box FLAT_BOX color 49 selection_color 49 labeltype NO_LABEL labelsize 12 textsize 12
+          }
+          Fl_Check_Button otherPrefsAboutPabloButton {
+            label {Show "About Pablo" window at startup}
+            callback {callback->setPrefsAboutWindow(0 != otherPrefsAboutPabloButton->value());}
+            xywh {385 195 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+          }
+          Fl_Button otherPrefsAboutPabloText {
+            label {yes/no}
+            xywh {410 195 55 25} box FLAT_BOX align 20
+          }
+          Fl_Group {} {
+            label {Reorder multi-figural models when saving:}
+            xywh {30 120 240 25} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsReorderBtns(globalControl->readInt(ReorderModels));}
+          } {
+            Fl_Check_Button otherPrefsReorderAlwaysButton {
+              label Always
+              callback {callback->setPrefsReorderWindow(1);}
+              xywh {45 120 60 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button otherPrefsReorderNeverButton {
+              label Never
+              callback {callback->setPrefsReorderWindow(0);}
+              xywh {120 120 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button otherPrefsReorderPromptButton {
+              label Prompt
+              callback {callback->setPrefsReorderWindow(-1);}
+              xywh {190 120 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+          Fl_Group simTransOutput {
+            label {Similarity transformation output:}
+            xywh {285 80 215 55} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+          } {
+            Fl_Group simTransGrp {
+              xywh {395 85 95 45}
+            } {
+              Fl_Check_Button otherPrefsSimTransVectorsButton {
+                label {Three vectors}
+                callback {callback->setPrefsSimTransOutputType();}
+                xywh {395 85 95 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+              }
+              Fl_Check_Button otherPrefsSimTransMatrixButton {
+                label {Matrix form}
+                callback {callback->setPrefsSimTransOutputType();}
+                xywh {395 105 90 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+              }
+            }
+            Fl_Group simTransFilesGrp {
+              xywh {290 85 105 45}
+            } {
+              Fl_Check_Button otherPrefsSimTransModelButton {
+                label {In model file.}
+                callback {callback->setPrefsSimTransOutputType();}
+                xywh {370 85 15 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12 align 4
+              }
+              Fl_Check_Button otherPrefsSimTransSeparateButton {
+                label {Separate file.}
+                callback {callback->setPrefsSimTransOutputType();}
+                xywh {370 105 15 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12 align 4
+              }
+            }
+          }
+          Fl_Group {} {
+            label {Amount of printed output:}
+            xywh {30 70 240 25} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+            code0 {setPrefsVerbosityBtns(globalControl->readInt(OutputVerbosity));}
+          } {
+            Fl_Check_Button otherPrefsQuietVerbosityButton {
+              label Quiet
+              callback {callback->setPrefsVerbosity(-1)}
+              xywh {45 70 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button otherPrefsNormalVerbosityButton {
+              label Normal
+              callback {callback->setPrefsVerbosity(0)}
+              xywh {115 70 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+            Fl_Check_Button otherPrefsLoudVerbosityButton {
+              label Verbose
+              callback {callback->setPrefsVerbosity(1)}
+              xywh {190 70 70 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+            }
+          }
+        }
+      }
+    }
+    code {preferencesEditorWindow->position(win_X, win_Y);} {}
+    Fl_Window prefsImageFilesWindow {
+      label {Image3D File Format}
+      xywh {576 266 424 186} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Group {} {
+        label {Byte order}
+        xywh {10 25 100 110} box EMBOSSED_FRAME labelfont 1 labelsize 12 align 5
+        code0 {setPrefsByteOrderBtns(globalControl->readInt(ByteOrder));}
+      } {
+        Fl_Check_Button imagePrefsReverseOrder {
+          label Reverse
+          callback {callback->setPrefsByteOrder(0);}
+          xywh {35 30 70 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+        }
+        Fl_Check_Button imagePrefsNativeOrder {
+          label Native
+          callback {callback->setPrefsByteOrder(1);}
+          xywh {35 55 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+        }
+        Fl_Check_Button imagePrefsNormalOrder {
+          label Normal
+          callback {callback->setPrefsByteOrder(2);}
+          xywh {35 80 70 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+        }
+        Fl_Check_Button imagePrefsRetainOrder {
+          label Retain
+          callback {callback->setPrefsByteOrder(3);}
+          xywh {35 105 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+        }
+        Fl_Button byteOrder_Caret0 {
+          label {@>}
+          xywh {15 35 25 15} box FLAT_BOX down_box FLAT_BOX labelsize 10 labelcolor 3
+        }
+        Fl_Button byteOrder_Caret1 {
+          label {@>}
+          xywh {15 85 25 15} box FLAT_BOX down_box FLAT_BOX labelsize 10 labelcolor 3
+        }
+      }
+      Fl_Check_Button imagePrefsScaleInput {
+        label {Scale input images}
+        callback {callback->setPrefsScaleInputImage(imagePrefsScaleInput->value())}
+        xywh {170 145 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 4
+      }
+      Fl_Button imagePrefsScaleInputText {
+        label {yes/no}
+        xywh {194 145 50 25} box FLAT_BOX align 20
+      }
+      Fl_Check_Button imagePrefsCompressImages {
+        label {Compress image files}
+        callback {callback->setPrefsCompressImages(imagePrefsCompressImages->value())}
+        xywh {340 85 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+      }
+      Fl_Button imagePrefsCompressImagesText {
+        label {yes/no}
+        xywh {365 85 50 25} box FLAT_BOX align 20
+      }
+      Fl_Check_Button imagePrefsConvertImages {
+        label {) old image files}
+        callback {callback->setPrefsConvertImages(imagePrefsConvertImages->value())}
+        xywh {340 105 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+      }
+      Fl_Button imagePrefsConvertImagesText {
+        label {yes/no}
+        xywh {365 105 50 25} box FLAT_BOX align 20
+      }
+      Fl_Button imagePrefsConvertImagesType {
+        label Uncompress
+        xywh {125 105 130 25} box NO_BOX labelsize 12 align 24 when 0
+      }
+      Fl_Return_Button {} {
+        label Close
+        callback {prefsImageFilesWindow->hide();}
+        xywh {320 150 90 30}
+      }
+      Fl_Check_Button imagePrefsConvertFormat {
+        label {Convert image files to above format}
+        callback {callback->setPrefsConvertFormat(imagePrefsConvertFormat->value())}
+        xywh {340 50 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 4
+      }
+      Fl_Button imagePrefsConvertFormatText {
+        label {yes/no}
+        xywh {365 50 65 25} box FLAT_BOX align 20
+      }
+      Fl_Counter imagePrefsImageFormat {
+        label {Image3D File Format  }
+        callback {callback->setPrefsImageFormat((int) imagePrefsImageFormat->value())}
+        xywh {345 30 60 20} type Simple labelsize 12 align 4 minimum 0 maximum 1 step 1
+      }
+    }
+    code {prefsImageFilesWindow->position(subwin_X, subwin_Y);} {}
+  }
+  Function {make_ReorderPopup()} {} {
+    Fl_Window reorderPopupWindow {
+      callback {reorderPopupWindow->hide();}
+      xywh {545 463 396 160} type Double hide modal
+    } {
+      Fl_Box {} {
+        label {?}
+        xywh {25 15 50 45} box BORDER_BOX color 23 labelfont 1 labelsize 28 labelcolor 4
+      }
+      Fl_Box {} {
+        label {This model needs reordering ...}
+        xywh {85 15 270 30} labelsize 20
+      }
+      Fl_Box {} {
+        label {Renumbering the figures will result in reordering to put}
+        xywh {85 45 270 20} labelsize 11 align 20
+      }
+      Fl_Box {} {
+        label {subfigures after their parents on the visibility window.}
+        xywh {85 60 270 20} labelsize 11 align 20
+      }
+      Fl_Group {} {
+        xywh {5 90 380 35}
+      } {
+        Fl_Return_Button {} {
+          label {Reorder figures}
+          callback {callback->reorderModel();
+  callback->clearReorderWindowMode();
+  reorderPopupWindow->hide();}
+          xywh {20 95 135 25}
+        }
+        Fl_Return_Button {} {
+          label {Save as is}
+          callback {callback->clearReorderWindowMode();
+  reorderPopupWindow->hide();}
+          xywh {175 95 100 25}
+        }
+        Fl_Return_Button {} {
+          label Cancel
+          callback {callback->cancelSave();
+  callback->clearReorderWindowMode();
+  reorderPopupWindow->hide();}
+          xywh {295 95 80 25}
+        }
+      }
+      Fl_Group {} {
+        xywh {20 130 345 25}
+      } {
+        Fl_Check_Button reorderAutomaticButton {
+          label {In the future, reorder automatically}
+          callback {callback->setPrefsReorderWindow(1);}
+          xywh {30 130 15 25} type Radio down_box EMBOSSED_BOX selection_color 1 labelsize 10 align 8
+        }
+        Fl_Check_Button reorderNeverButton {
+          label {In the future, never reorder}
+          callback {callback->setPrefsReorderWindow(0);}
+          xywh {220 130 15 25} type Radio down_box EMBOSSED_BOX selection_color 1 labelsize 10 align 8
+        }
+      }
+    }
+  }
+  Function {make_addQuadFigureDlg(int win_X, int win_Y, bool open)} {} {
+    Fl_Window addQuadFigureDlg {
+      label {Add Quad Figure}
+      callback {addQuadFigureDlg->hide();}
+      xywh {423 210 260 164} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Value_Input addQuadFigureRowInput {
+        label {Rows:}
+        xywh {55 15 30 25} value 4
+      }
+      Fl_Value_Input addQuadFigureColumnInput {
+        label {Columns:}
+        xywh {175 15 30 25} value 4
+      }
+      Fl_Return_Button addQuadFigureBtn {
+        label Add
+        callback {callback->addQuadFigure();}
+        xywh {165 125 80 25} shortcut 0xff0d
+      }
+      Fl_Input addQuadFigureNameInput {
+        label {Name:}
+        xywh {55 50 190 25} textsize 12
+      }
+      Fl_Menu_Button addQuadFigureColorBtn {
+        label Color
+        xywh {15 85 75 25} align 20
+      } {
+        MenuItem {} {
+          label Red
+          callback {callback->setFigureColor(addQuadFigureCurrentColor, FL_RED);}
+          xywh {0 0 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Green
+          callback {callback->setFigureColor(addQuadFigureCurrentColor, FL_GREEN);}
+          xywh {0 0 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Yellow
+          callback {callback->setFigureColor(addQuadFigureCurrentColor, FL_YELLOW);}
+          xywh {0 0 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Blue
+          callback {callback->setFigureColor(addQuadFigureCurrentColor, FL_BLUE);}
+          xywh {20 20 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Magenta
+          callback {callback->setFigureColor(addQuadFigureCurrentColor, FL_MAGENTA);}
+          xywh {30 30 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Cyan
+          callback {callback->setFigureColor(addQuadFigureCurrentColor, FL_CYAN);}
+          xywh {40 40 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Gray
+          callback {callback->setFigureColor(addQuadFigureCurrentColor, FL_GRAY);}
+          xywh {50 50 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Custom
+          callback {callback->setFigureColor(addQuadFigureCurrentColor);}
+          xywh {0 0 100 20} labelsize 12
+          code0 {\#include <FL/Fl_Color_Chooser.H>}
+        }
+      }
+      Fl_Box addQuadFigureCurrentColor {
+        label {current color}
+        xywh {100 85 115 25} box BORDER_BOX color 0 labelsize 10 labelcolor 7 align 16
+      }
+    }
+    code {addQuadFigureDlg->position(win_X, win_Y);
+  callback->initializeAddQuadDlg();
+  if (open) addQuadFigureDlg->show();} {}
+  }
+  Function {make_VisibilityControl(int win_X, int win_Y, bool open)} {} {
+    Fl_Window visibilityControlWindow {
+      label {Visibility Control}
+      callback {visibilityControlWindow->hide();
+  visibilityWindowCheckBox->value(0);}
+      xywh {507 258 203 393} type Double box UP_BOX labelsize 12 align 0 hide resizable
+      class movable_Fl_Window
+    } {
+      Fl_Button visibilityAllOn {
+        label {All Figures On}
+        callback {callback->visibilityAllOn();}
+        xywh {15 140 90 25} labelsize 12 align 16
+      }
+      Fl_Button visibilityAllOff {
+        label {All Figures Off}
+        callback {callback->visibilityAllOff();}
+        xywh {15 175 90 25} labelsize 12 align 16
+      }
+      Fl_Round_Button atomVectorsVisible {
+        label {Atom vectors}
+        callback {callback->atomVectorsVisible(atomVectorsVisible->value());}
+        xywh {25 5 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button meshConnectorsVisible {
+        label {Mesh connectors}
+        callback {callback->meshConnectorsVisible(meshConnectorsVisible->value());}
+        xywh {25 30 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button atomsVisible {
+        label {Show atoms}
+        callback {callback->atomsVisible(atomsVisible->value());}
+        xywh {25 55 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button Figure0 {
+        callback {callback->setFigureVisibility(0, Figure0->value());}
+        xywh {40 210 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button Figure1 {
+        callback {callback->setFigureVisibility(1, Figure1->value());}
+        xywh {40 235 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button Figure2 {
+        callback {callback->setFigureVisibility(2, Figure2->value());}
+        xywh {40 260 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button Figure3 {
+        callback {callback->setFigureVisibility(3, Figure3->value());}
+        xywh {40 285 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button Figure4 {
+        callback {callback->setFigureVisibility(4, Figure4->value());}
+        xywh {40 310 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button Figure5 {
+        callback {callback->setFigureVisibility(5, Figure5->value());}
+        xywh {40 335 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button Figure6 {
+        callback {callback->setFigureVisibility(6, Figure6->value());}
+        xywh {40 360 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Box figureNumber0 {
+        label 0
+        xywh {20 210 25 25} labelsize 12 align 16
+      }
+      Fl_Box figureNumber1 {
+        label 1
+        xywh {20 235 25 25} labelsize 12 align 16
+      }
+      Fl_Box figureNumber2 {
+        label 2
+        xywh {20 260 25 25} labelsize 12 align 16
+      }
+      Fl_Box figureNumber3 {
+        label 3
+        xywh {20 285 25 25} labelsize 12 align 16
+      }
+      Fl_Box figureNumber4 {
+        label 4
+        xywh {20 310 25 25} labelsize 12 align 16
+      }
+      Fl_Box figureNumber5 {
+        label 5
+        xywh {20 335 25 25} labelsize 12 align 16
+      }
+      Fl_Box figureNumber6 {
+        label 6
+        xywh {20 360 25 25} labelsize 12 align 16
+      }
+      Fl_Button visibilityAllInvert {
+        label Invert
+        callback {callback->visibilityAllInverted();}
+        xywh {115 150 45 35} labelsize 12 align 16
+      }
+      Fl_Round_Button constraintsVisible {
+        label {Show constraints}
+        callback {callback->constraintsVisible(constraintsVisible->value());}
+        xywh {25 80 25 25} down_box EMBOSSED_BOX selection_color 1 labelsize 12 align 8
+      }
+      Fl_Round_Button landmarksVisible {
+        label {Show landmarks}
+        callback {callback->landmarksVisible(landmarksVisible->value());}
+        xywh {25 105 25 25} down_box EMBOSSED_BOX value 1 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Roller visibilityFigureRoller {
+        callback {callback->setVisibilityFigureRange();}
+        xywh {10 255 15 85} box THIN_UP_FRAME maximum 7 step 1
+      }
+    }
+    code {visibilityControlWindow->position(win_X, win_Y);
+  visibilityFigureRoller->hide();
+  if (open) {
+      visibilityControlWindow->show();
+      visibilityWindowCheckBox->value(1);
+  }
+  else {
+      visibilityWindowCheckBox->value(0);
+  }} {}
+  }
+  Function {make_ConstraintsWindow(int win_X, int win_Y)} {} {
+    Fl_Window constraintsWindow {
+      label Constraints
+      callback {constraintsWindow->hide();}
+      xywh {562 419 463 413} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Group {} {
+        label {Interfigural Constraints}
+        xywh {0 5 460 405} labelfont 1 align 17
+      } {
+        Fl_Slider interObjectDistanceSlider {
+          callback {callback->setInterObjectDistance();}
+          xywh {200 320 235 20} type {Horz Knob} labelsize 12 align 4 maximum 10 value 0.5
+        }
+        Fl_Value_Output interObjectDistanceValue {
+          label {Inter-object distance}
+          xywh {145 320 55 20} labelsize 12 maximum 10 step 1e-006 value 0.5 textsize 10
+        }
+        Fl_Button contraintsDoneBtn {
+          label Done
+          callback {callback->exitConstraintsMode();
+  constraintsWindow->hide();}
+          xywh {375 370 75 30} labelsize 12
+        }
+        Fl_Box {} {
+          label Minimum
+          xywh {210 340 25 25} labelsize 10 align 17
+        }
+        Fl_Box {} {
+          label Maximum
+          xywh {400 340 25 25} labelsize 10 align 17
+        }
+        Fl_Button viewPartialSurfaces {
+          label {Set Governor}
+          callback {callback->initializeConstraints();}
+          xywh {260 105 100 30}
+        }
+        Fl_Group {} {
+          label {Render selected figures}
+          xywh {95 65 80 55} box ENGRAVED_BOX labelfont 1 labelsize 12 align 9
+        } {
+          Fl_Check_Button renderFullyBtn {
+            label Fully
+            callback {callback->togglePartialRendering(1);}
+            xywh {100 95 50 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button renderPartiallyBtn {
+            label Partially
+            callback {callback->togglePartialRendering(0);}
+            xywh {100 65 70 25} type Radio down_box ROUND_DOWN_BOX value 1 selection_color 1 labelsize 12
+          }
+        }
+        Fl_Group {} {
+          label {Surface Type}
+          xywh {35 145 100 100} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+          code0 {setPartialSurfaceTypeBtns(modelView->getPartialSurfaceStyle());}
+        } {
+          Fl_Check_Button partialNoneBtn {
+            label None
+            callback {callback->setPartialSurfaceStyle(M3D_NONE);}
+            xywh {40 145 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button partialPointcloudBtn {
+            label {Point cloud}
+            callback {callback->setPartialSurfaceStyle(M3D_POINTCLOUD);}
+            xywh {40 170 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button partialWireframeBtn {
+            label {Wire frame}
+            callback {callback->setPartialSurfaceStyle(M3D_WIREFRAME);}
+            xywh {40 195 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button partialSolidBtn {
+            label Solid
+            callback {callback->setPartialSurfaceStyle(M3D_SOLID);}
+            xywh {40 220 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+        }
+        Fl_Group {} {
+          label Subdivision
+          xywh {150 145 95 100} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+          code0 {setPartialSurfaceLevelBtns(modelView->getPartialSurfaceLevel());}
+        } {
+          Fl_Check_Button PartialSurfaceLevel_0Btn {
+            label {Level 0}
+            callback {callback->setPartialSurfaceLevel(0);}
+            xywh {155 145 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button PartialSurfaceLevel_1Btn {
+            label {Level 1}
+            callback {callback->setPartialSurfaceLevel(1);}
+            xywh {155 170 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button PartialSurfaceLevel_2Btn {
+            label {Level 2}
+            callback {callback->setPartialSurfaceLevel(2);}
+            xywh {155 195 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button PartialSurfaceLevel_3Btn {
+            label {Level 3}
+            callback {callback->setPartialSurfaceLevel(3);}
+            xywh {155 220 65 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+        }
+        Fl_Button fullClear {
+          label {Clear All}
+          callback {callback->clearAllConstraints();}
+          xywh {355 55 75 30} align 16
+        }
+        Fl_Button partialClear {
+          label Clear
+          callback {callback->clearPartialConstraints();}
+          xywh {260 180 60 30} align 16
+        }
+        Fl_Value_Output constraintCount {
+          label {Number of constraints:}
+          xywh {420 215 25 25} box FLAT_BOX
+        }
+        Fl_Value_Slider constraintsFigureSlider {
+          label {Figure number}
+          callback {callback->setInterObjectFigure();}
+          xywh {135 265 200 20} type {Horz Knob} labelsize 12 align 4 minimum -1 maximum 10 step 1
+        }
+        Fl_Output constraintsFigureSliderText {
+          label {Figure name:}
+          xywh {135 285 200 20} box FLAT_BOX color 49 selection_color 49 labelsize 12
+        }
+        Fl_Button SetFigureNumber {
+          label Set
+          callback {callback->setInterObjectConstraint();}
+          xywh {350 260 45 40} labelfont 1 align 16
+        }
+        Fl_Value_Output Governor {
+          label {Current governor:}
+          xywh {390 140 25 25} box FLAT_BOX
+        }
+      }
+    }
+    code {constraintsWindow->position(win_X, win_Y);} {}
+  }
+  Function {make_PrimitiveEditor(int win_X, int win_Y, bool open)} {} {
+    Fl_Window primitiveEditorWindow {
+      label {Atom Editor}
+      callback {primitiveEditorWindow->hide();}
+      xywh {579 504 255 133} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Value_Slider atomEditorThetaSlider {
+        label {Object angle}
+        callback {callback->setTheta();}
+        xywh {10 75 235 15} type {Horz Knob} labelsize 12 align 5 maximum 90 step 0.1
+      }
+      Fl_Value_Slider atomEditorElongationSlider {
+        label Elongation
+        callback {callback->setElongation();}
+        xywh {10 110 235 15} type {Horz Knob} labelsize 12 align 5 minimum 0.1 maximum 5 value 1
+      }
+      Fl_Button atomEditor1stMessageBtn {
+        label {Mark (ctrl-right click) any atom}
+        xywh {10 15 235 15} box NO_BOX labelsize 12 align 16
+      }
+      Fl_Button atomEditor2ndMessageBtn {
+        label {and then adjust the sliders.}
+        xywh {10 30 235 15} box NO_BOX labelsize 12 align 16
+      }
+      Fl_Group atomEditorOutputGrp {
+        xywh {10 10 235 50} box FLAT_BOX labeltype NO_LABEL align 0 hide
+      } {
+        Fl_Value_Output atomEditorFigureOutput {
+          label {Figure: }
+          xywh {65 15 35 20} box FLAT_BOX textsize 12
+        }
+        Fl_Value_Output atomEditorAtomIdOutput {
+          label {Atom: }
+          xywh {65 35 35 20} box FLAT_BOX textsize 12
+        }
+        Fl_Output atomEditorUVOutput {
+          label {Figural (u, v): }
+          xywh {195 35 45 20} box FLAT_BOX color 49 textsize 12
+        }
+      }
+    }
+    code {primitiveEditorWindow->position(win_X, win_Y);
+  if (open) primitiveEditorWindow->show();} {}
+  }
+  Function {make_CutPlaneControl(int win_X, int win_Y, bool open)} {} {
+    Fl_Window cutPlanesControlWindow {
+      label {Cut Planes Control}
+      callback {cutPlanesControlWindow->hide();
+  cutPlaneWindowCheckBox->value(0);}
+      xywh {894 329 282 112} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Check_Button cutPlaneBtn0 {
+        label Atom
+        callback {callback->viewBNCutPlane();}
+        xywh {45 15 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Check_Button cutPlaneBtn1 {
+        label Crest
+        callback {callback->viewBBPerpCutPlane();}
+        xywh {45 45 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Check_Button cutPlaneBtn2 {
+        label {Cross-figure}
+        callback {callback->viewBPerpNCutPlane();}
+        xywh {45 75 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Check_Button cutPlaneBtn3 {
+        label {Starboard spoke}
+        callback {callback->viewBPerpY0CutPlane();}
+        xywh {185 15 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 136
+      }
+      Fl_Check_Button cutPlaneBtn4 {
+        label {Port spoke}
+        callback {callback->viewBPerpY1CutPlane();}
+        xywh {185 45 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Check_Button cutPlaneBtn5 {
+        label Involutes
+        callback {callback->viewInvolutesCutPlane();}
+        xywh {185 75 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+      }
+      Fl_Button cutPlaneAtomModeBtn {
+        label 2
+        callback {callback->incrementCutPlanesMode(ATOM_PLANE);}
+        xywh {15 18 20 20} box THIN_UP_BOX align 16
+      }
+      Fl_Button cutPlaneCrestModeBtn {
+        label 2
+        callback {callback->incrementCutPlanesMode(CREST_PLANE);}
+        xywh {15 48 20 20} box THIN_UP_BOX align 16
+      }
+      Fl_Button cutPlaneBPerpNModeBtn {
+        label 2
+        callback {callback->incrementCutPlanesMode(BPERP_N_PLANE);}
+        xywh {15 76 20 20} box THIN_UP_BOX align 16
+      }
+      Fl_Button cutPlaneStarboardModeBtn {
+        label 2
+        callback {callback->incrementCutPlanesMode(STARBOARD_PLANE);}
+        xywh {155 18 20 20} box THIN_UP_BOX align 16
+      }
+      Fl_Button cutPlanePortModeBtn {
+        label 2
+        callback {callback->incrementCutPlanesMode(PORT_PLANE);}
+        xywh {155 48 20 20} box THIN_UP_BOX align 16
+      }
+      Fl_Button cutPlaneInvolutesModeBtn {
+        label 2
+        callback {callback->incrementCutPlanesMode(INVOLUTES_PLANE);}
+        xywh {155 78 20 20} box THIN_UP_BOX align 16
+      }
+    }
+    code {cutPlanesControlWindow->position(win_X, win_Y);
+  callback->initCutPlanesMode();
+  if (open) {
+      cutPlanesControlWindow->show();
+      cutPlaneWindowCheckBox->value(0);
+  }} {}
+  }
+  Function {make_CutPlaneWindows(int windowPropsPosn[WIN_PROPS_LEN][2])} {} {
+    Fl_Window bNCutPlaneWindow {
+      label {Atom Cut Plane}
+      callback {callback->hideCutPlanes(ATOM_PLANE);}
+      xywh {428 132 266 266} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Box bNCutPlaneView {
+        xywh {5 5 256 256} box FLAT_BOX color 32 selection_color 32 labeltype NO_LABEL
+        code0 {\#include "P3DCutPlaneView.h"}
+        class P3DCutPlaneView
+      }
+    }
+    Fl_Window bBPerpCutPlaneWindow {
+      label {Crest Cut Plane}
+      callback {callback->hideCutPlanes(CREST_PLANE);}
+      xywh {291 50 266 266} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Box bBPerpCutPlaneView {
+        xywh {5 5 256 256} box FLAT_BOX color 32 selection_color 32 labeltype NO_LABEL
+        code0 {\#include "P3DCutPlaneView.h"}
+        class P3DCutPlaneView
+      }
+    }
+    Fl_Window bPerpNCutPlaneWindow {
+      label {BPerp-N Cut Plane}
+      callback {callback->hideCutPlanes(BPERP_N_PLANE);}
+      xywh {571 50 266 266} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Box bPerpNCutPlaneView {
+        xywh {5 5 256 256} box FLAT_BOX color 32 selection_color 32 labeltype NO_LABEL
+        code0 {\#include "P3DCutPlaneView.h"}
+        class P3DCutPlaneView
+      }
+    }
+    Fl_Window bPerpY0CutPlaneWindow {
+      label {Starboard Cut Plane}
+      callback {callback->hideCutPlanes(STARBOARD_PLANE);}
+      xywh {275 391 266 266} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Box bPerpY0CutPlaneView {
+        xywh {5 5 256 256} box FLAT_BOX color 32 selection_color 32 labeltype NO_LABEL
+        code0 {\#include "P3DCutPlaneView.h"}
+        class P3DCutPlaneView
+      }
+    }
+    Fl_Window bPerpY1CutPlaneWindow {
+      label {Port Cut Plane}
+      callback {callback->hideCutPlanes(PORT_PLANE);}
+      xywh {291 346 266 266} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Box bPerpY1CutPlaneView {
+        xywh {5 5 256 256} box FLAT_BOX color 32 selection_color 32 labeltype NO_LABEL
+        code0 {\#include "P3DCutPlaneView.h"}
+        class P3DCutPlaneView
+      }
+    }
+    Fl_Window InvoluteCutPlaneWindow {
+      label {Involutes Cut Plane}
+      callback {callback->hideCutPlanes(INVOLUTES_PLANE);}
+      xywh {571 346 266 266} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Box InvoluteCutPlaneView {
+        xywh {5 5 256 256} box FLAT_BOX color 32 selection_color 32 labeltype NO_LABEL
+        code0 {\#include "P3DCutPlaneView.h"}
+        class P3DCutPlaneView
+      }
+    }
+    code {bBPerpCutPlaneWindow->resize(windowPropsPosn[CREST_PLANE_WIN][0], windowPropsPosn[CREST_PLANE_WIN][1], 266, 266);
+  bNCutPlaneWindow->resize(windowPropsPosn[ATOM_PLANE_WIN][0], windowPropsPosn[ATOM_PLANE_WIN][1], 266, 266);
+  bPerpNCutPlaneWindow->resize(windowPropsPosn[BPERP_N_PLANE_WIN][0], windowPropsPosn[BPERP_N_PLANE_WIN][1], 266, 266);
+  bPerpY0CutPlaneWindow->resize(windowPropsPosn[STARBOARD_PLANE_WIN][0], windowPropsPosn[STARBOARD_PLANE_WIN][1], 266, 266);
+  bPerpY1CutPlaneWindow->resize(windowPropsPosn[PORT_PLANE_WIN][0], windowPropsPosn[PORT_PLANE_WIN][1], 266, 266);
+  InvoluteCutPlaneWindow->resize(windowPropsPosn[INVOLUTES_PLANE_WIN][0], windowPropsPosn[INVOLUTES_PLANE_WIN][1], 266, 266);
+  bBPerpCutPlaneView->resize(5, 5, 256, 256);
+  bNCutPlaneView->resize(5, 5, 256, 256);
+  bPerpNCutPlaneView->resize(5, 5, 256, 256);
+  bPerpY0CutPlaneView->resize(5, 5, 256, 256);
+  bPerpY1CutPlaneView->resize(5, 5, 256, 256);
+  InvoluteCutPlaneView->resize(5, 5, 256, 256);} {}
+  }
+  Function {make_editLandmarksWindow(int win_X, int win_Y)} {} {
+    Fl_Window editLandmarksWindow {
+      label {Edit Landmarks}
+      callback {callback->finishEditLandmarks();}
+      xywh {971 489 358 309} type Double hide resizable
+      class movable_Fl_Window
+    } {
+      Fl_Button {} {
+        label Done
+        callback {callback->finishEditLandmarks();}
+        xywh {285 270 60 25} align 16
+      }
+      Fl_Button landmarksClearSurface {
+        label {Clear Surface Landmarks}
+        callback {callback->clearSurfaceLandmarks();}
+        xywh {165 15 180 25} labelsize 12
+      }
+      Fl_Button landmarksClearImage {
+        label {Clear Image Landmarks}
+        callback {callback->clearImageLandmarks();}
+        xywh {165 50 180 25} labelsize 12
+      }
+      Fl_Button landmarksNextBtn {
+        label Next
+        callback {callback->editLandmarksNext();}
+        xywh {15 90 60 25} labelsize 12 align 16
+      }
+      Fl_Button landmarksPreviousBtn {
+        label Previous
+        callback {callback->editLandmarksPrevious();}
+        xywh {80 90 70 25} labelsize 12 align 16
+      }
+      Fl_Button landmarkDeleteBtn {
+        label {Delete Landmark}
+        callback {callback->editLandmarkDelete();}
+        xywh {170 90 110 25} labelsize 12 align 16
+      }
+      Fl_Group editLandmarkNames {
+        label {Figure      Landmark Name}
+        xywh {30 143 317 102} box BORDER_BOX labelsize 12 align 5
+      } {}
+      Fl_Value_Output landmarksSurfaceNumber {
+        label {Number of surface landmarks:}
+        xywh {185 250 25 25} box FLAT_BOX labelsize 12
+      }
+      Fl_Group {} {
+        label {Edit landmarks on ...}
+        xywh {15 25 120 55} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5 resizable
+      } {
+        Fl_Check_Button landmarksEditMode_0Btn {
+          label Surface
+          callback {callback->setLandmarksEditMode(0);}
+          xywh {25 30 70 25} type Radio down_box ROUND_DOWN_BOX value 1 selection_color 1 labelsize 12
+        }
+        Fl_Check_Button landmarksEditMode_1Btn {
+          label Image
+          callback {callback->setLandmarksEditMode(1);}
+          xywh {25 50 60 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+        }
+      }
+      Fl_Button editLandmarks_Caret0 {
+        label {@>}
+        xywh {5 150 25 15} box FLAT_BOX down_box FLAT_BOX labelsize 10 labelcolor 3 align 16
+      }
+      Fl_Button editLandmarks_Caret1 {
+        label {@>}
+        xywh {5 165 25 15} box FLAT_BOX down_box FLAT_BOX labelsize 10 labelcolor 3 align 16
+      }
+      Fl_Button editLandmarks_Caret2 {
+        label {@>}
+        xywh {5 180 25 15} box FLAT_BOX down_box FLAT_BOX labelsize 10 labelcolor 3 align 16
+      }
+      Fl_Button editLandmarks_Caret3 {
+        label {@>}
+        xywh {5 195 25 15} box FLAT_BOX down_box FLAT_BOX labelsize 10 labelcolor 3 align 16
+      }
+      Fl_Button editLandmarks_Caret4 {
+        label {@>}
+        xywh {5 210 25 15} box FLAT_BOX down_box FLAT_BOX labelsize 10 labelcolor 3 align 16
+      }
+      Fl_Button editLandmarks_Caret5 {
+        label {@>}
+        xywh {5 225 25 15} box FLAT_BOX down_box FLAT_BOX labelsize 10 labelcolor 3 align 16
+      }
+      Fl_Value_Output landmarksImageNumber {
+        label {Number of image landmarks:}
+        xywh {180 275 25 25} box FLAT_BOX labelsize 12
+      }
+      Fl_Button {} {
+        label Apply
+        callback {callback->applyLandmarks();}
+        xywh {210 270 65 25} align 16
+      }
+      Fl_Button landmarkGotoBtn {
+        label Locate
+        callback {callback->editLandmarkGoto();}
+        xywh {295 90 50 25} labelsize 12 align 16
+      }
+    }
+    code {landmarkCells = NULL;
+  editLandmarksWindow->position(win_X, win_Y);} {}
+  }
+  Function {make_editModelWindow(int win_X, int win_Y)} {} {
+    Fl_Window editModelWindow {
+      label {Edit Model}
+      callback {editModelWindow->hide();}
+      xywh {793 222 312 420} type Double hide
+      class movable_Fl_Window modal
+    } {
+      Fl_Input editNameInput {
+        label {Model name: }
+        xywh {90 15 210 30} labelsize 12 textsize 12
+      }
+      Fl_Menu_Button editFigureColorSelector {
+        label Color
+        xywh {185 280 75 20} labelsize 12 align 20 textsize 12
+      } {
+        MenuItem {} {
+          label Red
+          callback {callback->setFigureColor(editCurrentColorOutput, FL_RED);
+  callback->editFigureColor();}
+          xywh {0 0 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Green
+          callback {callback->setFigureColor(editCurrentColorOutput, FL_GREEN);
+  callback->editFigureColor();}
+          xywh {0 0 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Yellow
+          callback {callback->setFigureColor(editCurrentColorOutput, FL_YELLOW);
+  callback->editFigureColor();}
+          xywh {0 0 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Blue
+          callback {callback->setFigureColor(editCurrentColorOutput, FL_BLUE);
+  callback->editFigureColor();}
+          xywh {20 20 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Magenta
+          callback {callback->setFigureColor(editCurrentColorOutput, FL_MAGENTA);
+  callback->editFigureColor();}
+          xywh {30 30 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Cyan
+          callback {callback->setFigureColor(editCurrentColorOutput, FL_CYAN);
+  callback->editFigureColor();}
+          xywh {40 40 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Gray
+          callback {callback->setFigureColor(editCurrentColorOutput, FL_GRAY);
+  callback->editFigureColor();}
+          xywh {50 50 100 20} labelsize 12
+        }
+        MenuItem {} {
+          label Custom
+          callback {callback->setFigureColor(editCurrentColorOutput);
+  callback->editFigureColor();}
+          xywh {0 0 100 20} labelsize 12
+          code0 {\#include <FL/Fl_Color_Chooser.H>}
+        }
+      }
+      Fl_Box editCurrentColorOutput {
+        label {current color}
+        xywh {185 245 100 25} box BORDER_BOX color 0 labelsize 10 labelcolor 7 align 16
+      }
+      Fl_Button {} {
+        label Done
+        callback {callback->finishEditModel();}
+        xywh {220 380 75 25}
+      }
+      Fl_Group editModelFigureNames {
+        label {Figure Names}
+        xywh {10 65 290 110} box BORDER_BOX
+      } {}
+      Fl_Counter editModelFigureNumber {
+        label Figure
+        callback {callback->editModelFigureNumber();}
+        xywh {10 195 85 20} type Simple labelsize 12 minimum 0 maximum 99 step 1
+      }
+      Fl_Counter editModelFigureTolerance {
+        label Smoothness
+        callback {callback->editModelFigureTolerance();}
+        xywh {185 200 85 20} type Simple labelsize 12 minimum 0 maximum 90 step 1 textsize 12
+      }
+      Fl_Group editModelFigureBlendGroup {
+        label Blending
+        xywh {20 265 115 135} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+      } {
+        Fl_Counter editModelFigureBlendExtent {
+          label {Blend Extent}
+          callback {callback->editModelFigureBlendExtent();}
+          xywh {35 320 85 20} type Simple labelsize 12 minimum 0 maximum 1 step 0.05 value 0.5 textsize 12
+        }
+        Fl_Counter editModelFigureBlendAmount {
+          label {Blend Amount}
+          callback {callback->editModelFigureBlendAmount();}
+          xywh {35 275 85 20} type Simple labelsize 12 minimum 0 maximum 1 step 0.05 value 0.5 textsize 12
+        }
+        Fl_Button editModelFigureApplyBlend {
+          label Apply
+          callback {callback->editModelReblend();}
+          xywh {65 365 55 25}
+        }
+      }
+      Fl_Check_Button editModelAttachmentMode {
+        label Protrusion
+        callback {callback->editModelAttachmentMode(editModelAttachmentMode->value());}
+        xywh {185 340 20 25} down_box EMBOSSED_BOX color 2 selection_color 3 labelsize 12 align 8
+      }
+      Fl_Group editModelPolarityGroup {
+        xywh {175 310 130 30} align 0
+      } {
+        Fl_Check_Button editModelPolarity {
+          label {P/N}
+          callback {callback->editModelPolarity();}
+          xywh {185 310 20 30} down_box EMBOSSED_BOX color 3 selection_color 2 labelsize 12 align 8
+        }
+      }
+      Fl_Button editModelDimensionsOutput {
+        label {2 x 2}
+        xywh {105 195 75 25} box NO_BOX labelsize 12 align 20
+      }
+    }
+    code {editModelWindow->position(win_X, win_Y);} {}
+  }
+  Function {make_AttachFigureDialog(int win_X, int win_Y, bool open)} {} {
+    Fl_Window attachSubfigureDialog {
+      label {Attach a Subfigure}
+      callback {callback->cancelAttachSubfigureDialog();
+  attachSubfigureDialog->hide();}
+      xywh {758 208 264 134} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Group {} {
+        xywh {5 5 255 125} box ENGRAVED_BOX
+      } {
+        Fl_Button attachStepTextOutput {
+          label Step
+          xywh {20 10 150 35} box FLAT_BOX labelfont 1 labelsize 18 align 20
+        }
+        Fl_Output attachInstructionsTextOutput {
+          xywh {20 45 230 40} type Multiline box FLAT_BOX color 49 selection_color 49 labeltype NO_LABEL textsize 12
+        }
+        Fl_Button attachNextButton {
+          label Next
+          callback {callback->advanceAttachSubfigureDialog();}
+          xywh {40 90 75 30}
+        }
+        Fl_Button attachCancelButton {
+          label Cancel
+          callback {callback->cancelAttachSubfigureDialog()}
+          xywh {140 90 75 30}
+        }
+        Fl_Group attachModeGroup {
+          label {Attachment mode}
+          xywh {20 60 230 25} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+        } {
+          Fl_Round_Button attachProtrusionButton {
+            label Protrusion
+            callback {callback->setAttachSubfigureMode(1)}
+            xywh {35 60 80 25} type Radio down_box ROUND_DOWN_BOX value 1 selection_color 1 labelsize 12
+          }
+          Fl_Round_Button attachIndentationButton {
+            label Indentation
+            callback {callback->setAttachSubfigureMode(2)}
+            xywh {140 60 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+        }
+      }
+    }
+    code {attachSubfigureDialog->position(win_X, win_Y);
+  if (open) attachSubfigureDialog->show();} {}
+  }
+  Function {make_ElongationDialog(int win_X, int win_Y, bool open)} {} {
+    Fl_Window elongationDialog {
+      label Elongation
+      callback {callback->elongateFinish();}
+      xywh {742 277 267 103} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Slider elongateRowSlider {
+        label {Elongate row}
+        callback {callback->elongateRow();}
+        xywh {15 75 100 15} type Horizontal labelsize 12 align 5 minimum 0.5 maximum 1.5 value 1
+      }
+      Fl_Slider elongateColumnSlider {
+        label {Elongate column}
+        callback {callback->elongateColumn();}
+        xywh {150 75 100 15} type Horizontal labelsize 12 align 5 minimum 0.5 maximum 1.5 value 1
+      }
+      Fl_Button elongation1stMessageBtn {
+        label {Mark (ctrl-right click) an atom of the figure}
+        xywh {15 15 240 15} box NO_BOX labelsize 12 align 16
+      }
+      Fl_Button elongation2ndMessageBtn {
+        label {to be elongated; then adjust the sliders.}
+        xywh {20 30 235 15} box NO_BOX labelsize 12 align 16
+      }
+      Fl_Button elongationFigureBtn {
+        label {Figure:}
+        xywh {55 25 50 20} box NO_BOX align 20
+      }
+      Fl_Value_Output elongationFigureNumberOutput {
+        xywh {110 25 50 20} box FLAT_BOX align 0
+      }
+    }
+    code {elongationDialog->position(win_X, win_Y);
+  if (open) elongationDialog->show();} {}
+  }
+  Function {make_OptimizerControlDialog(int win_X, int win_Y, bool open)} {} {
+    Fl_Window optimizerControlDialog {
+      label {Optimizer Control}
+      callback {callback->cancelOptimization();}
+      xywh {1003 156 291 309} type Double color 46 labelsize 12 align 24 hide
+      class movable_Fl_Window
+    } {
+      Fl_Group optimizerControl {
+        xywh {5 265 279 40} box FLAT_BOX color 46
+      } {
+        Fl_Button nextOptimizationBtn {
+          label Next
+          callback {(void) callback->nextOptimizationStage();}
+          xywh {109 275 74 25} labelsize 12
+        }
+        Fl_Button optimizationCancelBtn {
+          label Cancel
+          callback {callback->cancelOptimization();}
+          xywh {205 275 75 25} labelsize 12
+        }
+        Fl_Button previewOptimizationBtn {
+          label Probe
+          callback {callback->previewOptimizationStage();}
+          xywh {12 275 75 25} labelsize 12 hide
+        }
+        Fl_Button continuousOptimizationBtn {
+          label {Run Continuously}
+          callback {callback->continuousOptimization();}
+          xywh {15 275 125 25} labelsize 12 hide
+        }
+        Fl_Button startNextInteractiveStageBtn {
+          label Start
+          callback {callback->startNextInteractiveStage();}
+          xywh {150 275 45 25} labelsize 12 hide
+        }
+      }
+      Fl_Group optimizerSetupStage {
+        label Setup
+        xywh {10 35 270 225} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5
+      } {
+        Fl_Group optimizerMatchMethod {
+          label {Match Method}
+          xywh {25 60 240 170} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+        } {
+          Fl_Round_Button gaussDerivMatchRadioBtn {
+            label {Light to dark Gaussian derivative}
+            xywh {35 64 205 25} type Radio down_box ROUND_DOWN_BOX value 1 selection_color 1 labelsize 12
+          }
+          Fl_Round_Button negGaussDerivMatchRadioBtn {
+            label {Dark to light Gaussian derivative}
+            xywh {35 84 205 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Round_Button simpleMaskMatchRadioBtn {
+            label {Simple mask from training}
+            xywh {35 104 175 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Round_Button binaryMatchRadioBtn {
+            label {Binary image}
+            xywh {35 124 100 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Round_Button histogramMatchRadioBtn {
+            label {Histogram image match}
+            xywh {35 145 160 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+        }
+        Fl_Check_Button optimizerWindowedIntensities {
+          label {Use windowed intensities}
+          callback {callback->setOptimizerIntensityWindowing()}
+          xywh {30 235 20 25} down_box EMBOSSED_BOX value 1 color 55 selection_color 1 labelsize 12 align 8
+        }
+      }
+      Fl_Group optimizerObjectStage {
+        label {Object Stage}
+        xywh {10 35 270 205} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5 hide
+      } {
+        Fl_Button objectStartBtn {
+          label Start
+          callback {callback->startModelStage(false);}
+          xywh {25 205 70 25} labelsize 12
+        }
+        Fl_Button objectStopBtn {
+          label Stop
+          callback {callback->stopModelStage();}
+          xywh {110 205 70 25} labelsize 12
+        }
+        Fl_Button objectResetBtn {
+          label Reset
+          callback {callback->resetModelStage(false);}
+          xywh {195 205 70 25} labelsize 12
+        }
+        Fl_Value_Output objectIterationOutput {
+          label {Current iteration:}
+          xywh {135 60 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output objectMatchValueOutput {
+          label {Current match:}
+          xywh {135 80 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output objectPenaltyValueOutput {
+          label {Current penalty:}
+          xywh {135 100 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Slider objectPenaltyWeightSlider {
+          label {Geometry weight}
+          xywh {25 180 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+      }
+      Fl_Group optimizerEnsembleStage {
+        label {Object Ensemble Stage}
+        xywh {10 35 270 205} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5 hide
+      } {
+        Fl_Button modelStartBtn {
+          label Start
+          callback {callback->startModelStage(true);}
+          xywh {25 205 70 25} labelsize 12
+        }
+        Fl_Button modelStopBtn {
+          label Stop
+          callback {callback->stopModelStage();}
+          xywh {110 205 70 25} labelsize 12
+        }
+        Fl_Button modelResetBtn {
+          label Reset
+          callback {callback->resetModelStage(true);}
+          xywh {195 205 70 25} labelsize 12
+        }
+        Fl_Value_Output modelIterationOutput {
+          label {Current iteration:}
+          xywh {135 60 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output modelMatchValueOutput {
+          label {Current match:}
+          xywh {135 80 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output modelPenaltyValueOutput {
+          label {Current penalty:}
+          xywh {135 100 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Slider modelPenaltyWeightSlider {
+          label {Geometry weight}
+          xywh {25 180 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+      }
+      Fl_Group optimizerFigureStage {
+        label {Figure Stage}
+        xywh {10 35 270 220} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5 hide
+      } {
+        Fl_Button figureStageStartBtn {
+          label Start
+          callback {callback->startMainFigureStage(false);}
+          xywh {25 220 70 25} labelsize 12
+        }
+        Fl_Button figureStageStopBtn {
+          label Stop
+          callback {callback->stopMainFigureStage();}
+          xywh {110 220 70 25} labelsize 12
+        }
+        Fl_Output figureStageFigureName {
+          label {Figure:}
+          xywh {65 40 200 20} box FLAT_BOX color 49 labelsize 12 textsize 12
+        }
+        Fl_Value_Output figureStageIterationOutput {
+          label {Current iteration:}
+          xywh {135 60 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output figureStageImageMatchValueOutput {
+          label {Image match:}
+          xywh {135 80 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output figureStagePenaltyValueOutput {
+          label {Geometric deviation:}
+          xywh {135 100 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Slider figureStagePenaltyWeightSlider {
+          label {Geometry weight}
+          xywh {25 160 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Slider figureStageConstraintsPenaltyWeightSlider {
+          label {Inter-object weight}
+          xywh {25 195 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Output figureStageObjectiveFunctionValueOutput {
+          label {Objective function:}
+          xywh {135 120 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+      }
+      Fl_Group optimizerMainFigureStage {
+        label {Main Figure Stage}
+        xywh {10 35 270 220} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5 hide
+      } {
+        Fl_Button mainFigureStartBtn {
+          label Start
+          callback {callback->startMainFigureStage(true);}
+          xywh {25 220 70 25} labelsize 12
+        }
+        Fl_Button mainFigureStopBtn {
+          label Stop
+          callback {callback->stopMainFigureStage();}
+          xywh {110 220 70 25} labelsize 12
+        }
+        Fl_Output mainFigureName {
+          label {Figure:}
+          xywh {65 40 200 20} box FLAT_BOX color 49 labelsize 12 textsize 12
+        }
+        Fl_Value_Output mainFigureIterationOutput {
+          label {Current iteration:}
+          xywh {135 60 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output mainFigureImageMatchValueOutput {
+          label {Image match:}
+          xywh {135 80 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output mainFigurePenaltyValueOutput {
+          label {Geometric deviation:}
+          xywh {135 100 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Slider mainFigurePenaltyWeightSlider {
+          label {Geometry weight}
+          xywh {25 160 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Slider mainFigureConstraintsPenaltyWeightSlider {
+          label {Inter-object weight}
+          xywh {25 195 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Output mainFigureObjectiveFunctionValueOutput {
+          label {Objective function:}
+          xywh {135 120 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+      }
+      Fl_Group optimizerSubfigureStage {
+        label {Subfigure Stage}
+        xywh {10 35 270 220} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5 hide
+      } {
+        Fl_Button subfigureStartBtn {
+          label Start
+          callback {callback->startSubfigureStage();}
+          xywh {25 215 70 25} labelsize 12
+        }
+        Fl_Button subfigureStopBtn {
+          label Stop
+          callback {callback->stopSubfigureStage();}
+          xywh {110 215 70 25} labelsize 12
+        }
+        Fl_Output subFigureName {
+          label {Figure:}
+          xywh {65 40 200 20} box FLAT_BOX color 49 labelsize 12 textsize 12
+        }
+        Fl_Value_Output subfigureIterationOutput {
+          label {Current iteration:}
+          xywh {135 60 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output subfigureMatchValueOutput {
+          label {Current match:}
+          xywh {135 80 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output subfigurePenaltyValueOutput {
+          label {Geometric deviation:}
+          xywh {135 100 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Slider subfigurePenaltyWeightSlider {
+          label {Geometry weight}
+          callback {callback->setSubfigureStagePenaltyWeight();}
+          xywh {25 155 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Slider subfigureConstraintsPenaltyWeightSlider {
+          label {Inter-object weight}
+          callback {callback->setSubfigureStageConstraintsPenaltyWeight();}
+          xywh {25 190 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+      }
+      Fl_Group optimizerPrimitiveStage {
+        label {Atom Stage}
+        xywh {10 35 270 230} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5 hide
+      } {
+        Fl_Button primitiveStartBtn {
+          label Start
+          callback {callback->startPrimitiveStage();}
+          xywh {25 225 70 25} labelsize 12
+        }
+        Fl_Button primitiveStopBtn {
+          label Stop
+          callback {callback->stopPrimitiveStage();}
+          xywh {110 225 70 25} labelsize 12
+        }
+        Fl_Output primitiveFigureName {
+          label {Figure:}
+          xywh {65 35 200 20} box FLAT_BOX color 49 labelsize 12 textsize 12
+        }
+        Fl_Value_Output primitiveIterationOutput {
+          label {Current iteration:}
+          xywh {135 50 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output primitiveObjectiveFunctionValueOutput {
+          label {Objective function:}
+          xywh {135 80 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output primativePenaltyValueOutput {
+          label {Geometric deviation:}
+          xywh {135 95 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output primitiveImageMatchValueOutput {
+          label {Image match:}
+          xywh {135 65 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Slider primitivePenaltyWeightSlider {
+          label {Geometry weight}
+          xywh {25 165 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Slider primitiveConstraintsPenaltyWeightSlider {
+          label {Inter-atom weight}
+          xywh {25 200 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Slider primitiveNeighborPenaltyWeightSlider {
+          label {Neighbor penalty weight}
+          xywh {25 130 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+      }
+      Fl_Group optimizerVoxelStage {
+        label {Voxel Stage}
+        xywh {10 35 270 215} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5 hide
+      } {
+        Fl_Button voxelStageStartBtn {
+          label Start
+          callback {callback->startVoxelStage();}
+          xywh {25 215 70 25} labelsize 12
+        }
+        Fl_Button voxelStageStopBtn {
+          label Stop
+          callback {callback->stopVoxelStage();}
+          xywh {110 215 70 25} labelsize 12
+        }
+        Fl_Output voxelStageFigureName {
+          label {Figure:}
+          xywh {65 40 200 20} box FLAT_BOX color 49 labelsize 12 textsize 12
+        }
+        Fl_Value_Output voxelStageIterationOutput {
+          label {Current iteration:}
+          xywh {135 60 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output voxelStageMatchValueOutput {
+          label {Image match:}
+          xywh {135 80 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Output voxelStagePenaltyValueOutput {
+          label {Geometric deviation:}
+          xywh {135 100 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+        Fl_Value_Slider voxelStagePenaltyWeightSlider {
+          label {Geometry weight}
+          callback {callback->setVoxelStagePenaltyWeight();}
+          xywh {25 155 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Slider voxelStageConstraintsPenaltyWeightSlider {
+          label {Inter-object weight}
+          callback {callback->setVoxelStageConstraintsPenaltyWeight();}
+          xywh {25 190 240 15} type {Horz Knob} labelsize 12 align 5 value 0.5
+        }
+        Fl_Value_Output voxelStageObjectiveFunctionValueOutput {
+          label {Objective function:}
+          xywh {135 120 130 20} box FLAT_BOX labelsize 12 textsize 12
+        }
+      }
+      Fl_Group optimizerEndStage {
+        label End
+        xywh {10 35 270 205} box ENGRAVED_BOX labeltype ENGRAVED_LABEL labelfont 3 labelsize 24 align 5 hide
+      } {
+        Fl_Button {} {
+          label {Finished!}
+          xywh {80 105 125 60} box FLAT_BOX labelfont 2 labelsize 24
+        }
+      }
+    }
+    code {optimizerControlDialog->position(win_X, win_Y);
+  if (open)
+    optimizerControlDialog->show();} {}
+  }
+  Function {make_OptimizerSettingsDialog(int win_X, int win_Y, bool open)} {} {
+    Fl_Window optimizerSettingsDialog {
+      label {Optimizer Settings}
+      callback {optimizerSettingsDialog->hide();}
+      xywh {615 76 432 283} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Return_Button setPenaltyWeightsBtn {
+        label Set
+        callback {callback->setPenaltyWeights();}
+        xywh {270 130 80 25}
+      }
+      Fl_Button revertPenaltyWeightsBtn {
+        label Revert
+        callback {callback->revertPenaltyWeights();}
+        xywh {170 130 80 25}
+      }
+      Fl_Group {} {
+        label {Penalty Weights}
+        xywh {10 25 150 130} box ENGRAVED_BOX labelfont 1 labelsize 12
+      } {
+        Fl_Value_Input slidingPenaltyInput {
+          label {Sliding: }
+          xywh {90 125 60 20} labelsize 12 value 1 textsize 12
+        }
+        Fl_Value_Input normalPenaltyInput {
+          label {Normal: }
+          xywh {90 65 60 20} labelsize 12 value 1 textsize 12
+        }
+        Fl_Value_Input penetrationPenaltyInput {
+          label {Penetration: }
+          xywh {90 35 60 20} labelsize 12 value 1 textsize 12
+        }
+        Fl_Value_Input creasingPenaltyInput {
+          label {Creasing: }
+          xywh {90 95 60 20} labelsize 12 value 1 textsize 12
+        }
+      }
+      Fl_Group {} {
+        label {Atom Stage}
+        xywh {170 25 252 100} box ENGRAVED_BOX labelfont 1 labelsize 12
+      } {
+        Fl_Value_Input conjGradIterInput {
+          label {Conjugate gradient iterations: }
+          xywh {346 95 66 20} labelsize 12 textsize 12
+        }
+        Fl_Value_Input skipThresholdInput {
+          label {Skip threshold: }
+          xywh {346 35 65 20} labelsize 12 textsize 12
+        }
+        Fl_Value_Input skipMultiplierInput {
+          label {Skip multiplier: }
+          xywh {346 65 66 20} labelsize 12 textsize 12
+        }
+      }
+      Fl_Group {} {
+        label PGA
+        xywh {20 185 392 90} box ENGRAVED_BOX labelfont 1 labelsize 12
+      } {
+        Fl_Check_Button usePGABtn {
+          label {Use geodesics}
+          xywh {130 195 20 20} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 4
+        }
+        Fl_Button loadPGAFileBtn {
+          label {Load PGA File...}
+          callback {callback->loadPGAFile();}
+          xywh {245 195 120 25} align 16
+        }
+        Fl_Output pgaFileOutput {
+          xywh {85 235 310 30} type Multiline box FLAT_BOX color 49 selection_color 49 labelsize 10 align 132 textfont 4 textsize 10
+        }
+        Fl_Box {} {
+          label {PGA File:}
+          xywh {25 227 60 20} labelsize 10 align 18
+        }
+      }
+    }
+    code {optimizerSettingsDialog->position(win_X, win_Y);
+  if (open) optimizerSettingsDialog->show();
+  usePGABtn->deactivate();
+  loadPGAFileBtn->deactivate();} {}
+  }
+  Function {make_ModelSlideShowWindow(int win_X, int win_Y, bool open)} {} {
+    Fl_Window modelSlideShowDialog {
+      label {Model/Tile Slide Show}
+      callback {callback->quitModelSlideShow();
+  modelSlideShowDialog->hide();}
+      xywh {346 182 862 267} type Double box UP_BOX color 23 hide resizable
+      class movable_Fl_Window
+    } {
+      Fl_Group {} {
+        label Models
+        xywh {5 25 390 235} box UP_BOX color 29
+      } {
+        Fl_File_Browser modelSlideShowFileBrowser {
+          callback {callback->selectModelSlideShow();}
+          xywh {40 25 355 185} type Hold align 0 resizable
+        }
+        Fl_Button {} {
+          label {@8}
+          callback {callback->moveUpModelSlideShow();}
+          xywh {9 65 30 30} labelsize 12
+        }
+        Fl_Button {} {
+          label {@2}
+          callback {callback->moveDownModelSlideShow();}
+          xywh {9 130 30 30} labelsize 12
+        }
+        Fl_Button {} {
+          label Add
+          callback {callback->addModelsToSlideShow();}
+          xywh {10 221 83 33} labelsize 12
+        }
+        Fl_Counter modelSlideShowCounter {
+          label Display
+          callback {callback->changeModelSlideShow();}
+          xywh {106 231 85 19} type Simple selection_color 7 labelsize 12 align 1 minimum 0 maximum 0 step 1
+        }
+        Fl_Button {} {
+          label Remove
+          callback {callback->removeModelSlideShow();}
+          xywh {204 221 93 33} labelsize 12
+        }
+        Fl_Button {} {
+          label {Clear List}
+          callback {callback->clearModelSlideShow();}
+          xywh {310 221 80 33} labelsize 12
+        }
+        Fl_Box {} {
+          label order
+          xywh {9 100 30 25} labelsize 12 align 16
+        }
+      }
+      Fl_Check_Button slideShowSync {
+        label {Sync->}
+        tooltip {The tile set Display slider changes with the Model Display slider} xywh {422 213 20 25} down_box DOWN_BOX value 1 align 130
+      }
+      Fl_Group {} {
+        label Tiles
+        xywh {465 25 390 231} box UP_BOX color 29 resizable
+      } {
+        Fl_File_Browser tileSlideShowFileBrowser {
+          callback {callback->selectTileSlideShow();}
+          xywh {500 25 355 185} type Hold align 0 resizable
+        }
+        Fl_Button {} {
+          label {@8}
+          callback {callback->moveUpTileSlideShow();}
+          xywh {469 65 30 30} labelsize 12
+        }
+        Fl_Button {} {
+          label {@2}
+          callback {callback->moveDownTileSlideShow();}
+          xywh {469 130 30 30} labelsize 12
+        }
+        Fl_Button {} {
+          label Add
+          callback {callback->addTilesToSlideShow();}
+          xywh {470 219 82 32} labelsize 12
+        }
+        Fl_Counter tileSlideShowCounter {
+          label Display
+          callback {callback->changeTileSlideShow();}
+          xywh {565 230 85 20} type Simple labelsize 12 align 1 minimum 0 maximum 0 step 1
+        }
+        Fl_Button {} {
+          label Remove
+          callback {callback->removeTileSlideShow();}
+          xywh {663 221 91 30} labelsize 12
+        }
+        Fl_Button {} {
+          label {Clear List}
+          callback {callback->clearTileSlideShow();}
+          xywh {768 221 81 30} labelsize 12
+        }
+        Fl_Box {} {
+          label order
+          xywh {469 100 30 25} labelsize 12 align 16
+        }
+      }
+      Fl_Check_Button slideShowCenter {
+        label {Keep Centered}
+        tooltip {Each time the model changes via the Display slider, recenter it in the Model Display Window. Center tiles if no models.} xywh {421 100 20 25} down_box DOWN_BOX value 1 align 130
+      }
+    }
+    code {modelSlideShowDialog->position(win_X, win_Y);
+  if (open) modelSlideShowDialog->show();} {}
+  }
+  Function {make_PGAWindow(int win_X, int win_Y, bool open)} {} {
+    Fl_Window pgaDialog {
+      label {PGA Deformation}
+      callback {callback->pgaDeformationWindowDone();
+  pgaDialog->hide();}
+      xywh {590 726 391 256} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Button pgaNextBtn {
+        label {Next Stage}
+        callback {callback->pgaNextScale()}
+        xywh {205 190 90 25} labelsize 12 deactivate
+      }
+      Fl_Button pgaStageOutput {
+        label stage
+        xywh {55 224 245 25} box FLAT_BOX labelsize 12 align 20
+      }
+      Fl_Button pgaStageNameLabel {
+        label {Name:}
+        xywh {5 224 50 25} box FLAT_BOX labelsize 12 align 24
+      }
+      Fl_Button pgaDoneBtn {
+        label Done
+        callback {callback->pgaDeformationWindowDone()}
+        xywh {315 225 65 25}
+      }
+      Fl_Button pgaMeanResBtn {
+        label {Apply Mean of Residue}
+        callback {callback->pgaApplyMeanRes()}
+        xywh {15 190 175 25} labelsize 12
+      }
+      Fl_Group {} {
+        label {Principal Geodesics}
+        xywh {8 20 375 165} box ENGRAVED_BOX labelfont 1 labelsize 12
+      } {
+        Fl_Button {} {
+          label {-3                       -1.5                       0                       1.5                       3}
+          xywh {20 24 355 20} box FLAT_BOX labelsize 12
+        }
+        Fl_Slider pgaSlider1 {
+          label {1:}
+          callback {callback->pgaDeform();}
+          xywh {32 45 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+        Fl_Slider pgaSlider2 {
+          label {2:}
+          callback {callback->pgaDeform();}
+          xywh {33 72 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+        Fl_Slider pgaSlider3 {
+          label {3:}
+          callback {callback->pgaDeform();}
+          xywh {33 98 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+        Fl_Slider pgaSlider4 {
+          label {4:}
+          callback {callback->pgaDeform();}
+          xywh {33 127 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+        Fl_Slider pgaSlider5 {
+          label {5:}
+          callback {callback->pgaDeform();}
+          xywh {33 155 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+      }
+      Fl_Button pgaZeroBtn {
+        label Zero
+        callback {callback->pgaZero()}
+        xywh {315 190 60 25} labelsize 12 deactivate
+      }
+    }
+    code {pgaDialog->position(win_X, win_Y);
+\#ifdef BINARY
+  pgaNextBtn->hide();
+  pgaStageOutput->hide();
+  pgaStageNameLabel->hide();
+  pgaMeanResBtn->hide();
+  pgaZeroBtn->hide();
+\#endif
+  if (open) {
+    callback->pgaInitDeformationWindow();
+    pgaDialog->show();
+  }} {}
+  }
+  Function {make_PCAWindow(int win_X, int win_Y)} {} {
+    Fl_Window pcaDialog {
+      label {PCA Deformation}
+      callback {pcaDialog->hide()}
+      xywh {150 257 393 226} type Double hide
+      class movable_Fl_Window
+    } {
+      Fl_Group {} {
+        label {Principal Components}
+        xywh {5 20 380 190} box ENGRAVED_FRAME labelfont 1 labelsize 12
+      } {
+        Fl_Button {} {
+          label {-3                       -1.5                       0                       1.5                       3}
+          xywh {20 24 355 20} box FLAT_BOX labelsize 12
+        }
+        Fl_Slider pcaSlider1 {
+          label {1:}
+          callback {callback->pcaDeform();}
+          xywh {30 46 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+        Fl_Slider pcaSlider2 {
+          label {2:}
+          callback {callback->pcaDeform();}
+          xywh {30 77 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+        Fl_Slider pcaSlider3 {
+          label {3:}
+          callback {callback->pcaDeform();}
+          xywh {30 109 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+        Fl_Slider pcaSlider4 {
+          label {4:}
+          callback {callback->pcaDeform();}
+          xywh {30 140 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+        Fl_Slider pcaSlider5 {
+          label {5:}
+          callback {callback->pcaDeform();}
+          xywh {30 172 340 20} type Horizontal align 4 minimum -3 maximum 3 step 0.1
+        }
+      }
+    }
+    code {pcaDialog->position(win_X, win_Y);
+\#ifdef PCA_VISUALIZER
+  toolsMenuPCA_Deformation->show();
+  fileMenuLoadPCASurface->show();
+  fileMenuLoadPCAResidues->show();
+\#endif} {}
+  }
+  Function {make_TransformationRecordingTestDialog()} {} {
+    Fl_Window transformationRecordingTestDialog {
+      label {Transformation Recording}
+      callback {transformationRecordingTestDialog->hide();}
+      xywh {125 78 349 135} type Double hide
+    } {
+      Fl_Button startRecordingButton {
+        label {Set as Reference and Start Recording}
+        callback {callback->startRecording();}
+        xywh {10 15 155 45} align 128
+      }
+      Fl_Button endRecordingButton {
+        label {End Recording}
+        callback {callback->endRecording();}
+        xywh {10 75 155 45}
+      }
+      Fl_Button resetRecordingButton {
+        label {Reference Object}
+        callback {callback->resetObject();}
+        xywh {185 15 155 45}
+      }
+      Fl_Button testRecordingButton {
+        label {Target Object}
+        callback {callback->testTransformation();}
+        xywh {185 75 155 45}
+      }
+    }
+  }
+  Function {show()} {} {
+    code {\#ifdef PRODUCTION_VERSION
+    test_debug_menu->hide();
+  \#endif
+  callback->adjustInterfaceForBinary();
+  callback->show();} {}
+  }
+  decl {friend class P3DUserInterfaceCallback;} {}
+  decl {P3DUserInterfaceCallback * callback;} {public
+  }
+  decl {P3DControl * control;} {}
+  Function {setSurfaceLevelBtns(int button)} {} {
+    code {switch(button) {
+	    case 0:	SurfaceLevel_0Btn->value(1);
+					    SurfaceLevel_1Btn->value(0);
+					    SurfaceLevel_2Btn->value(0);
+					    SurfaceLevel_3Btn->value(0);
+					    break;
+	    case 1:	SurfaceLevel_0Btn->value(0);
+					    SurfaceLevel_1Btn->value(1);
+					    SurfaceLevel_2Btn->value(0);
+					    SurfaceLevel_3Btn->value(0);
+					    break;
+	    case 2:	SurfaceLevel_0Btn->value(0);
+					    SurfaceLevel_1Btn->value(0);
+					    SurfaceLevel_2Btn->value(1);
+					    SurfaceLevel_3Btn->value(0);
+					    break;
+	    case 3:	SurfaceLevel_0Btn->value(0);
+					    SurfaceLevel_1Btn->value(0);
+					    SurfaceLevel_2Btn->value(0);
+					    SurfaceLevel_3Btn->value(1);
+					    break;
+      }} {}
+  }
+  Function {setSurfaceTypeBtns(int button)} {} {
+    code {switch(button) {
+	    case M3D_NONE:		noneBtn->value(1);
+						    pointcloudBtn->value(0);
+						    wireframeBtn->value(0);
+						    solidBtn->value(0);
+						    break;
+	    case M3D_POINTCLOUD:		noneBtn->value(0);
+						    pointcloudBtn->value(1);
+						    wireframeBtn->value(0);
+						    solidBtn->value(0);
+						    break;
+	    case M3D_WIREFRAME:	noneBtn->value(0);
+						    pointcloudBtn->value(0);
+						    wireframeBtn->value(1);
+						    solidBtn->value(0);
+						    break;
+	    case M3D_SOLID:		noneBtn->value(0);
+						    pointcloudBtn->value(0);
+						    wireframeBtn->value(0);
+						    solidBtn->value(1);
+						    break;
+      }} {}
+  }
+  Function {setPartialSurfaceLevelBtns(int button)} {} {
+    code {switch(button) {
+	    case 0:	PartialSurfaceLevel_0Btn->value(1);
+					    PartialSurfaceLevel_1Btn->value(0);
+					    PartialSurfaceLevel_2Btn->value(0);
+					    PartialSurfaceLevel_3Btn->value(0);
+					    break;
+	    case 1:	PartialSurfaceLevel_0Btn->value(0);
+					    PartialSurfaceLevel_1Btn->value(1);
+					    PartialSurfaceLevel_2Btn->value(0);
+					    PartialSurfaceLevel_3Btn->value(0);
+					    break;
+	    case 2:	PartialSurfaceLevel_0Btn->value(0);
+					    PartialSurfaceLevel_1Btn->value(0);
+					    PartialSurfaceLevel_2Btn->value(1);
+					    PartialSurfaceLevel_3Btn->value(0);
+					    break;
+	    case 3:	PartialSurfaceLevel_0Btn->value(0);
+					    PartialSurfaceLevel_1Btn->value(0);
+					    PartialSurfaceLevel_2Btn->value(0);
+					    PartialSurfaceLevel_3Btn->value(1);
+					    break;
+      }} {}
+  }
+  Function {setPartialSurfaceTypeBtns(int button)} {} {
+    code {switch(button) {
+	    case M3D_NONE:		partialNoneBtn->value(1);
+						    partialPointcloudBtn->value(0);
+						    partialWireframeBtn->value(0);
+						    partialSolidBtn->value(0);
+						    break;
+	    case M3D_POINTCLOUD:	partialNoneBtn->value(0);
+						    partialPointcloudBtn->value(1);
+						    partialWireframeBtn->value(0);
+						    partialSolidBtn->value(0);
+						    break;
+	    case M3D_WIREFRAME:	partialNoneBtn->value(0);
+						    partialPointcloudBtn->value(0);
+						    partialWireframeBtn->value(1);
+						    partialSolidBtn->value(0);
+						    break;
+	    case M3D_SOLID:		partialNoneBtn->value(0);
+						    partialPointcloudBtn->value(0);
+						    partialWireframeBtn->value(0);
+						    partialSolidBtn->value(1);
+						    break;
+      }} {}
+  }
+  Function {setOptimizerMatchBtns(int button)} {} {
+    code {switch(button) {
+	    case 0:	gaussDerivMatchRadioBtn->value(1);
+					    negGaussDerivMatchRadioBtn->value(0);
+					    simpleMaskMatchRadioBtn->value(0);
+					    binaryMatchRadioBtn->value(0);
+					    histogramMatchRadioBtn->value(0);
+					    break;
+	    case 1:	gaussDerivMatchRadioBtn->value(0);
+					    negGaussDerivMatchRadioBtn->value(1);
+					    simpleMaskMatchRadioBtn->value(0);
+					    binaryMatchRadioBtn->value(0);
+					    histogramMatchRadioBtn->value(0);
+					    break;
+	    case 2:	gaussDerivMatchRadioBtn->value(0);
+					    negGaussDerivMatchRadioBtn->value(0);
+					    simpleMaskMatchRadioBtn->value(1);
+					    binaryMatchRadioBtn->value(0);
+					    histogramMatchRadioBtn->value(0);
+					    break;
+	    case 3:	gaussDerivMatchRadioBtn->value(0);
+					    negGaussDerivMatchRadioBtn->value(0);
+					    simpleMaskMatchRadioBtn->value(0);
+					    binaryMatchRadioBtn->value(1);
+					    histogramMatchRadioBtn->value(0);
+					    break;
+	    case 4:	gaussDerivMatchRadioBtn->value(0);
+					    negGaussDerivMatchRadioBtn->value(0);
+					    simpleMaskMatchRadioBtn->value(0);
+					    binaryMatchRadioBtn->value(0);
+					    histogramMatchRadioBtn->value(1);
+					    break;
+      }} {}
+  }
+  Function {setPrefsSurfaceLevelBtns(int button)} {} {
+    code {switch(button) {
+	    case 0:	surfacePrefsLevel_0Btn->value(1);
+					    surfacePrefsLevel_1Btn->value(0);
+					    surfacePrefsLevel_2Btn->value(0);
+					    surfacePrefsLevel_3Btn->value(0);
+					    break;
+	    case 1:	surfacePrefsLevel_0Btn->value(0);
+					    surfacePrefsLevel_1Btn->value(1);
+					    surfacePrefsLevel_2Btn->value(0);
+					    surfacePrefsLevel_3Btn->value(0);
+					    break;
+	    case 2:	surfacePrefsLevel_0Btn->value(0);
+					    surfacePrefsLevel_1Btn->value(0);
+					    surfacePrefsLevel_2Btn->value(1);
+					    surfacePrefsLevel_3Btn->value(0);
+					    break;
+	    case 3:	surfacePrefsLevel_0Btn->value(0);
+					    surfacePrefsLevel_1Btn->value(0);
+					    surfacePrefsLevel_2Btn->value(0);
+					    surfacePrefsLevel_3Btn->value(1);
+					    break;
+      }} {}
+  }
+  Function {setPrefsSurfaceTypeBtns(int button)} {} {
+    code {switch(button) {
+	    case M3D_NONE:		surfacePrefsNoneBtn->value(1);
+						    surfacePrefsPointcloudBtn->value(0);
+						    surfacePrefsWireframeBtn->value(0);
+						    surfacePrefsSolidBtn->value(0);
+						    break;
+	    case M3D_POINTCLOUD:	surfacePrefsNoneBtn->value(0);
+						    surfacePrefsPointcloudBtn->value(1);
+						    surfacePrefsWireframeBtn->value(0);
+						    surfacePrefsSolidBtn->value(0);
+						    break;
+	    case M3D_WIREFRAME:	surfacePrefsNoneBtn->value(0);
+						    surfacePrefsPointcloudBtn->value(0);
+						    surfacePrefsWireframeBtn->value(1);
+						    surfacePrefsSolidBtn->value(0);
+						    break;
+	    case M3D_SOLID:		surfacePrefsNoneBtn->value(0);
+						    surfacePrefsPointcloudBtn->value(0);
+						    surfacePrefsWireframeBtn->value(0);
+						    surfacePrefsSolidBtn->value(1);
+						    break;
+      }} {}
+  }
+  Function {setPrefsPartialSurfaceLevelBtns(int button)} {} {
+    code {switch(button) {
+	    case 0:	constraintPrefsLevel_0Btn->value(1);
+					    constraintPrefsLevel_1Btn->value(0);
+					    constraintPrefsLevel_2Btn->value(0);
+					    constraintPrefsLevel_3Btn->value(0);
+					    break;
+	    case 1:	constraintPrefsLevel_0Btn->value(0);
+					    constraintPrefsLevel_1Btn->value(1);
+					    constraintPrefsLevel_2Btn->value(0);
+					    constraintPrefsLevel_3Btn->value(0);
+					    break;
+	    case 2:	constraintPrefsLevel_0Btn->value(0);
+					    constraintPrefsLevel_1Btn->value(0);
+					    constraintPrefsLevel_2Btn->value(1);
+					    constraintPrefsLevel_3Btn->value(0);
+					    break;
+	    case 3:	constraintPrefsLevel_0Btn->value(0);
+					    constraintPrefsLevel_1Btn->value(0);
+					    constraintPrefsLevel_2Btn->value(0);
+					    constraintPrefsLevel_3Btn->value(1);
+					    break;
+      }} {}
+  }
+  Function {setPrefsPartialSurfaceTypeBtns(int button)} {} {
+    code {switch(button) {
+	    case M3D_NONE:		constraintPrefsNoneBtn->value(1);
+						    constraintPrefsPointcloudBtn->value(0);
+						    constraintPrefsWireframeBtn->value(0);
+						    constraintPrefsSolidBtn->value(0);
+						    break;
+	    case M3D_POINTCLOUD:	constraintPrefsNoneBtn->value(0);
+						    constraintPrefsPointcloudBtn->value(1);
+						    constraintPrefsWireframeBtn->value(0);
+						    constraintPrefsSolidBtn->value(0);
+						    break;
+	    case M3D_WIREFRAME:	constraintPrefsNoneBtn->value(0);
+						    constraintPrefsPointcloudBtn->value(0);
+						    constraintPrefsWireframeBtn->value(1);
+						    constraintPrefsSolidBtn->value(0);
+						    break;
+	    case M3D_SOLID:		constraintPrefsNoneBtn->value(0);
+						    constraintPrefsPointcloudBtn->value(0);
+						    constraintPrefsWireframeBtn->value(0);
+						    constraintPrefsSolidBtn->value(1);
+						    break;
+      }} {}
+  }
+  Function {setPrefsAtomBVectorsBtns(int button)} {} {
+    code {switch(button) {
+	    case 0:	atomPrefsNoBVectorsButton->value(1);
+			    atomPrefsCrestBVectorsButton->value(0);
+			    atomPrefsAllBVectorsButton->value(0);
+			    break;
+	    case 1:	atomPrefsNoBVectorsButton->value(0);
+			    atomPrefsCrestBVectorsButton->value(0);
+			    atomPrefsAllBVectorsButton->value(1);
+			    break;
+	    case 2:	atomPrefsNoBVectorsButton->value(0);
+			    atomPrefsCrestBVectorsButton->value(1);
+			    atomPrefsAllBVectorsButton->value(0);
+			    break;
+      }} {}
+  }
+  Function {setPartialSurfaceRendering(int button)} {} {
+    code {if (button == 0) {
+            renderPartiallyBtn->value(1);
+       	    renderFullyBtn->value(0);
+          }
+          else {
+            renderPartiallyBtn->value(0);
+            renderFullyBtn->value(1);
+      }} {}
+  }
+  Function {setPrefsPartialSurfaceRendering(int button)} {} {
+    code {if (button == 0) {
+            constraintPrefsPartiallyBtn->value(1);
+       	    constraintPrefsFullyBtn->value(0);
+          }
+          else {
+            constraintPrefsPartiallyBtn->value(0);
+            constraintPrefsFullyBtn->value(1);
+      }} {}
+  }
+  Function {setPrefsIconifyBtns(int button)} {} {
+    code {switch(button) {
+	    case 0:	displayPrefsIconifyIndepButton->value(1);
+			    displayPrefsIconifyMainButton->value(0);
+			    displayPrefsIconifyAnyButton->value(0);
+			    break;
+	    case 1:	displayPrefsIconifyIndepButton->value(0);
+			    displayPrefsIconifyMainButton->value(1);
+			    displayPrefsIconifyAnyButton->value(0);
+			    break;
+	    case 2:	displayPrefsIconifyIndepButton->value(0);
+			    displayPrefsIconifyMainButton->value(0);
+			    displayPrefsIconifyAnyButton->value(1);
+			    break;
+      }} {}
+  }
+  Function {setPrefsByteOrderBtns(int button)} {} {
+    code {switch(button) {
+	    case 0:	imagePrefsReverseOrder->value(1);
+			    imagePrefsNativeOrder->value(0);
+			    imagePrefsNormalOrder->value(0);
+			    imagePrefsRetainOrder->value(0);
+			    break;
+	    case 1:	imagePrefsReverseOrder->value(0);
+			    imagePrefsNativeOrder->value(1);
+			    imagePrefsNormalOrder->value(0);
+			    imagePrefsRetainOrder->value(0);
+			    break;
+	    case 2:	imagePrefsReverseOrder->value(0);
+			    imagePrefsNativeOrder->value(0);
+			    imagePrefsNormalOrder->value(1);
+			    imagePrefsRetainOrder->value(0);
+			    break;
+	    case 3:	imagePrefsReverseOrder->value(0);
+			    imagePrefsNativeOrder->value(0);
+			    imagePrefsNormalOrder->value(0);
+			    imagePrefsRetainOrder->value(1);
+			    break;
+      }} {}
+  }
+  Function {setPrefsReorderBtns(int button)} {} {
+    code {switch(button) {
+	    case -1:	otherPrefsReorderNeverButton->value(0);
+			    otherPrefsReorderAlwaysButton->value(0);
+			    otherPrefsReorderPromptButton->value(1);
+			    break;
+	    case 0:	otherPrefsReorderNeverButton->value(1);
+			    otherPrefsReorderAlwaysButton->value(0);
+			    otherPrefsReorderPromptButton->value(0);
+			    break;
+	    case 1:	otherPrefsReorderNeverButton->value(0);
+			    otherPrefsReorderAlwaysButton->value(1);
+			    otherPrefsReorderPromptButton->value(0);
+			    break;
+      }} {}
+  }
+  Function {setPrefsVerbosityBtns(int button)} {} {
+    code {switch(button) {
+	    case -1:	otherPrefsQuietVerbosityButton->value(1);
+			    otherPrefsNormalVerbosityButton->value(0);
+			    otherPrefsLoudVerbosityButton->value(0);
+			    break;
+	    case 0:	otherPrefsQuietVerbosityButton->value(0);
+			    otherPrefsNormalVerbosityButton->value(1);
+			    otherPrefsLoudVerbosityButton->value(0);
+			    break;
+	    case 1:	otherPrefsQuietVerbosityButton->value(0);
+			    otherPrefsNormalVerbosityButton->value(0);
+			    otherPrefsLoudVerbosityButton->value(1);
+			    break;
+      }} {}
+  }
+  Function {setPrefsBYUOutputBtns(int type)} {} {
+    code {switch(type) {
+	    case 0:	otherPrefsBYUTrianglesButton->value(1);
+			    otherPrefsBYUQuadsButton->value(0);
+			    break;
+	    case 1:	otherPrefsBYUTrianglesButton->value(0);
+			    otherPrefsBYUQuadsButton->value(1);
+			    break;
+	    case 2:	otherPrefsBYUModelCoordButton->value(1);
+			    otherPrefsBYUWorldCoordButton->value(0);
+			    break;
+	    case 3:	otherPrefsBYUModelCoordButton->value(0);
+			    otherPrefsBYUWorldCoordButton->value(1);
+			    break;
+      }} {}
+  }
+  decl {void * landmarkCells;} {}
+  decl {void * modelNameCells;} {}
+  declblock {\#ifndef PRODUCTION_VERSION} {after {\#endif}
+  } {
+    Function {make_InterpolatedPrimitiveWindow(int win_X, int win_Y, bool open)} {} {
+      Fl_Window interpolatedPrimitiveWindow {
+        label {Interpolated Atom}
+        callback {interpolatedPrimitiveWindow->hide();}
+        xywh {317 327 218 138} type Double hide
+        class movable_Fl_Window
+      } {
+        Fl_Value_Slider uSlider {
+          label {u: }
+          callback {callback->interpolatePrimitive(uSlider->value(), vSlider->value());}
+          xywh {25 20 175 20} type {Horz Knob} labelsize 12 align 4 maximum 6
+        }
+        Fl_Value_Slider vSlider {
+          label {v: }
+          callback {callback->interpolatePrimitive(uSlider->value(), vSlider->value());}
+          xywh {25 60 175 20} type {Horz Knob} labelsize 12 align 4 maximum 6
+        }
+        Fl_Return_Button {} {
+          label Done
+          callback {callback->destroyInterpolatedPrimitive();}
+          xywh {125 95 75 30} align 16
+        }
+      }
+      code {interpolatedPrimitiveWindow->position(win_X, win_Y);
+  if (open) interpolatedPrimitiveWindow->show();} {}
+    }
+    Function {make_SubfigureTransformationTestDialog()} {} {
+      Fl_Window subfigureTransformationTestDialog {
+        label {Subfigure Transformation Test}
+        callback {subfigureTransformationTestDialog->hide();}
+        xywh {838 499 331 312} type Double color 48 hide
+      } {
+        Fl_Group {} {
+          xywh {10 85 310 220} box RFLAT_BOX color 31
+        } {
+          Fl_Counter hingeRotationCounter {
+            label {Hinge Rotation}
+            callback {callback->hingeSubfigure();}
+            xywh {175 235 115 25}
+          }
+          Fl_Counter surfaceRotationCounter {
+            label {Surface Rotation}
+            callback {callback->rotateSubfigure();}
+            xywh {40 235 110 25}
+          }
+          Fl_Counter subfigureElongationCounter {
+            label Elongation
+            callback {callback->elongateSubfigure();}
+            xywh {175 180 115 25}
+          }
+          Fl_Counter subfigureScaleCounter {
+            label Scale
+            callback {callback->scaleSubfigure();}
+            xywh {40 180 115 25}
+          }
+          Fl_Counter uTranslationCounter {
+            label {U Translation}
+            callback {callback->translateSubfigure();}
+            xywh {40 120 115 25}
+          }
+          Fl_Counter vTranslationCounter {
+            label {V Translation}
+            callback {callback->translateSubfigure();}
+            xywh {175 120 115 25}
+          }
+        }
+        Fl_Button {} {
+          label Initialize
+          callback {callback->initializeSubfigureTransformation();}
+          xywh {15 55 105 25} color 48 labeltype ENGRAVED_LABEL labelsize 16
+        }
+        Fl_Button {} {
+          label {Mark a hinge atom, press Initialize, and}
+          xywh {10 5 295 25} box FLAT_BOX color 48 align 20
+        }
+        Fl_Button {} {
+          label {then adjust the counters.}
+          xywh {10 25 295 25} box FLAT_BOX color 48 align 20
+        }
+      }
+    }
+    Function {make_testConstraintsDialog()} {} {
+      Fl_Window testConstraintsDialog {
+        label {Test Constraints}
+        callback {testConstraintsDialog->hide();}
+        xywh {626 171 260 194} type Double hide
+      } {
+        Fl_Button {} {
+          label {Test Value}
+          callback {callback->testConstraintsPenalty();}
+          xywh {145 145 85 25} labeltype EMBOSSED_LABEL labelfont 1
+        }
+        Fl_Value_Output testConstraintsOutput {
+          label {Penalty value: }
+          xywh {115 25 130 25}
+        }
+        Fl_Value_Input testConstraintsFigureNumberInput {
+          label {Figure number: }
+          xywh {115 75 40 25} value 1
+        }
+        Fl_Button {} {
+          label Setup
+          callback {callback->initializeTestConstraints();}
+          xywh {25 145 85 25} labeltype EMBOSSED_LABEL labelfont 1
+        }
+      }
+    }
+    Function {make_testSeuratDialog()} {} {
+      Fl_Window testSeuratDialog {
+        label {Test Seurat}
+        callback {testSeuratDialog->hide();}
+        xywh {626 171 260 140} type Double hide
+      } {
+        Fl_Button {} {
+          label {Print Plist}
+          callback {callback->testSeurat();}
+          xywh {140 90 85 25} labeltype EMBOSSED_LABEL labelfont 1
+        }
+        Fl_Value_Input testSeuratFigureNumberInput {
+          label {Figure number: }
+          xywh {145 55 40 25}
+        }
+        Fl_Value_Input testSeuratLevelInput {
+          label {Level of detail: }
+          xywh {145 20 40 25} value 4
+        }
+      }
+    }
+    Function {make_MatchSurfacesDialog(int win_X, int win_Y, bool open)} {} {
+      Fl_Window matchSurfacesDialog {
+        label {Surface Visualizer Control}
+        callback {matchSurfacesDialog->hide();}
+        xywh {477 252 381 194} type Double hide
+      } {
+        Fl_Value_Slider matchIntensityMinSlider {
+          label {Intensity min}
+          callback {callback->setMatchSurfaceColorRange();}
+          xywh {85 140 280 15} type {Horz Knob} labelsize 12 align 4
+        }
+        Fl_Value_Slider matchIntensityMaxSlider {
+          label {Intensity max}
+          callback {callback->setMatchSurfaceColorRange();}
+          xywh {85 165 280 15} type {Horz Knob} labelsize 12 align 4 value 1
+        }
+        Fl_Light_Button showMatchSurfacesButton {
+          label Display
+          callback {callback->toggleMatchSurfaceDisplay()}
+          xywh {195 25 80 20} labelsize 12 align 16
+        }
+        Fl_Check_Button tieToImageSlidersButton {
+          label {Use Display Window intensity sliders}
+          callback {callback->tieSurfaceToImageSlider((int) tieToImageSlidersButton->value())}
+          xywh {125 100 20 25} down_box EMBOSSED_BOX color 55 selection_color 1 labelsize 12 align 8
+        }
+        Fl_Group {} {
+          label {Surface Type}
+          xywh {15 25 100 100} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+          code0 {setSurfaceTypeBtns(modelView->getSurfaceStyle());}
+        } {
+          Fl_Check_Button matchSurfaceNoneBtn {
+            label None
+            callback {callback->setMatchSurfaceStyle(M3D_NONE);}
+            xywh {20 25 55 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button matchSurfacePointcloudBtn {
+            label {Point cloud}
+            callback {callback->setMatchSurfaceStyle(M3D_COLORED_POINTCLOUD);}
+            xywh {20 50 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button matchSurfaceWireframeBtn {
+            label {Wire frame}
+            callback {callback->setMatchSurfaceStyle(M3D_COLORED_WIREFRAME);}
+            xywh {20 75 85 25} type Radio down_box ROUND_DOWN_BOX selection_color 1 labelsize 12
+          }
+          Fl_Check_Button matchSurfaceSolidBtn {
+            label Solid
+            callback {callback->setMatchSurfaceStyle(M3D_COLORED_SOLID);}
+            xywh {20 100 55 25} type Radio down_box ROUND_DOWN_BOX value 1 selection_color 1 labelsize 12
+          }
+        }
+        Fl_Button matchSurfaceSerialName {
+          xywh {125 45 240 20} box NO_BOX labelsize 10 align 24
+        }
+        Fl_Counter matchSurfaceSerialNumber {
+          label {Data Set}
+          callback {callback->matchSurfaceSerialNumberChanged((int) matchSurfaceSerialNumber->value());}
+          xywh {125 25 50 20} type Simple labelsize 10 align 1 minimum 0 maximum 10 step 1 textsize 12
+        }
+        Fl_Choice matchSurfaceColormapChoice {
+          label Colormap
+          callback {callback->chooseMatchSurfaceColormap()} open
+          xywh {260 75 105 20} box UP_BOX down_box DOWN_BOX labelsize 12 textsize 12
+        } {}
+        Fl_Button {} {
+          label Discard
+          callback {callback->discardMatchSurfaces()}
+          xywh {295 25 70 20}
+        }
+        Fl_Light_Button plainMatchSurfacesButton {
+          label Plain
+          callback {callback->togglePlainMatchSurfaces(plainMatchSurfacesButton->value())}
+          xywh {125 75 60 20} labelsize 12 align 16
+        }
+      }
+      code {matchSurfacesDialog->position(win_X, win_Y);
+    if (open) matchSurfacesDialog->show();} {}
+    }
+    Function {make_RegularizerWindow(int win_X, int win_Y, bool open)} {} {
+      Fl_Window regularizerWindow {
+        callback {regularizerWindow->hide();}
+        xywh {596 214 265 159} type Double when 1 hide
+        class movable_Fl_Window
+      } {
+        Fl_Return_Button {} {
+          label Close
+          callback {regularizerWindow->hide();}
+          xywh {180 120 70 30}
+        }
+        Fl_Value_Slider regularizeStepsizeSlider {
+          label Stepsize
+          xywh {65 40 180 25} type {Horz Knob} labelsize 12 align 4 minimum 0.01 value 0.01
+        }
+        Fl_Value_Slider regularizeIterationSlider {
+          label Iterations
+          xywh {65 75 180 25} type {Horz Knob} labelsize 12 align 4 maximum 100 step 1 value 40
+        }
+        Fl_Box {} {
+          label {Regularize Model}
+          xywh {20 0 180 30}
+        }
+        Fl_Button {} {
+          label Regularize
+          callback {callback->regularizeModel((int) regularizeIterationSlider->value(), regularizeStepsizeSlider->value());}
+          xywh {20 110 110 30}
+        }
+      }
+      code {regularizerWindow->position(win_X, win_Y);
+    if (open) regularizerWindow->show();} {}
+    }
+  }
+  Function {~P3DUserInterface()} {} {
+    code {delete control;
+  control = NULL;
+  delete callback;
+  callback = NULL;
+  delete mainWindow;
+  mainWindow = NULL;
+  delete modelView;
+  modelView = NULL;
+  delete modelWindow;
+  modelWindow = NULL;} {}
+  }
+} 

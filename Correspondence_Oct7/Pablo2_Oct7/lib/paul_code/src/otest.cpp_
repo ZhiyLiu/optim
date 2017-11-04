@@ -1,0 +1,94 @@
+
+#pragma hdrstop
+#include <condefs.h>
+
+
+//---------------------------------------------------------------------------
+#pragma argsused
+#include "problem.h"
+#include "sa.h"
+
+USEUNIT("support.cpp");
+USEUNIT("EvolutionStrategy.cpp");
+USEUNIT("matrix.cpp");
+USEUNIT("Problem.cpp");
+USEUNIT("simplex.cpp");
+USEUNIT("classes.cpp");
+USEUNIT("sa.cpp");
+//---------------------------------------------------------------------------
+int bain(int argc, char **argv)
+{
+	DeJongF4 problem;
+   Simplex smp(problem);
+   smp.setReflectionConstants(1.0,5.0,0.2,-0.2);
+   for(int i=0;i<500;i++) {
+   	smp.performIteration();
+      printf("iteration %d, best value = %lg\n",i,smp.getBestEverValue());
+
+   }
+   Vector v = smp.getBestEverX();
+   v.print();
+   printf("done");
+
+   SimulatedAnnealing sa(problem,300);
+   sa.setFixedShpereHood(0.05,true);
+   for(int i=0;i<300;i++) {
+   	sa.performIteration();
+      printf("iteration %d, best value = %lg\n",i,sa.getBestEverValue());
+   }
+
+   v = sa.getBestEverX();
+   v.print();
+   printf("done");
+
+}
+
+int main(int argc, char **argv) {
+	double mat[12] = {1,2,7,1,4,2,1,4,7,2,0,3};
+	Matrix pat(3,4,mat);
+
+   pat.print();
+
+   Matrix U(3,4),V(4,4);
+   Vector v(4);
+
+   pat.doSVD(U,v,V);
+
+   U.print();
+   v.print();
+   V.print();
+
+   Matrix L(4,4);
+   for(int i=0;i<4;i++)
+   	L(i,i) = v(i);
+
+	Matrix vt = V;
+   vt.transpose();
+   Matrix A = U*(L*(vt));
+   A.print();
+
+	Matrix pt = pat;
+   pt.print();
+   pt.transpose();
+   pt.print();
+   Matrix s = pt*pat;
+   s.print();
+
+   L=(L*L);
+   L.print();
+
+	A = V*(L*(vt));
+   A.print();
+
+   Vector x = V.getColumn(0);
+
+	A = s*x;
+   A.print();
+
+   A = x*L(0,0);
+   A.print();
+
+
+
+}
+

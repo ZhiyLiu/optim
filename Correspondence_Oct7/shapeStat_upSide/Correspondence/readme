@@ -1,0 +1,32 @@
+For the down spokes:
+=============================================
+To calculate the srep area and volume entropy:
+regularityEntropy('/NIRAL/work/ltu/WorkSpace/data_pablo/Pablo2/lib/vtksrep/Correspondence/output_feature/srepareavolume_down/',3);
+
+To calculate the srep horizonal edges entropy:
+regularityEntropy('/NIRAL/work/ltu/WorkSpace/data_pablo/Pablo2/lib/vtksrep/Correspondence/output_feature/srephorizonal_down/',2);
+
+To calculate the srep vertical edges entropy:
+regularityEntropy('/NIRAL/work/ltu/WorkSpace/data_pablo/Pablo2/lib/vtksrep/Correspondence/output_feature/srepvertical_down/',2);
+
+
+
+
+
+
+For the top spokes:
+============================================
+To calculate the srep area and volume entropy:
+regularityEntropy('/NIRAL/work/ltu/WorkSpace/data_pablo/Pablo2/lib/vtksrep/Correspondence/output_feature/srepareavolume_top/',3);
+
+To calculate the srep horizonal edges entropy:
+regularityEntropy('/NIRAL/work/ltu/WorkSpace/data_pablo/Pablo2/lib/vtksrep/Correspondence/output_feature/srephorizonal_top/',2);
+
+To calculate the srep vertical edges entropy:
+regularityEntropy('/NIRAL/work/ltu/WorkSpace/data_pablo/Pablo2/lib/vtksrep/Correspondence/output_feature/srepvertical_top/',2);
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+Based on previous experitment, the weight for geo is too high(15), now change to 4.
+Use the newest interpolation code.
+
+[ltu@pegasus binPablo2_Oct6_upSide]$ /work/ltu/WorkSpace/Sep_Oct6_allInOne/binPablo2_Oct6_upSide/corrOpt /work/ltu/WorkSpace/Sep_Oct6_allInOne/upSide /work/ltu/WorkSpace/Sep_Oct6_allInOne/input_sreps.txt 0 /work/ltu/WorkSpace/Sep_Oct6_allInOne/results/up/up_Oct6.log
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+//You can include any C libraries that you normally use
+#define NULL 0
+#include "Image3D.h"
+#include "AllImageIO.h"
+#include "ControlParms.h"
+#include "math.h"
+#include "mex.h"   //--This one is required
+
+ControlParms* globalControl = new ControlParms();
+int globalVerbosity = 0;
+
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
+
+    try {
+        if (nrhs < 4) {
+            printf("Usage: writemedim(filename, imarray, origin, "
+                    "spacing).\n");
+            return;
+        }
+
+        // filename
+        int filenameLen = mxGetN(prhs[0]) + 1;
+        char* filename = (char*) mxCalloc(filenameLen, sizeof(char));
+        mxGetString(prhs[0], filename, filenameLen);
+
+        // data
+        unsigned short* imageData = (unsigned short*)mxGetData(prhs[1]);
+        mwSize ndims = mxGetNumberOfDimensions(prhs[1]);
+        if (ndims != 3) {
+            fprintf(stderr, "Image array must be three-dimensional.\n");
+            return;
+        }
+        const mwSize* dim = mxGetDimensions(prhs[1]); 
+
+        // origin
+        double* origin = mxGetPr(prhs[2]);
+        if (mxGetN(prhs[2]) < 3) {
+            fprintf(stderr, "Origin must be a vector of length 3 or more.\n");
+            return;
+        }
+
+        // spacing
+        double* spacing = mxGetPr(prhs[3]);
+        if (mxGetN(prhs[3]) < 3) {
+            fprintf(stderr, "Spacing must be a vector of length 3 or more.\n");
+            return;
+        }
+
+        Image3D* image_3d = new Image3D(dim[0], dim[1], dim[2]);
+        short* data = (short int *) image_3d->getVoxels();
+        // Never wrote the code to copy the image data from the Matlab
+        // array to the 'data' buffer!
+
+        Vector3D originVector3D(origin);
+        image_3d->setSpacingAndOrigin(spacing[0], spacing[1], spacing[2],
+                                      &originVector3D);
+
+        image_3d->setIntensityMapping(1.0, 0);
+
+        AllImageIO writer;
+        if (!writer.write(filename, *image_3d)) {
+            fprintf(stderr, "Unable to write image.\n");
+            return;
+        }
+    } catch (...) {
+        fprintf(stderr, "Error trying to save file.\n");
+        return;
+    }
+
+    return;
+
+}

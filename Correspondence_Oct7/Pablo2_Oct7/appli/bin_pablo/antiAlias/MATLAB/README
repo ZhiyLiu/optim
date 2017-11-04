@@ -1,0 +1,7 @@
+
+To execute the AA function use the script as follow
+
+sh execImage2Distance.sh <Filename binary image>
+
+The output is <Filename>-antiAliased. mhd and raw
+

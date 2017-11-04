@@ -1,0 +1,449 @@
+
+
+The pablo program can take the following command line options, which on
+Microsoft Windows may be prefixed by either `-' or `/'.
+
+option      argument    effect
+------      --------    ------
+
+-h[elp]     none        Prints out a brief usage message and exits.
+
+-c[d]       ctrl_dir    Specifies that the indicated directory is to be
+                        searched for the pablo control file (described
+                        below).
+
+-i[mage]    filename    Causes the indicated image file to loaded.
+
+-l[eft]     none        Specifies that a left-handed mouse will be used.
+                        This option is not present on Microsoft Windows
+                        systems.  It has minimal effect on the program, but
+                        some users may wish to alias 'pablo' to 'pablo -l',
+                        to indicate their mouse button order preference.
+
+-m[odel]    filename    Causes the indicated model file to loaded.  The
+                        model may also be specified as the last item on the
+                        command line, without the -model option.
+
+-n[ot]      none        Do nothing; causes pablo to exit.  Useful only
+                        with -v, which otherwise starts up Pablo.
+
+-q[uiet]    none        Reduces the amount of printed information.
+
+-r[eg]      [n s]       Regularize the specified input model n iterations of
+			step size s and then halt.  Default values for n and
+			s are 40 and 0.01, respectively.
+
+-R[elease]              Causes the program's version number (date and time)
+			to be printed.
+
+-u[n]       none        Non-interactively uncompress the image file given
+                        with -image and then halt.
+
+-v[erbose]              Increases the amount of information that is printed.
+
+-x          none        Perform non-interactive compression of the image file
+                        specified using -image and then halt.
+
+
+The program can also take as its final option the path of a model file,
+if the -model option is not used.
+
+If pablo detects incorrect options, it will exit with a return code of -1.
+
+The user-specific settings used by pablo (preferences) are read from a
+control file.  The contents of this file are described below.  This
+file should be named .pablo and go in the user's home directory on UNIX
+and LINUX.  For Windows NT, it should be named pablo.txt and go in the
+user's profile directory.  For Windows 95/98, pablo.txt must be in the
+directory from which the program is run.  In all cases, however, another
+directory containing the control file can be specified by using the "-cd"
+or "/cd" option.
+
+The format is one definition per line, with each definition consisting of
+a key name followed by the equal sign, which must be followed by a value.
+Each line must be followed by a semicolon.  White space may be used to
+improve readability.  The following table explains the possibilities.
+
+key name                values          meaning
+--------                ------          -------
+
+BackgroundColor_R       [0.0, 1.0]      Components (red, green and blue) of
+BackgroundColor_G       [0.0, 1.0]      the background color of model window.
+BackgroundColor_B       [0.0, 1.0]      If they are omitted, dark blue is used.
+
+AtomVectorsType         0, 1            With a value of 0 (the default), unit
+                                        vectors will be drawn on atoms.  A
+                                        value of 1 causes the B vector to have
+                                        correctly proportional length and to
+                                        show the eta extension in the case of
+                                        end atoms.  See BVectorsType also.
+
+BVectorsType            0, 1            With a value of 0 (the default), no B
+                                        vectors will be drawn.  A value of 1 
+                                        causes all B vector to be drawn.  A
+                                        value of 2 causes B vectors only to be
+                                        drawn for crest (end) atoms.  See
+					AtomVectorsType also.
+
+AtomVectorsLineWidth    1, 2, ..., 10   The integer number of pixels wide
+                                        atom vectors will be drawn.  Only
+                                        small values are reasonable, and the
+                                        default is 1.
+
+ShowAtomVectors         0, 1            If this is 0, no vectors will be
+                                        drawn on atoms.  The default value
+                                        is 1, which causes the B and two
+                                        sail plane vectors to be shown.
+
+ExtraAtomVectors        0, 1            If 1, the N and B-Perp frame vectors
+                                        will be shown on atoms.  Normally this
+                                        is 0.
+
+FiguresColorAtoms       0, 1            If this is 1, then atoms will always be
+                                        given a color very close to that of the
+                                        figure containng them.  The default of
+                                        0, results in all atoms being yellow.
+                                        This control has no effect on the color
+                                        of the marked atom.
+
+MeshConnectorsType      0, 1            A value of 1 causes the medial mesh
+                                        to be drawn using dotted lines.  The
+                                        default value is 0, which gives
+                                        solid lines.
+
+MeshConnectorsLineWidth 1, 2, ..., 10   The integer number of pixels wide
+                                        mesh connectors will be drawn.  Only
+                                        small values are reasonable, and the
+                                        default is 1.
+
+ShowMeshConnectors      0, 1            A value of 0 surpresses drawing of the
+                                        medial mesh.  Normally it is drawn, so
+                                        the default value of this is 1.
+
+ConnectorsColor_R       [0.0, 1.0]      Components (red, green and blue) of
+ConnectorsColor_G       [0.0, 1.0]      the color used for drawing mesh
+ConnectorsColor_B       [0.0, 1.0]      connectors.  If no color is specified,
+                                        medium green is used.
+
+SmoothImages            0, 1            If 1, bilinear interpolation will
+                                        be used to produce smoother looking
+                                        slice views and cut planes.
+
+AxialSliceDefault       0, 1            Setting any of these to 1 activates
+CoronalSliceDefault     0, 1            the corresponding control on the Image
+SagittalSliceDefault    0, 1            tab of the Display Control Window.
+
+DisplayStdAxes          0, 1            A 1 turns on display of the XYZ axes.
+
+SurfaceStyle            0 - 3           Controls the drawing of surfaces
+                                        during normal operation.
+                                        0 = do not display surfaces
+                                        1 = point display of surfaces
+                                        2 = wire frame display of surfaces
+                                        3 = solid display of surfaces
+
+SurfaceLevel            1 - 4           Level of detail for display of
+                                        entire surfaces of figures.
+
+SurfaceLineWidth        1, 2, ..., 10   The line width used for drawing wire
+                                        frame figures.  Also the width of dots
+                                        used when drawing point cloud figures.
+
+TwoLights               0, 1            If 1, then solid surfaces will receive
+                                        more lighting.
+
+SurfaceSmoothnessDefault  0 - 90        Default value, used when creating
+                                        figures, of the amount of variance
+                                        from perpendicularity of the surface
+                                        to the atom vectors allowed when
+                                        rendering.  If not specified, a
+                                        value of 50 (very smooth) is used.
+
+PartialSurfaceRendering 0, 1            Controls the drawing of governed
+                                        surfaces during setting of the
+                                        interpenetration constraints.  If
+                                        1, the entire surface is displayed
+                                        using two colors.  If 0, which is
+                                        the default, only the part within
+                                        the cutoff value is rendered.
+
+PartialSurfaceStyle     0 - 3           Controls the drawing of surfaces
+                                        during setting of the interpenetration
+                                        constraints.
+                                        0 = do not display surfaces
+                                        1 = wire frame display of surfaces
+                                        2 = solid display of surfaces
+
+PartialSurfaceLevel     1 - 4           Level of detail for display of
+                                        partial surfaces figures during the
+                                        setting of the interpenetration
+                                        constraints.
+
+PartialSurfaceColor_R   [0.0, 1.0]      Components (red, green and blue) of
+PartialSurfaceColor_G   [0.0, 1.0]      the color to be used when displaying
+PartialSurfaceColor_B   [0.0, 1.0]      partial surfaces.
+
+ShowConstraints         0, 1            If 0, constraints that have been set
+                                        will be shown at all times.  The
+                                        default is 0.
+
+DrawCutPlaneBoundary    0, 1            If 0, figure surface boundaries will
+                                        not be drawn in cut plane views.  The
+                                        default is 1.
+
+CutPlaneBoundaryWidth   1, 2, ..., 6    The integer width in pixels of the
+                                        surface boundary drawn cut plane views.
+                                        The default is 1.
+
+CutPlaneMode            0, 1, 2         The default setting for viewing of cut
+                                        planes.  A one indicates that only
+                                        separate cut plane views will be shown.
+                                        Two means the views will be inside the
+                                        model window.  A zero, which is the
+                                        default, causes both to be shown.
+
+RockingAngle            degrees         Half-angle of rocking motion used
+                                        when activated.  The default is 20
+                                        degrees.
+
+RockingIncrement        degrees         Angular change between successive views
+                                        when rocking motion is on.  This
+                                        controls the apparent speed of the
+                                        rocking.  The default is 0.5 degree.
+
+BYUOutputType           0, 1            Specifies the type of BYU tiles that
+                                        may be exported.  0 specifies triangles
+                                        and 1 means quadrangles.  The default
+                                        is 0 to produce triangles.
+
+BYUOutputCoords         0, 1            Specifies whether coordinates in BYU
+                                        tile files are to be written in world
+                                        coordinates (1) or not (0).  The default
+                                        is to write then in model coordinates.
+                                        An image file must be loaded at the time
+                                        of writing for this option to have any
+                                        effect.
+
+ShowLandmarks           0, 1            If 0, landmarks that have been set
+                                        will be shown at all times.  The
+                                        default is 0.
+
+LandmarkNarrowWidth     1, 2, ..., 10   The integer number of pixels wide
+                                        most landmarks will be drawn.  Only
+                                        small values are reasonable, and the
+                                        default is 1.
+
+LandmarkWideWidth       1, 2, ..., 10   The integer number of pixels wide the
+                                        marked landmark will be drawn.  Usually
+                                        larger than the LandmarkNarrowWidth;
+                                        the default is 3.
+
+LandmarksColor_R        [0.0, 1.0]      Components (red, green and blue) of
+LandmarksColor_G        [0.0, 1.0]      the default color of landmarks, used
+LandmarksColor_B        [0.0, 1.0]      only with point cloud or wire frame
+                                        rendering.  The default is orange.
+
+UndoListLength          commands        Number of permitted undo's (ctrl-Z).
+                                        The default is 250.
+
+LeftHandedMouse         0, 1            True if the user uses a left-handed
+                                        mouse, with reversed right and left
+                                        buttons.  On Microsoft Windows systems
+                                        this is not used, although it is
+                                        reported and may be set in the
+                                        preferences editing window.  On other
+                                        systems, the -l[eft] option also may
+                                        be used to override the set value.
+
+IconifyMode             0, 1, 2         A 0 indicates that each window must be
+                                        iconfified/deiconified independently.
+                                        A 1 is the same, except that iconifying
+                                        or deiconifying the main window causes
+                                        all windows to be opened or closed.  A
+                                        2 causes the same action to be applied
+                                        to all windows that is applied to any
+                                        single window.
+
+ReorderModels           -1, 0, 1        Controls the behavior when saving
+                                        unordered, multi-figural models.
+                                        -1 = prompt the user for an action
+                                        0 = never reorder before saving
+                                        1 = always reorder before saving
+
+ModelDirectory          path            The path to the last directory from
+                                        which models were loaded.  This will
+                                        be the directory first listed in the
+                                        browser for loading model files.
+                                        It should not end with a slash (/).
+
+ImageDirectory          path            The path to the last directory from
+                                        which images were loaded.  This will
+                                        be the directory first listed in the
+                                        browser for loading image files.  If
+                                        identical to the ModelDirectory, this
+                                        is stored as an empty string.  It
+                                        should not end with a slash (/).
+
+TileSetDirectory        path            The path to the last directory from
+                                        which tile sets were loaded.  This will
+                                        be the directory first listed in the
+                                        browser for loading tile set files.  If
+                                        identical to the ModelDirectory, this
+                                        is stored as an empty string.  It
+                                        should not end with a slash (/).
+
+OutputVerbosity         -1, 0, 1        A value of 1 causes more output to be
+                                        printed by Pablo than a value of 0.
+                                        A -1 causes less to be printed.  This
+                                        affects informational messages only;
+                                        error messages and warnings are always
+                                        printed.
+
+CompressImages          0, 1            Causes output images to be written in
+                                        a compressed form, when the value is
+                                        1.  Otherwise, they will not be
+                                        compressed, taking much more disk
+                                        space.
+
+ConvertImages           0, 1            If 1, then existing images will be
+                                        converted when they are read, from
+                                        uncompressed to compressed, or the
+                                        reverse, depending on the setting of
+                                        CompressImages.
+
+ConvertImageFormat      0, 1            If 1, then when an image file is read
+                                        that has a different format than that
+                                        specified by ImageFormat, the file will
+                                        be rewritten into that format.  If 0,
+                                        then no action is taken.
+
+ImageFormat             0, 1            The number of the image file format to
+                                        be written.
+
+ByteOrder               0, 1, 2, 3      This is the preferred byte order with
+                                        which image files will be written.  The
+                                        values corresponds to Reverse, Native,
+                                        Normal, and Retain, respectively.  PCs
+                                        have "reverse" byte order, while most
+                                        Unix machines have "normal" order.
+                                        Native means "use the order found on
+                                        the machine running Pablo", while
+                                        Retain means the same as Native, unless
+                                        the image is being converted, in which
+                                        case the conversion will not change
+                                        the order from the original image file.
+
+
+The remaining entries in this table are for the positioning of the windows
+and the indication of which ones are to be open at the start of the program.
+Both of these can be recorded by selecting a button on the Preferences
+window.  The xxxxWindow_Open tags are merely listed here.  Any of them having
+a value of 1 will result in that window being opened at startup.  However, the
+main window and model window are always opened, regardless of the settings.
+Similarly, the settings for the Cut Plane windows are ignored, because those
+windows can only be opened by pressing buttons on the Cut Planes Control
+window.
+
+
+MainWindow_X                  pixels    Position of the main (menu) window.
+MainWindow_Y                            The default is (638, 0).
+MainWindow_Open               0, 1      Ignored.
+
+ModelWindow_X                 pixels    Position of the model/image window.
+ModelWindow_Y                           The default is (638, 72).
+ModelWindow_Open              0, 1      Ignored.
+
+DisplayControlWindow_X        pixels    Position of the display control window.
+DisplayControlWindow_Y                  The default is (0, 200).
+DisplayControlWindow_Open     0, 1
+
+VisibilityControlWindow_X     pixels    Position of the visibility control
+VisibilityControlWindow_Y               window.  The default is (0, 437).
+VisibilityControlWindow_Open  0, 1
+
+ConstraintsWindow_X           pixels    Position of the constraints window.
+ConstraintsWindow_Y                     The default is (20, 100).
+ConstraintsWindow_Open        0, 1
+
+AtomEditorWindow_X            pixels    Position of the atom editor window.
+AtomEditorWindow_Y                      The default is (190, 470).
+AtomEditorWindow_Open         0, 1
+
+CutPlanesControlWindow_X      pixels    Position of the cut planes control
+CutPlanesControlWindow_Y                window.  The default is (310, 370).
+CutPlanesControlWindow_Open   0, 1
+
+OptimizerControlWindow_X      pixels    Position of the optimizer control
+OptimizerControlWindow_Y                window.  The default is (310, 50).
+OptimizerControlWindow_Open   0, 1
+
+PenaltyWeightsWindow_X        pixels    Position of the penalty weights
+PenaltyWeightsWindow_Y                  window.  The default is (336, 640).
+PenaltyWeightsWindow_Open     0, 1
+
+MaskBuilder_X                 pixels    Position of the mask builder dialog
+MaskBuilder_Y                           window.  The default is (336, 331).
+
+CrestPlaneWindow_X            pixels    Position of the crest cut plane window.
+CrestPlaneWindow_Y                      The default is (10, 574).
+CrestPlaneWindow_Open         0, 1      Ignored.
+
+AtomPlaneWindow_X             pixels    Position of the atom cut plane window.
+AtomPlaneWindow_Y                       The default is (300, 574).
+AtomPlaneWindow_Open          0, 1      Ignored.
+
+BPerpNPlaneWindow_X           pixels    Position of the Bperp-N cut plane
+BPerpNPlaneWindow_Y                     window.  The default is (490, 559).
+BPerpNPlaneWindow_Open        0, 1      Ignored.
+
+PortPlaneWindow_X             pixels    Position of the port sail cut plane
+PortPlaneWindow_Y                       window.  The default is (880, 574).
+PortPlaneWindow_Open          0, 1      Ignored.
+
+StarboardPlaneWindow_X        pixels    Position of the starboard sail cut plane
+StarboardPlaneWindow_Y                  window.  The default is (590, 574).
+StarboardPlaneWindow_Open     0, 1      Ignored.
+
+InvolutesPlaneWindow_X        pixels    Position of the involutes cut plane
+InvolutesPlaneWindow_Y                  window.  The default is (200, 559).
+InvolutesPlaneWindow_Open     0, 1      Ignored.
+
+AddQuadFigureWindow_X         pixels    Position of the dialog for adding quad
+AddQuadFigureWindow_Y                   figures.  It is usually best to put
+AddQuadFigureWindow_Open      0, 1      this inside the model window, because
+                                        it must be closed before work can
+                                        continue.  The default is (648, 52).
+
+PreferencesEditorWindow_X     pixels    Position of the preferences editor.
+PreferencesEditorWindow_Y               The default is (300, 500).
+PreferencesEditorWindow_Open  0, 1
+
+AttachSubfigureWindow_X       pixels    Position of the attach subfigure
+AttachSubfigureWindow_Y                 window.  The default is (390, 70).
+AttachSubfigureWindow_Open    0, 1
+
+EditLandmarksWindow_X         pixels    Position of the edit landmarks window.
+EditLandmarksWindow_Y                   The default is (80, 490).
+
+EditModelPropsWindow_X        pixels    Position of the edit model properties
+EditModelPropsWindow_Y                  window.  The default is (452, 470).
+
+ElongationWindow_X            pixels    Position of the model elongation
+ElongationWindow_Y                      window.  The default is (680, 670).
+
+SlideShowWindow_X             pixels    Position of the model slide show
+SlideShowWindow_Y                       window.  The default is (100, 100).
+SlideShowWindow_Open          0, 1
+
+AboutPabloWindow_X            pixels    Position of the About Pablo window.
+AboutPabloWindow_Y                      The default is (308, 0).
+AboutPabloWindow_Open         0, 1
+
+
+The following is only of interest to the developers of Pablo.
+
+
+InterpolatedPrimitiveWindow_X pixels    Position of the interpolate primitive
+InterpolatedPrimitiveWindow_Y           window.  The default is (190, 630).
+InterpolatedPrimitiveWindow_Open  0, 1
+

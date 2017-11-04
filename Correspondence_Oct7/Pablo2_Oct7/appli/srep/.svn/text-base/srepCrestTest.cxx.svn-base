@@ -1,0 +1,869 @@
+#include <vtkSmartPointer.h>
+
+#include <vtksrep.h>
+#include <vtksrepinterpolatemedialsheet.h>
+#include <vtksrepvisuprimitives.h>
+
+#include <vtkCellArray.h>
+#include <vtkQuad.h>
+#include <vtkLine.h>
+
+#include <vtkPolyDataMapper.h>
+#include <vtkActor.h>
+#include <vtkProperty.h>
+
+#include <vtkRenderer.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderWindow.h>
+
+#include <vtksrepinterpolatemedialcrestcurve.h>
+#include <vtksrepinterpolatemedialspokes.h>
+#include <vtksrepinterpolatecrestspokes.h>
+#include <vtksrepinterpolatecrestspokesquartic.h>
+
+#define PI 3.14159265
+
+using namespace std;
+
+void help(char* execname){
+    cout<<"Srep test using vtk"<<endl;
+    //cout<<"Usage: "<<execname<<" -d <patients dir> -p <patient name> [options]"<<endl;
+    //cout<<"options:"<<endl;
+    cout<<"--h --help show help menu"<<endl;
+    //cout<<"-p <patient name> add another patient";
+
+}
+
+
+int main(int argc, char *argv[])
+{
+
+
+    if (argc < 1){
+        help(argv[0]);
+        return 0;
+    }
+
+    string dirname = "";
+    vector< std::string > patientname;
+
+    for(int i = 1; i < argc; i++){
+
+        if(string(argv[i]) == "--h" || string(argv[i]) == "--help"){
+            help(argv[0]);
+            return 0;
+        }else if (string(argv[i]) == "-d"){
+            if(i + 1 >= argc){
+                std::cout << "ERROR: Sample filename missing."
+                          <<std::endl
+                          <<"-sp <filename>"
+                          << std::endl ;
+                return EXIT_FAILURE;
+            }
+
+            dirname = argv[i + 1];
+
+
+        }else if(string(argv[i]) == "-p"){
+
+            //imagesize[0] = atoi(argv[i+1]);
+            patientname.push_back(argv[i + 1]);
+
+        }
+
+    }
+
+
+    vnl_vector<double> x(3);
+    vnl_vector<double> ux(3);
+    vnl_vector<double> uy(3);
+    vnl_vector<double> uz(3);
+    vector<double> r;
+
+    vtkSRep::VectorVNLType points[3][8];
+    vtkSRep::VectorVNLType spokes[3][8];
+    vtkSRep::RadiusVectorType radius[3][8];
+
+
+
+    x[0] = 0.355312;
+    x[1] = 0.438497;
+    x[2] = 0.393654;
+
+    ux[0] = 0.496548;
+    ux[1] = 0.722098;
+    ux[2] = 0.481679;
+    r.push_back(0.00892952);
+
+    uy[0] = 0.625175;
+    uy[1] = -0.339259;
+    uy[2] = -0.702894;
+    r.push_back(0.00892952);
+
+    uz[0] = 0.930333;
+    uz[1] = 0.317519;
+    uz[2] = -0.183471;
+    r.push_back(0.0100859);
+
+    points[0][0].push_back(x);
+    spokes[0][0].push_back(ux);
+    spokes[0][0].push_back(uy);
+    spokes[0][0].push_back(uz);
+    radius[0][0].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.347964;
+    x[1] = 0.426191;
+    x[2] = 0.400464;
+
+    ux[0] = 0.264842;
+    ux[1] = 0.738145;
+    ux[2] = 0.620484;
+    r.push_back(0.00821324);
+
+    uy[0] = 0.700676;
+    uy[1] = -0.604319;
+    uy[2] = -0.379279;
+    r.push_back(0.00821324);
+
+    uz[0] = 0.961529;
+    uz[1] = 0.133273;
+    uz[2] = 0.240209;
+    r.push_back(0.00914712);
+
+    points[0][1].push_back(x);
+    spokes[0][1].push_back(ux);
+    spokes[0][1].push_back(uy);
+    spokes[0][1].push_back(uz);
+    radius[0][1].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.337335;
+    x[1] = 0.410849;
+    x[2] = 0.410971;
+
+    ux[0] = 0.193329;
+    ux[1] = 0.761711;
+    ux[2] = 0.618401;
+    r.push_back(0.00916655);
+
+    uy[0] = 0.56665;
+    uy[1] = -0.692332;
+    uy[2] = -0.446748;
+    r.push_back(0.00916655);
+
+    uz[0] = 0.971584;
+    uz[1] = 0.088697;
+    uz[2] = 0.219447;
+    r.push_back(0.0101829);
+
+    points[0][2].push_back(x);
+    spokes[0][2].push_back(ux);
+    spokes[0][2].push_back(uy);
+    spokes[0][2].push_back(uz);
+    radius[0][2].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.327334;
+    x[1] = 0.389611;
+    x[2] = 0.42712;
+
+    ux[0] = 0.365015;
+    ux[1] = 0.614788;
+    ux[2] = 0.699142;
+    r.push_back(0.00981905);
+
+    uy[0] = 0.61638;
+    uy[1] = -0.443231;
+    uy[2] = -0.650862;
+    r.push_back(0.00981905);
+
+    uz[0] = 0.983908;
+    uz[1] = 0.171997;
+    uz[2] = 0.0484031;
+    r.push_back(0.00994006);
+
+    points[0][3].push_back(x);
+    spokes[0][3].push_back(ux);
+    spokes[0][3].push_back(uy);
+    spokes[0][3].push_back(uz);
+    radius[0][3].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.321575;
+    x[1] = 0.37095;
+    x[2] = 0.449864;
+
+    ux[0] = 0.181642;
+    ux[1] = 0.942285;
+    ux[2] = 0.281256;
+    r.push_back(0.00949929);
+
+    uy[0] = 0.807414;
+    uy[1] = -0.502895;
+    uy[2] = -0.308511;
+    r.push_back(0.00949929);
+
+    uz[0] = 0.913587;
+    uz[1] = 0.405863;
+    uz[2] = -0.0251757;
+    r.push_back(0.00993079);
+
+    points[0][4].push_back(x);
+    spokes[0][4].push_back(ux);
+    spokes[0][4].push_back(uy);
+    spokes[0][4].push_back(uz);
+    radius[0][4].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.325684;
+    x[1] = 0.363675;
+    x[2] = 0.474121;
+
+    ux[0] = -0.255397;
+    ux[1] = 0.893858;
+    ux[2] = 0.368496;
+    r.push_back(0.00857298);
+
+    uy[0] = 0.990667;
+    uy[1] = 0.0136929;
+    uy[2] = -0.135618;
+    r.push_back(0.00857298);
+
+    uz[0] = 0.61735;
+    uz[1] = 0.762002;
+    uz[2] = 0.19553;
+    r.push_back(0.00833423);
+
+    points[0][5].push_back(x);
+    spokes[0][5].push_back(ux);
+    spokes[0][5].push_back(uy);
+    spokes[0][5].push_back(uz);
+    radius[0][5].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.343395;
+    x[1] = 0.361501;
+    x[2] = 0.493253;
+
+    ux[0] = -0.0842586;
+    ux[1] = 0.854692;
+    ux[2] = 0.512252;
+    r.push_back(0.00924977);
+
+    uy[0] = 0.63148;
+    uy[1] = 0.204397;
+    uy[2] = -0.747967;
+    r.push_back(0.00924977);
+
+    uz[0] = 0.450319;
+    uz[1] = 0.871543;
+    uz[2] = -0.193974;
+    r.push_back(0.0117543);
+
+    points[0][6].push_back(x);
+    spokes[0][6].push_back(ux);
+    spokes[0][6].push_back(uy);
+    spokes[0][6].push_back(uz);
+    radius[0][6].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.351933;
+    x[1] = 0.34327;
+    x[2] = 0.50518;
+
+    ux[0] = 0.130027;
+    ux[1] = 0.716024;
+    ux[2] = 0.685859;
+    r.push_back(0.0128811);
+
+    uy[0] = 0.570955;
+    uy[1] = -0.118001;
+    uy[2] = -0.812457;
+    r.push_back(0.0128811);
+
+    uz[0] = 0.753686;
+    uz[1] = 0.642985;
+    uz[2] = -0.136116;
+    r.push_back(0.0151896);
+
+    points[0][7].push_back(x);
+    spokes[0][7].push_back(ux);
+    spokes[0][7].push_back(uy);
+    spokes[0][7].push_back(uz);
+    radius[0][7].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.341931;
+    x[1] = 0.446927;
+    x[2] = 0.391353;
+
+    ux[0] = -0.0408894;
+    ux[1] = 0.966558;
+    ux[2] = 0.253168;
+    r.push_back(0.0117385);
+
+    uy[0] = 0.410242;
+    uy[1] = -0.443885;
+    uy[2] = -0.79666;
+    r.push_back(0.0117385);
+
+    uz[0] = 0.439895;
+    uz[1] = 0.622498;
+    uz[2] = -0.647293;
+    r.push_back(0.012737);
+
+    points[1][0].push_back(x);
+    spokes[1][0].push_back(ux);
+    spokes[1][0].push_back(uy);
+    spokes[1][0].push_back(uz);
+    radius[1][0].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.327108;
+    x[1] = 0.430884;
+    x[2] = 0.394324;
+
+    ux[0] = -0.3558;
+    ux[1] = 0.715198;
+    ux[2] = 0.601579;
+    r.push_back(0.0118156);
+
+    uy[0] = 0.336176;
+    uy[1] = -0.526746;
+    uy[2] = -0.78072;
+    r.push_back(0.0118156);
+
+    points[1][1].push_back(x);
+    spokes[1][1].push_back(ux);
+    spokes[1][1].push_back(uy);
+    radius[1][1].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.310816;
+    x[1] = 0.409664;
+    x[2] = 0.404683;
+
+    ux[0] = -0.255885;
+    ux[1] = 0.736427;
+    ux[2] = 0.626257;
+    r.push_back(0.0132754);
+
+    uy[0] = 0.249752;
+    uy[1] = -0.68834;
+    uy[2] = -0.681038;
+    r.push_back(0.0132754);
+
+    points[1][2].push_back(x);
+    spokes[1][2].push_back(ux);
+    spokes[1][2].push_back(uy);
+    radius[1][2].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.30275;
+    x[1] = 0.386323;
+    x[2] = 0.421684;
+
+    ux[0] = -0.317483;
+    ux[1] = 0.672477;
+    ux[2] = 0.668565;
+    r.push_back(0.0148925);
+
+    uy[0] = 0.318023;
+    uy[1] = -0.674236;
+    uy[2] = -0.666533;
+    r.push_back(0.0148925);
+
+    points[1][3].push_back(x);
+    spokes[1][3].push_back(ux);
+    spokes[1][3].push_back(uy);
+    radius[1][3].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.29961;
+    x[1] = 0.370901;
+    x[2] = 0.449149;
+
+    ux[0] = -0.199794;
+    ux[1] = 0.705366;
+    ux[2] = 0.680103;
+    r.push_back(0.0142519);
+
+    uy[0] = 0.199975;
+    uy[1] = -0.69228;
+    uy[2] = -0.693367;
+    r.push_back(0.0142519);
+
+    points[1][4].push_back(x);
+    spokes[1][4].push_back(ux);
+    spokes[1][4].push_back(uy);
+    radius[1][4].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.307306;
+    x[1] = 0.359397;
+    x[2] = 0.470381;
+
+    ux[0] = -0.318011;
+    ux[1] = 0.650999;
+    ux[2] = 0.689253;
+    r.push_back(0.019406);
+
+    uy[0] = 0.311531;
+    uy[1] = -0.612983;
+    uy[2] = -0.726085;
+    r.push_back(0.019406);
+
+    points[1][5].push_back(x);
+    spokes[1][5].push_back(ux);
+    spokes[1][5].push_back(uy);
+    radius[1][5].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.320968;
+    x[1] = 0.340578;
+    x[2] = 0.491168;
+
+    ux[0] = -0.324375;
+    ux[1] = 0.489621;
+    ux[2] = 0.809353;
+    r.push_back(0.0217474);
+
+    uy[0] = 0.321574;
+    uy[1] = -0.564683;
+    uy[2] = -0.760081;
+    r.push_back(0.0217474);
+
+    points[1][6].push_back(x);
+    spokes[1][6].push_back(ux);
+    spokes[1][6].push_back(uy);
+    radius[1][6].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.331837;
+    x[1] = 0.311866;
+    x[2] = 0.506674;
+
+    ux[0] = 0.165872;
+    ux[1] = 0.198868;
+    ux[2] = 0.965887;
+    r.push_back(0.0160352);
+
+    uy[0] = 0.160577;
+    uy[1] = -0.798503;
+    uy[2] = -0.58018;
+    r.push_back(0.0160352);
+
+    uz[0] = 0.416305;
+    uz[1] = -0.764688;
+    uz[2] = 0.491876;
+    r.push_back(0.019712);
+
+    points[1][7].push_back(x);
+    spokes[1][7].push_back(ux);
+    spokes[1][7].push_back(uy);
+    spokes[1][7].push_back(uz);
+    radius[1][7].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.326157;
+    x[1] = 0.444147;
+    x[2] = 0.384189;
+
+    ux[0] = -0.467805;
+    ux[1] = 0.849453;
+    ux[2] = 0.244107;
+    r.push_back(0.0114925);
+
+    uy[0] = 0.0177499;
+    uy[1] = -0.524301;
+    uy[2] = -0.851348;
+    r.push_back(0.0114925);
+
+    uz[0] = -0.546974;
+    uz[1] = 0.395173;
+    uz[2] = -0.73801;
+    r.push_back(0.0113269);
+
+    points[2][0].push_back(x);
+    spokes[2][0].push_back(ux);
+    spokes[2][0].push_back(uy);
+    spokes[2][0].push_back(uz);
+    radius[2][0].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.307582;
+    x[1] = 0.427586;
+    x[2] = 0.390074;
+
+    ux[0] = -0.658404;
+    ux[1] = 0.688663;
+    ux[2] = 0.303723;
+    r.push_back(0.0107396);
+
+    uy[0] = -0.168151;
+    uy[1] = -0.480047;
+    uy[2] = -0.860976;
+    r.push_back(0.0107396);
+
+    uz[0] = -0.811579;
+    uz[1] = 0.204837;
+    uz[2] = -0.547157;
+    r.push_back(0.0100034);
+
+    points[2][1].push_back(x);
+    spokes[2][1].push_back(ux);
+    spokes[2][1].push_back(uy);
+    spokes[2][1].push_back(uz);
+    radius[2][1].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.290763;
+    x[1] = 0.40529;
+    x[2] = 0.405007;
+
+    ux[0] = -0.775795;
+    ux[1] = 0.42364;
+    ux[2] = 0.467624;
+    r.push_back(0.0101077);
+
+    uy[0] = -0.202072;
+    uy[1] = -0.611728;
+    uy[2] = -0.764824;
+    r.push_back(0.0101077);
+
+    uz[0] = -0.940984;
+    uz[1] = -0.180994;
+    uz[2] = -0.28599;
+    r.push_back(0.0104969);
+
+    points[2][2].push_back(x);
+    spokes[2][2].push_back(ux);
+    spokes[2][2].push_back(uy);
+    spokes[2][2].push_back(uz);
+    radius[2][2].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.282841;
+    x[1] = 0.382155;
+    x[2] = 0.426147;
+
+    ux[0] = -0.73189;
+    ux[1] = 0.409447;
+    ux[2] = 0.544693;
+    r.push_back(0.0116087);
+
+    uy[0] = -0.140095;
+    uy[1] = -0.653063;
+    uy[2] = -0.744232;
+    r.push_back(0.0116087);
+
+    uz[0] = -0.940547;
+    uz[1] = -0.262772;
+    uz[2] = -0.215229;
+    r.push_back(0.0113034);
+
+    points[2][3].push_back(x);
+    spokes[2][3].push_back(ux);
+    spokes[2][3].push_back(uy);
+    spokes[2][3].push_back(uz);
+    radius[2][3].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.276889;
+    x[1] = 0.363887;
+    x[2] = 0.449496;
+
+    ux[0] = -0.700073;
+    ux[1] = 0.415277;
+    ux[2] = 0.580898;
+    r.push_back(0.0112507);
+
+    uy[0] = -0.277416;
+    uy[1] = -0.682966;
+    uy[2] = -0.67572;
+    r.push_back(0.0112507);
+
+    uz[0] = -0.960294;
+    uz[1] = -0.26298;
+    uz[2] = -0.0931537;
+    r.push_back(0.0105687);
+
+    points[2][4].push_back(x);
+    spokes[2][4].push_back(ux);
+    spokes[2][4].push_back(uy);
+    spokes[2][4].push_back(uz);
+    radius[2][4].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.278517;
+    x[1] = 0.344926;
+    x[2] = 0.472617;
+
+    ux[0] = -0.595063;
+    ux[1] = 0.44973;
+    ux[2] = 0.666066;
+    r.push_back(0.0117506);
+
+    uy[0] = -0.224219;
+    uy[1] = -0.615741;
+    uy[2] = -0.755373;
+    r.push_back(0.0117506);
+
+    uz[0] = -0.974536;
+    uz[1] = -0.197471;
+    uz[2] = -0.106231;
+    r.push_back(0.0110238);
+
+    points[2][5].push_back(x);
+    spokes[2][5].push_back(ux);
+    spokes[2][5].push_back(uy);
+    spokes[2][5].push_back(uz);
+    radius[2][5].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.290718;
+    x[1] = 0.33041;
+    x[2] = 0.495569;
+
+    ux[0] = -0.713147;
+    ux[1] = 0.14184;
+    ux[2] = 0.686515;
+    r.push_back(0.0117603);
+
+    uy[0] = -0.371569;
+    uy[1] = -0.632402;
+    uy[2] = -0.679709;
+    r.push_back(0.0117603);
+
+    uz[0] = -0.911138;
+    uz[1] = -0.412062;
+    uz[2] = 0.00571718;
+    r.push_back(0.0110888);
+
+    points[2][6].push_back(x);
+    spokes[2][6].push_back(ux);
+    spokes[2][6].push_back(uy);
+    spokes[2][6].push_back(uz);
+    radius[2][6].push_back(r);
+    r.clear();
+
+
+    x[0] = 0.306351;
+    x[1] = 0.313905;
+    x[2] = 0.503719;
+
+    ux[0] = -0.197552;
+    ux[1] = -0.0670764;
+    ux[2] = 0.977995;
+    r.push_back(0.0132391);
+
+    uy[0] = -0.141689;
+    uy[1] = -0.822659;
+    uy[2] = -0.550596;
+    r.push_back(0.0132391);
+
+    uz[0] = -0.325026;
+    uz[1] = -0.852453;
+    uz[2] = 0.40949;
+    r.push_back(0.0124777);
+
+    points[2][7].push_back(x);
+    spokes[2][7].push_back(ux);
+    spokes[2][7].push_back(uy);
+    spokes[2][7].push_back(uz);
+    radius[2][7].push_back(r);
+    r.clear();
+
+
+
+
+
+         vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+         renderer->SetBackground(1,1,1);
+         vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
+         renderWindow->AddRenderer(renderer);
+         vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+         renderWindowInteractor->SetRenderWindow(renderWindow);
+
+
+
+         vtkSmartPointer<vtkSRep> hippoc = vtkSmartPointer<vtkSRep>::New();
+         vtkSmartPointer< vtkPoints > hubpos = vtkSmartPointer< vtkPoints >::New();
+         vtkSmartPointer<vtkCellArray> cellarray = vtkSmartPointer<vtkCellArray>::New();
+
+         vtkSRep::VectorSRepIdsType pointsIds;
+
+         vtkSRep::RadiusVectorType allradius;
+         vtkSRep::SpokesVectorType allspokes;
+
+         for(unsigned i = 0; i < 3; i++){
+             pointsIds.push_back(vtkSRep::VectorIdsType());
+              for(unsigned j = 0; j < 8; j++){
+                  pointsIds[i].push_back(hubpos->InsertNextPoint(points[i][j][0][0], points[i][j][0][1], points[i][j][0][2]));
+                  allspokes.push_back(spokes[i][j]);
+                  allradius.push_back(radius[i][j][0]);
+              }
+          }
+
+
+         for(unsigned i = 0; i < pointsIds.size() - 1; i++){
+              for(unsigned j = 0; j < pointsIds[i].size() - 1; j++){
+
+                  vtkSmartPointer<vtkQuad> quad = vtkSmartPointer<vtkQuad>::New();
+                  quad->GetPointIds()->SetId(0, pointsIds[i][j]);
+                  quad->GetPointIds()->SetId(1, pointsIds[i+1][j]);
+                  quad->GetPointIds()->SetId(2, pointsIds[i+1][j+1]);
+                  quad->GetPointIds()->SetId(3, pointsIds[i][j+1]);
+
+                  //quad->Print(cout);
+
+                  cellarray->InsertNextCell(quad);
+
+              }
+          }
+
+         hippoc->SetPoints(hubpos);
+         hippoc->SetPolys(cellarray);
+         hippoc->SetAllSpokes(allspokes);
+         hippoc->SetAllSpokesRadius(allradius);
+         //hippoc->SetGridTopolgyIds(pointsIds);
+
+
+
+
+         int interpolationlevel = 3;
+
+
+         vtkSmartPointer< vtkSRepInterpolateMedialSheet > medialsheetinterpolator = vtkSmartPointer< vtkSRepInterpolateMedialSheet >::New();
+         medialsheetinterpolator->SetInput(hippoc);
+         medialsheetinterpolator->SetInterpolationLevel(interpolationlevel);
+         medialsheetinterpolator->Update();
+
+
+         vtkSmartPointer< vtkPolyData > medialsheet = medialsheetinterpolator->GetOutput();
+
+         vtkSmartPointer<vtkPolyDataMapper> medialsheetmapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+         medialsheetmapper->SetInputConnection(medialsheet->GetProducerPort());
+         vtkSmartPointer<vtkActor>  medialsheetactor = vtkActor::New();
+         medialsheetactor->SetMapper(medialsheetmapper);
+         medialsheetactor->GetProperty()->SetPointSize(10);
+         medialsheetactor->GetProperty()->SetColor(0.2,0.6,1);
+         renderer->AddActor(medialsheetactor);
+
+         vtkSmartPointer<vtkSRepInterpolateMedialCrestCurve> curveinterpolation = vtkSmartPointer<vtkSRepInterpolateMedialCrestCurve>::New();
+         curveinterpolation->SetInput(hippoc);
+         curveinterpolation->SetInterpolationLevel(interpolationlevel);
+         curveinterpolation->Update();
+         vtkPolyData* medialcrestcurve = curveinterpolation->GetOutput();
+
+         vtkSmartPointer<vtkPolyDataMapper> medialcrestcurvemapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+         medialcrestcurvemapper->SetInputConnection(medialcrestcurve->GetProducerPort());
+         vtkSmartPointer<vtkActor>  medialsheetcrestcurveactor = vtkActor::New();
+         medialsheetcrestcurveactor->SetMapper(medialcrestcurvemapper);
+         medialsheetcrestcurveactor->GetProperty()->SetLineWidth(5);
+         medialsheetcrestcurveactor->GetProperty()->SetColor(1,1,0);
+         renderer->AddActor(medialsheetcrestcurveactor);
+
+
+         //vtkSRep::VectorIdsType crestids = hippoc->GetCrestMedialAtomsIds();
+
+         //for(unsigned i = 0; i < crestids.size(); i++){
+             vtkSmartPointer<vtkSRepInterpolateCrestSpokes> interpolatecrestspokes = vtkSmartPointer<vtkSRepInterpolateCrestSpokes>::New();
+             //vtkSmartPointer<vtkSRepInterpolateCrestSpokesQuartic> interpolatecrestspokes = vtkSmartPointer<vtkSRepInterpolateCrestSpokesQuartic>::New();
+             interpolatecrestspokes->SetInput(hippoc);
+             interpolatecrestspokes->SetInterpolationLevel(interpolationlevel);
+             //interpolatecrestspokes->SetAtomId(crestids[i]);
+             //interpolatecrestspokes->SetGamma_t(0.7);
+             //interpolatecrestspokes->SetGamma_theta(0.8);
+             //interpolatecrestspokes->SetSpokeType(vtkSRep::CREST_SPOKE);
+             interpolatecrestspokes->Update();
+
+
+             vtkPolyData* interpolatedcrest = interpolatecrestspokes->GetOutput();
+
+             vtkSmartPointer<vtkPolyDataMapper> crestspokescurvemapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+             crestspokescurvemapper->SetInputConnection(interpolatedcrest->GetProducerPort());
+             vtkSmartPointer<vtkActor>  crestspokesactor = vtkActor::New();
+             crestspokesactor->SetMapper(crestspokescurvemapper);
+             crestspokesactor->GetProperty()->SetLineWidth(5);
+             crestspokesactor->GetProperty()->SetColor(1,0,0);
+             renderer->AddActor(crestspokesactor);
+
+             //renderer->RemoveActor(spokesactor);
+
+         //}
+
+
+
+
+
+
+
+         vtkSmartPointer< vtkSRepVisuPrimitives > visuprimitives = vtkSmartPointer< vtkSRepVisuPrimitives >::New();
+         visuprimitives->SetInput(hippoc);
+         visuprimitives->Update();
+
+
+
+
+         vtkActorCollection* actorcollection = visuprimitives->GetOuputActors();
+
+         for(unsigned i = 0; i < 4; i++){
+
+             vtkActor* actor = (vtkActor*) actorcollection->GetItemAsObject(i);
+
+             renderer->AddActor(actor);
+         }
+
+         vtkActor* actor = (vtkActor*) actorcollection->GetItemAsObject(0);//hubs
+         //renderer->AddActor(actor);
+
+         actor = (vtkActor*) actorcollection->GetItemAsObject(4);//normals to the sheet
+         renderer->AddActor(actor);
+
+         actor = (vtkActor*) actorcollection->GetItemAsObject(5);//uderivative
+         //renderer->AddActor(actor);
+
+         actor = (vtkActor*) actorcollection->GetItemAsObject(6);//vderivative
+         //renderer->AddActor(actor);
+
+
+
+
+
+
+
+
+         renderWindow->Render();
+         renderWindowInteractor->Start();
+
+
+
+    return 0;
+}
+
+
+

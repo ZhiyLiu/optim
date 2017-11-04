@@ -1,0 +1,61 @@
+# - this module looks for Matlab
+# Defines:
+#  MATLAB_INCLUDE_DIR: include path for mex.h, engine.h
+#  MATLAB_LIBRARIES:   required libraries: libmex, etc
+#  MATLAB_MEX_LIBRARY: path to libmex.lib
+#  MATLAB_MX_LIBRARY:  path to libmx.lib
+#  MATLAB_ENG_LIBRARY: path to libeng.lib
+
+
+SET(MATLAB_FOUND FALSE)
+  IF(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    # Regular x86
+    SET(MATLAB_ROOT
+      /NIRAL/tools/Matlab2011a/bin/glnx86/
+      )
+  ELSE(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    # AMD64:
+    SET(MATLAB_ROOT
+      /NIRAL/tools/Matlab2011a/bin/glnxa64/
+      )
+  ENDIF(CMAKE_SIZEOF_VOID_P EQUAL 4)
+  FIND_LIBRARY(MATLAB_MEX_LIBRARY
+    mex
+    ${MATLAB_ROOT}
+    )
+  FIND_LIBRARY(MATLAB_MX_LIBRARY
+    mx
+    ${MATLAB_ROOT}
+    )
+  FIND_LIBRARY(MATLAB_ENG_LIBRARY
+    eng
+    ${MATLAB_ROOT}
+    )
+  FIND_PATH(MATLAB_INCLUDE_DIR
+    "mex.h"
+    "/NIRAL/tools/Matlab2011a/extern/include/"
+    )
+
+
+# This is common to UNIX and Win32:
+SET(MATLAB_LIBRARIES
+  ${MATLAB_MEX_LIBRARY}
+  ${MATLAB_MX_LIBRARY}
+  ${MATLAB_ENG_LIBRARY}
+)
+
+IF(MATLAB_INCLUDE_DIR AND MATLAB_LIBRARIES)
+  SET(MATLAB_FOUND TRUE)
+ENDIF(MATLAB_INCLUDE_DIR AND MATLAB_LIBRARIES)
+
+#MARK_AS_ADVANCED(
+#  MATLAB_LIBRARIES
+#  MATLAB_MEX_LIBRARY
+#  MATLAB_MX_LIBRARY
+#  MATLAB_ENG_LIBRARY
+#  MATLAB_INCLUDE_DIR
+#  MATLAB_FOUND
+#  MATLAB_ROOT
+#)
+
+

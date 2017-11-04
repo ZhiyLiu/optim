@@ -1,0 +1,14 @@
+
+addpath('/work/ltu/Correspondence_Oct7/shapeStat_downSide/Correspondence/');
+
+% Add these path to make sure the calculateCPNS_eigenvalue canworks
+addpath('/work/ltu/Correspondence_Oct7/shapeStat_downSide/functions/', '/work/ltu/Correspondence_Oct7/shapeStat_downSide/ios/');
+addpath('/work/ltu/Correspondence_Oct7/shapeStat_downSide/', '/work/ltu/Correspondence_Oct7/shapeStat_downSide/CPNS/');
+addpath('/work/ltu/Correspondence_Oct7/shapeStat_downSide/CPNS/Sungkyu_additional_functions/subfunctions');
+  
+
+geoEntropy(dataDir); 
+
+quit;
+
+

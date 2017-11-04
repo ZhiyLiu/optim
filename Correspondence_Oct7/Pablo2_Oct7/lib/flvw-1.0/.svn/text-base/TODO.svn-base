@@ -1,0 +1,67 @@
+manpage documentation (I could use some feed back on how C++ man pages
+	are structured.  Do you provide one manpage per class or one manpage per
+  class function?
+
+Add callbacks COL_RESIZE, ROW_RESIZE
+
+Update list/table as needed for editors.  Should have all functions
+	defined now.
+
+General
+	Miscellaneous style info...
+    I'm thinking of removing global_style from Flv_List and implementing a
+		Flv_Style_List with specific indices for GLOBAL_STYLE,
+		SELECTION_STYLE, etc.  It would reduce
+		the class size and make all those styles optional.  Any existing code
+		could #define global_style as styles[GLOBAL_STYLE], hmmm, maybe right
+		after editing... ?
+
+Flv_Style_List
+  Your requests
+  Bug fixes
+  Code improvements (always...)
+
+Flv_Style
+  Your requests
+  Bug fixes
+  Code improvements (always...)
+
+Flv_List
+  Row editing
+  Validation
+  Your requests
+  Bug fixes
+  Code improvements (always...)
+  Add selection_style?
+    For automatic selection style information.  This would mainly come
+    into play in Flv_Table (see below), but would create a nice generic
+    way to program what the selected cell(s) look like.
+
+Flv_Table
+  Cell editing
+  Validation
+  Drawing code I think has a few lingering problems, could
+    be in Flv_List, but I think it's here.  Probbably need to re-write them
+    both to be more standard, and hopefully smaller as well.
+  Your requests
+  Bug fixes
+  Code improvements (always...)
+  Add fixed_selection_style?
+    Apply STYLE_ROW_HEADER, STYLE_ROW_FOOTER, STYLE_COL_HEADER,STYLE_COL_FOOTER
+    Would allow for things like auto depressed header styles.  Looks nice in
+    spreadsheets.  Not a bad indicator for data tables either.
+
+Flv_CStyle
+	Write Flv_CStyle_List.  Flv_CTable will use a Flv_CStyle_List for various
+	layouts.  This will probbably also impact get_style significantly.
+	
+Flv_CTable
+  Everything, Including your requests :)
+
+Other widgets
+  I would like to implement simple text versions of the widgets that store
+  information.
+
+  If you have a general purpose widget that could be based on these and would
+  be generally usefull, I will consider writing it.
+

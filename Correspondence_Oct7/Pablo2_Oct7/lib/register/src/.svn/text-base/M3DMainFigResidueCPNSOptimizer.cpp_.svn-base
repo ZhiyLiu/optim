@@ -1,0 +1,23 @@
+#include <fstream>
+#include <stdio.h>
+#include <math.h>
+#include "OptimizerBase.h"
+#include "M3DMainFigResidueCPNSOptimizer.h"
+
+using namespace std;
+
+M3DMainFigResidueCPNSOptimizer::M3DMainFigResidueCPNSOptimizer(Match *m,
+	M3DCPNSStats * cpnsPtr, int order) : M3DMainFigureOptimizer(m)
+{
+	boundsFunction = new M3DMainFigResidueCPNSProblemBoundsFunction;
+	problem = new M3DMainFigResidueCPNSProblem(cpnsPtr, order);
+	numParameters = ((M3DMainFigResidueCPNSProblem *) problem)->parameterCount();
+}
+
+bool M3DMainFigResidueCPNSOptimizer::initialize(M3DObject *referenceObject, int treeIndex)
+{
+	M3DCPNSStats * cpnsPtr - ((M3DMainFigResidueCPNSProblem *)problem)->getCPNS();
+	M3DObject * tempObj = referenceObject->assign();
+	
+	tempObj = cpnsPtr->eigenmodeDeformMean(cpnsPtr->
+}

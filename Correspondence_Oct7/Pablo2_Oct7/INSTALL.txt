@@ -1,0 +1,201 @@
+
+          Installation Guide for the 3D M-reps Project's Pablo Program
+
+
+Table of Contents
+-----------------
+1. Introduction
+2. Prerequisite
+3. Versions
+4. Building the project in UNIX or LINUX
+5. Building the project in Windows NT
+6. Running Pablo
+
+
+1. Introduction
+---------------
+This file is the installation guide for the 3D M-reps program named
+pablo, a tool for modeling and segmentation with 3D M-reps.  If you are
+able to follow these steps successfully, you will in the end have an
+executable of this program in the Pablo/bin directory.
+
+This code has only been built and run on Solaris and Windows PC
+platforms. The only compilers that have been tested are the GNU
+compilers and Microsoft Visual C++.
+
+Any question with this file, installation of the project, or the code
+itself should be directed to the development team at UNC.
+
+
+2. Prerequisite
+---------------
+
+Before building pablo, You must first install the FLTK package, if it
+is not already installed on your system.  To install it, download the
+latest source from http::/www.fltk.org, unpack it on your system and
+build it according to the instructions provided.  This version of Pablo
+is based on fltk-1.1.7, which comes with fluid version 1.0107.
+
+You also need the FLVW package shipped with this product.  It is built
+in much the same way as FLTK.
+
+You must also have the CLAPACK package, built with the same compiler
+you will use to build Pablo.  If you provide your own copies, install a
+link to them at the same level as the Pablo directory.  Alternatively,
+these files may be checked out from CVS, so they are at the same level
+as the Pablo directory.  For Window NT, the package name is
+CLAPACK-WindowsNT.  For other compilers and platforms, different names
+are used, such as CLAPACK-gnu-solaris, for the g++ version built on
+Solaris.  The CLAPACK source is available at
+http://netlib.bell-labs.com/netlib/master/readme.html.
+
+
+3. Versions
+
+Using compile-time options, you may build several versions of pablo.
+These are determined by specifying none, one, or all of the build-time
+options listed here, either in the appropriate makeinclude file, in the
+Project Settings of Visual Studio, or in file globalBuildParms.h in
+./include.
+
+REGULAR
+    There are multiple basic programs in the pablo hierarchy.  Visual
+    Studio configurations may be used to choose between them.  To make
+    regular (grey) Pablo using the makefiles, use the command 'make regular'
+    instead of 'make', which produces both regular and binary Pablo.
+
+BINARY
+    There are multiple basic programs in the pablo hierarchy.  Visual
+    Studio configurations may be used to choose between them.  To make
+    Binary Pablo using the makefiles, use the command 'make binary'
+    instead of 'make', which produces both regular and binary Pablo.
+
+PRODUCTION_VERSION
+    This specifies that the Debug Menu Tab of the Main Window is not
+    to be built.  This is the normal situation when an optimized version
+    of the program is built.  The Debug Menu does not contain anything
+    of use to general users of the program, but contains tools intended
+    to be used by the designers of the program.  The use of this option
+    is automatically set in the existing makeinclude files.  In Visual
+    Studio, the Configuration (Release or Debug) determines it.
+
+TASKING
+    If this is defined at build time, the code for display of the Task
+    Display Window and for the -task option will be generated.  The
+    window will be located at the top of the Model Display Window.  If
+    use of the Task Display Window is desired, then TASKING should be
+    defined on the CXXFLAGS in the makeinclude file, or when using Visual
+    C++, it should be defined in the Project Settings for the gui
+    subproject.  This must be provided as a defined constant in the
+    compilation.
+
+OPTIMIZATION_VISUALIZER
+    This may be defined in ./include/globalBuildParms.h.  It will turn
+    on a visualizer for viewing the objective function seem by the
+    optimizer.  This is intended only for performance tuning of the
+    optimizer, since it slows optimization.
+
+PCA_VISUALIZER
+    This may be defined in ./include/globalBuildParms.h.  It activates
+    a viewer for the display of PCA-defined surfaces, for comparison
+    with the PGA-based results from Pablo.
+ 
+
+4. Building the project in UNIX or LINUX
+----------------------------------------
+This section describes how to generate an executable from the source
+using the GNU C++ (i.e., g++) compiler.  This method is known to work
+in LINUX ane Solaris.
+
+        a. Configuration
+        ----------------
+
+        In the main mreps directory there are several files with names
+        beginning with "makeinclude-".  Select the one you want and
+        COPY it to "makeinclude".  This file defines the location of
+        packages that need to be linked into the project and which
+        compilers and command line options to use.  Adjust any
+        variables that you need to change in the new file.
+
+        Note that you need not (and should not) modify the original
+        "makeinclude-" files, which are checked into CVS.
+
+
+        b. Building the project
+        -----------------------
+        This is the easy part - just enter the main Pablo directory and
+        run "make".  If you just want to make individual libraries,
+        there is a Makefile in the each of the subdirectories.
+
+
+5. Building the project in Windows NT
+-------------------------------------
+This section describes how to generate an executable from the source
+using the Visual Studio C++ compiler in Windows NT.
+
+        a. Configuration
+        ----------------
+
+        Start Visual C++.
+
+        You must tell the compiler where FLTK, FLVW and CLAPACK are, as
+        follows.  In the Tools Menu, select Options..., select the
+        Directories tab.  Pull down the appropriate item, "Include files"
+        or "Library files", from the menu and click in the rectangular
+        box in the large Directories window.  Add each library and
+        include path there and press OK.  Notice that there are no
+        include files for CLAPACK, so should be added only once.
+
+        Decide the configuration (Release, Debug, etc.) you want to make.
+
+        In the Build menu, select Set Active Configuration, and specify
+        your choice in the window that pops up.  Note that the Debug
+        configurations can be expected to run slower than the Release
+        configurations.  All configurations build a multi-threaded
+        program.
+
+
+        b. Building the project
+        -----------------------
+        Next, select Open Workspace... from the File menu.  Then browse to
+        the Pablo/gui/visualc directory and open the pablo.dsw file.
+
+        If you build a Debug Configuration, the program will have an
+        additional menu (Test/Debug) with items used by the program's
+        developers.  These configurations also define __CYGWIN32__ (in the
+        Project Settings, C++ tab), which permit the command line parser to
+        recognize paths starting with slash (/).  In the event that this
+        capability is desired in the production version, then the definition
+        of __CYGWIN32__ should be added to the settings for the Release
+        Configuration.
+
+        To compile the code, select Rebuild All from the Build menu or using
+        the toolbar icon.  Usually pressing F7 does the same thing.  The
+        build will take a few minutes.
+
+        For working on individual libraries, there is also a visualc
+        directory in each of the subdirectories.
+
+
+6. Running Pablo
+----------------
+The final executable is located in the Pablo/bin directory.  Its name
+will depend somewhat on how it was built.
+
+
+----------------------------
+To build for PLUNC on Linux, do the following.
+
+1.  Do everthing needed for a regular build, such as installing the latest
+	FLTK.  That can be tested by running make regular in Pablo2/.
+
+2.  Start with a built installation of PLUNC.  If not already done, set
+	the environment variables for building PLUNC, as described in
+	/Clinic/PLUNC/MASTER/NOTES/README.
+
+3.  Then with the tree clean of object and library files (make clean), run
+	make -f Makefile.PLUNC >& install_report
+
+4.  If successful, the command `bin/pablo_ae2 -construct -qv -pq` should
+	report the program's version number.
+

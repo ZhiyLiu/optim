@@ -1,0 +1,21 @@
+% cd('C:\Pablo2_age\0109\antiAlias\20mhd-ddm');
+ddm_dir = 'C:\Pablo2_age\0109\antiAlias\20mhd-ddm\';
+files =dir(ddm_dir);
+for i=1:size(files,1)
+    [filename,pathname] = uigetfile('FilterSpec','Pick a mhd', '*.mhd');
+    [pathstr, name, ext, versn] = fileparts(strcat(ddm_dir, files(i).name));
+    if strcmp(ext,'mhd')
+        antiAliasWrapper( files(i).name, outPrefix, movement );
+    end
+end
+
+filelen=length(filename);
+for k=1:filelen;
+if filename(k)=='.';
+dotnum=k;
+end;
+k=k+1;
+end;
+insuffix= filename(dotnum:end);
+infname=filename(1:dotnum-1);
+

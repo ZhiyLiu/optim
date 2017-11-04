@@ -1,0 +1,113 @@
+
+                        The Raw3 Image File Format
+
+
+Image files read by Pablo must have the format described here.  There are
+actually two versions of the format, as a result of evolutionary needs.
+This description incorporates both versions, indicating differences where
+they occur.
+
+Image files consist of optional comments, followed by a short header,
+followed by the pixel data.  Each of these sections is described below.
+
+Comments begin with '#' and go to the end of the line.  Any number of
+comments may be used, but they must only be at the start of the file.
+
+The header contains a series of fields, which in order are:
+
+    1.  Byte order: a 3-letter string, either "msb" ("most significant byte
+                first") for Normal byte order, as found on Sun Solaris
+                systems, or "lsb" ("least significant byte first") for
+                Reverse byte order, as found on Intel PCs.
+
+    2.  A space, if the format is version 0; or a newline if the version number
+		is 1 or more.
+
+    3.  If the format is version 1 or later, then comes an extension record
+		which is followed by a newline.  There is no extension record
+		for version 0 files.
+
+		The extension record consists of a series of comma-terminated
+		fields.  Thus, a missing field can be detected by finding only
+		optional whitespace between two commas.  The fields on the
+		extension record are:
+
+		a.  The version number.  This will be 1 or more.  At present,
+		    it can only be 1.
+
+		b.  A modality code.  If the modality is unknown, this field
+		    is left empty.  At present the only possible modality is
+		    "CT".  All CT images will be displayed with an intensity
+		    range of [-1024, 3072], regardless of the intensity range
+		    specified in the header (item 7 below).
+
+    4.  Dimensions: the X, Y, and Z dimensions (number of voxels in each
+                direction) of the image.  It is assumed in Pablo's display
+                controls that the Z direction is the "axial" direction.
+                Making Z correspond to the coronal or sagittal directions may
+                be confusing to the user.  If any of the dimension values is
+                negative, the image will be flipped along that axis, and the
+                dimension will be made positive.  This feature is provided as
+                an aid in the handling of unusual cases and is not expected to
+                be used often.
+
+    5.  Inter-voxel spacing: the distance between slices taken in the X, Y,
+                and Z directions, respectively.  Alternatively, this can be
+                thought of as the sizes of each voxel.  Any appropriate units
+                may be used, but the same units must be used for all three
+                values.  The Y and Z spacings may be negative to indicate that
+                the axis is flipped.  Since Pablo considers an axial system
+                using positive-valued inter-voxel spacings to be right handed,
+                making any one of the axial spacings negative will imply that
+                the input image has a left-handed coordinate system.  This will
+                change the orientation of the image on the screen with respect
+                to that axis and cause the corresponding image-slice slider to
+                be reversed.
+
+    6.  Origin:  The X, Y, and Z coordinates, respectively, of the origin, the
+                first voxel of the image file.  The origin is considered to be
+                in the center of the voxel.  The units of these values must be
+                the same as used for the inter-voxel spacing.  Changing a value
+                of the origin will shift correspondingly the values reported
+                by the image-slice slider.
+
+    7.  Intensity range: the minimum and maximum voxel values, respectively.
+                If either of these is 99999, the actual value used will be
+                calculated from the voxels.  Values outside the actual range
+                of intensities may be used to reduce the range of displayed
+                intensities.  Binary images produced by pablo will have an
+		intensity range of [0, 65535].
+
+A space character must separate each of the values in the header, except
+for the newlines delimiting the extension record from the rest of the header.
+
+Following a version 0 header, there is either a single space or tab character.
+If a space is used, the voxels will be expected to be uncompressed.  A tab
+indicates that the voxels are compressed (using the zlib compression library,
+the basis for the gzip program).  The format for compressed pixels is not
+described here, since it is only expected to be produced by running Pablo.
+
+For version 1 or later headers, the intensity range is followed by another
+space-delimited field, the compression code, and then two newlines.  The
+compression code is a single character to indicate the compression method.
+This will be 'Z' if the zlib compression is used and 'u' if the image is not
+compressed.
+
+The file next contains either raw voxels or their compressed equivalent, as
+determined by the preceding character.  Raw voxels are represented by 16-bit
+quantities, as described below.  The voxels are stored using binary output in
+the byte order indicated in the header.  They are written in row-major order,
+so that X moves fastest and Z moves slowest.  The first voxel stored has
+coordinate (0, 0, 0).
+
+The 16-bits used to store voxels may be interpreted in two ways, depending on
+how the high-order bit is interpreted.  If the intensity range is specified
+in the header, the high-order bit may be a data bit or it may be a sign bit,
+depending on the specified range.  For example, a range of [0, 65535] means
+all 16 bits contain data stored as unsigned shorts.  However, the range
+[-1024, 3071] means the high-order bit is the sign and the data is stored
+as shorts.  If either or both of the intensity extrema are absent, then the
+voxels a considered to be unsigned shorts for the calculation of the absent
+extrema.  Note that Pablo remaps all images it reads by use of the intensity
+extrema provided or which it calculates.
+

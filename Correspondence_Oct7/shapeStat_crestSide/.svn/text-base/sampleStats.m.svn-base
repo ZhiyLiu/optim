@@ -1,0 +1,59 @@
+function sampleStats(stats, header, count, eigenCount, outfilePath, prefix)
+%
+% function sampleStats( stats, header, count, eigenCount, outfilePath )
+%
+% Generates "count" samples from the statistics and saves it under
+% outfilePath. The files are named as ${header.figName}.fr$count.m3d
+%
+% If eigenCount is 0 or less, then all the eigen values are used.
+%
+% Returns: nothing
+%
+
+if( exist(outfilePath, 'dir') ~= 7 )
+	mkdir(outfilePath);
+end
+
+if( eigenCount <= 0 || eigenCount > numel(stats.EVs) )
+	eigenCount	= numel(stats.EVs);
+end
+
+meanAtoms = stats.Mean;
+PCs = stats.PCs;
+
+coeffs	= [randn([count,eigenCount]), zeros([count, numel(stats.EVs) - eigenCount] ) ];
+
+fid	= fopen([ outfilePath filesep 'coeffs.txt'], 'w+');
+
+moveToCenter= false;
+
+for i = 1:count
+	fprintf(fid, '%3.0f', i );
+	mahal	= 0;
+	for c = 1:eigenCount
+		fprintf(fid, '\t%7.4f', coeffs(i,c) );
+		%% FIXME: Ok how was mahalanobis distance computed?
+		mahal	= mahal + coeffs(i,c)*coeffs(i,c);
+	end
+	fprintf(fid, '\t%8.4f\n', mahal );
+
+	coeffs(i,:) = coeffs(i,:) .* sqrt(stats.EVs);
+    hatMreps = makeMrep(coeffs(i,:)', meanAtoms, PCs);
+
+    if (moveToCenter)
+        for j=1:numel(hatMreps)
+            prim	= hatMreps{j};
+            prim	= set(prim, 'pos', get(prim, 'pos') + 0.5);
+            hatMreps{j}	= prim;
+        end
+    end
+	
+    filename = fullfile(outfilePath, [prefix sprintf('.sample%03d', i) '.m3d']);
+    writeM3d(filename, header, -1, hatMreps);
+
+%    filename = fullfile(outfilePath, [sprintf('pat%03d-', i) header.figNames{1} '-coefs.txt']);
+%    writeCoefs(coeffs(i,:)', {filename});
+end
+fclose(fid);
+
+return

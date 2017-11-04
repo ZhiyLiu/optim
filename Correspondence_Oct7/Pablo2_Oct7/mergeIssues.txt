@@ -1,0 +1,130 @@
+These are the issues that arose when Binary Pablo was merged into regular
+Pablo.  A.G. Gash, 1 Dec 05.
+
+1.  The includes for fcntl.h and ctype.h in utility.cpp aren't needed
+	in Solaris.  Check Linux.
+
+2.  The ifdef BINARY in m3d/utility.cpp can be removed after Image3D.*
+	are corrected.
+
+3.  Gregg should make sure the changes involving searchDir at the start of
+	ConjugateGradientMethod::performIteration() are OK for Binary Pablo.
+
+4.  I assumed that the registry-gst.* files in paul_code were junk.
+
+5.  In Registry::readFromFile(), Gregg had put the error message
+	"INFO: optional registry file missing: " in place of "No input file."
+	A substitution may be needed when the exception that is thrown is
+	processed.
+
+6.  Gregg had changed the ControlFile class to have a constructor that
+	took an actual file pathname.  I've added a function for this to
+	the .h file, but not yet implemented it.
+
+7.  For reference, the following names were added to enum control_keys_t
+	in ControlParms.h since Binary Pablo was started:
+		BYUOutputCoords
+		ConvertImageFormat
+		DisplayModelUnits
+		DisplayRangeUnits
+		DrawBoundary
+		ImageFormat
+		ImagePrefsSubEditorWindow_X
+		ImagePrefsSubEditorWindow_Y
+		MatchSurfaces_Open
+		MatchSurfaces_X
+		MatchSurfaces_Y
+		OptVisualizerWindow_Open
+		OptVisualizerWindow_X
+		OptVisualizerWindow_Y
+		PCADeformWindow_X
+		PCADeformWindow_Y
+		PGADeformWindow_Open
+		PGADeformWindow_X
+		PGADeformWindow_Y
+		ScaleImages
+		SimTransformMatrix
+		SimTransformSeparate
+		TilesColor_B
+		TilesColor_G
+		TilesColor_R
+
+8.  Can the two versions of GeodesicSym::atomSquareDistance() be merged?
+	Note also that there is a bug for which a fixup has been installed.
+	The underlying reason for this should be researched and eliminated.
+
+9.  A few lines in ConjugateGradient could not be changed to the new version
+	without badly changing the test runs' output.  Probably, the #ifdef
+	BINARY blocks in ConjugateGradient.cpp should be removed.  Josh Levy
+	has looked at the one involving boundsFunction and said it should be
+	like in regular Pablo.
+10. With the new Image3D class, the world in .m3d files has changed.
+
+11. The new Binary Pablo exports tilesets differently from the old version,
+	which makes the tileset files to not compare.  This is because of
+	several reasons.  First, the old code wrote out duplicate vertices,
+	while the new one does not.  Second, there may be slight differences
+	in the world coordinates of vertices written into BYU files.  However,
+	the old code appeared to not work correctly, in that it would not remap
+	the tilesets back to model coordinates.  Therefore, I opted to simply
+	discard the original tileset/BYU code.
+AGG: P3dView::setCenterOfRotation() need to be replaced.
+
+12. The original Binary Pablo renders mmy.m3d as if it were a landmark, not a
+	small figure.
+
+13. I've assumed that the use of the ScaleImages preference does not compromise
+	the execution of Binary Pablo.  It was originally absent.
+
+14. The example binary images don't display with regular Pablo, when the image
+	max intensity roller is near 0.
+
+15. The problem with the fileExists() function in utility.h is that it is needed
+	by registry.cpp, which is in paul_code, and thus cannot have it.  I left
+	registry.cpp unchanged.
+
+16. I re-enabled writing timestamp into world part of m3d files.  They are
+	not read by anything, but just for information.
+
+17. Should the "Use Windowed Intensities" button on the optimizer window be
+	hidden in Binary Pablo?  At present, I've made it visible.
+
+18. I fully replaced match/*/SimpleMaskFile.*.  The only significant difference
+	was that (row, col) have been changed to two tau values.  Joshua Stough
+	indicated that this was the right thing to do.  This caused a minor,
+	one-line change in Mask.cpp.
+
+19. Similarly, I replaced match/*/TemplateProfiles.*, which Joshua agreed with.
+	No othe changes were required as a consequence.
+
+20. There are two questions remaining to be resolved in ImageResample.cpp.
+	Look for 'AGG'.
+
+21. File register/src/M3DSimilarityElongationProblem.cpp is really two files
+	in one.
+
+22. Model files written by Binary Pablo have a different format than in
+	regular Pablo, because of the handling of landmarks.  This difference
+	should be eliminated as soon as possible.
+
+23. The "Binary image" button on the Optimizer Control Window should be made
+	to run the new Binary Pablo in regular Pablo.
+
+24. Snapshot() was not intended to be a general image output routine.
+	The uses of it in Binary Pablo should be eliminated.
+
+25. M3DObjectFile writes the image file name and its mod time into the world
+	block of the m3d file.  Binary Pablo omits this by not passing the
+	filename in from P3DControl.  Why?  Also, the PGA data is never saved,
+	because the last argument of M3DObjectFile::write() is omitted in the
+	call from P3DControl.  Should this be?
+
+26. Binary Pablo does not have P3DControl::handPlacementTransform.  Should it?
+
+27. A couple of code simplifications may be possible in
+	M3DSimilarityPGAProblem.cpp.
+
+28. The get*Distance() functions in ImageDistanceMap were significantly
+	different in v.14 than in regular Pablo.  At least one of them may
+	need to be changed.
+

@@ -1,0 +1,33 @@
+Text File Description
+
+Every file contains columns of values, every column represents a single-figure m-rep object
+
+The first two entries in every column are the number of rows and columns in the grid of the medial sheet.
+Eg. In our data we have 3 rows and 8 columns
+
+The rest of the entries are: <All position values> followed by <All radii values> followed by <All unit spoke direction values>
+
+If there are (n_rows, n_cols) in the medial grid, then the following would be the numbers:
+
+n_end_atoms = 2 * n_rows  + 2 * (n_cols-2)	= 18 (this case)
+
+n_std_atoms = n_rows * n_cols - n_end_atoms	= 6  (this case)
+
+n_total_positions 	= 3 * ( n_end_atoms + n_std_atoms ) 	= 72
+
+n_total_radii		= 3 * n_end_atoms + 2 * n_std_atoms 	= 66
+
+n_total_unit_spokes	= 9 * n_end_atoms + 6 * n_std_atoms 	= 198
+
+So, in one column vector, 	in [2+1, 2+72], 				there are position values
+							in [2+72+1, 2+72+66], 			there are radii values
+							in [2+72+66+1, 2+72+66+198], 	there are unit spoke direction values
+							
+The information for all atoms is written in a row-major order, that is: (0,0), (0,1), (0,2), (1,0), (1,1), (1,2) ... (7,2)
+
+So, while reading in the atoms, if (i,j) is the atom number, it is an end atom if i = 0 or i = 7, or j = 0 or j = 2
+
+For the end atoms, the radii are written in the order (r_1, r_2, r_end) and the unit spokes are also written in the same order
+
+		
+		

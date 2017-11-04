@@ -1,0 +1,272 @@
+README - FLTK Virtual Widgets
+-----------------------------
+
+    FLTK Virtual Styles, List, Table, and Complex Table Widgets
+
+    Copyright 1999 by Larry Charlton and others
+
+    Thanks to Joesph Robertson for corrections and code submissions
+
+    Thanks to everyone who inquired, requested features or provided
+    critical feedback.
+
+    Thanks to Michael Sweet for providing the FLTK Widget
+    Contribution Kit, it made creating this package easy.
+
+    Thanks to Bill Spatzik for allowing me to "borrow" :) the top level
+    makefile from FLTK for this project.
+
+    Special thanks to all the FLTK developers that are
+    providing this great toolkit.
+
+BUILDING AND INSTALLING WIDGETS UNDER UNIX
+    Build and install FLTK 2.0 cvs
+
+    make
+
+    If everthing went okay, you should now have the library "libflvw.a"
+    in the lib directory and the two example programs "testlist" and
+    "testtable" in the test directory.
+
+    Optionally you may install the library
+
+    make install
+
+    The default install directory will be /usr/local.  If you want
+    to change it, you will need to run configure manually.
+
+    Enjoy
+
+BUILDING AND INSTALLING WIDGETS UNDER OTHER OS's
+    Windows:
+      BC++ 5.02 I am including both 2.0 cvs and 1.x production ide files.
+          Required defines:
+            SET BCROOT=path to borland installation
+            SET FLTK=path to 1.x production fltk
+            SET FLTKCVS=path to 2.0 cvs fltk
+
+          My settings look like the following
+            SET BCROOT=C:\Win32\Bc5
+            SET FLTK=D:\Fltk-1.0.6
+            SET FLTKCVS=D:\Fltk-cvs
+
+      Visual C++ Joseph Robertson has supplied C++ make files
+
+    Other environments/platforms
+      If you supply the make files, I will include them.
+
+REPORTING BUGS
+    To report a bug or request an enhancement to the widgets
+    send an email to "lcharlto@mail.coin.missouri.edu".  Please
+    include FLTK in the subject line.  You may also submit
+    corrections and where appropriate I will include them in
+    the distribution.  For FLTK questions please use the fltk
+    mailing list at "fltk@easysw.com".
+
+LICENSING
+    The widgets come with complete free source code. The widgets
+    require FLTK and are available under the terms of the GNU
+    Library General Public License.
+
+VIRTUAL STYLE
+    Flv_Style
+
+    Features
+        Handles drawing alignment, background/foreground colors
+          font, font size, frame style, locked (not editable),
+          resizable properties, as well as height and width for rows
+          and columns.
+        Values may be defined or undefined
+
+VIRTUAL STYLE LIST
+    Flv_Style_List
+
+    Features
+        Random and sequential access methods
+        Uses a form of sparse arrays to conserve memory
+
+VIRTUAL LIST WIDGET
+    Flv_List
+
+    Description
+        Scrollable list
+
+    Features
+        Supports optional row headers and/or footers
+        Optional horizontal and vertical scroll bars
+        Dynamic row heights as well as styled row heights
+        Trickle down style information (Global and row)
+          Alignment, background color, font name, font size,
+          foreground color, frame style, height, width,
+          resizable, edit locked
+        Optional row grids
+        Optional selectable range
+        Optional Row resizing w/mosue in full grid
+        Dynamic or settable rows per page
+        No data stored in widget
+        Supports ~2 billion rows
+        Absolute row references
+        For text values draw_row is trivial to implement
+
+    To do
+        Row based editing
+        Validation
+
+    row -1 is defined as the row header
+    row -2 is defined as the row footer
+    row -3 is defined as the widget title/caption
+
+    Note: using this widget requires inheriting from it and
+    defining draw_row, and possible row_height/handle functions.
+    For a simple example of using the virtual list widget see
+    the testlist.cxx source file.  Below is a sample class
+    definition you can use.
+
+    class Flv_List_Child : public Flv_List
+    {
+    public:
+      Flv_List_Child( int X, int Y, int W, int H, const char *l=0 ) :
+        Flv_List(X,Y,W,H,l) {};
+      virtual void draw_row( int R, int Offset, int X, int Y, int W, int H );
+      int handle(int event);
+      virtual int row_height( int r );
+      virtual int row_height( int r, int n );
+    };
+
+    Example draw row:
+      void Flv_List_Child::draw_cell( int R, int Offset, int X, int Y, int W, int H )
+      {
+        Flv_Style s;
+        Fl_Align a = FL_ALIGN_CLIP;
+
+        get_style(R,s);
+        if (!s.align_defined())
+          a |= FL_ALIGN_LEFT;
+        else
+          a |= s.align();
+        Flv_List::draw_cell(R,Offset,X,Y,W,H);
+        fl_draw(get_value(R), X-Offset, Y+1, W-2, H-2, a );
+      }
+
+    * You write char *get_value(int R, int C)
+
+VIRTUAL TABLE WIDGET
+    Flv_Table (requires Flv_List)
+
+    Description
+        Table/Grid widget
+
+    Features
+        Supports optional row/column headers/footers
+        Optional horizontal and vertical scroll bars
+            (Never/Always/Automatic)
+        Dynamic and styled row heights/column widths
+        Trickle down style information (Global, row, col, cell)
+          Alignment, background color, font name, font size,
+          foreground color, frame style, height, width,
+          resizable, edit locked
+        Optional selectable cell range
+        Optional row and/or column grids
+        Dynamic or settable rows per page
+        Optional Row/Col resizing w/mouse either in headers only
+          or in full grid
+        Current cell or row selection
+          (Row selection acts like list w/columns)
+        No data stored in widget
+        Supports ~2 billion rows and columns
+        Absolute cell references (row, column)
+        For text values draw_cell is trivial to implement
+
+    To do:
+        Editing
+        Validation
+        Range selection
+
+    row -1 is defined as the row header
+    row -2 is defined as the row footer
+    row -3 is defined as the widget title/caption
+    col -1 is defined as the column header
+    col -2 is defined as the column footer
+
+    Note: using this widget requires inheriting from it and
+    defining draw_row, and possibly col_width/row_height/handle
+    functions.  For a simple example of using the virtual list
+    widget see the testtable.cxx source file.  Below is a sample
+    class  definition you can use.
+
+    class Fl_VirtualTable_Child : public Flv_Table
+    {
+    public:
+      Fl_VirtualTable_Child( int X, int Y, int W, int H, const char *l=0 );
+      ~Fl_VirtualTable_Child();
+
+      virtual void draw_cell( int R, int C, int Offset, int X, int Y, int W, int H );
+      virtual int col_width(int c);           //  Get column width
+      virtual int col_width(int c, int n);    //  Set column width
+      virtual int row_height( int r );        //  Get row height
+      virtual int row_height( int r, int n ); //  Set row height
+      int handle(int event);
+      virtual void draw_row( int R, int Offset, int X, int Y, int W, int H );
+    };
+
+    Example draw cell:
+      void Flv_Table_Child::draw_cell( int R, int C, int Offset,
+                                        int X, int Y, int W, int H )
+      {
+        Flv_Style s;
+        Fl_Align a = FL_ALIGN_CLIP;
+
+        get_style(R,C,s);
+        if (!s.align_defined())
+          a |= FL_ALIGN_LEFT;
+        else
+          a |= s.align();
+        Flv_List::draw_cell(R,C,Offset,X,Y,W,H);
+        fl_draw(get_value(R,C), X-Offset, Y+1, W-2, H-2, a );
+      }
+
+    * You write char *get_value(int R, int C)
+
+    Note: you probbably won't want to override draw_row.  Also the
+    Set version for col_width and row_height will only be meaningful
+    if you override them and do something with them.  Currently there
+    is only one value for the entire table.
+
+VIRTUAL COMPLEX TABLE WIDGET
+    Flv_CTable (requires Flv_Table)
+
+    Nothing implemented at this time
+
+    Description
+        Table/Grid widget
+
+    Features
+        Supports optional row and/or column headers and/or footers
+        Optional horizontal and vertical scroll bars
+            (Never/Always/Automatic)
+        Dynamic and styled row heights/column widths
+        Trickle down style information (Global, row, col, cell)
+          Alignment, background color, font name, font size,
+          foreground color, frame style, height, width,
+          resizable, edit locked
+        Optional row/column grids
+        Optional selectable range
+        Dynamic or settable rows per page
+        cell or row selection (Row selection acts like list w/columns)
+        No data stored in widget
+        Supports ~2 billion rows and columns
+        Absolute cell references (row, column)
+        For text values draw_cell is trivial to implement
+        Cells can be placed arbitrarily within a row.
+        Optional Row/Col resizing either in headers only or in full grid
+
+    To do:
+        Everything :)
+
+    row -1 is defined as the row header
+    row -2 is defined as the row footer
+    row -3 is defined as the widget title/caption
+    col -1 is defined as the column header
+    col -2 is defined as the column footer
+
+

@@ -1,0 +1,17 @@
+% Sample configuration file to train single figure m-rep 
+
+statsFlag = 1;      % Don't change (1-symmetric rep, 0-lie group rep (old))
+bReadData = 1;      % Don't change
+alignMode = 0;      % 0-Skip alignment, 1-translation, 2-translation & rotation
+
+PGAflag  = 0;       % 0-object complecx, 1-object by object
+bOutput  = 1;       % 1-output files, 0-don't output files
+bCleanUp = 1;       % Set to delete temporary variables
+weightMode = 0;     % 0-mean radius,  1-half of mean radius
+
+figNames = [Fig1];
+dependency.figureOrder = [];          
+dependency.depAtomTree = {};                      
+
+nComp = [10];              
+nProj = [5];              

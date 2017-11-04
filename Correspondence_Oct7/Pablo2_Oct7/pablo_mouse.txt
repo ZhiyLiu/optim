@@ -1,0 +1,118 @@
+
+                        Use of the Mouse in Pablo
+
+
+This document describes the mouse actions possible in the 3D Model Window.
+
+Either a two-button or three-button mouse may be used, but with a different
+combination of keys to acheive a particular effect.  With a two-button mouse
+the middle mouse button must be simulated by using the Shift key with the
+left mouse button.  A 3-button mouse allows use of the Ctrl and Alt keys for
+some actions.  Some features cannot be accessed with a two-button mouse.
+
+Either the usual right-handed mouse or a left-handed mouse may be used.  If
+using the mouse on the left, some guidance produced by Pablo will be incorrect,
+unless the mouse setting on the Other tab of the Preferences Editor has been
+set to indicate that a left-handed mouse is being used.
+
+An atom is always in one of four states:
+    1. Selected, indicated by an enlargement of the atom in the Model Window.
+    2. Marked, indicated by a change of color of the atom.
+    3. Selected and Marked, which combines the effects of 1 and 2.
+    4. None of the above.
+
+Multiple atoms may be selected by dragging a box around them, as described
+below.  Selecting an atom that is already selected will unselect it, and an
+atom can be unmarked by "marking" it a second time.  Only one atom at a time
+can be marked; any number of atoms can be selected.  An entire figure is
+considered selected, if all of its atoms are selected.  It is considered marked
+if one of its atoms is marked.
+
+Tiles are divided into tile-figures, each of which was loaded from a
+separate tile file or generated independently. For instance, "Export Model
+To BYU Tiles..." will generate a tile-figure per model figure.
+Each tile-figure may be individually selected for editing; see the checkboxes in:
+  Display Control -> TileSet -> Move Figs
+Additionally, the Mobile checkbox must be enabled to edit tile-figures.
+
+Two kinds of actions are controlled by dragging the mouse:
+- editing actions change the objects, and
+- view actions affect the camera only.
+The editing actions operate on atoms or figures that are selected or marked,
+and on tile-figures when in "Mobile" mode, according to the rules below.
+
+The following table summarizes the actions available with each combination
+of the keys and mouse buttons.  If a left-handed mouse is used, then the
+words "right" and "left" must be exchanged.
+
+
+Left Button Actions
+===================
+
+No keys         Rotate the view using a "trackball" model.
+Ctrl            Select an atom or figure by clicking or dragging.
+Alt             Rotate the selected atoms and mobile tile-figures
+                  about the center of the view using the trackball
+                  interaction model.
+Shift           Translate the view.  (Middle-button substitute).
+Shift + Alt     Translate the selected atoms.  (Middle-button substitute).
+Shift + Alt     Pirouette (rotate) each mobile tile-figure about it's
+                  own axis. (3-button mouse only).
+
+
+Middle Button Actions
+=====================
+
+No keys         Translate the view using the "trackball" model.
+Ctrl            No action.
+Alt             Translate the selected atoms within the view plane.
+Shift           No action.
+Shift + Alt     No action.
+
+
+Right Button Actions
+====================
+
+No keys         Scale the view; dragging down zooms in.
+Ctrl            Mark an atom by clicking.
+Alt             Scale the selected atoms and their inter-atom distances about
+                  their center of gravity; drag down to enlarge.
+Shift           No action.
+Shift + Alt     Scale the selected atoms, in place. Does not affect tile-figures
+
+
+
+Visual Summary: cut-n-print
+===========================
+
+               Left       Middle      Right
+               Button     Button      Button
+               ---------  ----------  ---------
+ 
++--- 3-BUTTON MOUSE
+| 
+| No keys      Rotate     Translate   Scale
+|              View       View        View
+| 
+| Ctrl         Select       --        Mark
+|              Atom(s)                Atom
+| 
+| Alt          Rotate     Translate   Scale
+|              Objects    Objects     Objects
+| 
+| Shift + Alt  Pirouette    --          --
+|              Tiles
+| 
++--
+
++--- 2-BUTTON MOUSE changes these actions
+| 
+| 
+| Shift        Translate    --          --
+|              View
+| 
+| Shift + Alt  Translate    --          --
+|              Objects
+| 
++--
+

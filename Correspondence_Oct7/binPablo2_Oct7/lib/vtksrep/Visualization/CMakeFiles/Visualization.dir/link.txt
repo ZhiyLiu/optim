@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../../libVisualization.a  CMakeFiles/Visualization.dir/visualizesrepsurface.cpp.o CMakeFiles/Visualization.dir/visualizeobject.cpp.o CMakeFiles/Visualization.dir/visualizecrest.cpp.o
+/usr/bin/ranlib ../../../libVisualization.a

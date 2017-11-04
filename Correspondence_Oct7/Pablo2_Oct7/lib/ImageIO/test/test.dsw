@@ -1,0 +1,123 @@
+Microsoft Developer Studio Workspace File, Format Version 6.00
+# WARNING: DO NOT EDIT OR DELETE THIS WORKSPACE FILE!
+
+###############################################################################
+
+Project: "test"=".\test.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+    Begin Project Dependency
+    Project_Dep_Name ImageIO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ioGipl
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ioMeta
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ioPlanIm
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ioUtilities
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name mixedImageIO
+    End Project Dependency
+    Begin Project Dependency
+    Project_Dep_Name ioAnalyze
+    End Project Dependency
+}}}
+
+###############################################################################
+
+Project: "ioAnalyze"="..\Analyze\visualc\ioAnalyze.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ioGipl"="..\Gipl\visualc\ioGipl.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ioMeta"="..\Meta\visualc\ioMeta.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ioPlanIm"="..\PlanIm\visualc\ioPlanIm.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "ioUtilities"="..\utilities\visualc\ioUtilities.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+Project: "mixedImageIO"="..\visualc\mixedImageIO.dsp" - Package Owner=<4>
+
+Package=<5>
+{{{
+}}}
+
+Package=<4>
+{{{
+}}}
+
+###############################################################################
+
+
+Global:
+
+Package=<5>
+{{{
+}}}
+
+Package=<3>
+{{{
+}}}
+
+###############################################################################
+

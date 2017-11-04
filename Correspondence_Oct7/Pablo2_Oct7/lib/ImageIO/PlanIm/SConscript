@@ -1,0 +1,14 @@
+# vim: set syn=python si ts=4:
+
+import os
+import re
+
+Import('env')
+### Project specific code ###
+
+sources	= [ file for file in os.listdir(str(Dir('#'+env['project'])) + os.sep + 'src') if re.search('^.*[.]cpp$',file) ]
+
+### Common portion ends ###
+
+env['makeLibrary']( env, sources, env['prefix'], 'PlanIm', env['suffix'] )
+

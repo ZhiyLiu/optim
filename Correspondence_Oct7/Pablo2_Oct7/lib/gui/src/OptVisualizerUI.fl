@@ -1,0 +1,354 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0107 
+header_name {.h} 
+code_name {.cpp}
+declblock {\#if OPTIMIZATION_VISUALIZER} {open selected after {\#endif}
+} {
+  class OptVisualizerUI {open
+  } {
+    decl {friend class OptVisualizerCallback;} {public
+    }
+    Function {OptVisualizerUI(int win_X, int win_Y)} {open
+    } {
+      code {control = NULL;
+    newChart = NULL;
+    plot3DWrapper = NULL;
+    callback = new OptVisualizerCallback(this);} {}
+      Fl_Window optVisualizerUIWindow {
+        label {Optimization Visualizer}
+        callback {callback->hide();} open
+        xywh {611 135 956 482} type Double box THIN_DOWN_BOX align 16 hide
+        code0 {\#include "OptVisualizerUIDefs.h"}
+        code1 {optVisualizerUIWindow->resize(win_X, win_Y, 956, 482);}
+        class movable_Fl_Window
+      } {
+        Fl_Group chartGrp {
+          xywh {5 5 390 270} box FLAT_BOX color 43 align 16
+        } {}
+        Fl_Value_Output minOut {
+          label {Min:}
+          xywh {425 240 48 25} box FLAT_BOX labelsize 12 step 0.001
+        }
+        Fl_Value_Output maxOut {
+          label {Max:}
+          xywh {425 15 48 25} box FLAT_BOX labelsize 12 step 0.001
+        }
+        Fl_Group chartControlsGrp {
+          xywh {15 390 260 80}
+        } {
+          Fl_Choice categoryChooser {
+            label Category
+            callback {callback->categoryChange();}
+            xywh {105 395 95 20} down_box BORDER_BOX labelsize 12
+          } {
+            MenuItem {} {
+              label Gradient
+              xywh {10 10 100 20}
+            }
+            MenuItem {} {
+              label Search
+              xywh {20 20 100 20}
+            }
+            MenuItem {} {
+              label Exploration
+              xywh {30 30 100 20}
+            }
+            MenuItem {} {
+              label Projection
+              xywh {30 30 100 20}
+            }
+          }
+          Fl_Value_Input minIndexInput {
+            label {Min Index}
+            callback {callback->rangeChange();}
+            xywh {29 426 48 25} labelsize 12 align 2 maximum 1e+06 step 1
+          }
+          Fl_Value_Input maxIndexInput {
+            label {Max Index}
+            callback {callback->rangeChange();}
+            xywh {125 426 48 25} labelsize 12 align 2 minimum -1 maximum 1e+06 step 1 value -1
+          }
+          Fl_Value_Input stepSizeInput {
+            label {Step Size}
+            callback {callback->rangeChange();}
+            xywh {217 426 48 25} labelsize 12 align 2 minimum 1 maximum 100 step 1 value 17
+          }
+        }
+        Fl_Group {} {
+          label {Selection Mode}
+          xywh {305 373 90 102} box ENGRAVED_BOX labelfont 1 labelsize 12 align 5
+        } {
+          Fl_Round_Button {} {
+            label Origin
+            callback {callback->selectionModeChange(0)}
+            xywh {305 373 25 25} type Radio down_box ROUND_DOWN_BOX value 1 labelsize 12 align 8
+          }
+          Fl_Round_Button {} {
+            label {Grad->X1}
+            callback {callback->selectionModeChange(1)}
+            xywh {305 388 25 25} type Radio down_box ROUND_DOWN_BOX labelsize 12 align 8
+          }
+          Fl_Round_Button {} {
+            label {Grad->X2}
+            callback {callback->selectionModeChange(2)}
+            xywh {305 403 25 25} type Radio down_box ROUND_DOWN_BOX labelsize 12 align 8
+          }
+          Fl_Round_Button {} {
+            label {Diff->X1}
+            callback {callback->selectionModeChange(3)}
+            xywh {305 418 25 25} type Radio down_box ROUND_DOWN_BOX labelsize 12 align 8
+          }
+          Fl_Round_Button {} {
+            label {Diff->X2}
+            callback {callback->selectionModeChange(4)}
+            xywh {305 433 25 25} type Radio down_box ROUND_DOWN_BOX labelsize 12 align 8
+          }
+          Fl_Round_Button {} {
+            label Projection
+            callback {callback->selectionModeChange(5)}
+            xywh {305 448 25 25} type Radio down_box ROUND_DOWN_BOX labelsize 12 align 8
+          }
+        }
+        Fl_Group plotGrp {
+          xywh {480 5 470 370} box FLAT_BOX color 43 align 16
+        } {}
+        Fl_Button updateBtn {
+          label Update
+          callback {callback->updateBtnPressed();}
+          xywh {660 380 80 20} labelsize 12 align 16
+        }
+        Fl_Button resetBtn {
+          label Reset
+          callback {callback->resetBtnPressed();}
+          xywh {660 405 80 20} labelsize 12 align 16
+        }
+        Fl_Round_Button scalingBtn {
+          label Scaling
+          callback {callback->scalingBtnPressed();}
+          xywh {660 430 80 20} down_box ROUND_DOWN_BOX color 1 labelsize 12
+        }
+        Fl_Round_Button showModelBtn {
+          label {Show Model}
+          callback {callback->showModelBtnPressed();}
+          xywh {660 455 90 20} down_box ROUND_DOWN_BOX color 1 labelsize 12
+        }
+        Fl_Input originInput {
+          label Origin
+          xywh {475 380 178 20} labelsize 12
+        }
+        Fl_Input projectionInput {
+          label Projection
+          callback {callback->projectionChanged()}
+          xywh {475 455 178 20} labelsize 12 when 8
+        }
+        Fl_Value_Input x1MagnitudeInput {
+          label X1
+          xywh {475 405 35 20} labelsize 12 maximum 100 step 0.01 value 1
+        }
+        Fl_Input x1Input {
+          label {*}
+          xywh {520 405 133 20}
+        }
+        Fl_Value_Input x2MagnitudeInput {
+          label X2
+          xywh {475 430 35 20} labelsize 12 maximum 100 step 0.01 value 1
+        }
+        Fl_Input x2Input {
+          label {*}
+          xywh {520 430 133 20}
+        }
+        Fl_Choice surfaceChoice {
+          label Surface
+          callback {callback->surfaceChanged();}
+          xywh {815 380 130 20} down_box BORDER_BOX labelsize 12
+        } {
+          MenuItem {} {
+            label Geometry
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label {Image Match}
+            xywh {10 10 100 20}
+          }
+          MenuItem {} {
+            label {Objective Function}
+            xywh {20 20 100 20}
+          }
+          MenuItem {} {
+            label {Param 1}
+            xywh {20 20 100 20}
+          }
+          MenuItem {} {
+            label {Param 2}
+            xywh {30 30 100 20}
+          }
+          MenuItem {} {
+            label {Param 3}
+            xywh {40 40 100 20}
+          }
+        }
+        Fl_Choice commandChoice {
+          label Command
+          callback {callback->commandChanged();}
+          xywh {815 405 130 20} down_box BORDER_BOX labelsize 12
+        } {
+          MenuItem {} {
+            label {---}
+            xywh {0 0 100 20}
+          }
+          MenuItem {} {
+            label {Selection->Center}
+            xywh {10 10 100 20}
+          }
+          MenuItem {} {
+            label {Reseed Optimizer}
+            xywh {20 20 100 20}
+          }
+          MenuItem {} {
+            label {Export Model}
+            xywh {30 30 100 20}
+          }
+          MenuItem {} {
+            label {Export Data}
+            xywh {40 40 100 20}
+          }
+          MenuItem {} {
+            label {Load as Center}
+            xywh {0 0 31 21}
+          }
+          MenuItem {} {
+            label {Load as X1}
+            xywh {0 0 31 21}
+          }
+          MenuItem {} {
+            label {Load as X2}
+            xywh {0 0 31 21}
+          }
+          MenuItem {} {
+            label {Load as Projection}
+            xywh {0 0 31 21}
+          }
+        }
+        Fl_Group arrowGrp {
+          xywh {825 425 90 55}
+        } {
+          Fl_Button upArrowBtn {
+            label {@-18UpArrow}
+            callback {callback->arrowBtnPressed(0);}
+            xywh {860 430 20 20} labelsize 12 labelcolor 1 align 16
+          }
+          Fl_Button downArrowBtn {
+            label {@-12UpArrow}
+            callback {callback->arrowBtnPressed(1);}
+            xywh {860 455 20 20} labelsize 12 labelcolor 1 align 16
+          }
+          Fl_Button leftArrowBtn {
+            label {@-14UpArrow}
+            callback {callback->arrowBtnPressed(2);}
+            xywh {835 440 20 20} labelsize 12 labelcolor 1 align 16
+          }
+          Fl_Button rightArrowBrn {
+            label {@-1UpArrow}
+            callback {callback->arrowBtnPressed(3);}
+            xywh {885 440 20 20} labelsize 12 labelcolor 1 align 16
+          }
+        }
+        Fl_Group attribute {
+          xywh {5 275 395 110}
+        } {
+          Fl_Button attributeBtn0 {
+            callback {callback->toggleAttribute(0)}
+            xywh {15 280 110 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn1 {
+            callback {callback->toggleAttribute(1)}
+            xywh {135 280 110 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn2 {
+            callback {callback->toggleAttribute(2)}
+            xywh {255 280 130 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn3 {
+            callback {callback->toggleAttribute(3)}
+            xywh {15 305 110 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn4 {
+            callback {callback->toggleAttribute(4)}
+            xywh {135 305 110 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn5 {
+            callback {callback->toggleAttribute(5)}
+            xywh {255 305 130 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn6 {
+            callback {callback->toggleAttribute(6)}
+            xywh {15 330 110 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn7 {
+            callback {callback->toggleAttribute(7)}
+            xywh {135 330 110 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn8 {
+            callback {callback->toggleAttribute(8)}
+            xywh {255 330 130 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn9 {
+            callback {callback->toggleAttribute(9)}
+            xywh {15 355 110 25} type Toggle labelsize 10 align 16
+          }
+          Fl_Button attributeBtn10 {
+            callback {callback->toggleAttribute(10)}
+            xywh {135 355 110 25} type Toggle labelsize 10 align 16
+          }
+        }
+      }
+    }
+    Function {make_chart(P3DControl * ctrl)} {} {
+      code {newChart = new LogManagerChart(chartGrp->x() + 1, chartGrp->y() + 1,
+	chartGrp->w() - 2, chartGrp->h() - 2);
+    newChart->setControl(ctrl);} {}
+    }
+    Function {make_plot(P3DControl * ctrl, P3DUserInterfaceCallback * uic)} {} {
+      code {plot3DWrapper = new Plot3DWindowWrapper(plotGrp->x() + 1, plotGrp->y() + 1,
+	plotGrp->w() - 2, plotGrp->h() - 2, ctrl);
+    plot3DWrapper->setP3DUIC(uic);
+    plot3DWrapper->setWidgets(originInput, x1Input, x1MagnitudeInput, x2Input,
+	x2MagnitudeInput, projectionInput);
+    newChart->setThreedView(plot3DWrapper);} {}
+    }
+    Function {updateChart()} {} {
+      code {if (newChart) {
+	newChart->calculateBounds();
+	maxOut->value(newChart->maxY);
+	maxOut->redraw();
+	minOut->value(newChart->minY);
+	minOut->redraw();
+	newChart->redraw();
+    }} {}
+    }
+    Function {setP3DUserInterface(P3DUserInterface * ui)} {} {
+      code {p3dUI = ui;} {}
+    }
+    Function {show()} {} {
+      code {if (callback)
+	callback->show();} {}
+    }
+    Function {hide()} {} {
+      code {if (callback)
+	callback->hide();} {}
+    }
+    Function {init()} {} {
+      code {if (! callback)
+	return;
+     if (! p3dUI)
+	return;
+     callback->init();} {}
+    }
+    decl {OptVisualizerCallback * callback;} {public
+    }
+    decl {LogManagerChart * newChart;} {}
+    decl {Plot3DWindowWrapper * plot3DWrapper;} {}
+    decl {P3DUserInterface * p3dUI;} {}
+    decl {P3DControl * control;} {}
+  }
+} 

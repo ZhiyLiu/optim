@@ -1,0 +1,62 @@
+% ==================================================================================
+% Function [d] = mrepDist(M1, M2, R)
+%
+%   Computes the distance between mreps M1 and M2, using M2's radii (default)
+%       or R if provided.  
+%   Inputs:     M1, M2 are cell arrays of primitives
+%               R (optional) radii info
+%   Output:     scalar difference square.  
+%
+%    M1, M2 : nA(#Atoms of an m-rep) x 1
+%             A cell array (atoms can be either tube or quad or combined)
+%    R(varargin{1}) : nA x 1 array of real number (should be mean radii)
+%
+%    The difference is computed in symmetric representation.
+% ----------------------------------------------------------------------------------
+
+function [d] = mrepDist(M1, M2, varargin)
+
+if (size(M1, 1) ~= size(M2, 1) )
+    error('Cannot compute the distance between m-reps of different number of atoms');
+end
+
+if nargin > 3
+    error('Wrong number of input arguments');
+end
+
+if nargin == 3
+    R = varargin{1};
+end
+
+nAtoms = length(M1);
+
+if ~(isa(M2{1}, 'QuadSymPrimitive') ||  isa(M2{1}, 'TubeSymPrimitive') || ...
+          isa(M2{1}, 'QuadPrimitive') ||  isa(M2{1}, 'TubePrimitive') || ...
+          isa(M2{1}, 'SrepQuadPrimitive'))
+    error('Unsupported representation.');
+end
+
+lieRep = ( isa(M2{1}, 'QuadPrimitive') ||  isa(M2{1}, 'TubePrimitive') );
+
+d = 0;
+for i=1:nAtoms
+    if (lieRep)
+        sM2 = convert2Sym(M2{i});
+        sM1 = convert2Sym(M1{i});
+    else
+        sM2 = M2{i};
+        sM1 = M1{i};
+    end
+    symPrim = Log(sM2 - sM1); % Log(atom difference)
+    if nargin < 3
+        r = get(sM2, 'r');
+        if isequal(size(r), [1 3])
+            r = geomean(abs(r(1:2)));
+        end
+    else
+        r = R(i);
+    end
+    symPrim = adjustUnits(symPrim, r , 1, 0);
+    d = d + squaredNorm(symPrim);
+end
+    

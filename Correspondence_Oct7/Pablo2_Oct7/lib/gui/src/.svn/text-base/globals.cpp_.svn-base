@@ -1,0 +1,39 @@
+/**
+ * This file should contain *all* the global variables used by Pablo
+ * The initialization of destruction of these global variables should happen
+ * via the functions listed below.
+ *
+ * This greatly reduces the pain when one is creating shared libraries.
+ * For now this will only be linked with the swig modules; eventually
+ * pablo should link to this.
+ *
+ *  - Rohit Saboo
+ */
+
+#include <stdlib.h>
+#include "ControlParms.h"
+
+ControlParms * globalControl	= NULL;
+int globalVerbosity				= 0;
+
+static bool initialized			= false;
+
+
+/**
+ * The initializer and destructor functions:
+ */
+
+void __attribute__ ((constructor)) initialize(void)
+{
+	globalVerbosity	= 1;
+	globalControl	= new ControlParms();
+	initialized	= true;
+}
+
+void __attribute__ ((destructor)) destroy(void)
+{
+	delete globalControl;
+	globalControl	= NULL;
+	initialized	= false;
+}
+

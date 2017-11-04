@@ -1,0 +1,110 @@
+This is Gregg Tracton's list from v.14 of Binary Pablo.
+--------------------------
+
+TO DO
+
+'x' means Done. # means priority. 'I' means ignore
+
+SWITCHES
+x add landmark model switch (-bpLandmark)
+x add tile output (-bpTile)
+4 add log output (-bpLog)
+
+GENERAL
+x write byu file in image/world coords
+x clean up registry to include this:
+  - MOM: add rotate, translate, scale options
+  - Rigid Figure weights: image match, landmark
+  - PGA weights: image match, maha distance (PGA/eigenCoords), landmark
+  - set ref model
+  - atom weights: image match, ref model, atom nei, landmark
+  - NO multiple atom stages
+x when reading model, enable PGA if stat's present
+
+GUI
+- atom stage: change 3 sliders to
+  - 4 type-in weights (image match, ref model, atom nei, landmark)
+  - 4 response 
+  - 4 weighted responses
+  - sum of weighted responses
+- figure stage: change 3 sliders to
+  - 2 type-in weights (Image match, landmark)
+  - 2 responses
+  - 2 weighted responses
+  - sum of weighted responses
+- MOM: add rotate, translate, scale options?
+x write config file from current GUI values
+
+
+WEB SITE
+x new bin pablo page
+  - titan/colab/Private/Pablo/dow.html
+x package's purpose
+- snaps (DK)
+- lists package's requirements (windows, matlab, cygwin?)
+x pablo logo (indicates binary pablo)
+x user guide available with or without install package
+x split ImMap into it's own page, with purpose, download pointer
+x install package - license req'd
+
+INSTALL PACKAGE
+- splash screen includes:
+  x colab logo
+  - contact info
+x queries user as to which dir to install into
+x jeong's script needs a NAME! (singleObjStat, multiObjStat)
+x documents (doc dir)
+  x word -> pdf format
+  - the pipeline: [bin_pablo -> jeong script] -> byu scale
+  x bin_pablo USER GUIDE
+	x purpose
+	x usage
+    x building a shape model (once)
+	x building a landmark model
+	  x from an image
+	  x from existing shape data
+	x image conversion issues
+	  x coordinate system, intensity range
+	  x image compression (raw3z files)
+	x config file contents
+  - jeong's matlab script
+	- purpose
+	- usage
+	- how to write a bootstrap script
+  - byu_scale
+	- purpose
+	- usage
+  x file formats
+  x description of sample data files
+  x release notes: changes, known bugs
+x libs (lib dir)
+  x MSVC 6 DLLs: do not dump into system dir!
+- programs (bin dir)
+  x pablo.exe (no symbols, DEBUG version!)
+  - jeong's matlab scripts (supports bootstrap)
+    - can these read data files from another dir?
+  x byu_scale.exe (more byu utilites?)
+- sample files
+  x pablo demo (data/sample1 dir)
+    x input
+      x registry/config file
+      x binary image
+	  - mean model (w/ pga stat's)
+	  x landmark model
+	  x distance map?
+    x output
+      x fitted model
+	  x log file
+  - jeong script demo (data/sample2 dir)
+	- input
+	  - multiple models
+	- output
+	  - mean model
+	  - PGA stats (are these contained in the model?)
+
+USABILITY: after 11-jan
+- read/write raw3.gz
+- regMerge:
+  i insert stat's into model - needed?
+  - insert landmarks into shape model
+- utility to convert image to raw3

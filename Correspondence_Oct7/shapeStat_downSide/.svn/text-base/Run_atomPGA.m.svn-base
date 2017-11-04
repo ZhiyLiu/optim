@@ -1,0 +1,27 @@
+%produce the multiscale PGA file: meanM3dModel + figPGA + atomPGA
+%xiaoxiao Liu      july, 2007
+
+% function run_atomPGA(dataType,diffModelDir,skipNo,outputDir,alignReferenceFileDir,alignReferenceFilePrefix,alignReferenceFilePost,meanRadiiFileName,saveasPrefix,paramFile)
+function Run_atomPGA(workingDir, m3dDir, fileFilter, paramFile, ...
+    savePrefix, skipNumber, meanRadiiFileName, figPGAFileName)
+    
+%clc;
+%close all;   
+% addpath('d:/svn/matlab/shapeStat');
+% addpath('d:/svn/matlab/shapeStat/ios');
+% addpath('d:/svn/matlab/shapeStat/mrepProjection');
+% addpath('d:/svn/matlab/shapeStat/functions');
+
+% savePrefix = calculatePGA_atom_by_atom(outputDir,diffModelDir, m3dPost, paramFile,skipNo,saveasPrefix,meanRadiiFileName);
+calculateAtomPGA(workingDir, m3dDir, fileFilter, paramFile,savePrefix, skipNumber,meanRadiiFileName);
+
+
+allPGAfileName=[workingDir,'/MEAN.',savePrefix,'.m3d']; %finally results are stored in this file
+atomPGAfileName = [workingDir,'/',savePrefix,'-SymMean.txt'];
+
+fopen(allPGAfileName,'w');
+
+extendFileAbyB(allPGAfileName,figPGAFileName);
+extendFileAbyB(allPGAfileName,atomPGAfileName);
+
+

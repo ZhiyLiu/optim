@@ -1,0 +1,59 @@
+
+The pablo program can take the following typed commands, which may
+be entered into any window, unless otherwise indicated.
+
+command  window    effect
+-------  ------    ------
+
+CTRL-n             Discards any existing model so a new one may be built.
+
+CTRL-l             Opens a window for loading a model file.
+
+CTRL-i             Opens a window for loading an image file.
+
+CTRL-t             Opens a window for loading an tile set file.
+
+CTRL-q             Quit the program.  The user will be allowed to save the
+                   model file if it is modified.
+
+CTRL-s             Saves the current model to the existing model file.
+                   If no file has previously been specified, opens a
+                   window for specifying the file name.
+
+CTRL-z             Undo the previous action.
+
+CTRL-y             Redo the previous action that was undone.
+
+CTRL-a             Opens a window for specifying a new figure.
+
+CTRL-r             Remove any figure for which all atoms are selected.
+
+CTRL-k             Opens a window for specifying and applying landmarks.
+
+CTRL-p             Opens a window for editing properties of the figures.
+
+SHIFT-CTRL-s       Selects all atoms of all figures in the model.
+
+SHIFT-CTRL-d       Deselects all atoms in the model.
+
+SHIFT-CTRL-t       Toggles the current selection of all atoms in the model.
+
+CTRL-c             Copies the selected figures.
+
+CTRL-v             Copies the copied figures.
+
+CTRL-m             Mirrors each selected figures about its center point.
+
+CTRL-o             Opens the Optimizer Control window.
+
+a        Model     Same as pressing the A button: switch to axial view.
+
+s        Model     Same as pressing the S button: switch to sagital view.
+
+c        Model     Same as pressing the C button: switch to coronal view.
+
+x        Model     Same as pressing the Center button: centers the model.
+
+FUNC-12  Model     Causes the figure and atom number to be displayed for
+                   the atom on which the pointer is placed.
+

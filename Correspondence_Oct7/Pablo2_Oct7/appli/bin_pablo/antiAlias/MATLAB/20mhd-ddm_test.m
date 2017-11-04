@@ -1,0 +1,1 @@
+antiAliasWrapper( '20mhd-ddm/3000_041202_3d_hippocampusLeft_c_pp-ddm.mhd', '20mhd-antiAlias/3000_041202_3d_hippocampusLeft_c_pp-ddm', [0.5 0.5] );

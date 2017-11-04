@@ -1,0 +1,2105 @@
+#include <iostream>
+#include "M3DQuadInterpolater.h"   //Jared's interpolation method to up and down spoke.
+#include "calregularityfeatures.h"
+#include "toolsfunc.h"
+#include <math.h>
+#include "visualization.h"
+
+using namespace std;
+
+calregularityfeatures::calregularityfeatures()
+{
+}
+
+calregularityfeatures::calregularityfeatures(M3DQuadFigure* curQuadFig, int interpolationLevel, int side, bool moved){
+    this->curQuadFig = curQuadFig;
+    this->rowNum = curQuadFig->getRowCount();
+    this->colNum = curQuadFig->getColumnCount();
+    this->quadNum = (rowNum-1)*(colNum-1);
+    this->interpolationLevel = interpolationLevel;
+    this->side = side;
+    this->step = pow((double)2, (double)interpolationLevel);
+    this->subQuadPointsNum = (step+1)*(step+1);
+
+    //initialize the subUs, subVs vector of all the subquads. Each srep has diff subUs, subVs vector.
+    if(moved){//use original primitive's u p r in the input m3d file.
+        getSubQuadsUVCoordinateNotUsingDeltaUV();
+    }
+    else   {//use new primitive's u p r by add deltaU & deltaV.
+        getSubQuadsUVCoordinateUsingDeltaUV();
+    }
+}
+
+
+calregularityfeatures::calregularityfeatures(M3DQuadFigure* shiftedQuadFig, int side, int rowNum, int colNum, int subQuadNum, int step,
+                                             DoubleVecVec subUs, DoubleVecVec subVs) {
+    this->rowNum = rowNum;
+    this->colNum = colNum;
+    this->quadNum = (rowNum-1)*(colNum-1);
+    this->side = side;
+    this->step = step;
+    this->subQuadPointsNum = (step+1)*(step+1);
+    this->subQuadNum = subQuadNum;
+
+    this->subUs = subUs;
+    this->subVs = subVs;
+
+    this->brhpi = (step+1)*(step) - 1;
+    this->brvpi = (step+1)*(step+1) - 2;
+
+    this->curQuadFig = shiftedQuadFig;
+}
+
+
+
+
+
+calregularityfeatures::~calregularityfeatures()
+{
+}
+
+
+
+/* give four points, return its area.
+ * the four points is given in u, v coordinate
+ * the quad is in counter clockwise
+ * u0, v0 is the up-left corner point; u1, v1 is the down-left corner point; u2, v2 is the up-right corner point;
+ * u3, v3 is the down-right corner point.
+ * quadtype: 0 means boundary area; 1 means skeletal area.
+ * side: 0 means up; 1 means down.
+*/
+double calregularityfeatures::calculatequadarea(double u0, double v0, double u1, double v1, double u2, double v2, double u3, double v3, int quadtype){
+
+    M3DQuadInterpolater *tpm = new M3DQuadInterpolater(curQuadFig);
+
+    //store the four points of a quad, each point is a 3D vector, which store the x, y, z coordinate of this point.
+    Vector3D point[4];
+
+    //quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+    switch(quadtype){
+        case 0:
+            //boundary quads(0)
+            point[0] = tpm->interpolateQuadSpoke(curQuadFig,u0,v0,side)->getB();
+            point[1] = tpm->interpolateQuadSpoke(curQuadFig,u1,v1,side)->getB();
+            point[2] = tpm->interpolateQuadSpoke(curQuadFig,u2,v2,side)->getB();
+            point[3] = tpm->interpolateQuadSpoke(curQuadFig,u3,v3,side)->getB();
+            break;
+        case 1:
+            //skeletal quads(1)
+            point[0] = tpm->interpolateQuadSpoke(curQuadFig,u0,v0,side)->getX();
+            point[1] = tpm->interpolateQuadSpoke(curQuadFig,u1,v1,side)->getX();
+            point[2] = tpm->interpolateQuadSpoke(curQuadFig,u2,v2,side)->getX();
+            point[3] = tpm->interpolateQuadSpoke(curQuadFig,u3,v3,side)->getX();
+            break;
+        default:
+            break;
+    }
+
+    //calculate the quad area. By divide the subquad into two triangles.
+    //the first method: diagonal of p0p2
+    double diagonalp0p2 = sqrt(pow(point[0].getX()-point[2].getX(), 2) + pow(point[0].getY()-point[2].getY(), 2) + pow(point[0].getZ()-point[2].getZ(), 2));
+    //the second method: diagonal of p1p3
+    double diagonalp1p3 = sqrt(pow(point[1].getX()-point[3].getX(), 2) + pow(point[1].getY()-point[3].getY(), 2) + pow(point[1].getZ()-point[3].getZ(), 2));
+
+    //the four sides of each sub-quad.
+    //left edge: p0p1
+    double p0p1 = sqrt(pow(point[0].getX()-point[1].getX(), 2) + pow(point[0].getY()-point[1].getY(), 2) + pow(point[0].getZ()-point[1].getZ(), 2));
+    //bottom edge: p1p2
+    double p1p2 = sqrt(pow(point[1].getX()-point[2].getX(), 2) + pow(point[1].getY()-point[2].getY(), 2) + pow(point[1].getZ()-point[2].getZ(), 2));
+    //right edge: p2p3
+    double p2p3 = sqrt(pow(point[2].getX()-point[3].getX(), 2) + pow(point[2].getY()-point[3].getY(), 2) + pow(point[2].getZ()-point[3].getZ(), 2));
+    //top edge: p0p3
+    double p0p3 = sqrt(pow(point[0].getX()-point[3].getX(), 2) + pow(point[0].getY()-point[3].getY(), 2) + pow(point[0].getZ()-point[3].getZ(), 2));
+
+    //calculate triangle area using Heron's formula
+    double s1 = (diagonalp0p2 + p0p1 + p1p2)/2; //half of the sum of three edges.
+    double s2 = (diagonalp0p2 + p0p3 + p2p3)/2;
+    double s3 = (diagonalp1p3 + p0p1 + p0p3)/2;
+    double s4 = (diagonalp1p3 + p1p2 + p2p3)/2;
+
+    //two triangle's area using the first method, diagonalp0p2
+    double size1 = sqrt(fabs(s1*(s1-p0p1)*(s1-p1p2)*(s1-diagonalp0p2)));
+    double size2 = sqrt(fabs(s2*(s2-p0p3)*(s2-p2p3)*(s2-diagonalp0p2)));
+    //two triangle's area using the second method, diagonalp1p3
+    double size3 = sqrt(fabs(s3*(s3-p0p1)*(s3-p0p3)*(s3-diagonalp1p3)));
+    double size4 = sqrt(fabs(s4*(s4-p1p2)*(s4-p2p3)*(s4-diagonalp1p3)));
+
+    delete tpm;
+    //the smaller one of the two method as the area for the sub-quad
+    return min(size1+size2, size3+size4);
+}
+
+
+
+bool calregularityfeatures::folded(Vector3D a, Vector3D b, Vector3D c, Vector3D d){
+
+    Vector3D Vab, Vac, Vad;
+    Vab.setX(b.getX()-a.getX());
+    Vab.setY(b.getY()-a.getY());
+    Vab.setZ(b.getZ()-a.getZ());
+
+    Vac.setX(c.getX()-a.getX());
+    Vac.setY(c.getY()-a.getY());
+    Vac.setZ(c.getZ()-a.getZ());
+
+    Vad.setX(d.getX()-a.getX());
+    Vad.setY(d.getY()-a.getY());
+    Vad.setZ(d.getZ()-a.getZ());
+
+    double x0, y0, z0, x1, y1, z1;
+    x0 = Vac.getX();
+    y0 = Vac.getY();
+    z0 = Vac.getZ();
+    x1 = Vad.getX();
+    y1 = Vad.getY();
+    z1 = Vad.getZ();
+    Vector3D crossProduct;
+    crossProduct.setX(y0*z1-y1*z0);
+    crossProduct.setY(z0*x1-z1*x0);
+    crossProduct.setZ(x0*y1-x1*y0);
+
+    double dotProduct = Vab.getX()*crossProduct.getX() + Vab.getY()*crossProduct.getY() + Vab.getZ()*crossProduct.getZ();
+
+    double V = dotProduct/6;
+
+    if(V<0){
+        cout<<"------------ has folded---------------the V is: "<<V<<endl;
+        return true;
+    }
+    else
+    {
+        cout<<"++++++++++++ no folded here+++++++++++the V is: "<<V<<endl;
+        return false;
+    }
+}
+
+
+
+
+/* Calculate the quad area by divide each of its subquads into two triangles.
+ * Input: Four points of a quad, each point contains the x, y, z coordinate.
+ * The four vetex point of the quad is in counter clockwise. whiche mean: point[0] is the top-left corner;
+ * point[1] is the bottom-left corner; point[2] is the bottom-right corner; point[3] is the top-right corner.
+ * There're two diagonal for each subquad, use each to calculate the sum of its two triangles. we can get two area,
+ * we want the smaller one as the area of this subquad.
+*/
+double calregularityfeatures::quadArea(Vector3D *point){
+    //the first method: diagonal of p0p2
+    double diagonalp0p2 = sqrt(pow(point[0].getX()-point[2].getX(), 2) + pow(point[0].getY()-point[2].getY(), 2) + pow(point[0].getZ()-point[2].getZ(), 2));
+    //the second method: diagonal of p1p3
+    double diagonalp1p3 = sqrt(pow(point[1].getX()-point[3].getX(), 2) + pow(point[1].getY()-point[3].getY(), 2) + pow(point[1].getZ()-point[3].getZ(), 2));
+
+    //the four sides of each sub-quad.
+    //left edge: p0p1
+    double p0p1 = sqrt(pow(point[0].getX()-point[1].getX(), 2) + pow(point[0].getY()-point[1].getY(), 2) + pow(point[0].getZ()-point[1].getZ(), 2));
+    //bottom edge: p1p2
+    double p1p2 = sqrt(pow(point[1].getX()-point[2].getX(), 2) + pow(point[1].getY()-point[2].getY(), 2) + pow(point[1].getZ()-point[2].getZ(), 2));
+    //right edge: p2p3
+    double p2p3 = sqrt(pow(point[2].getX()-point[3].getX(), 2) + pow(point[2].getY()-point[3].getY(), 2) + pow(point[2].getZ()-point[3].getZ(), 2));
+    //top edge: p0p3
+    double p0p3 = sqrt(pow(point[0].getX()-point[3].getX(), 2) + pow(point[0].getY()-point[3].getY(), 2) + pow(point[0].getZ()-point[3].getZ(), 2));
+
+    //calculate triangle area using Heron's formula
+    double s1 = (diagonalp0p2 + p0p1 + p1p2)/2; //half of the sum of three edges.
+    double s2 = (diagonalp0p2 + p0p3 + p2p3)/2;
+    double s3 = (diagonalp1p3 + p0p1 + p0p3)/2;
+    double s4 = (diagonalp1p3 + p1p2 + p2p3)/2;
+
+    //two triangle's area using the first method, diagonalp0p2
+    double size1 = sqrt(fabs(s1*(s1-p0p1)*(s1-p1p2)*(s1-diagonalp0p2)));
+    double size2 = sqrt(fabs(s2*(s2-p0p3)*(s2-p2p3)*(s2-diagonalp0p2)));
+
+    //two triangle's area using the second method, diagonalp1p3
+    double size3 = sqrt(fabs(s3*(s3-p0p1)*(s3-p0p3)*(s3-diagonalp1p3)));
+    double size4 = sqrt(fabs(s4*(s4-p1p2)*(s4-p2p3)*(s4-diagonalp1p3)));
+
+    //the smaller one of the two method as the area for the sub-quad
+    return min(size1+size2, size3+size4);
+}
+
+
+/* interpolate 3 new points between two given points, and return the 5 points in a array resultpoints.
+ * point1 is the left point, for example p0_u;
+ * point2 is the right point, for example p3_u.
+ * double (&resultpoints)[5] is a reference passing of an array of 5 doubles. Which can store the result to the main function.
+*/
+void calregularityfeatures::bilinearinterpolateoftwopoints(double point1, double point2, double (&resultpoints)[5]){
+    double stepdistance = (point2 - point1)/4;
+    //resultpoints is an array of 5 double.
+    resultpoints[0] = point1;
+    resultpoints[1] = point1 + stepdistance;
+    resultpoints[2] = point1 + stepdistance*2;
+    resultpoints[3] = point1 + stepdistance*3;
+    resultpoints[4] = point2;
+
+   /* cout<<"resultpoints[0] is: "<<resultpoints[0]<<endl;
+    cout<<"resultpoints[1] is: "<<resultpoints[1]<<endl;
+    cout<<"resultpoints[2] is: "<<resultpoints[2]<<endl;
+    cout<<"resultpoints[3] is: "<<resultpoints[3]<<endl;
+    cout<<"resultpoints[4] is: "<<resultpoints[4]<<endl;*/
+}
+
+
+
+/* Split a quad into 16 sub quads. By doing this to u and v seperately for each quad point.
+ * Return a double vector that store the 25 u or v coordinate of the point of the quad.
+ * p0, p1, p2, p3 is u or v coordinate of the four vertical point of the quad.
+ * first consider only the u coordinate, do bilinear interpolation to the row p0p3 and p1p2. Then the same with the v coordinate.
+ * it return the points in a column first order.
+ */
+vector<double> calregularityfeatures::splitquad(double p0, double p1, double p2, double p3){
+    //do bilinear interpolate to the row
+    //for the first row, p0p3
+    double firstrow[5];
+    bilinearinterpolateoftwopoints(p0, p3, firstrow);
+
+    //for the second row, p1p2
+    double secondrow[5];
+    bilinearinterpolateoftwopoints(p1, p2, secondrow);
+
+    //do bilinear interpolate to the coloum
+    double columntemp[5];
+    vector<double> quadpoints;  //store the final subquads corner points.
+
+    //loop each pair of points in firstrow[5] and secondrow[5].
+    for(unsigned i =0; i<5; i++){
+        //interpolate to each pair of column
+        bilinearinterpolateoftwopoints(firstrow[i], secondrow[i], columntemp);
+        //cout<<"firstrow"<< i<<" is: "<<firstrow[i]<<endl;
+        //cout<<"secondrow"<< i<<" is: "<<secondrow[i]<<endl;
+
+        //store the column's 5 points into vector quadpoints.
+        for(unsigned j=0; j<5; j++){
+            //cout<<"columntemp ["<<j<<"] is: "<<columntemp[j]<<endl;
+            quadpoints.push_back(columntemp[j]);
+        }
+    }
+
+    //the size of quadpoints is 25.
+    /*for(unsigned m =0; m<quadpoints.size();m++){
+        cout<<"quadpoints[" << m << "] is: "<<quadpoints[m]<<endl;
+    }*/
+
+    return quadpoints;
+}
+
+
+
+/* Return all the sub quads's u & v coordinate into vector subUs & subVs.
+ * The u, v is the moved value with deltaU and deltaV.
+ * subUs[q]: store the u coordinate of all the sub-quad of quad[q].
+ * subVs[q]: store the v coordinate of all the sub-quad of quad[q].
+*/
+void calregularityfeatures::getSubQuadsUVCoordinateUsingDeltaUV(){
+
+    int quadIndex = 0;
+
+    M3DQuadPrimitive* prim0;
+    vector<double> subquadpoint_v, subquadpoint_u;
+
+    for(unsigned i = 0; i < rowNum -1; i++){ //the row number of the quads. its 3.
+        for(unsigned j = 0; j < colNum -1; j++){//coloums, its 13.
+                subUs.push_back(VectorDoublePoints());
+                subVs.push_back(VectorDoublePoints());
+
+                //deltau[0]: left-top point; deltau[1]: left-bottom point; deltau[2]: right-bottom; deltau[3]: right-top
+                double deltau[4], deltav[4];
+
+                switch(side){
+                case 0: //top side
+                    //get the primitive's delta u, v
+                    //primitive[i][j]
+                    prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j));
+                    deltau[0] = prim0->getDeltaU0();
+                    deltav[0] = prim0->getDeltaV0();
+
+                    //primitive[i+1][j]
+                    prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j));
+                    deltau[1] = prim0->getDeltaU0();
+                    deltav[1] = prim0->getDeltaV0();
+
+                    //primitive[i+1][j+1]
+                    prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j+1));
+                    deltau[2] = prim0->getDeltaU0();
+                    deltav[2] = prim0->getDeltaV0();
+
+                    //primitive[i][j+1]
+                    prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j+1));
+                    deltau[3] = prim0->getDeltaU0();
+                    deltav[3] = prim0->getDeltaV0();
+                    //delete prim0;
+                    break;
+                case 1:  //down side
+                    //get the primitive's delta u, v
+                    //primitive[i][j]
+                    prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j));
+                    deltau[0] = prim0->getDeltaU1();
+                    deltav[0] = prim0->getDeltaV1();
+
+                    //primitive[i+1][j]
+                    prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j));
+                    deltau[1] = prim0->getDeltaU1();
+                    deltav[1] = prim0->getDeltaV1();
+
+                    //primitive[i+1][j+1]
+                    prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j+1));
+                    deltau[2] = prim0->getDeltaU1();
+                    deltav[2] = prim0->getDeltaV1();
+
+                    //primitive[i][j+1]
+                    prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j+1));
+                    deltau[3] = prim0->getDeltaU1();
+                    deltav[3] = prim0->getDeltaV1();
+                    //delete prim0;
+                    break;
+                default:
+                    break;
+                }
+
+                //four points of a quad with delta u, v. counter clockwise.
+                double quadpointsu[4], quadpointsv[4];
+                //left-top point
+                quadpointsu[0] = i + deltau[0];
+                quadpointsv[0] = j + deltav[0];
+                //left-bottom point
+                quadpointsu[1] = i + 1 + deltau[1];
+                quadpointsv[1] = j + deltav[1];
+                //right-bottom point
+                quadpointsu[2] = i + 1 + deltau[2];
+                quadpointsv[2] = j + 1 + deltav[2];
+                //right-top point
+                quadpointsu[3] = i + deltau[3];
+                quadpointsv[3] = j + 1 + deltav[3];
+
+                //given four points of a quad (p0, p1, p2, p3), split each side of the quad into 2^interpolationLevel sub-line.
+                //first, get the subquads's u coordinate, in column first order.
+                subquadpoint_u = tools.splitQuad(quadpointsu[0],quadpointsu[1],quadpointsu[2],quadpointsu[3], step);
+
+                //second, get the 25 subquads's v coordinate, in column first order.
+                subquadpoint_v = tools.splitQuad(quadpointsv[0],quadpointsv[1],quadpointsv[2],quadpointsv[3], step);
+
+                for(unsigned m =0; m<subquadpoint_u.size();m++){
+                    subUs[quadIndex].push_back(subquadpoint_u[m]);
+                    subVs[quadIndex].push_back(subquadpoint_v[m]);
+                    //cout<<"MSG from getSubQuadsUVCoordinateUsingDeltaUV: subUs["<<quadIndex<<"]---------m is: "<<m<<"---subquadpoint_u["<<m<<"] is: "<<subquadpoint_u[m]<<endl;
+                    //cout<<"MSG from getSubQuadsUVCoordinateUsingDeltaUV: subVs["<<quadIndex<<"]---------m is: "<<m<<"---subquadpoint_v["<<m<<"] is: "<<subquadpoint_v[m]<<endl;
+                }
+
+                quadIndex++;
+
+                subquadpoint_v.clear();
+                subquadpoint_u.clear();
+        }
+    }
+}
+
+
+
+
+/* Return all the sub quads's u & v coordinate into vector subUs & subVs.
+ * Without considering the deltaU and deltaV in the m3d file(because the primitive has already been moved
+ * and updated using them during write to m3d in privious steps).
+ * subUs[q]: store the u coordinate of all the sub-quad of quad[q].
+ * subVs[q]: store the v coordinate of all the sub-quad of quad[q].
+*/
+void calregularityfeatures::getSubQuadsUVCoordinateNotUsingDeltaUV(){
+
+    int quadIndex = 0;
+
+    vector<double> subquadpoint_v, subquadpoint_u;
+
+    for(unsigned i = 0; i < rowNum -1; i++){ //the row number of the quads. its 3.
+        for(unsigned j = 0; j < colNum -1; j++){//coloums, its 13.
+                subUs.push_back(VectorDoublePoints());
+                subVs.push_back(VectorDoublePoints());
+
+                //four points of a quad with delta u, v. counter clockwise.
+                //double quadpointsu[4], quadpointsv[4];
+                vector<double> quadpointsu, quadpointsv;
+                quadpointsv.resize(4);
+                quadpointsu.resize(4);
+                //left-top point
+                quadpointsu[0] = i;
+                quadpointsv[0] = j;
+                //left-bottom point
+                quadpointsu[1] = i + 1;
+                quadpointsv[1] = j;
+                //right-bottom point
+                quadpointsu[2] = i + 1;
+                quadpointsv[2] = j + 1;
+                //right-top point
+                quadpointsu[3] = i;
+                quadpointsv[3] = j + 1;
+
+                //given four points of a quad (p0, p1, p2, p3), split each side of the quad into 2^interpolationLevel sub-line.
+                //first, get the subquads's u coordinate, in column first order.
+                subquadpoint_u = tools.splitQuad(quadpointsu[0],quadpointsu[1],quadpointsu[2],quadpointsu[3], step);
+
+                //second, get the 25 subquads's v coordinate, in column first order.
+                subquadpoint_v = tools.splitQuad(quadpointsv[0],quadpointsv[1],quadpointsv[2],quadpointsv[3], step);
+
+                for(unsigned m =0; m<subquadpoint_u.size();m++){
+                    subUs[quadIndex].push_back(subquadpoint_u[m]);
+                    subVs[quadIndex].push_back(subquadpoint_v[m]);
+
+                    //cout<<"MSG from getSubQuadsUVCoordinateNotUsingDeltaUV: subUs["<<quadIndex<<"]---------m is: "<<m<<"---subquadpoint_u["<<m<<"] is: "<<subquadpoint_u[m]<<endl;
+                    //cout<<"MSG from getSubQuadsUVCoordinateNotUsingDeltaUV: subVs["<<quadIndex<<"]---------m is: "<<m<<"---subquadpoint_v["<<m<<"] is: "<<subquadpoint_v[m]<<endl;
+                }
+
+                quadIndex++;
+
+                subquadpoint_v.clear();
+                subquadpoint_u.clear();
+        }
+    }
+}
+
+
+
+
+
+
+/* Get all the sub-quad position by given u v coordinates.
+ * quadtype: boundary quads(0), skeletal quads(1).
+*/
+vtkSmartPointer< vtkPoints > calregularityfeatures::getSubQuadsPosition(int quadtype){
+
+    vtkSmartPointer< vtkPoints > hubpos = vtkSmartPointer< vtkPoints >::New();    
+
+    M3DQuadInterpolater standsideintp;    
+
+    //store the all the position of points for a quad, each point is a 3D vector, which store the x, y, z coordinate of this point.
+    Vector3D point;
+
+    for(int i =0; i<quadNum; i++){
+        //cout<<"Currently drawing quad: "<<i<<endl;
+        for(int j =0; j<subQuadPointsNum;j++){
+            M3DSpoke newspoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][j], subVs[i][j], side);
+            //quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+            switch(quadtype){
+                case 0:
+                    //boundary quads(0)                    
+                    point = newspoke.getB();
+                    //cout<<"point position: x is: "<<point.getX()<<" y is: "<<point.getY()<<" z is: "<<point.getZ()<<endl;
+                    hubpos->InsertNextPoint(point.getX(),point.getY(),point.getZ());
+
+                    //test only...
+                    /*cout<<"---------curQuadFig row number is: "<<curQuadFig->getRowCount()<<"column num is: "<<curQuadFig->getColumnCount()<<endl;
+                    cout<<"---------side is: "<<side<<endl;
+                    point = tpm->interpolateQuadSpoke(curQuadFig, 0, 2, side)->getB();
+                    cout<<"----the interpolated position at (0, 2) is: -----"<<point<<endl;
+                    point = tpm->interpolateQuadSpoke(curQuadFig, 0.25, 7.5, side)->getB();
+                    cout<<"----the interpolated position at (0.25, 7.5) is: -----"<<point<<endl;
+                    point = tpm->interpolateQuadSpoke(curQuadFig, 1.75, 4, side)->getB();
+                    cout<<"----the interpolated position at (1.75, 4) is: -----"<<point<<endl;*/
+
+                    break;
+                case 1:
+                    //skeletal quads(1)
+                    point = newspoke.getX();
+                    hubpos->InsertNextPoint(point.getX(),point.getY(),point.getZ());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    return hubpos;
+}
+
+
+
+/* Get all the sub-quad position by given u v coordinates.
+ * quadtype: boundary quads(0), skeletal quads(1).
+*/
+vtkSmartPointer< vtkPoints > calregularityfeatures::getSubQuadsVertex(int quadtype){
+
+    vtkSmartPointer< vtkPoints > hubpos = vtkSmartPointer< vtkPoints >::New();
+
+    M3DQuadInterpolater standsideintp;
+
+    //store the all the position of points for a quad, each point is a 3D vector, which store the x, y, z coordinate of this point.
+    Vector3D point;
+
+    for(int i =0; i<quadNum; i++){
+        //cout<<"Currently drawing quad: "<<i<<endl;
+        for(int j =0; j<subQuadPointsNum;j++){
+            M3DSpoke newspoke = standsideintp.interpolateQuadSpoke2(curQuadFig, subUs[i][j], subVs[i][j], side);
+            //quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+            switch(quadtype){
+                case 0:
+                    //boundary quads(0)
+                    point = newspoke.getB();
+                    //cout<<"point position: x is: "<<point.getX()<<" y is: "<<point.getY()<<" z is: "<<point.getZ()<<endl;
+                    hubpos->InsertNextPoint(point.getX(),point.getY(),point.getZ());
+
+                    //test only...
+                    /*cout<<"---------curQuadFig row number is: "<<curQuadFig->getRowCount()<<"column num is: "<<curQuadFig->getColumnCount()<<endl;
+                    cout<<"---------side is: "<<side<<endl;
+                    point = tpm->interpolateQuadSpoke(curQuadFig, 0, 2, side)->getB();
+                    cout<<"----the interpolated position at (0, 2) is: -----"<<point<<endl;
+                    point = tpm->interpolateQuadSpoke(curQuadFig, 0.25, 7.5, side)->getB();
+                    cout<<"----the interpolated position at (0.25, 7.5) is: -----"<<point<<endl;
+                    point = tpm->interpolateQuadSpoke(curQuadFig, 1.75, 4, side)->getB();
+                    cout<<"----the interpolated position at (1.75, 4) is: -----"<<point<<endl;*/
+
+                    break;
+                case 1:
+                    //skeletal quads(1)
+                    point = newspoke.getX();
+                    hubpos->InsertNextPoint(point.getX(),point.getY(),point.getZ());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    return hubpos;
+}
+
+
+
+/* Calculate the areas of the quads(cells) of a srep.
+ * First get the u, v coordinate, and do bilinear interpolation to it to get 16 subquads index in u, v coordinate. And then
+ * using these u,v and Jared's interpolation method to get the spoke information.
+ * pointsIds: stores the 3 rows 13 columns srep atom index.
+ * side: 0 means up spoke interpolate, 1 means down spoke interpolate.
+ * quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+*/
+vector<double> calregularityfeatures::calculateAreas_method1(int quadtype){
+    //for(unsigned num=0;num<24;num++){   // there are 24 quads in my srepfig.
+    int quadindex = 0;
+
+    //store the sum of 16 subquad to get the quad area.
+    vector<double> quadarea;
+    vector<double> subsubUs;
+    vector<double> subsubVs;
+    vector<double> subquadareas;//store the 16 subquads area.
+    //subquadareas.push_back(0);
+
+        for(unsigned i = 0; i <rowNum -1; i++){ //the row number of the quads. its 3.
+            for(unsigned j = 0; j <colNum -1; j++){//coloums, its 13.
+               //locate space for a new value, initial it to 0 ?
+               quadarea.push_back(0);
+
+               //four points of a quad with delta u, v. counter clockwise.
+               double quadpointsu[4], quadpointsv[4];
+               //left-top point
+               quadpointsu[0] = i ;
+               quadpointsv[0] = j;
+               //left-bottom point
+               quadpointsu[1] = i + 1;
+               quadpointsv[1] = j;
+               //right-bottom point
+               quadpointsu[2] = i + 1 ;
+               quadpointsv[2] = j + 1 ;
+               //right-top point
+               quadpointsu[3] = i ;
+               quadpointsv[3] = j + 1 ;
+
+               //given four points(p0, p1, p2, p3), split the quad into 16 pieces.
+               //first, get the 25 subquads's u coordinate, in column first order.
+               subsubUs = splitquad(quadpointsu[0],quadpointsu[1],quadpointsu[2],quadpointsu[3]);
+               /*for(unsigned k=0; k<subsubUs.size();k++){
+                   cout<<"The function output quad points ["<<k<<"] is:"<<subsubUs[k]<<endl;
+               }*/
+               //cout<<"subsubUs.size() is : "<<subsubUs.size()<<endl;
+
+               //second, get the 25 subquads's v coordinate, in column first order.
+               subsubVs = splitquad(quadpointsv[0],quadpointsv[1],quadpointsv[2],quadpointsv[3]);
+               //cout<<"subsubVs.size() is : "<<subsubVs.size()<<endl;
+
+              /*using correspondence u, v to get the specific spoke information, and calculate the 16 subquads ares.
+                *subsubVs and subsubUs are column vector. which can be list as 5 rows, 5 columns gird. m is the left-top point,
+                *m+1 is the left-bottom point, m+6 is the right-bottom point, m+5 is the right-top point.
+                *Loop each element.*/
+               double lefttopu0, lefttopv0, leftbottomu1, leftbottomv1, rightbottomu2, rightbottomv2, righttopu3, righttopv3;
+
+               //m is the 16 left-top corner point of each subquad.
+               for(unsigned m = 0; m<subsubUs.size()-5;m++){ // minus 5 because do not need the right column elements in the loop.
+                   //cout<<"------------------ m is : "<<m<<endl;
+                   double subquadarea;
+                   //do not need the bottom row points.
+                   if(m%5!=4){
+                       lefttopu0 = subsubUs[m];
+                       lefttopv0 = subsubVs[m];
+                       leftbottomu1 = subsubUs[m+1];
+                       leftbottomv1 = subsubVs[m+1];
+                       rightbottomu2 = subsubUs[m+6];
+                       rightbottomv2 = subsubVs[m+6];
+                       righttopu3 = subsubUs[m+5];
+                       righttopv3 = subsubVs[m+5];
+
+                       //each of the 16 subquads area.
+                       subquadarea = calculatequadarea(lefttopu0, lefttopv0, leftbottomu1, leftbottomv1, rightbottomu2, rightbottomv2, righttopu3, righttopv3,quadtype);
+
+                       //put all the 16 sub area into a vector subquadareas.
+                       subquadareas.push_back(subquadarea);
+                   }
+               }
+
+               //cout<<"subquadareas size is:" << subquadareas.size() <<endl; //the output is 16.
+
+               //sum the 16 subquads areas.
+               for(unsigned n =0; n<subquadareas.size();n++){
+                   quadarea[quadindex] += subquadareas[n];
+                   //cout<<"subquadareas["<<n<<"] is: "<<subquadareas[n]<<endl;
+               }
+               //cout<<"quadarea["<<quadindex<<"] is: "<<quadarea[quadindex]<<endl;
+
+               //clear vector for next quad.
+               subquadareas.clear();
+
+               quadindex++;
+            }
+        }
+
+        //sum the 24 quads
+        //for(unsigned p =0; p < quadarea.size();p++){
+        //    sreparea += quadarea[p];
+        //}
+
+    return quadarea;
+}
+
+
+/* Draw the frame of quad by quad index.
+*/
+void calregularityfeatures::drawFrameOfQuadByIndex(vtkSmartPointer< vtkPoints > hubpos, int quadIndex, double quadColor[3],
+                                  vtkSmartPointer<vtkRenderer> renderer){
+
+    vtkSmartPointer<vtkCellArray> cellarraypointsline = vtkSmartPointer<vtkCellArray>::New();
+    vtkSmartPointer<vtkPolyData> polypointsline = vtkSmartPointer<vtkPolyData>::New();
+
+    vtkSmartPointer< vtkPoints > hubPosNewSequence = vtkSmartPointer< vtkPoints >::New();
+
+    //draw vertical lines.
+    for(int n=0; n<step+1;n++){
+        int pointIndex =0;
+        for(int k = 0; k<step&&pointIndex<subQuadPointsNum-1;k++){
+            pointIndex = n + k*(step+1);
+            double p[3];
+            vtkSmartPointer<vtkLine> medialsheetline = vtkSmartPointer<vtkLine>::New();
+
+            hubpos->GetPoint(quadIndex*subQuadPointsNum+pointIndex,p);
+            vtkIdType id0 = hubPosNewSequence->InsertNextPoint(p[0],p[1],p[2]);
+            //cout<<"p1: "<<p[0]<<"  "<<p[1]<<"  "<<p[2]<<endl;
+
+            hubpos->GetPoint(quadIndex*subQuadPointsNum+pointIndex+step+1,p);
+            vtkIdType id1 = hubPosNewSequence->InsertNextPoint(p[0],p[1],p[2]);
+            //cout<<"p2: "<<p[0]<<"  "<<p[1]<<"  "<<p[2]<<endl;
+
+            medialsheetline->GetPointIds()->SetId(0, id0);
+            medialsheetline->GetPointIds()->SetId(1, id1);
+
+            cellarraypointsline->InsertNextCell(medialsheetline);
+        }
+    }
+
+    //draw horizonal lines.
+    for(int n=0; n<step+1;n++){
+        for(int k = 0; k<step;k++){
+            int currentpoint = k + n*(step+1);
+            double p[3];
+            vtkSmartPointer<vtkLine> medialsheetline = vtkSmartPointer<vtkLine>::New();
+
+            hubpos->GetPoint(quadIndex*subQuadPointsNum+currentpoint,p);
+            vtkIdType id0 = hubPosNewSequence->InsertNextPoint(p[0],p[1],p[2]);
+
+            hubpos->GetPoint(quadIndex*subQuadPointsNum+currentpoint+1,p);
+            vtkIdType id1 = hubPosNewSequence->InsertNextPoint(p[0],p[1],p[2]);
+
+            medialsheetline->GetPointIds()->SetId(0, id0);
+            medialsheetline->GetPointIds()->SetId(1, id1);
+
+            cellarraypointsline->InsertNextCell(medialsheetline);
+        }
+    }
+
+    polypointsline->SetPoints(hubPosNewSequence);
+    polypointsline->SetLines(cellarraypointsline);
+
+    vtkSmartPointer<vtkPolyDataMapper> pointlinemapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    pointlinemapper->SetInput(polypointsline);
+    vtkSmartPointer<vtkActor>  lineactor = vtkActor::New();
+    lineactor->SetMapper(pointlinemapper);
+    lineactor->GetProperty()->SetLineWidth(1);
+    lineactor->GetProperty()->SetColor(quadColor);// (0,1,0) is green, (1,1,1) is white.
+    renderer->AddActor(lineactor);
+
+}
+
+
+vector<double> calregularityfeatures::calculateAreas_method2(vtkSmartPointer< vtkPoints > hubpos){
+    int subQuadNum = step*step;
+
+    vector<double> subquadareas;//store the 16 subquads area.
+    //store the sum of 16 subquad to get the quad area.
+    vector<double> quadarea;
+
+    Vector3D points[4];
+    double subquadarea;
+/*    cout<<"subQuadPointsNum----------------:"<<subQuadPointsNum<<endl;
+    vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+    renderer->SetBackground(1,1,1);
+    vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
+    renderWindow->AddRenderer(renderer);
+    vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+    renderWindowInteractor->SetRenderWindow(renderWindow);
+
+    double quadColor[3] = {1,0.5,0};
+    for(int i =0;i<16;i++){
+       cout<<"Drawing quad: "<<i<<endl;
+        quadColor[0] =0.05*i;
+        quadColor[1] =0.3+0.05*i;
+        quadColor[2] =1;
+        drawFrameOfQuadByIndex(hubpos,i,quadColor,renderer);
+    }
+
+    renderWindow->Render();
+    renderWindowInteractor->Start();
+*/
+
+    //for each quad
+    for(int n=0; n<quadNum;n++){        
+        //locate space for a new value, initial it to 0.
+        quadarea.push_back(0);
+
+        //For each subQuadNum's sub-quad.
+        for(int m=0; m<step;m++){
+            for(int k = 0; k<step;k++){
+                int currentpoint = k + m*(step+1);
+                double p[3];
+                //Left-top point.
+                hubpos->GetPoint(n*subQuadPointsNum+currentpoint,p);  //m
+                points[0].setX(p[0]);
+                points[0].setY(p[1]);
+                points[0].setZ(p[2]);
+                //Bottom side
+                hubpos->GetPoint(n*subQuadPointsNum+currentpoint+1,p);//m+1
+                points[1].setX(p[0]);
+                points[1].setY(p[1]);
+                points[1].setZ(p[2]);
+                //Right side
+                hubpos->GetPoint(n*subQuadPointsNum+currentpoint+1+step+1,p);//m+6
+                points[2].setX(p[0]);
+                points[2].setY(p[1]);
+                points[2].setZ(p[2]);
+                //Top side
+                hubpos->GetPoint(n*subQuadPointsNum+currentpoint+step+1,p);//m+5
+                points[3].setX(p[0]);
+                points[3].setY(p[1]);
+                points[3].setZ(p[2]);
+
+                //cout<<"quadNum: "<<n<<" quad-left-top-point: "<<currentpoint<<endl;
+                //cout<<"The four points of the quad are: "<<points[0]<<points[1]<<points[2]<<points[3]<<endl;
+
+                //each of the 16 subquads area.
+                subquadarea = quadArea(points);
+                //cout<<"---------------subquadarea is: "<<subquadarea<<endl;
+                /*test. If the quadArea works, the following area should be 1.
+                Vector3D pointstest[4];
+                pointstest[0].setX(0);
+                pointstest[0].setY(0);
+                pointstest[0].setZ(0);
+
+                pointstest[1].setX(0);
+                pointstest[1].setY(1);
+                pointstest[1].setZ(0);
+
+                pointstest[2].setX(1);
+                pointstest[2].setY(1);
+                pointstest[2].setZ(0);
+
+                pointstest[3].setX(1);
+                pointstest[3].setY(0);
+                pointstest[3].setZ(0);
+                cout<<"---------------------test area is:------------------"<<quadArea(pointstest)<<endl;*/
+
+                //put all the 16 sub areas into a vector subquadareas.
+                subquadareas.push_back(subquadarea);
+            }
+        }
+
+        //sum the 16 subquads areas.
+        for(unsigned i =0; i<subQuadNum;i++){
+            quadarea[n] += subquadareas[i];
+        }
+
+        //clear vector for next quad.
+        subquadareas.clear();
+    }
+
+    return quadarea;
+}
+
+
+/* calculate the area of tetrahedron by its 6 edges using 海伦-秦九韶公式
+ * 任意一个三棱锥或者说四面体，其棱为a，b，c，d，e，f，其中a与d，b与e，c与f互为对边
+*/
+double calregularityfeatures::tetrahedronarea(double a, double b, double c, double d, double e, double f){
+
+    double D = pow(b,2) + pow(c,2) - pow(d,2);
+    double E = pow(a,2) + pow(c,2) - pow(e,2);
+    double F = pow(a,2) + pow(b,2) - pow(f,2);
+
+    double v = sqrt(4*pow(a,2)*pow(b,2)*pow(c,2)-pow(a,2)*pow(D,2)-pow(b,2)*pow(E,2)-pow(c,2)*pow(F,2)+D*E*F)/12;
+
+    return v;
+}
+
+/* given the 6 points of a triangular prism, calculate its volume.
+ * by divide a triangular prism into 3 triangular pyramid.
+ * use 海伦-秦九韶公式 to calculate the triangular pyramid volume.
+ * a, b, c, a1, b1, c1 are the 6 corner of the triangular prism.
+*/
+double calregularityfeatures::calculatetriangularprismvolume(Vector3D a, Vector3D b, Vector3D c, Vector3D a1, Vector3D b1, Vector3D c1 ){
+
+    //divide the triangular prism into 3 triangular pyramid: b1abc; aa1b1c; ca1b1c1
+    //triangular pyramid1 b1abc;
+    //calculate the 6 edges of pyramid1
+    double ab1 = sqrt(pow(a.getX()-b1.getX(), 2) + pow(a.getY()-b1.getY(), 2) + pow(a.getZ()-b1.getZ(), 2));
+    double ab = sqrt(pow(a.getX()-b.getX(), 2) + pow(a.getY()-b.getY(), 2) + pow(a.getZ()-b.getZ(), 2));
+    double ac = sqrt(pow(a.getX()-c.getX(), 2) + pow(a.getY()-c.getY(), 2) + pow(a.getZ()-c.getZ(), 2));
+    double bb1 = sqrt(pow(b.getX()-b1.getX(), 2) + pow(b.getY()-b1.getY(), 2) + pow(b.getZ()-b1.getZ(), 2));
+    double cb1 = sqrt(pow(c.getX()-b1.getX(), 2) + pow(c.getY()-b1.getY(), 2) + pow(c.getZ()-b1.getZ(), 2));
+    double bc = sqrt(pow(b.getX()-c.getX(), 2) + pow(b.getY()-c.getY(), 2) + pow(b.getZ()-c.getZ(), 2));
+
+    //calculate the area of tetrahedron by its 6 edges using 海伦-秦九韶公式
+    //ab1(=f); cb1(=d); ab(=a); ac(=e); bb1(=b); bc(=c)
+    double pyramid1 = tetrahedronarea(ab, bb1, bc, cb1, ac, ab1);
+
+    //triangular pyramid2 aa1b1c;
+    double a1b1 = sqrt(pow(a1.getX()-b1.getX(), 2) + pow(a1.getY()-b1.getY(), 2) + pow(a1.getZ()-b1.getZ(), 2));
+    double aa1 = sqrt(pow(a.getX()-a1.getX(), 2) + pow(a.getY()-a1.getY(), 2) + pow(a.getZ()-a1.getZ(), 2));
+    double a1c = sqrt(pow(a1.getX()-c.getX(), 2) + pow(a1.getY()-c.getY(), 2) + pow(a1.getZ()-c.getZ(), 2));
+    //ab1, b1c, ac is the same as pyramid1.
+
+    //a1b1(=f); cb1(=d); aa1(=a); a1c(=e); ab1(=b); ac(=c)
+    double pyramid2 = tetrahedronarea(aa1, ab1, ac, cb1, a1c, a1b1);
+
+    //triangular pyramid3 ca1b1c1
+    double cc1 = sqrt(pow(c.getX()-c1.getX(), 2) + pow(c.getY()-c1.getY(), 2) + pow(c.getZ()-c1.getZ(), 2));
+    double c1b1 = sqrt(pow(c1.getX()-b1.getX(), 2) + pow(c1.getY()-b1.getY(), 2) + pow(c1.getZ()-b1.getZ(), 2));
+    double a1c1 = sqrt(pow(a1.getX()-c1.getX(), 2) + pow(a1.getY()-c1.getY(), 2) + pow(a1.getZ()-c1.getZ(), 2));
+    //a1c, cb1, a1b1 is the same as above.
+
+    //a1c1(=f); cb1(=c); a1c(=a); a1b1(=e); cc1(=b); c1b1(=d)
+    double pyramid3 = tetrahedronarea(a1c, cc1, cb1, c1b1, a1b1, a1c1);
+
+    //Some volume were 0, Martin said I can check maybe one of the subvolume is not exist, if so, throw this, only sum the rest 2.
+    double totalvolume = 0;
+    if(pyramid1>0)
+        totalvolume += pyramid1;
+    //else
+        //cout<<"The pyramid1 not exist, has been throw away!"<<endl;
+    if(pyramid2>0)
+        totalvolume += pyramid2;
+    //else
+        //cout<<"The pyramid2 not exist, has been throw away!"<<endl;
+    if(pyramid3>0)
+        totalvolume += pyramid3;
+    //else
+        //cout<<"The pyramid3 not exist, has been throw away!"<<endl;
+
+    return totalvolume;
+}
+
+
+
+/* calculate the subquad volume. By divide the boundary and skeletal subquad into two triangles.
+ * that means, divide the subquad volume into 2 triangular prisms.
+ * we choose the minimum sum of the trangular prism volume as the subquad volume.
+*/
+double calregularityfeatures::calculatequadvolume(double u0, double v0, double u1, double v1, double u2, double v2, double u3, double v3){
+
+    M3DQuadInterpolater standsideintp;
+
+    //store the four points of a quad, each point is a 3D vector, which store the x, y, z coordinate of this point.
+    //pointS is the four points on the skeletal sheet, pointB is on the boundary.
+    Vector3D pointS[4], pointB[4];
+
+    //two kinds of volumes: side=0: up volumes(up boundary-skeletal quad); side=1: down volumes(down boundary-skeletal quad).
+    M3DSpoke spoke0 = standsideintp.interpolateQuadSpoke2(curQuadFig,u0,v0,side);
+    M3DSpoke spoke1 = standsideintp.interpolateQuadSpoke2(curQuadFig,u1,v1,side);
+    M3DSpoke spoke2 = standsideintp.interpolateQuadSpoke2(curQuadFig,u2,v2,side);
+    M3DSpoke spoke3 = standsideintp.interpolateQuadSpoke2(curQuadFig,u3,v3,side);
+
+    //boundary quads
+    pointB[0] = spoke0.getB();
+    pointB[1] = spoke1.getB();
+    pointB[2] = spoke2.getB();
+    pointB[3] = spoke3.getB();
+
+    //skeletal quads
+    pointS[0] = spoke0.getX();
+    pointS[1] = spoke1.getX();
+    pointS[2] = spoke2.getX();
+    pointS[3] = spoke3.getX();
+
+    //calculate the subquad volume. By divide the boundary and skeletal subquad into two triangles.
+    //the divide method agree with each other for the S and B quad, we have 2 divide methods to seperate the quad.
+    //we choose the minimum sum of the trangular prism volume as the subquad volume.
+    //the first method: diagonal of s0s2, b0b2. Quad volume is divided into triangularprism1 and triangularprism2
+    double triangularprism1 = calculatetriangularprismvolume(pointS[0],pointS[1],pointS[2],pointB[0],pointB[1],pointB[2]);//s0, s1, s2, b0, b1, b2
+    double triangularprism2 = calculatetriangularprismvolume(pointS[0],pointS[3],pointS[2],pointB[0],pointB[3],pointB[2]);//s0, s3, s2, b0, b3, b2
+
+    //the second method: diagonal of s1s3, b1b3. Quad volume is divided into triangularprism3 and triangularprism4
+    //quad volume is divided into triangularprism3 and triangularprism4
+    double triangularprism3 = calculatetriangularprismvolume(pointS[1],pointS[2],pointS[3],pointB[1],pointB[2],pointB[3]);//s1, s2, s3, b1, b2, b3
+    double triangularprism4 = calculatetriangularprismvolume(pointS[1],pointS[0],pointS[3],pointB[1],pointB[0],pointB[3]);//s1, s0, s3, b1, b0, b3
+
+    //the smaller one of the two method as the volume for the sub-quad
+    return min(triangularprism1 + triangularprism2, triangularprism3 + triangularprism4);
+}
+
+
+
+/*
+ *side: 0 means up volume, 1 means down volume.
+*/
+vector<double> calregularityfeatures::calculateVolumes_method1(){
+
+    //store the sum of 16 subquad to get the quad volume.
+    vector<double> quadvolume;
+
+    vector<double> subsubUs;
+    vector<double> subsubVs;
+
+    vector<double> subquadvolumes;//store the sum of the 16 subquads volume.
+
+    int quadindex = 0;
+    //double srepvolume = 0;
+
+    //Loop each quad.
+    for(unsigned i = 0; i <rowNum -1; i++){ //pointsIds.size() is the row number of the quads. its 3.
+        for(unsigned j = 0; j <colNum -1; j++){//coloums, its 13.
+           //locate space for a new value, initial it to 0 ?
+           quadvolume.push_back(0);
+
+           //four points of a quad with delta u, v. counter clockwise.
+           double quadpointsu[4], quadpointsv[4];
+           //left-top point
+           quadpointsu[0] = i;
+           quadpointsv[0] = j;
+           //left-bottom point
+           quadpointsu[1] = i + 1;
+           quadpointsv[1] = j;
+           //right-bottom point
+           quadpointsu[2] = i + 1;
+           quadpointsv[2] = j + 1;
+           //right-top point
+           quadpointsu[3] = i;
+           quadpointsv[3] = j + 1;
+
+           //given four points(p0, p1, p2, p3), split the quad into 16 pieces.
+           //first, get the 25 subquads's u coordinate, in column first order.
+           subsubUs = splitquad(quadpointsu[0],quadpointsu[1],quadpointsu[2],quadpointsu[3]);
+           /*for(unsigned k=0; k<subsubUs.size();k++){
+               cout<<"The function output quad points ["<<k<<"] is:"<<subsubUs[k]<<endl;
+           }*/
+
+           //second, get the 25 subquads's v coordinate, in column first order.
+           subsubVs = splitquad(quadpointsv[0],quadpointsv[1],quadpointsv[2],quadpointsv[3]);
+
+          /*using correspondence u, v to get the specific spoke information, and calculate the 16 subquads volumes.
+            *subsubVs and subsubUs are column vector. which can be list as 5 rows, 5 columns gird. m is the left-top point,
+            *m+1 is the left-bottom point, m+6 is the right-bottom point, m+5 is the right-top point.
+            *Loop each element.*/
+           double lefttopu0, lefttopv0, leftbottomu1, leftbottomv1, rightbottomu2, rightbottomv2, righttopu3, righttopv3;
+
+           //m is the 16 left-top corner point of each subquad.
+           for(unsigned m = 0; m<subsubUs.size()-5;m++){ // minus 5 because do not need the right column elements in the loop.
+
+               double subquadvolume;
+               //do not need the bottom row points.
+               if(m%5!=4){
+                   lefttopu0 = subsubUs[m];
+                   lefttopv0 = subsubVs[m];
+                   leftbottomu1 = subsubUs[m+1];
+                   leftbottomv1 = subsubVs[m+1];
+                   rightbottomu2 = subsubUs[m+6];
+                   rightbottomv2 = subsubVs[m+6];
+                   righttopu3 = subsubUs[m+5];
+                   righttopv3 = subsubVs[m+5];
+
+                   //each of the 16 subquads volume.
+                   subquadvolume = calculatequadvolume(lefttopu0, lefttopv0, leftbottomu1, leftbottomv1, rightbottomu2, rightbottomv2, righttopu3, righttopv3);
+
+                   //put all the 16 sub volumes into a vector subquadareas.
+                   subquadvolumes.push_back(subquadvolume);
+               }
+           }
+
+           //sum the 16 subquads areas.
+           for(unsigned n =0; n<subquadvolumes.size();n++){
+               quadvolume[quadindex] += subquadvolumes[n];
+               //cout<<"subquadvolumes["<<n<<"] is: "<<subquadvolumes[n]<<endl;
+           }
+           //cout<<"quadvolume["<<quadindex<<"] is: "<<quadvolume[quadindex]<<endl;
+
+           //clear vector for next quad.
+           subquadvolumes.clear();
+
+           quadindex++;
+        }
+    }
+
+    //int quadsnum = quadvolume.size();
+
+    //sum the 24 quads
+    //for(unsigned p =0; p< quadsnum; p++){
+    //    srepvolume += quadvolume[p];
+    //}
+
+    //cout<<"The side: "<<side<<" srepvolume is: "<<srepvolume<<endl;
+
+    //the mean
+    //double mean = srepvolume / quadsnum;
+    //cout<<"The side: "<<side<<" srepvolume mean is: "<<mean<<endl;
+
+    //each quad volume minus the mean
+    //for(unsigned o = 0; o < quadsnum; o++){
+    //    quadvolume[o] -= mean;
+    //}
+
+    return quadvolume;
+}
+
+
+
+
+double calregularityfeatures::quadVolume(Vector3D *pointB, Vector3D *pointS){
+
+    //calculate the subquad volume. By divide the boundary and skeletal subquad into two triangles.
+    //the divide method agree with each other for the S and B quad, we have 2 divide methods to seperate the quad.
+    //we choose the minimum sum of the trangular prism volume as the subquad volume.
+    //the first method: diagonal of s0s2, b0b2. Quad volume is divided into triangularprism1 and triangularprism2
+    double triangularprism1 = calculatetriangularprismvolume(pointS[0],pointS[1],pointS[2],pointB[0],pointB[1],pointB[2]);//s0, s1, s2, b0, b1, b2
+    double triangularprism2 = calculatetriangularprismvolume(pointS[0],pointS[3],pointS[2],pointB[0],pointB[3],pointB[2]);//s0, s3, s2, b0, b3, b2
+
+    //the second method: diagonal of s1s3, b1b3. Quad volume is divided into triangularprism3 and triangularprism4
+    //quad volume is divided into triangularprism3 and triangularprism4
+    double triangularprism3 = calculatetriangularprismvolume(pointS[1],pointS[2],pointS[3],pointB[1],pointB[2],pointB[3]);//s1, s2, s3, b1, b2, b3
+    double triangularprism4 = calculatetriangularprismvolume(pointS[1],pointS[0],pointS[3],pointB[1],pointB[0],pointB[3]);//s1, s0, s3, b1, b0, b3
+
+    //the smaller one of the two method as the volume for the sub-quad
+    return min(triangularprism1 + triangularprism2, triangularprism3 + triangularprism4);
+
+    //In fact, subdivided into tetrahedron, the above two methods should get a same result.
+    // which means, triangularprism1 + triangularprism2 = triangularprism3 + triangularprism4, always!
+}
+
+
+
+/* Calculate quad-quad volume, by given the 4 vertices on boundary and 4 vertices on skeletal.
+ * The quad-quad is a 12 faces, because it has 6*2 triangles. Each trigangle is a coplane.
+ * Subdivided this quad-quad into 5 tetrahedrons(pyramid), and then compute each tetrahedron's volume using Heron's formula.
+*/
+double calregularityfeatures::quadQuadVolume(Vector3D *pointB, Vector3D *pointS){
+
+    //Subdivided the quad-quad into 5 pyramids:B1S0S1S2; B3S0S2S3; B0B1S0B3; B2B1S2B3; B3B1S0S2.
+
+    double pyramid_1, pyramid_2, pyramid_3, pyramid_4, pyramid_5;
+
+    double B1S1 = sqrt(pow(pointB[1].getX()-pointS[1].getX(), 2) + pow(pointB[1].getY()-pointS[1].getY(), 2) + pow(pointB[1].getZ()-pointS[1].getZ(), 2));
+    double B1S2 = sqrt(pow(pointB[1].getX()-pointS[2].getX(), 2) + pow(pointB[1].getY()-pointS[2].getY(), 2) + pow(pointB[1].getZ()-pointS[2].getZ(), 2));
+    double B1S0 = sqrt(pow(pointB[1].getX()-pointS[0].getX(), 2) + pow(pointB[1].getY()-pointS[0].getY(), 2) + pow(pointB[1].getZ()-pointS[0].getZ(), 2));
+    double S1S0 = sqrt(pow(pointS[1].getX()-pointS[0].getX(), 2) + pow(pointS[1].getY()-pointS[0].getY(), 2) + pow(pointS[1].getZ()-pointS[0].getZ(), 2));
+    double S1S2 = sqrt(pow(pointS[1].getX()-pointS[2].getX(), 2) + pow(pointS[1].getY()-pointS[2].getY(), 2) + pow(pointS[1].getZ()-pointS[2].getZ(), 2));
+    double S0S2 = sqrt(pow(pointS[0].getX()-pointS[2].getX(), 2) + pow(pointS[0].getY()-pointS[2].getY(), 2) + pow(pointS[0].getZ()-pointS[2].getZ(), 2));
+
+    pyramid_1 = tetrahedronarea(B1S1, B1S2, B1S0, S0S2, S1S0, S1S2);
+
+    double B3S0 = sqrt(pow(pointB[3].getX()-pointS[0].getX(), 2) + pow(pointB[3].getY()-pointS[0].getY(), 2) + pow(pointB[3].getZ()-pointS[0].getZ(), 2));
+    double B3S2 = sqrt(pow(pointB[3].getX()-pointS[2].getX(), 2) + pow(pointB[3].getY()-pointS[2].getY(), 2) + pow(pointB[3].getZ()-pointS[2].getZ(), 2));
+    double B3S3 = sqrt(pow(pointB[3].getX()-pointS[3].getX(), 2) + pow(pointB[3].getY()-pointS[3].getY(), 2) + pow(pointB[3].getZ()-pointS[3].getZ(), 2));
+    double S0S3 = sqrt(pow(pointS[0].getX()-pointS[3].getX(), 2) + pow(pointS[0].getY()-pointS[3].getY(), 2) + pow(pointS[0].getZ()-pointS[3].getZ(), 2));
+    double S2S3 = sqrt(pow(pointS[2].getX()-pointS[3].getX(), 2) + pow(pointS[2].getY()-pointS[3].getY(), 2) + pow(pointS[2].getZ()-pointS[3].getZ(), 2));
+
+    pyramid_2 = tetrahedronarea(B3S0, B3S2, B3S3, S2S3, S0S3, S0S2);
+
+    double B0B1 = sqrt(pow(pointB[0].getX()-pointB[1].getX(), 2) + pow(pointB[0].getY()-pointB[1].getY(), 2) + pow(pointB[0].getZ()-pointB[1].getZ(), 2));
+    double B0S0 = sqrt(pow(pointB[0].getX()-pointS[0].getX(), 2) + pow(pointB[0].getY()-pointS[0].getY(), 2) + pow(pointB[0].getZ()-pointS[0].getZ(), 2));
+    double B0B3 = sqrt(pow(pointB[0].getX()-pointB[3].getX(), 2) + pow(pointB[0].getY()-pointB[3].getY(), 2) + pow(pointB[0].getZ()-pointB[3].getZ(), 2));
+    double B1B3 = sqrt(pow(pointB[1].getX()-pointB[3].getX(), 2) + pow(pointB[1].getY()-pointB[3].getY(), 2) + pow(pointB[1].getZ()-pointB[3].getZ(), 2));
+
+    pyramid_3 = tetrahedronarea(B0B1, B0S0, B0B3, B3S0, B1B3, B1S0);
+
+    double B1B2 = sqrt(pow(pointB[1].getX()-pointB[2].getX(), 2) + pow(pointB[1].getY()-pointB[2].getY(), 2) + pow(pointB[1].getZ()-pointB[2].getZ(), 2));
+    double B2B3 = sqrt(pow(pointB[2].getX()-pointB[3].getX(), 2) + pow(pointB[2].getY()-pointB[3].getY(), 2) + pow(pointB[2].getZ()-pointB[3].getZ(), 2));
+    double B2S2 = sqrt(pow(pointB[2].getX()-pointS[2].getX(), 2) + pow(pointB[2].getY()-pointS[2].getY(), 2) + pow(pointB[2].getZ()-pointS[2].getZ(), 2));
+
+    pyramid_4 = tetrahedronarea(B1B2, B2B3, B2S2, B3S2, B1S2, B1B3);
+
+    pyramid_5 = tetrahedronarea(B1B3, B3S0, B3S2, S0S2, B1S2, B1S0);
+
+
+    //Some volume were 0, check maybe one of the subvolume is not exist, if so, throw this, only sum the rest 2.
+    double totalvolume = 0;
+    if(pyramid_1>0)
+        totalvolume += pyramid_1;
+    //else
+        //cout<<"The pyramid1 not exist, has been throw away!"<<endl;
+    if(pyramid_2>0)
+        totalvolume += pyramid_2;
+    //else
+        //cout<<"The pyramid2 not exist, has been throw away!"<<endl;
+    if(pyramid_3>0)
+        totalvolume += pyramid_3;
+    //else
+        //cout<<"The pyramid3 not exist, has been throw away!"<<endl;
+    if(pyramid_4>0)
+        totalvolume += pyramid_4;
+    //else
+        //cout<<"The pyramid2 not exist, has been throw away!"<<endl;
+    if(pyramid_5>0)
+        totalvolume += pyramid_5;
+
+    //If one of the tetrahedron volume not exist, we use a same quad as skeletal quad and suppose the radius ara paraller, compare this volume with
+    //totalvolume, keep the smaller one.
+
+
+
+
+
+
+    return totalvolume;
+}
+
+
+
+/* Calculate the volume using given 8 vertexes. 4 points on the skeletal sheet(skeletalPoints[4]), 4 on the boundary(boundaryPoints[4]).
+ *side: 0 means up volume, 1 means down volume.
+*/
+vector<double> calregularityfeatures::calculateVolumes_method2(vtkSmartPointer< vtkPoints > boundaryHubpos, vtkSmartPointer< vtkPoints > skeletalHubpos){
+    int subQuadNum = step*step;
+
+    vector<double> subquadvolumes;//store the 16 subquads area.
+    //store the sum of 16 subquad to get the quad area.
+    vector<double> quadvolume;
+
+    Vector3D boundaryPoints[4], skeletalPoints[4];
+    double subquadvolume;
+
+    //for each quad
+    for(int n=0; n<quadNum;n++){
+        //locate space for a new value, initial it to 0 ?
+        quadvolume.push_back(0);
+
+        //For each subQuadNum's sub-quad.
+        for(int m=0; m<step;m++){
+            for(int k = 0; k<step;k++){
+                int currentpoint = k + m*(step+1);
+                double p[3];
+                //Left-top point.
+                boundaryHubpos->GetPoint(n*subQuadPointsNum+currentpoint,p);  //m
+                boundaryPoints[0].setX(p[0]);
+                boundaryPoints[0].setY(p[1]);
+                boundaryPoints[0].setZ(p[2]);                
+                skeletalHubpos->GetPoint(n*subQuadPointsNum+currentpoint,p);  //m
+                skeletalPoints[0].setX(p[0]);
+                skeletalPoints[0].setY(p[1]);
+                skeletalPoints[0].setZ(p[2]);
+                //Bottom side
+                boundaryHubpos->GetPoint(n*subQuadPointsNum+currentpoint+1,p);//m+1
+                boundaryPoints[1].setX(p[0]);
+                boundaryPoints[1].setY(p[1]);
+                boundaryPoints[1].setZ(p[2]);
+                skeletalHubpos->GetPoint(n*subQuadPointsNum+currentpoint+1,p);//m+1
+                skeletalPoints[1].setX(p[0]);
+                skeletalPoints[1].setY(p[1]);
+                skeletalPoints[1].setZ(p[2]);
+                //Right side
+                boundaryHubpos->GetPoint(n*subQuadPointsNum+currentpoint+1+step+1,p);//m+6
+                boundaryPoints[2].setX(p[0]);
+                boundaryPoints[2].setY(p[1]);
+                boundaryPoints[2].setZ(p[2]);
+                skeletalHubpos->GetPoint(n*subQuadPointsNum+currentpoint+1+step+1,p);//m+6
+                skeletalPoints[2].setX(p[0]);
+                skeletalPoints[2].setY(p[1]);
+                skeletalPoints[2].setZ(p[2]);
+                //Top side
+                boundaryHubpos->GetPoint(n*subQuadPointsNum+currentpoint+step+1,p);//m+5
+                boundaryPoints[3].setX(p[0]);
+                boundaryPoints[3].setY(p[1]);
+                boundaryPoints[3].setZ(p[2]);
+                skeletalHubpos->GetPoint(n*subQuadPointsNum+currentpoint+step+1,p);//m+5
+                skeletalPoints[3].setX(p[0]);
+                skeletalPoints[3].setY(p[1]);
+                skeletalPoints[3].setZ(p[2]);
+                //cout<<"skeletalPoints input is: ------"<<skeletalPoints[0]<<"  "<<skeletalPoints[1]<<"  "<<skeletalPoints[2]<<"  "<<skeletalPoints[3]<<endl;
+                //each of the 16 subquads area.
+                //subquadvolume = quadVolume(boundaryPoints, skeletalPoints);
+                //cout<<"For quad "<<n<<", subquad "<<currentpoint<<": "<<endl;
+                //folded(skeletalPoints[1], skeletalPoints[2], boundaryPoints[2], boundaryPoints[1]);
+
+
+                subquadvolume = quadQuadVolume(boundaryPoints, skeletalPoints);
+                //cout<<"subquadvolume is:------------------"<<subquadvolume<<endl;
+
+                //put all the 16 sub areas into a vector subquadareas.
+                subquadvolumes.push_back(subquadvolume);
+            }
+        }
+
+        //sum the 16 subquads areas.
+        for(unsigned i =0; i<subQuadNum;i++){
+            quadvolume[n] += subquadvolumes[i];
+        }
+
+        //clear vector for next quad.
+        subquadvolumes.clear();
+    }
+
+    return quadvolume;
+}
+
+
+
+
+//calculate the distance between two points.
+double calregularityfeatures::lengthofedges(Vector3D point[2]){
+    double x0 = point[0].getX();
+    double y0 = point[0].getY();
+    double z0 = point[0].getZ();
+    //cout<<"point[0] is:"<<x0<<"; "<<y0<<"; "<<z0<<endl;
+
+    double x1 = point[1].getX();
+    double y1 = point[1].getY();
+    double z1 = point[1].getZ();
+    //cout<<"point[1] is:"<<x1<<"; "<<y1<<"; "<<z1<<endl;
+
+    double distance = sqrt(pow(x1-x0, 2) + pow(y1-y0, 2) + pow(z1-z0, 2));
+
+    //cout<<"distance between two edges is: "<<distance<<endl;
+
+    return distance;
+}
+
+
+
+/* Take each length of the quad as a feature.
+ * Sum the 4 subquad lengths as the length of the quad. do this to each of the 62 edges (12*3+2*13) in one srep. So we
+ * get 62 features of edges for the top boundary quads and top skeletal quads, the same for the bottom ones.
+ * topboundaryquadedges: store the 62 edges length of the top boundary quad.
+ * topskeletalquadedges: store the 62 edges length of the top skeletal quad.
+ */
+void calregularityfeatures::calculatequadedges(vector<double> &quadedges, int quadtype){
+
+    //get the correspondence delta u , v of each of the four points.
+    M3DQuadPrimitive* prim0;
+    M3DQuadInterpolater *tpm = new M3DQuadInterpolater(curQuadFig);
+
+    //Loop the left point of each quad in the srep.
+        for(unsigned i = 0; i < rowNum; i++){ //PointsIds.size() is the row number of the quads. its 3.
+
+            for(unsigned j = 0; j < colNum; j++){//coloums, its 13.
+
+               //store the delta u and v of up and down spokes of Primitive[u][v].
+               //deltau[0]: current point; deltau[1]: next horizonal point; deltau[2]: next vertical point
+               double deltau[3]={0,0,0};
+               double deltav[3]={0,0,0};
+
+               switch(side){
+                   case 0: //top side
+                       //get the original medial sheet atom's delta u, v.
+                       //considering horizonal edges & vertical edges.
+                       //primitive[i][j]
+                       prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j));
+                       deltau[0] = prim0->getDeltaU0();
+                       deltav[0] = prim0->getDeltaV0();
+                       //primitive[i][j+1]
+                       if(j!=colNum-1){   //not the right side
+                           prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j+1));
+                           deltau[1] = prim0->getDeltaU0();
+                           deltav[1] = prim0->getDeltaV0();
+                       }
+                       //primitive[i+1][j]
+                       if(i!=rowNum-1){    //not the bottom side
+                           prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j));
+                           deltau[2] = prim0->getDeltaU0();
+                           deltav[2] = prim0->getDeltaV0();
+                       }
+                       break;
+                   case 1:  //down side
+                       //get the original medial sheet atom's delta u, v.
+                       //primitive[i][j]
+                       prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j));
+                       deltau[0] = prim0->getDeltaU1();
+                       deltav[0] = prim0->getDeltaV1();
+                       //primitive[i][j+1]
+                       if(j!=colNum-1){
+                           prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j+1));
+                           deltau[1] = prim0->getDeltaU1();
+                           deltav[1] = prim0->getDeltaV1();
+                       }
+                       //primitive[i+1][j]
+                       if(i!=rowNum-1){
+                           prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j));
+                           deltau[2] = prim0->getDeltaU1();
+                           deltav[2] = prim0->getDeltaV1();
+                       }
+                       break;
+                   default:
+                       break;
+               }
+
+               //new points position with delta u, v. In u, v coordinate.
+               double quadpointsu[3], quadpointsv[3];
+               //current point
+               quadpointsu[0] = i + deltau[0];
+               quadpointsv[0] = j + deltav[0];
+
+               //next horizonal point
+               quadpointsu[1] = i + deltau[1];
+               quadpointsv[1] = j + 1 + deltav[1];
+
+               //next vertical point
+               quadpointsu[2] = i + 1 + deltau[2];
+               quadpointsv[2] = j + deltav[2];
+
+               //calculate each of the horizonal edge, and store it in topboundaryquadedges
+               double horizonaledgepointsu[5];
+               bilinearinterpolateoftwopoints(quadpointsu[0], quadpointsu[1], horizonaledgepointsu);
+               double horizonaledgepointsv[5];
+               bilinearinterpolateoftwopoints(quadpointsv[0], quadpointsv[1], horizonaledgepointsv);
+
+               //calculate each of the vertical edge, also store it in topboundaryquadedges
+               double verticaledgepointsu[5];
+               bilinearinterpolateoftwopoints(quadpointsu[0], quadpointsu[2], verticaledgepointsu);
+               double verticaledgepointsv[5];
+               bilinearinterpolateoftwopoints(quadpointsv[0], quadpointsv[2], verticaledgepointsv);
+
+               //store the horizonal two points, each point is a 3D vector, which store the x, y, z coordinate of this point.
+               Vector3D horizonalpoint[2];
+               //store the vertical two points, each point is a 3D vector, which store the x, y, z coordinate of this point.
+               Vector3D verticalpoint[2];
+
+               double edgelengthhorizonal =0;
+               double edgelengthvertical =0;
+
+               //cout<<"i is: "<< i << " j is: "<< j << endl;
+
+               //quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+               switch(quadtype){
+                   case 0:
+                       //boundary quads(0)
+                       if(j!=colNum-1){
+                           for(unsigned v = 0; v < 4; v++){
+                               horizonalpoint[0] = tpm->interpolateQuadSpoke(curQuadFig,horizonaledgepointsu[v],horizonaledgepointsv[v],side)->getB();
+                               horizonalpoint[1] = tpm->interpolateQuadSpoke(curQuadFig,horizonaledgepointsu[v+1],horizonaledgepointsv[v+1],side)->getB();
+
+                               //horizonal sub edges.
+                               edgelengthhorizonal += lengthofedges(horizonalpoint);
+                           }
+
+                           quadedges.push_back(edgelengthhorizonal);
+                           //cout<<"["<<i<<", "<<j<<"] boundary edgelengthhorizonal is: "<<edgelengthhorizonal<<endl;
+                       }
+                       if(i!=rowNum-1){
+                           for(unsigned f = 0; f < 4; f++){
+                               verticalpoint[0] = tpm->interpolateQuadSpoke(curQuadFig,verticaledgepointsu[f],verticaledgepointsv[f],side)->getB();
+                               verticalpoint[1] = tpm->interpolateQuadSpoke(curQuadFig,verticaledgepointsu[f+1],verticaledgepointsv[f+1],side)->getB();
+
+                               //vertical sub edges.
+                               edgelengthvertical += lengthofedges(verticalpoint);
+                           }
+
+                           quadedges.push_back(edgelengthvertical);
+                           //cout<<"["<<i<<", "<<j<<"] boundary edgelengthvertical is: "<<edgelengthvertical<<endl;
+                       }
+                       break;
+                   case 1:
+                       //skeletal quads(1)
+                       if(j!=colNum-1){
+                           for(unsigned v = 0; v < 4; v++){
+                               horizonalpoint[0] = tpm->interpolateQuadSpoke(curQuadFig,horizonaledgepointsu[v],horizonaledgepointsv[v],side)->getX();
+                               horizonalpoint[1] = tpm->interpolateQuadSpoke(curQuadFig,horizonaledgepointsu[v+1],horizonaledgepointsv[v+1],side)->getX();
+
+                               //horizonal sub edges.
+                               edgelengthhorizonal += lengthofedges(horizonalpoint);
+                           }
+
+                           quadedges.push_back(edgelengthhorizonal);
+                           //cout<<"["<<i<<", "<<j<<"] skeletal edgelengthhorizonal is: "<<edgelengthhorizonal<<endl;
+                           //edgelengthhorizonal = 0;
+                       }
+
+                       if(i!=rowNum-1){
+                           for(unsigned f = 0; f < 4; f++){
+                               verticalpoint[0] = tpm->interpolateQuadSpoke(curQuadFig,verticaledgepointsu[f],verticaledgepointsv[f],side)->getX();
+                               verticalpoint[1] = tpm->interpolateQuadSpoke(curQuadFig,verticaledgepointsu[f+1],verticaledgepointsv[f+1],side)->getX();
+
+                               //vertical sub edges.
+                               edgelengthvertical += lengthofedges(verticalpoint);
+                           }
+
+                           quadedges.push_back(edgelengthvertical);
+                           //cout<<"["<<i<<", "<<j<<"] skeletal edgelengthvertical is: "<<edgelengthvertical<<endl;
+                       }
+                       break;
+                   default:
+                       break;
+               }
+            }
+        }
+
+        delete tpm;
+        delete prim0;
+
+}
+
+
+/* Swap the row and column of a matrix.
+ * matrix: with row is the case number; column is the feature number.
+ * output will be: row is the feature number, column is the case number.
+*/
+VectorTrainingSetFeaturesType calregularityfeatures::transposeMatrix(VectorTrainingSetFeaturesType oldmatrix){
+    int colnum, rownum;
+
+    //we want the case number as the new matrix's column.
+    colnum = oldmatrix.size(); //case number
+
+    rownum = oldmatrix[0].size();  //the feature numbers, the column size of matrix
+
+    double transposefeaturematrix[rownum][colnum];
+
+    //swap the row and column. store the new matrix in transposefeaturematrix.
+    for(unsigned i = 0; i < colnum; i++){
+        for(unsigned j = 0; j < rownum; j++){
+           transposefeaturematrix[j][i] = oldmatrix[i][j];
+
+           //cout<< "The oldmatrix["<<i<<","<<j<<"] is: "<<oldmatrix[i][j] <<" ";
+        }
+        //cout<<endl;
+    }
+
+    VectorTrainingSetFeaturesType traingsetfeaturematrix;
+
+    //copy the array transposefeaturematrix's values to traingsetfeaturematrix
+    for(unsigned m =0; m<rownum; m++){
+        //before we set value to traingsetfeaturematrix[m], we must create a space for it.
+        traingsetfeaturematrix.push_back(VectorSRepFeaturesType());
+
+        for(unsigned n=0; n<colnum; n++){
+            traingsetfeaturematrix[m].push_back(transposefeaturematrix[m][n]);
+            //cout<< "traingsetfeaturematrix["<<m<<","<<n<<"] is: "<< traingsetfeaturematrix[m][n] <<"  ";
+            //cout<<traingsetfeaturematrix[m][n] <<" ";
+        }
+        //cout<<endl;
+    }
+
+    return traingsetfeaturematrix;
+}
+
+
+
+
+/* Take each length of the quad as a feature.
+ * Sum the 4 subquad lengths as the length of the quad. do this to each of the 4 edges of a quad. So we
+ * get 4 features of edges for each of the top boundary quads/top skeletal quads, the same for the bottom ones.
+ * topquadedges: store the 24 top edges of each quad in a srep.
+ * bottomquadedges: store the 24 bottom edges of each quad in a srep.
+ * leftquadedges: store the 24 left edges of each quad in a srep.
+ * rightquadedges: store the 24 right edges of each quad in a srep.
+ */
+void calregularityfeatures::calquadedgesforeachsrep(vector<double> &topquadedges, vector<double> &bottomquadedges,
+                             vector<double> &leftquadedges,vector<double> &rightquadedges, int quadtype){
+
+    //get the correspondence delta u , v of each of the four points.
+    M3DQuadPrimitive* prim0;
+    M3DQuadInterpolater *tpm = new M3DQuadInterpolater(curQuadFig);
+
+    for(unsigned i = 0; i <rowNum -1; i++){ //PointsIds.size() is the row number of the quads. its 3.
+        for(unsigned j = 0; j <colNum -1; j++){//coloums, its 13.
+
+           //store the delta u and v of up and down spokes of Primitive[u][v].
+           //deltau[0]: left-top point; deltau[1]: left-bottom point; deltau[2]: right-bottom; deltau[3]: right-top
+           double deltau[4], deltav[4];
+
+           switch(side){
+               case 0: //top side
+                   //get the original medial sheet quad's delta u, v
+                   //primitive[i][j]
+                   prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j));
+                   deltau[0] = prim0->getDeltaU0();
+                   deltav[0] = prim0->getDeltaV0();
+                   //primitive[i+1][j]
+                   prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j));
+                   deltau[1] = prim0->getDeltaU0();
+                   deltav[1] = prim0->getDeltaV0();
+                   //primitive[i+1][j+1]
+                   prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j+1));
+                   deltau[2] = prim0->getDeltaU0();
+                   deltav[2] = prim0->getDeltaV0();
+                   //primitive[i][j+1]
+                   prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j+1));
+                   deltau[3] = prim0->getDeltaU0();
+                   deltav[3] = prim0->getDeltaV0();
+                   break;
+               case 1:  //down side
+                   //get the original medial sheet quad's delta u, v
+                   //primitive[i][j]
+                   prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j));
+                   deltau[0] = prim0->getDeltaU1();
+                   deltav[0] = prim0->getDeltaV1();
+                   //primitive[i+1][j]
+                   prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j));
+                   deltau[1] = prim0->getDeltaU1();
+                   deltav[1] = prim0->getDeltaV1();
+                   //primitive[i+1][j+1]
+                   prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i+1, j+1));
+                   deltau[2] = prim0->getDeltaU1();
+                   deltav[2] = prim0->getDeltaV1();
+                   //primitive[i][j+1]
+                   prim0= dynamic_cast<M3DQuadPrimitive*>(curQuadFig->getPrimitivePtr(i, j+1));
+                   deltau[3] = prim0->getDeltaU1();
+                   deltav[3] = prim0->getDeltaV1();
+                   break;
+               default:
+                   break;
+           }
+
+           //four points of a quad with delta u, v. counter clockwise.
+           double quadpointsu[4], quadpointsv[4];
+           //left-top point
+           quadpointsu[0] = i + deltau[0];
+           quadpointsv[0] = j + deltav[0];
+           //left-bottom point
+           quadpointsu[1] = i + 1 + deltau[1];
+           quadpointsv[1] = j + deltav[1];
+           //right-bottom point
+           quadpointsu[2] = i + 1 + deltau[2];
+           quadpointsv[2] = j + 1 + deltav[2];
+           //right-top point
+           quadpointsu[3] = i + deltau[3];
+           quadpointsv[3] = j + 1 + deltav[3];
+
+           //calculate the four side of a quad.
+           double subleftedgepointsu[5];
+           bilinearinterpolateoftwopoints(quadpointsu[0], quadpointsu[1], subleftedgepointsu);
+           double subleftedgepointsv[5];
+           bilinearinterpolateoftwopoints(quadpointsv[0], quadpointsv[1], subleftedgepointsv);
+
+           double subrightedgepointsu[5];
+           bilinearinterpolateoftwopoints(quadpointsu[3], quadpointsu[2], subrightedgepointsu);
+           double subrightedgepointsv[5];
+           bilinearinterpolateoftwopoints(quadpointsv[3], quadpointsv[2], subrightedgepointsv);
+
+           double subtopedgepointsu[5];
+           bilinearinterpolateoftwopoints(quadpointsu[0], quadpointsu[3], subtopedgepointsu);
+           double subtopedgepointsv[5];
+           bilinearinterpolateoftwopoints(quadpointsv[0], quadpointsv[3], subtopedgepointsv);
+
+           double subbottomedgepointsu[5];
+           bilinearinterpolateoftwopoints(quadpointsu[1], quadpointsu[2], subbottomedgepointsu);
+           double subbottomedgepointsv[5];
+           bilinearinterpolateoftwopoints(quadpointsv[1], quadpointsv[2], subbottomedgepointsv);
+
+           //point, a 3D vector, which store the x, y, z coordinate of this point.
+           Vector3D point[2];
+           double edgelength[4]={0,0,0,0};
+
+           //quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+           switch(quadtype){
+               case 0:
+                   //boundary quads(0)
+                   for(unsigned v = 0; v < 4; v++){
+                       point[0] = tpm->interpolateQuadSpoke(curQuadFig,subleftedgepointsu[v],subleftedgepointsv[v],side)->getB();
+                       point[1] = tpm->interpolateQuadSpoke(curQuadFig,subleftedgepointsu[v+1],subleftedgepointsv[v+1],side)->getB();
+                       //left sub edges.
+                       edgelength[0] += lengthofedges(point);
+
+                       point[0] = tpm->interpolateQuadSpoke(curQuadFig,subrightedgepointsu[v],subrightedgepointsv[v],side)->getB();
+                       point[1] = tpm->interpolateQuadSpoke(curQuadFig,subrightedgepointsu[v+1],subrightedgepointsv[v+1],side)->getB();
+                       //right sub edges.
+                       edgelength[1] += lengthofedges(point);
+
+                       point[0] = tpm->interpolateQuadSpoke(curQuadFig,subtopedgepointsu[v],subtopedgepointsv[v],side)->getB();
+                       point[1] = tpm->interpolateQuadSpoke(curQuadFig,subtopedgepointsu[v+1],subtopedgepointsv[v+1],side)->getB();
+                       //top sub edges.
+                       edgelength[2] += lengthofedges(point);
+
+                       point[0] = tpm->interpolateQuadSpoke(curQuadFig,subbottomedgepointsu[v],subbottomedgepointsv[v],side)->getB();
+                       point[1] = tpm->interpolateQuadSpoke(curQuadFig,subbottomedgepointsu[v+1],subbottomedgepointsv[v+1],side)->getB();
+                       //bottom sub edges.
+                       edgelength[3] += lengthofedges(point);
+                   }
+
+                   leftquadedges.push_back(edgelength[0]);
+                   rightquadedges.push_back(edgelength[1]);
+                   topquadedges.push_back(edgelength[2]);
+                   bottomquadedges.push_back(edgelength[3]);
+
+                   cout<<"boundary quads["<<i<<"," <<j<<"] leftquadedges length is: "<<edgelength[0]<<endl;
+                   cout<<"boundary quads["<<i<<"," <<j<<"] rightquadedges length is: "<<edgelength[1]<<endl;
+                   cout<<"boundary quads["<<i<<"," <<j<<"] topquadedges length is: "<<edgelength[2]<<endl;
+                   cout<<"boundary quads["<<i<<"," <<j<<"] bottomquadedges length is: "<<edgelength[3]<<endl;
+                   break;
+               case 1:
+                   //skeletal quads(1)
+                   for(unsigned v = 0; v < 4; v++){
+                       point[0] = tpm->interpolateQuadSpoke(curQuadFig,subleftedgepointsu[v],subleftedgepointsv[v],side)->getX();
+                       point[1] = tpm->interpolateQuadSpoke(curQuadFig,subleftedgepointsu[v+1],subleftedgepointsv[v+1],side)->getX();
+                       //left sub edges.
+                       edgelength[0] += lengthofedges(point);
+
+                       point[0] = tpm->interpolateQuadSpoke(curQuadFig,subrightedgepointsu[v],subrightedgepointsv[v],side)->getX();
+                       point[1] = tpm->interpolateQuadSpoke(curQuadFig,subrightedgepointsu[v+1],subrightedgepointsv[v+1],side)->getX();
+                       //right sub edges.
+                       edgelength[1] += lengthofedges(point);
+
+                       point[0] = tpm->interpolateQuadSpoke(curQuadFig,subtopedgepointsu[v],subtopedgepointsv[v],side)->getX();
+                       point[1] = tpm->interpolateQuadSpoke(curQuadFig,subtopedgepointsu[v+1],subtopedgepointsv[v+1],side)->getX();
+                       //top sub edges.
+                       edgelength[2] += lengthofedges(point);
+
+                       point[0] = tpm->interpolateQuadSpoke(curQuadFig,subbottomedgepointsu[v],subbottomedgepointsv[v],side)->getX();
+                       point[1] = tpm->interpolateQuadSpoke(curQuadFig,subbottomedgepointsu[v+1],subbottomedgepointsv[v+1],side)->getX();
+                       //bottom sub edges.
+                       edgelength[3] += lengthofedges(point);
+                   }
+
+                   leftquadedges.push_back(edgelength[0]);
+                   rightquadedges.push_back(edgelength[1]);
+                   topquadedges.push_back(edgelength[2]);
+                   bottomquadedges.push_back(edgelength[3]);
+
+                   cout<<"skeletal quads["<<i<<"," <<j<<"] leftquadedges length is: "<<edgelength[0]<<endl;
+                   cout<<"skeletal quads["<<i<<"," <<j<<"] rightquadedges length is: "<<edgelength[1]<<endl;
+                   cout<<"skeletal quads["<<i<<"," <<j<<"] topquadedges length is: "<<edgelength[2]<<endl;
+                   cout<<"skeletal quads["<<i<<"," <<j<<"] bottomquadedges length is: "<<edgelength[3]<<endl;
+                   break;
+               default:
+                   break;
+           }
+        }
+    }
+    delete tpm;
+    delete prim0;
+}
+
+
+
+/* Get the edges length in vertical and horizonal direction seperately.
+ * Each quad length is a sum of 4 subquad lengths. Do this to each of the 36 horizonal edges (12*3) and 26 vertical edges (2*13) in one srep.
+ * Each edge is count once, no overlap.
+ */
+void calregularityfeatures::calculateEdges_method1(vector<double> &verticaledges, vector<double> &horizonaledges, int quadtype){
+    //get the correspondence delta u , v of each of the four points.
+    M3DQuadInterpolater *tpm = new M3DQuadInterpolater(curQuadFig);
+
+    //For test only: draw the lines.-------------------------------------------------------------
+    /*vtkSmartPointer<vtkCellArray> cellarraypointsline = vtkSmartPointer<vtkCellArray>::New();
+    vtkSmartPointer<vtkPolyData> polypointsline = vtkSmartPointer<vtkPolyData>::New();
+    vtkSmartPointer< vtkPoints > hubpos = vtkSmartPointer< vtkPoints >::New();
+    vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
+    renderer->SetBackground(1,1,1);
+    vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
+    renderWindow->AddRenderer(renderer);
+    vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+    renderWindowInteractor->SetRenderWindow(renderWindow);
+    double quadColor[3] = {1,0.5,0};*/
+
+    //Loop the left point of each quad in the srep.
+        for(unsigned i = 0; i < rowNum; i++){ //PointsIds.size() is the row number of the quads. its 3.
+            for(unsigned j = 0; j < colNum; j++){//coloums, its 13.
+               //new points position with delta u, v. In u, v coordinate.
+               double quadpointsu[3], quadpointsv[3];
+               //current point
+               quadpointsu[0] = i;
+               quadpointsv[0] = j;
+
+               //next horizonal point
+               quadpointsu[1] = i;
+               quadpointsv[1] = j + 1;
+
+               //next vertical point
+               quadpointsu[2] = i + 1;
+               quadpointsv[2] = j;
+
+               //calculate each of the vertical edge, and store it in topboundaryquadedges
+               vector<double> verticalPointsU;
+               tools.splitLine(quadpointsu[0], quadpointsu[1], step, verticalPointsU);
+               vector<double> verticalPointsV;
+               tools.splitLine(quadpointsv[0], quadpointsv[1], step, verticalPointsV);
+
+               //calculate each of the vertical edge, also store it in topboundaryquadedges
+               vector<double> horizonalPointsU;
+               tools.splitLine(quadpointsu[0], quadpointsu[2], step, horizonalPointsU);
+               vector<double> horizonalPointsV;
+               tools.splitLine(quadpointsv[0], quadpointsv[2], step, horizonalPointsV);
+
+
+               //store the horizonal two points, each point is a 3D vector, which store the x, y, z coordinate of this point.
+               Vector3D verticalPoint[2];
+               //store the vertical two points, each point is a 3D vector, which store the x, y, z coordinate of this point.
+               Vector3D horizonalPoint[2];
+
+               double hLen =0;
+               double vLen =0;
+
+               //quadtype: Two kinds of quads, boundary quads(0), skeletal quads(1)
+               switch(quadtype){
+                   case 0:
+                       //boundary quads(0)
+                       if(j!=colNum-1){
+                           for(unsigned v = 0; v < step; v++){
+                               verticalPoint[0] = tpm->interpolateQuadSpoke(curQuadFig,verticalPointsU[v],verticalPointsV[v],side)->getB();
+                               verticalPoint[1] = tpm->interpolateQuadSpoke(curQuadFig,verticalPointsU[v+1],verticalPointsV[v+1],side)->getB();
+
+                               //vertical sub edges.
+                               vLen += lengthofedges(verticalPoint);
+
+                               /*vtkSmartPointer<vtkLine> medialsheetline = vtkSmartPointer<vtkLine>::New();
+
+                               vtkIdType id0 = hubpos->InsertNextPoint(verticalPoint[0].getX(),verticalPoint[0].getY(),verticalPoint[0].getZ());
+                               vtkIdType id1 = hubpos->InsertNextPoint(verticalPoint[1].getX(),verticalPoint[1].getY(),verticalPoint[1].getZ());
+
+                               medialsheetline->GetPointIds()->SetId(0, id0);
+                               medialsheetline->GetPointIds()->SetId(1, id1);
+
+                               cellarraypointsline->InsertNextCell(medialsheetline);
+                               //cout<<"V-b: "<<verticalPoint[0].getX()<<"  "<<verticalPoint[0].getY()<<"  "<<verticalPoint[0].getZ()<<endl;
+                               //cout<<"V-e: "<<verticalPoint[1].getX()<<"  "<<verticalPoint[1].getY()<<"  "<<verticalPoint[1].getZ()<<endl;*/
+                           }
+
+                           verticaledges.push_back(vLen);
+                       }
+                       if(i!=rowNum-1){
+                           for(unsigned f = 0; f < step; f++){
+                               horizonalPoint[0] = tpm->interpolateQuadSpoke(curQuadFig,horizonalPointsU[f],horizonalPointsV[f],side)->getB();
+                               horizonalPoint[1] = tpm->interpolateQuadSpoke(curQuadFig,horizonalPointsU[f+1],horizonalPointsV[f+1],side)->getB();
+
+                               //horizonal sub edges.
+                               hLen += lengthofedges(horizonalPoint);
+
+                               /*vtkSmartPointer<vtkLine> medialsheetline = vtkSmartPointer<vtkLine>::New();
+
+                               vtkIdType id0 = hubpos->InsertNextPoint(horizonalPoint[0].getX(),horizonalPoint[0].getY(),horizonalPoint[0].getZ());
+                               vtkIdType id1 = hubpos->InsertNextPoint(horizonalPoint[1].getX(),horizonalPoint[1].getY(),horizonalPoint[1].getZ());
+
+                               medialsheetline->GetPointIds()->SetId(0, id0);
+                               medialsheetline->GetPointIds()->SetId(1, id1);
+
+                               cellarraypointsline->InsertNextCell(medialsheetline);
+                               //cout<<"H-b: "<<horizonalPoint[0].getX()<<"  "<<horizonalPoint[0].getY()<<"  "<<horizonalPoint[0].getZ()<<endl;
+                               //cout<<"H-e:"<<horizonalPoint[1].getX()<<"  "<<horizonalPoint[1].getY()<<"  "<<horizonalPoint[1].getZ()<<endl;*/
+                           }
+
+                           horizonaledges.push_back(hLen);
+                       }
+                       break;
+                   case 1:
+                       //skeletal quads(1)
+                       if(j!=colNum-1){
+                           for(unsigned v = 0; v < step; v++){
+                               verticalPoint[0] = tpm->interpolateQuadSpoke(curQuadFig,verticalPointsU[v],verticalPointsV[v],side)->getX();
+                               verticalPoint[1] = tpm->interpolateQuadSpoke(curQuadFig,verticalPointsU[v+1],verticalPointsV[v+1],side)->getX();
+
+                               //vertical sub edges.
+                               vLen += lengthofedges(verticalPoint);
+                           }
+
+                           verticaledges.push_back(vLen);
+                       }
+                       if(i!=rowNum-1){
+                           for(unsigned f = 0; f < step; f++){
+                               horizonalPoint[0] = tpm->interpolateQuadSpoke(curQuadFig,horizonalPointsU[f],horizonalPointsV[f],side)->getX();
+                               horizonalPoint[1] = tpm->interpolateQuadSpoke(curQuadFig,horizonalPointsU[f+1],horizonalPointsV[f+1],side)->getX();
+
+                               //horizonal sub edges.
+                               hLen += lengthofedges(horizonalPoint);
+                           }
+
+                           horizonaledges.push_back(hLen);
+                       }
+                       break;
+                   default:
+                       break;
+               }
+            }
+        }
+
+        /*polypointsline->SetPoints(hubpos);
+        polypointsline->SetLines(cellarraypointsline);
+
+        vtkSmartPointer<vtkPolyDataMapper> pointlinemapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+        pointlinemapper->SetInput(polypointsline);
+        vtkSmartPointer<vtkActor>  lineactor = vtkActor::New();
+        lineactor->SetMapper(pointlinemapper);
+        lineactor->GetProperty()->SetLineWidth(1);
+        lineactor->GetProperty()->SetColor(quadColor);// (0,1,0) is green, (1,1,1) is white.
+        renderer->AddActor(lineactor);
+
+        renderWindow->Render();
+        renderWindowInteractor->Start();*/
+
+        delete tpm;
+}
+
+
+/* Calculate the edge of the quads, each quad has four edges, each edge was divided into some small pieces, add these sub-line together is the
+ * length of the edge.
+*/
+void calregularityfeatures::calculateEdges_method2(vtkSmartPointer< vtkPoints > hubpos, vector<double> &verticaledges,
+                                                   vector<double> &horizonaledges){
+
+    Vector3D point[2];
+    double p[3];
+
+    //For each quad, its left side is horizonal lines.
+    for(int m=0; m<quadNum;m++){
+        double sumOfSubLines = 0;
+        //left side. For each sub-line.
+        for(int n=0; n<step;n++){
+            hubpos->GetPoint(m*subQuadPointsNum+n,p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadPointsNum+n+1,p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+            sumOfSubLines += lengthofedges(point);
+        }
+        horizonaledges.push_back(sumOfSubLines);
+    }
+
+    //For the quads (colNum-1)*colNumIndex -1, its right side is also horizonal lines.
+    for(int m=0; m<quadNum;m++){
+        if((m+1)%(colNum-1)==0){
+            double sumOfSubLines = 0;
+            for(int n=subQuadPointsNum-(step+1); n<subQuadPointsNum-1;n++){
+                hubpos->GetPoint(m*subQuadPointsNum+n,p);
+                point[0].setX(p[0]);
+                point[0].setY(p[1]);
+                point[0].setZ(p[2]);
+
+                hubpos->GetPoint(m*subQuadPointsNum+n+1,p);
+                point[1].setX(p[0]);
+                point[1].setY(p[1]);
+                point[1].setZ(p[2]);
+
+                sumOfSubLines += lengthofedges(point);
+            }
+            horizonaledges.push_back(sumOfSubLines);
+        }
+    }
+
+    //Vertical lines.
+    //For each quad, its top side is vertical lines.
+    for(int m=0; m<quadNum;m++){
+        double sumOfSubLines = 0;
+        for(int k = 0; k<step;k++){
+            hubpos->GetPoint(m*subQuadPointsNum+0+k*(step+1),p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadPointsNum+(k+1)*(step+1),p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+           sumOfSubLines += lengthofedges(point);
+        }
+        verticaledges.push_back(sumOfSubLines);
+    }
+
+    //For the last colNum-1 quads, its bottom side is also vertical lines.
+    for(int m=quadNum-(colNum-1); m<quadNum;m++){
+        double sumOfSubLines = 0;
+        for(int k = 0; k<step;k++){
+            hubpos->GetPoint(m*subQuadPointsNum+step + k*(step+1),p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadPointsNum+step + (k+1)*(step+1),p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+           sumOfSubLines += lengthofedges(point);
+        }
+        verticaledges.push_back(sumOfSubLines);
+    }
+}
+
+
+void calregularityfeatures::calculateEdges_method3(vtkSmartPointer< vtkPoints > hubpos, MatrixType &horEdgeFeatureMatrix,
+                                                   MatrixType &verEdgeFeatureMatrix, int quadType){
+
+    Vector3D point[2];
+    double p[3];
+
+    int horEdgeNum = 0;
+    //For each quad, its left side is horizonal lines.
+    for(int m=0; m<quadNum;m++){
+        double sumOfSubLines = 0;
+        //left side. For each sub-line.
+        for(int n=0; n<step;n++){
+            hubpos->GetPoint(m*subQuadPointsNum+n,p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadPointsNum+n+1,p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+            sumOfSubLines += lengthofedges(point);
+        }
+        horEdgeFeatureMatrix[quadType][horEdgeNum] =sumOfSubLines;
+        horEdgeNum++;
+    }
+
+    //For the quads (colNum-1)*colNumIndex -1, its right side is also horizonal lines.
+    for(int m=0; m<quadNum;m++){
+        if((m+1)%(colNum-1)==0){
+            double sumOfSubLines = 0;
+            for(int n=subQuadPointsNum-(step+1); n<subQuadPointsNum-1;n++){
+                hubpos->GetPoint(m*subQuadPointsNum+n,p);
+                point[0].setX(p[0]);
+                point[0].setY(p[1]);
+                point[0].setZ(p[2]);
+
+                hubpos->GetPoint(m*subQuadPointsNum+n+1,p);
+                point[1].setX(p[0]);
+                point[1].setY(p[1]);
+                point[1].setZ(p[2]);
+
+                sumOfSubLines += lengthofedges(point);
+            }
+            horEdgeFeatureMatrix[quadType][horEdgeNum] =sumOfSubLines;
+            horEdgeNum++;
+        }
+    }
+
+    //Vertical lines.
+    int verEdgeNum = 0;
+    //For each quad, its top side is vertical lines.
+    for(int m=0; m<quadNum;m++){
+        double sumOfSubLines = 0;
+        for(int k = 0; k<step;k++){
+            hubpos->GetPoint(m*subQuadPointsNum+0+k*(step+1),p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadPointsNum+(k+1)*(step+1),p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+           sumOfSubLines += lengthofedges(point);
+        }
+        verEdgeFeatureMatrix[quadType][verEdgeNum] = sumOfSubLines;
+        verEdgeNum++;
+    }
+
+    //For the last colNum-1 quads, its bottom side is also vertical lines.
+    for(int m=quadNum-(colNum-1); m<quadNum;m++){
+        double sumOfSubLines = 0;
+        for(int k = 0; k<step;k++){
+            hubpos->GetPoint(m*subQuadPointsNum+step + k*(step+1),p);
+            point[0].setX(p[0]);
+            point[0].setY(p[1]);
+            point[0].setZ(p[2]);
+
+            hubpos->GetPoint(m*subQuadPointsNum+step + (k+1)*(step+1),p);
+            point[1].setX(p[0]);
+            point[1].setY(p[1]);
+            point[1].setZ(p[2]);
+
+           sumOfSubLines += lengthofedges(point);
+        }
+        verEdgeFeatureMatrix[quadType][verEdgeNum] = sumOfSubLines;
+        verEdgeNum++;
+    }
+}
+
+
+
+/* Compute the angles on each quad.
+ * use the avarage angle of the sub-quads.
+ */
+void calregularityfeatures::calculateAnglesForStandardSide(vtkSmartPointer< vtkPoints > hubpos, MatrixType &angleFeatureMatrix, int quadType) {
+
+    double p0[3];
+    double p1[3];
+    double p2[3];
+    double p3[3];
+
+    // For each quad
+    for(int n = 0; n < quadNum; n++){
+        double angle_subQuads_tl = 0.0; // top-left angle
+        double angle_subQuads_br = 0.0; // bottom-right angle
+
+        //For each sub-quad.
+        for(int m=0; m<step;m++){
+            for(int k = 0; k<step;k++){
+                int currentpoint = k + m*(step+1);
+                // top-left point.
+                hubpos->GetPoint(n*subQuadPointsNum+currentpoint,p0);  //m
+                // bottom-left point
+                hubpos->GetPoint(n*subQuadPointsNum+currentpoint+1,p1);//m+1
+                // bottom-right point
+                hubpos->GetPoint(n*subQuadPointsNum+currentpoint+1+step+1,p2);//m+6
+                // top-right point
+                hubpos->GetPoint(n*subQuadPointsNum+currentpoint+step+1,p3);//m+5
+
+                angle_subQuads_tl += tools.dotProductAngle(p0, p3, p1);
+                angle_subQuads_br += tools.dotProductAngle(p2, p1, p3);
+            }
+        }
+
+        // top-left corner trangular
+        hubpos->GetPoint(n*subQuadPointsNum,p0);
+        hubpos->GetPoint(n*subQuadPointsNum+(step+1),p3);
+        hubpos->GetPoint(n*subQuadPointsNum+1,p1);
+        Vector3D normal_tl = tools.trangularNormal_doublePot(p0, p3, p1);
+
+        // bottom-right corner trangular
+        hubpos->GetPoint(n*subQuadPointsNum+this->brvpi+1,p2);
+        hubpos->GetPoint(n*subQuadPointsNum+this->brhpi,p1);
+        hubpos->GetPoint(n*subQuadPointsNum+this->brvpi,p3);
+        Vector3D normal_br = tools.trangularNormal_doublePot(p2, p1, p3);
+
+        normal_tl.normalize();
+        normal_br.normalize();
+
+        if(quadType == 0){ // on boundary
+            // up-left angle
+            angleFeatureMatrix[0][n] = angle_subQuads_tl/subQuadNum;
+
+            // bot-right corner
+            angleFeatureMatrix[1][n] = angle_subQuads_br/subQuadNum;
+
+            // normal swing
+            angleFeatureMatrix[2][n] = normal_tl * normal_br;
+        }
+        else { // on skeletal
+            // up-left angle
+            angleFeatureMatrix[3][n] = angle_subQuads_tl/subQuadNum;
+
+            // bot-right corner
+            angleFeatureMatrix[4][n] = angle_subQuads_br/subQuadNum;
+
+            // normal swing
+            angleFeatureMatrix[5][n] = normal_tl * normal_br;
+        }
+    }
+}
+
+
+
+
+

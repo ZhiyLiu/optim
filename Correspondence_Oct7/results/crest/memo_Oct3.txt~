@@ -1,0 +1,2 @@
+[ltu@pegasus ~]$ /work/ltu/WorkSpace/Sep_17_allInOne/binPablo2_Sep17_crestSide/corrOpt /work/ltu/WorkSpace/Sep_17_allInOne/crestSide /work/ltu/WorkSpace/Sep_17_allInOne/input_sreps_new.txt 2 /work/ltu/WorkSpace/Sep_17_allInOne/results/crest/crest_Oct3_31sreps.log -useVarFile
+

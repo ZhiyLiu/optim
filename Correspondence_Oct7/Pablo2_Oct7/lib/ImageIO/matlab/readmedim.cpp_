@@ -1,0 +1,96 @@
+//You can include any C libraries that you normally use
+#define NULL 0
+#include "Image3D.h"
+#include "AllImageIO.h"
+#include "ControlParms.h"
+#include "math.h"
+#include "mex.h"   //--This one is required
+
+ControlParms* globalControl = new ControlParms();
+int globalVerbosity = 0;
+
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[])
+{
+
+    try {
+
+        if (nrhs < 1) {
+            fprintf(stderr, "File name required.\n");
+            return;
+        }
+
+        if (nlhs < 1) return;
+
+        mexPrintf("Got this far.\n");
+
+        int filenameLen = mxGetN(prhs[0]) + 1;
+        char* filename = (char*) mxCalloc(filenameLen, sizeof(char));
+        mxGetString(prhs[0], filename, filenameLen);
+
+        Image3D* im = NULL;
+        AllImageIO reader;
+        try {
+            im = reader.read(filename);
+        } catch (...) {
+            fprintf(stderr, "Could not read image file.\n");
+            return;
+        }
+
+        unsigned short min;
+        unsigned short max;
+        im->range(min, max);
+        mexPrintf("min = %d, max = %d\n", min, max);
+
+        mwSize dims[3];
+        dims[0] = im->getXDim();
+        dims[1] = im->getYDim();
+        dims[2] = im->getZDim();
+
+        plhs[0] = mxCreateNumericArray(3, dims, mxUINT16_CLASS, mxREAL);
+        unsigned short* imageArray = (unsigned short*)(mxGetData(plhs[0]));
+
+        if (!im->getIsImageStacked()) {
+            unsigned short* end = imageArray + im->getVoxelCount();
+            GreyValue* from = im->getVoxels();
+            for (unsigned short* to = imageArray; to < end; ++to, ++from) {
+                *to = *from;
+                if ((end - to) % 100 == 0) mexPrintf("%d ", *to);
+                if ((end - to) % 2000 == 0) mexPrintf("\n");
+            }
+            mexPrintf("\n");
+        } else {
+            unsigned short* to = imageArray;
+            for (int z = 0; z < dims[2]; ++z) {
+                for (int y = 0; y < dims[1]; ++y) {
+                    for (int x = 0; x < dims[0]; ++x) {
+                        *to++ = im->getVoxelValue(x, y, z);
+                    }}}
+        }
+
+        plhs[1] = mxCreateDoubleMatrix(1, 3, mxREAL);
+        double* origin = mxGetPr(plhs[1]);
+        origin[0] = im->getXWorldOrigin();
+        origin[1] = im->getYWorldOrigin();
+        origin[2] = im->getZWorldOrigin();
+
+        plhs[2] = mxCreateDoubleMatrix(1, 3, mxREAL);
+        double* spacing = mxGetPr(plhs[2]);
+        spacing[0] = im->getXSpacing();
+        spacing[1] = im->getYSpacing();
+        spacing[2] = im->getZSpacing();
+
+        double scale;
+        int shift;
+        im->getIntensityMapping(scale, shift);
+        plhs[3] = mxCreateDoubleMatrix(1, 2, mxREAL);
+        double* scaleAndShift = mxGetPr(plhs[3]);
+        scaleAndShift[0] = scale;
+        scaleAndShift[1] = shift;
+    } catch (...) {
+        fprintf(stderr, "Error reading file.\n");
+        return;
+    }
+
+    return;
+
+}

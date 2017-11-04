@@ -1,0 +1,12 @@
+found 3 bad s-reps in the training set, they are:
+N0147-2-3
+N0177-1-01
+T0036-1-1-03
+
+get ride of them, and redo this experiment for the rest 31 sreps. Variables begin from 0.
+
+Start from 0 because the variables gotten from previous iteration, after get ride of the 3 srep, they are almost the same...
+
+
+[ltu@pegasus ~]$ /work/ltu/WorkSpace/Sep_17_allInOne/binPablo2_Sep17_downSide/corrOpt /work/ltu/WorkSpace/Sep_17_allInOne/downSide /work/ltu/WorkSpace/Sep_17_allInOne/input_sreps_new.txt 1 /work/ltu/WorkSpace/Sep_17_allInOne/results/down/down_Oct3-31sreps.log
+

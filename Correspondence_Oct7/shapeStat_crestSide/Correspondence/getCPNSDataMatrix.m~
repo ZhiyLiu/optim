@@ -1,0 +1,95 @@
+% side: 0, up spokes; 1, down spokes.
+function [ data info ] = getCPNSDataMatrix( dataDir, side ) 
+
+    %% Read all the models in the data folder %%
+
+    [info m3dData] = readM3d( dataDir, '*.m3d' )  ;
+    
+    % convert this data to s-reps if they are in old format
+    
+    if( strcmp( get( m3dData.atoms{1,1}, 'Type' ), 'lie-group' ) )
+        disp('CPNS cannot handle lie-group representation of atoms.') ;
+        disp('Please convert the models to s-rep representation using Pablo!') ;
+        data = [] ;
+        return ;
+    end    
+    
+    
+    %% Construct the CPNS data matrix by vertical concatenation of p's, r's and U's %%
+    
+    nSamples = info.nSamps ; 
+    disp(['Input ' nSamples 'models...']);
+    nRows = info.nRows ; % for LV its 3
+    nCols = info.nCols ; % its 13
+    
+    nEndAtoms = 2 * nRows + 2 * (nCols - 2) ;% 28    
+    nStdAtoms = nRows * nCols - nEndAtoms ;% 11
+    
+    spokeNums = nEndAtoms + nStdAtoms; % 39 up spokes, 39 down spokes, 28 crest spokes. 39*2 + 28 = 106 spokes.
+    
+    if(side==2)
+        spokeNums = nEndAtoms;
+    end    
+    
+    pMatrix = zeros( spokeNums*3, nSamples ) ; % each atom has x, y, z. 3*39 = 117. 
+    rMatrix = zeros( spokeNums, nSamples ) ; % each spoke has a radii, 28*3+11*2 = 106 spokes.
+    uMatrix = zeros( spokeNums*3, nSamples ) ;  % each spoke has direction x, y, z. 
+    
+    for ns = 1 : nSamples,        
+
+        nAtomsBefore = 0;
+        
+        for i = 1 : nRows,            
+            for j = 1 : nCols,
+                
+                if(side==2)
+                
+                
+                else
+                    atomIndex = nCols * (i-1) + (j-1) + 1 ;% atomIndex from 1 to 39.
+
+                    % Get positions                
+                    pIndex = 3 * ( nCols * (i-1) + j-1 ) ;% pIndex is 3*(0,1,2,3,..,38), because each position need x,y,z.
+                    % 3 rows wirte into pMatrix, 
+                    pMatrix( pIndex+1 : pIndex+3, ns ) = get( m3dData.atoms{ns, atomIndex}, 'pos' ) ;
+
+                    % Get radii                
+                    %rIndex = 3 * nEndAtomsBefore + 2 * nStdAtomsBefore ;
+                    rIndex = nAtomsBefore;
+                    % rVals store the radii value, in row vector??
+                    rVals = get( m3dData.atoms{ns, atomIndex}, 'r' ) ;
+                    if( side==0 )
+                        % the first value in rVals is up spoke radii
+                        rMatrix( rIndex+1, ns) = rVals(1) ;                
+                    else
+                        % the second value in rVals is down spoke radii
+                        rMatrix( rIndex+1, ns) = rVals(2) ;                 
+                    end
+
+                    % Get spoke directions                
+                    uIndex = 3 * nAtomsBefore;
+
+                    % uVals is a matrix with row are xyz, column is u[0],u[1],[u2]
+                    uVals = get( m3dData.atoms{ns, atomIndex}, 'U' ) ;
+
+                    if( side==0 )
+                        % for up spoke, the direction xyz is in coloum 1
+                        uMatrix( uIndex+1 : uIndex+3, ns) = uVals( :, 1 )' ;
+                    else
+                        % for down spoke, the direction xyz is in coloum 2
+                        uMatrix( uIndex+1 : uIndex+3, ns) = uVals( :, 2 )' ;
+                    end
+
+                    % update the no. of atoms                
+                    nAtomsBefore = nAtomsBefore + 1;
+                end 
+            end
+        end
+    end
+    
+    data = [    pMatrix ;
+                rMatrix ;
+                uMatrix ] ;
+%   disp('The new m3d file CPNS data matrix is: ');
+%   disp(data);
+end

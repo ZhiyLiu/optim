@@ -1,0 +1,1 @@
+antiAliasWrapper('Right_Hippocampus-ddm.mhd','Right_Hippocampus-ddm-AA',[0.5 0.5])

@@ -1,0 +1,179 @@
+% =================================================================================
+% getPGA:
+%   [pgaStruct] = getPGA(atomMatrix, nComp, nProj, statsFlag)
+%   [pgaStruct] = getPGA(atomMatrix, nComp, nProj, statsFlag, weighting)
+%
+%   Does PGA for the given atom array
+%
+%   Input:
+%       - atomMatrix:   matrix of atoms of size 
+%           length_of_atom_vector * number_of_m-reps * number_of_atoms_in_each_m-rep
+%       - nComp:        number of PG's to compute
+%       - nProj:        number of PG's for projection
+%       - statsFlag:    0-Lie group, 1-symmetric space
+%       - If a fifth argument is given, it is used to make atom units commensurate.
+%         The default is to use the mean radii of the atoms.
+%   Output:
+%     A structure with the following fields:
+%       - stats:        mean and principal geodesics (PG's)
+%       - logProjs:     projections on the first nProj PG's in tangent space
+%       - projections:  projections on the first nProj PG's
+%       - residues:     what remains after the projection
+%       - numPGs:       number of PG's to compute
+%       - projDims:     number of PG's for projection
+% ---------------------------------------------------------------------------------
+
+
+% atomMatrix(data matrix): cell matrix of atoms in symmmetric space
+% representation
+%    number_of_m-reps * number_of_total atoms 
+%
+
+function pgaStruct = getPGA(atomMatrix, nComp, nProj, outputDir, filename, varargin)
+
+% ***************************
+% Get dimensions            *
+% ***************************
+[nSamps, nAtoms] = size(atomMatrix);
+
+
+resPGA = 0;%default
+
+if (nargin > 8) 
+    resPGA = varargin{4};
+end
+
+if (~resPGA)
+    % ****************************************
+    % Compute the mean for each atom         *
+    % ****************************************
+    aMean = mrepMean(atomMatrix);
+   % **********************
+% Get residues from mean
+% **********************
+    atomResMatrix = mrepDiff(atomMatrix, repmat(aMean,[nSamps,1]));
+   
+else
+    aMean = mrepMean(atomMatrix); 
+    aMean = mrepDiff(aMean,aMean);%zero model for both quad and tubes
+    atomResMatrix = atomMatrix; 
+end
+
+
+aLogRes = mrepLog( atomResMatrix );
+
+% **************************************
+% Make the units commensurate          *
+% **************************************
+saveFlag = 1;    %default: save eigenmode graphs
+weightMode = 1;  %default: meanRadii/2
+if (nargin < 6)
+    meanRadii = getRadii(aMean);
+else
+    options = varargin{1};
+    meanRadii = options.meanRadii;
+    saveFlag = options.saveFlag;
+    weightMode = options.weightMode;
+    if (isempty(meanRadii))
+        meanRadii = getRadii(aMean);
+    end
+end
+
+aLogRes = makeCommensurate(aLogRes, repmat(meanRadii, [nSamps, 1]), 1, weightMode);
+
+% *******************************
+% Make the data matrix          *
+% *******************************
+
+[aLogResMatrix, atomInd] = makeDataMtx(aLogRes);
+nVars = size(aLogResMatrix, 2);
+
+% ************************
+% PCA in the tangent space
+% ************************
+%aLogRes = reshape(aLogRes, nlDims*nAtoms, nSamps)';  % each row is a feature vector. i.e column corresponds to a variable
+
+%[PCs, SCORE, LATENT, TSQUARE] = princcomp(aLogResMatrix);   % size(aLogResMatrix) = nSamps x nlDims*nAtoms
+
+[PCs, SCORE, LATENT, TSQUARE] = princomp(aLogResMatrix);
+
+%Check the number of eigenvalues not close to 0
+count = 0;
+while(LATENT(count+1) > 1e-20 & count+1 < length(LATENT))
+    count = count + 1;
+end
+if(count < nProj)
+    nProj = count;
+end
+
+evs = LATENT(1:nComp)';
+totalVar = sum(LATENT);
+
+%Show eigenvalues
+if (count > 0)
+    if (saveFlag)
+          evalPlot(outputDir, filename, evs, totalVar);
+    end
+end
+
+
+% ***************************************************************   
+% Compute projections in tangent space and symmetric space
+% ***************************************************************
+
+tempALogResMatrix = aLogResMatrix';  % nlDims*nAtoms x nSamps
+tempPCs = PCs(:, 1:nProj);  % nlDims*nAtoms x nProj
+
+aLogPGProjMatrix =  (tempPCs * (tempPCs'*tempALogResMatrix))';  % nSamps X nlDims*nAtoms
+
+% Convert back to a cell array of atoms
+aLogPGProj = makeDataMtx(aLogPGProjMatrix, atomInd);
+aLogPGProj = makeCommensurate(aLogPGProj, repmat(meanRadii, [nSamps, 1]), 0, weightMode);
+
+
+% *************************************************************************
+% Save statistics, projections in tangent and symmetric space and residue 
+% *************************************************************************
+%  Scale PCs by eigenvalues
+PCs = PCs(:, 1:nComp) .* repmat(sqrt(evs), [nVars, 1]);
+
+% 6/23/05 : Understood making units commensurate.
+
+% Convert to atom format
+PCAtoms = makeDataMtx(PCs',atomInd);
+
+% Undo scale adjustment for rotation 
+PCAtoms = makeCommensurate(PCAtoms, repmat(meanRadii, [nComp, 1]), 0, weightMode);
+
+% Convert back to float matrix
+adjPCs = makeDataMtx(PCAtoms)';
+
+% Save Statistics
+stats = struct('Mean', {aMean}, 'PCAtoms', {PCAtoms}, 'PCs', adjPCs, 'EVs', evs, 'TotalVar', sum(LATENT));
+ 
+% Projection of training cases 
+aPGProj = mrepExp(aLogPGProj);
+
+% Undo scale adjustment for rotation 
+aLogRes = makeCommensurate(aLogRes, repmat(meanRadii, [nSamps, 1]), 0, weightMode);
+
+%Save projections and residue 
+pgaStruct = struct('stats', stats, 'logProjs', {aLogPGProj}, ... 
+                   'projections', {aPGProj}, 'residues', [], ...
+                   'numPGs', nComp, 'projDims', nProj, ...
+                   'logRes', {aLogRes});
+
+return;
+
+
+% *********************
+% Correlation PCA
+% *********************F
+% vsd = std(aLogRes, 0, 1)';
+% [PCs, LATENT, EXPLAINED] = pcacov(corrcoef(aLogRes));
+% PCs = PCs .* repmat(vsd, 1, size(PCs, 2));
+% 
+% PCs = reshape(PCs(:, 1:nComp), nlDims, nAtoms, nComp);
+% PCs = adjustUnits(PCs, repmat(meanRadii, [1 1 nComp]), 0);
+% corr_pga = struct('Mean', aMean, 'PCs', PCs, 'EVs', LATENT(1:nComp), 'TotalVar', sum(LATENT));
+
