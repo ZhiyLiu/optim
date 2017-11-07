@@ -1,0 +1,17 @@
+@startuml
+
+class Newuoa {
+-spokeType
+-inputSreps
+-interpolationLevel
+
+}
+class OptimizerBase {
++cost()
++operator()(double arg)
++getOjbectiveFunction()
+}
+
+OptimizerBase <|-- Newuoa
+
+@enduml
