@@ -25,10 +25,17 @@ public:
     M3DNewuoaOptimizer(char* rootDir, const std::vector< std::string > &inputSreps, int interpolationLevel, int spokeType);
     void initialize();
 
+    // Description: Return a cost value, with hard-coded weight currently. The cost function was iterated automaticly by the optimizer, each time it change the values of coeff, we use the new coeff
+    //Parameter: coeff is a N*46 dimesion arrary. Store the 46 spoke's u or v of all sreps. We will split this array to get each 46 for one srep.
     double getCost(const double *coeff);
 
+    // Description: Return a cost value computed according to pre-defined entropy minimization objective function
+    // Parameter: @coeff: input coefficients in each iterariton
+    // @w1/w2: weight for geometric entropy and regularity
     double getObjectiveFunctionValue(const double *wholeCoeff, double w1, double w2) const;
 
+    // Description: Override operator (). Required by min_newuoa.
+    // Parameter: @coeff: the pointer to coefficients
     double operator () (double *coeff);
 
     // major entry to invoke this optimizer
@@ -43,7 +50,7 @@ private:
 
     char* mVarFileDir;
     int   mInterpolationLevel;
-    int   mSpokeType;
+    int   mSpokeType; // 0-upSide 1-downSide 2-crest spoke
     int   mTotalDimensions;
     int   mIterationCounter;
     M3DQuadFigure*    mShiftingQuadFig;

@@ -20,6 +20,7 @@ M3DNewuoaOptimizer::M3DNewuoaOptimizer(char* mVarFileDir, const std::vector< std
 }
 
 void M3DNewuoaOptimizer::initialize() {
+    // step 1. compute total number of atoms
     toolsfunc tools;
     M3DQuadFigure* mShiftingQuadFig; // as a template, storing a s-rep for shifting.
     // readin a arbtrary srep as a template, holding the current srep's info, the optimization iteratively modifing this srep.
@@ -50,7 +51,7 @@ void M3DNewuoaOptimizer::initialize() {
 
     mTotalDimensions = mInputSreps.size() * dimensionNum;
 
-    //Initialized the srep quadFig list
+    //step 2. Initialized the srep quadFig list
     for(unsigned int i = 0; i < mInputSreps.size(); i++){
         //Initialize mQuadFigList, which holding the original sreps, the changing during each iteration will based on this.
         std::cout<<"---------Reading:"<<mInputSreps[i]<<std::endl;
@@ -65,6 +66,7 @@ void M3DNewuoaOptimizer::initialize() {
         this->mSrepFigList.push_back(srepfig);
     }
 
+    // step 3. Compute subdivision of quad
     uvmap mp;
     // holding the 0~1 subdivision of the line.
     this->mSubdivisions = mp.getUVSubdivision(mInterpolationLevel);
@@ -205,5 +207,13 @@ int M3DNewuoaOptimizer::perform(const char* logFileName, bool initialOpt) {
 }
 
 bool M3DNewuoaOptimizer::isCorrectMove( double *coeff, int length, double moveDis) {
+    // If one of the coeff generated is bigger than 1 or smaller than -1, throw away this tuple.
+    for(unsigned int i = 0; i < length; i++){
+        if(coeff[i] > moveDis || coeff[i] < -moveDis){
+            std::cout << "Step bigger than 0.5, throw away!" << std::endl;
+            return false;
+        }
+    }
+
     return true;
 }
