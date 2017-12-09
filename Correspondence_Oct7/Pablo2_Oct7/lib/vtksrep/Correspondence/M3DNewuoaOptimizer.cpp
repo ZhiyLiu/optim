@@ -88,11 +88,87 @@ double M3DNewuoaOptimizer::getCost(const double *coeff) {
     return getObjectiveFunctionValue(coeff, w1, w2);
 }
 
+double M3DNewuoaOptimizer::computeSRepImageMatch(double weight, double dilationFactor)
+{
+    double match = 0.0;
+    toolsfunc tools;
+    // step 1: find relevant spokes
+    std::vector<M3DSpoke> allSpokes;
+    interpolateSRep(&allSpokes);
+    
+   // step 2: compute the sum of square distances as the match value
+    std::vector<Vector3D> surfacePoints;
+    for(int i = 0; i < allSpokes.size(); ++i)
+    {
+        surfacePoints.push_back(allSpokes[i].getB());
+    }
+
+    int pointsNum = surfacePoints.size();
+    if(pointsNum == 0)
+    {
+        // ERROR
+        std::cout << "[ERROR]Implied boundary after interpolation is empty in method: M3DNewuoaOptimizer::computeSRepImageMatch!" << std::endl;
+        return -999.0;
+    }
+
+    double max_dist = 0.0, min_dist = +1e20, avg_dist = 0.0;
+
+
+    for(int i = 0; i < pointsNum; ++i)
+    {
+        // TODO: DistanceMap should be singleton class that provide utilities
+        //double distance = fabs(binaryDistanceMap->getDistance(surfacePoints[i]) - dilationFactor);
+
+        double distance = 0.0;
+        if(distance > max_dist)
+        {
+            max_dist = distance;
+        }
+
+        if(distance < min_dist)
+        {
+            min_dist = distance;
+        }
+
+        match += distance * distance;
+        avg_dist += distance;
+    }
+
+    
+    avg_dist /= pointsNum;
+    match /= pointsNum;
+
+    MatchUtility::max_dist = max_dist;
+	MatchUtility::min_dist = min_dist;
+	MatchUtility::nPoints = numPoints;
+	MatchUtility::avg_dist = avg_dist;
+	MatchUtility::avg_dist_squared = match;
+    return match;
+}
+
+void M3DNewuoaOptimizer::interpolateSRep(std::vector<M3DSpoke> *outputSpokes)
+{
+    // interpolation level from config file
+    int level = 2;
+    // TODO: interpolator should be singleton tool manufactured by a factory to provide utilities
+}
+
 /* Compute the total entropy. */
 double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double w1, double w2) const {
-        //Step 1: Move spokes, compute the regularity entropy and save geometry matrix to .txt.
+    double objFunctionValue = 0.0;
+    // coeff are now lengths of spokes
+    // 0. Update new length to each spoke
+    
+    // 1. Image match
+    w_ImageMatch = 9999;
+    double dilationFactor = 0.0; 
+    objFunctionValue += computeSRepImageMatch(w_ImageMatch, dilationFactor);
+    return objFunctionValue;
+/*    //Step 1: Move spokes, compute the regularity entropy and save geometry matrix to .txt.
     movespokes mSpokes(mVarFileDir, mTotalDimensions, this->mQuadFigList.size(), mSpokeType, this->mInterpolationLevel);
     double regEntropy = mSpokes.calculateRegEntropy(coeff,this->mShiftingQuadFig, mSubdivisions, mTotalDimensions, mQuadFigList, mSrepFigList);
+    w1; w2;
+    return regEntropy;
 
     toolsfunc tools;
 
@@ -132,10 +208,9 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
     std::cout <<"----objective function: "<<objectFuc<<std::endl;
 
     return objectFuc;
-
+*/
 }
 double M3DNewuoaOptimizer::operator() (double *coeff) {
-    
         this->mIterationCounter++;
         std::cout<<"The "<<this->mIterationCounter<<"th iteration. "<<std::endl;
 
@@ -164,11 +239,13 @@ int M3DNewuoaOptimizer::perform(const char* logFileName, bool initialOpt) {
     using namespace std;
     //std::cout<<"this->mTotalDimensions---------"<<this->mTotalDimensions<<std::endl;
     double *changingUV = new double [this->mTotalDimensions];
+    double *coeffOfLength = new double[this->mTotalDimensions];  // optimize length's coefficients instead of length itself, to avoid negative length output by newuoa
 
     // for the first optimization, all the coeff set to 0.
     if(initialOpt){
         for(unsigned int i =0;i<this->mTotalDimensions;i++){
             changingUV[i] = 0.0;
+            coeffOfLength[i] = 1.0;
         }
     }
     else {
