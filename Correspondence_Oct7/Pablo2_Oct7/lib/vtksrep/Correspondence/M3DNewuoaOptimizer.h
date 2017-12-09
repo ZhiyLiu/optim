@@ -46,6 +46,8 @@ public:
 
 private:
     bool isCorrectMove(double *coeff, int length, double moveDis);
+    double computeSRepImageMatch(double weight, double dilationFactor);
+    void M3DNewuoaOptimizer::interpolateSRep(std::vector<M3DSpoke> *outputSpokes);
 private:
 
     char* mVarFileDir;
