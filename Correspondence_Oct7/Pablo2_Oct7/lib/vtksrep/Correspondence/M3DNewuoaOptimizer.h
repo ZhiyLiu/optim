@@ -32,7 +32,7 @@ public:
     // Description: Return a cost value computed according to pre-defined entropy minimization objective function
     // Parameter: @coeff: input coefficients in each iterariton
     // @w1/w2: weight for geometric entropy and regularity
-    double getObjectiveFunctionValue(const double *wholeCoeff, double w1, double w2) const;
+    double getObjectiveFunctionValue(const double *wholeCoeff, double w1, double w2);
 
     // Description: Override operator (). Required by min_newuoa.
     // Parameter: @coeff: the pointer to coefficients
@@ -47,7 +47,7 @@ public:
 private:
     bool isCorrectMove(double *coeff, int length, double moveDis);
     double computeSRepImageMatch(double weight, double dilationFactor);
-    void M3DNewuoaOptimizer::interpolateSRep(std::vector<M3DSpoke> *outputSpokes);
+    void interpolateSRep(std::vector<M3DSpoke> *outputSpokes);
 private:
 
     char* mVarFileDir;

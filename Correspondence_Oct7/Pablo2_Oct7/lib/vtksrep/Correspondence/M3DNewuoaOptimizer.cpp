@@ -140,7 +140,7 @@ double M3DNewuoaOptimizer::computeSRepImageMatch(double weight, double dilationF
 
     MatchUtility::max_dist = max_dist;
 	MatchUtility::min_dist = min_dist;
-	MatchUtility::nPoints = numPoints;
+	MatchUtility::nPoints = pointsNum;
 	MatchUtility::avg_dist = avg_dist;
 	MatchUtility::avg_dist_squared = match;
     return match;
@@ -154,13 +154,14 @@ void M3DNewuoaOptimizer::interpolateSRep(std::vector<M3DSpoke> *outputSpokes)
 }
 
 /* Compute the total entropy. */
-double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double w1, double w2) const {
+double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double w1, double w2)
+{
     double objFunctionValue = 0.0;
     // coeff are now lengths of spokes
     // 0. Update new length to each spoke
     
     // 1. Image match
-    w_ImageMatch = 9999;
+    double w_ImageMatch = 9999;
     double dilationFactor = 0.0; 
     objFunctionValue += computeSRepImageMatch(w_ImageMatch, dilationFactor);
     return objFunctionValue;

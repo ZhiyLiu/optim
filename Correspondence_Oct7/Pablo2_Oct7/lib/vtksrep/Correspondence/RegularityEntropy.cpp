@@ -6,7 +6,7 @@
 #include "RegularityEntropy.h"
 
 RegularityEntropy::RegularityEntropy()
-    :mCoeff(nullptr){
+{
 
 }
 
