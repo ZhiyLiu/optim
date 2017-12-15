@@ -11,6 +11,7 @@
 #include "toolsfunc.h"
 #include "M3DQuadFigure.h"
 #include "movespokes.h"
+#include "M3DAtomPredictorQuad.h"
 
 M3DNewuoaOptimizer::M3DNewuoaOptimizer(char* mVarFileDir, const std::vector< std::string > &inputSreps, int interpolationLevel, int spokeType) :
     mInterpolationLevel(interpolationLevel),
@@ -88,7 +89,15 @@ double M3DNewuoaOptimizer::getCost(const double *coeff) {
     return getObjectiveFunctionValue(coeff, w1, w2);
 }
 
-double M3DNewuoaOptimizer::computeSRepImageMatch(double weight, double dilationFactor)
+double M3DNewuoaOptimizer::computeSradPenalty()
+{
+    double sradPenalty = 0.0;
+    M3DAtomPredictorQuad *atomPredictor = new M3DAtomPredictorQuad();
+//    sradPenalty = atomPredictor->getRSradPenalty();
+    return sradPenalty;
+}
+
+double M3DNewuoaOptimizer::computeSRepImageMatch(double dilationFactor)
 {
     double match = 0.0;
     toolsfunc tools;
@@ -153,77 +162,53 @@ void M3DNewuoaOptimizer::interpolateSRep(std::vector<M3DSpoke> *outputSpokes)
     // TODO: interpolator should be singleton tool manufactured by a factory to provide utilities
 }
 
+/* Update spoke properties after each optimization */
+void M3DNewuoaOptimizer::updateSpokes(const double *coeff)
+{
+    try
+    {
+        std::vector<M3DSpoke> allSpokes;
+        for(int i = 0; i < allSpokes.size(); ++i)
+        {
+            allSpokes[i].setR(exp(coeff[i]));
+        }
+    }
+    catch(std::exception& e)
+    {
+        std::cout << "[Error]updateSpokes has an exception" << std::endl;
+    }
+}
 /* Compute the total entropy. */
 double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double w1, double w2)
 {
+    // input coeff from newuoa is the coeff of length. it could be positive or negative
+    updateSpokes(coeff);
+    
     double objFunctionValue = 0.0;
     // coeff are now lengths of spokes
     // 0. Update new length to each spoke
     
     // 1. Image match
+    // TODO: should read from config file
     double w_ImageMatch = 9999;
-    double dilationFactor = 0.0; 
-    objFunctionValue += computeSRepImageMatch(w_ImageMatch, dilationFactor);
+    double w_sradPenalty = 1.0;
+    double dilationFactor = 0.0;
+
+    // measure sum square of distance from implied boundary to expected image boundary
+    double imageMatch = computeSRepImageMatch(dilationFactor);
+
+    // measure how far from regular srep model
+    double sradPenalty = computeSradPenalty();
+
+    objFunctionValue = w_ImageMatch * imageMatch + w_sradPenalty * sradPenalty;
     return objFunctionValue;
-/*    //Step 1: Move spokes, compute the regularity entropy and save geometry matrix to .txt.
-    movespokes mSpokes(mVarFileDir, mTotalDimensions, this->mQuadFigList.size(), mSpokeType, this->mInterpolationLevel);
-    double regEntropy = mSpokes.calculateRegEntropy(coeff,this->mShiftingQuadFig, mSubdivisions, mTotalDimensions, mQuadFigList, mSrepFigList);
-    w1; w2;
-    return regEntropy;
-
-    toolsfunc tools;
-
-    //Step 2: Call matlab script to compute geometry entropy.
-    //matlab -nodesktop -nodisplay -nojvm -nosplash -r "dataDir='/work/ltu/WorkSpace/Sep_3_newFeature/downSide/temp_data/';geoEntropy"
-    string s = string("matlab -nodesktop -nodisplay -nojvm -nosplash -singleCompThread -r ") + '"' + string("dataDir='") + tools.connectStr(mVarFileDir, "/temp_data/");
-
-    string script_str;
-    if(this->mSpokeType == 0)
-        script_str = s + string("';upSide") + '"';
-    else if(this->mSpokeType == 1)
-        script_str = s + string("';downSide") + '"';
-    else
-        script_str = s + string("';crestSide") + '"';
-
-    int returnValue1 = system(script_str.c_str());
-    if (returnValue1 != 0 ) std::cout << "something has happened in Matlab, following value returned: " << returnValue1 << std::endl;
-
-
-    //Step 3: Read the geo entropy from .txt
-    string geoEntropyResultPath = tools.connectStr(tools.connectStr(mVarFileDir, "/temp_data/"), "geoEntropyResult.txt");
-    ifstream myfile(geoEntropyResultPath.c_str());
-    string line;
-    double geoEntropy = 0;
-    if (myfile.is_open()) {
-        while ( getline (myfile,line) )
-        {
-            geoEntropy = atof(line.c_str());
-            std::cout <<"----geoEntropy: "<<geoEntropy<<std::endl;
-        }
-        myfile.close();
-    }
-
-    else std::cout << "Unable to open file: " << geoEntropyResultPath << std::endl;
-
-    double objectFuc = w1*geoEntropy - w2*regEntropy;
-    std::cout <<"----objective function: "<<objectFuc<<std::endl;
-
-    return objectFuc;
-*/
 }
 double M3DNewuoaOptimizer::operator() (double *coeff) {
         this->mIterationCounter++;
         std::cout<<"The "<<this->mIterationCounter<<"th iteration. "<<std::endl;
 
         double cost = 0.0;
-        if(isCorrectMove(coeff, this->mTotalDimensions, 1)){
-            // call the cost function defined in optimizationusingnewuoa
-            cost = this->getCost(coeff);
-        }
-        else {
-            cost = 10000.1;
-        }
-
+        cost = this->getCost(coeff);
         // output the coeff every 1000 iteration
         if(this->mIterationCounter%500 == 0){
             std::cout<<"Variables: ";
@@ -236,62 +221,19 @@ double M3DNewuoaOptimizer::operator() (double *coeff) {
         return cost;
 }
 
-int M3DNewuoaOptimizer::perform(const char* logFileName, bool initialOpt) {
-    using namespace std;
+/* Main entry of optimizer */
+int M3DNewuoaOptimizer::perform(const std::string& srep) {
+    // initialize
+    
     //std::cout<<"this->mTotalDimensions---------"<<this->mTotalDimensions<<std::endl;
-    double *changingUV = new double [this->mTotalDimensions];
     double *coeffOfLength = new double[this->mTotalDimensions];  // optimize length's coefficients instead of length itself, to avoid negative length output by newuoa
 
-    // for the first optimization, all the coeff set to 0.
-    if(initialOpt){
-        for(unsigned int i =0;i<this->mTotalDimensions;i++){
-            changingUV[i] = 0.0;
-            coeffOfLength[i] = 1.0;
-        }
+    for(unsigned int i =0;i<this->mTotalDimensions;i++){
+        coeffOfLength[i] = 1.0;
     }
-    else {
-        string varFilePath = string(this->mVarFileDir) + string("/vars.txt");
-        ifstream ss(varFilePath.c_str());
+    min_newuoa(this->mTotalDimensions,coeffOfLength,*this,0.1, 0.000001, 30000);
 
-        if (! ss.is_open()){
-            std::cerr << "Msg from optimizationusingnewuoa::callower: Unable to open the vars file \"" << varFilePath << "\"!" << std::endl;
-            return 1;
-        }
-
-        string token;
-
-        int i = 0;
-        while (ss >> token && i <this->mTotalDimensions) {
-            changingUV[i] = atof(token.c_str());
-            i++;
-        }
-    }
-
-    std::ofstream out(logFileName, std::ios_base::out | std::ios_base::app);
-    std::streambuf *coutbuf = std::cout.rdbuf(); //save old buf
-    std::cout.rdbuf(out.rdbuf()); //redirect std::cout to out.txt!
-
-    min_newuoa(this->mTotalDimensions,changingUV,*this,0.1, 0.000001, 30000);
-
-    //std::cout<<", The objectFunction is: "<<cost(ary)<<std::endl;
-
-    delete changingUV;
-
-    //reset to standard output
-    std::cout.rdbuf(coutbuf);
-
+    delete[] coeffOfLength;
     return 0;
 
-}
-
-bool M3DNewuoaOptimizer::isCorrectMove( double *coeff, int length, double moveDis) {
-    // If one of the coeff generated is bigger than 1 or smaller than -1, throw away this tuple.
-    for(unsigned int i = 0; i < length; i++){
-        if(coeff[i] > moveDis || coeff[i] < -moveDis){
-            std::cout << "Step bigger than 0.5, throw away!" << std::endl;
-            return false;
-        }
-    }
-
-    return true;
 }

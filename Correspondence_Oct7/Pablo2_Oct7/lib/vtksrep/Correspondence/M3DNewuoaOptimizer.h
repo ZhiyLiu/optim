@@ -42,12 +42,13 @@ public:
     // input: logFileName- the whole path of  output log file
     // input: initalOpt- whether or not this is first iteration
     // return: error code
-    int perform(const char* logFileName, bool initialOpt);
+    int perform(const std::string& srep);
 
 private:
-    bool isCorrectMove(double *coeff, int length, double moveDis);
-    double computeSRepImageMatch(double weight, double dilationFactor);
+    double computeSRepImageMatch(double dilationFactor);
+    double computeSradPenalty();
     void interpolateSRep(std::vector<M3DSpoke> *outputSpokes);
+    void updateSpokes(const double *coeff); // update spokes after each optimization
 private:
 
     char* mVarFileDir;
