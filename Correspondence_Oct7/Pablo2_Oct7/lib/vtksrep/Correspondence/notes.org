@@ -5,3 +5,7 @@
 ** AverageNeighbor
 *** Radius
 *** Curviness
+
+* Problems
+** no function srepfig->SetAllSpokesRadius(allradius);?????
+** return value in M3DInterpolater.interpolateSpoke becomes M3DSpoke*?????

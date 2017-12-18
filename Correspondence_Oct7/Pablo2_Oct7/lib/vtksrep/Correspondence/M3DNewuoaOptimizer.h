@@ -22,12 +22,7 @@ class M3DNewuoaOptimizer : public OptimizerBase
 public:
     M3DNewuoaOptimizer();
 
-    M3DNewuoaOptimizer(char* rootDir, const std::vector< std::string > &inputSreps, int interpolationLevel, int spokeType);
-    void initialize();
-
-    // Description: Return a cost value, with hard-coded weight currently. The cost function was iterated automaticly by the optimizer, each time it change the values of coeff, we use the new coeff
-    //Parameter: coeff is a N*46 dimesion arrary. Store the 46 spoke's u or v of all sreps. We will split this array to get each 46 for one srep.
-    double getCost(const double *coeff);
+    M3DNewuoaOptimizer(M3DObject* sreps);
 
     // Description: Return a cost value computed according to pre-defined entropy minimization objective function
     // Parameter: @coeff: input coefficients in each iterariton
@@ -39,28 +34,36 @@ public:
     double operator () (double *coeff);
 
     // major entry to invoke this optimizer
-    // input: logFileName- the whole path of  output log file
-    // input: initalOpt- whether or not this is first iteration
+    // Each object might contain multiple figures
+    // Each figure is an srep. But currently each object has only one srep
     // return: error code
-    int perform(const std::string& srep);
+    int perform();
 
+    // Set object want to optimize
+    // Each object might contain multiple figures
+    // Each figure is an srep. But currently each object has only one srep
+    void setObject(M3DObject* sreps);
 private:
-    double computeSRepImageMatch(double dilationFactor);
     double computeSradPenalty();
+    
     void interpolateSRep(std::vector<M3DSpoke> *outputSpokes);
-    void updateSpokes(const double *coeff); // update spokes after each optimization
-private:
+    
+     // update a figure after each optimization 
+    void updateFigure(const double *coeff, int figureId);
+    
+    // Description: interpolate crest spokes
+    // Input: interpolation level
+    // Output: crestSpokes
+    void interpolateCrestSpokes(int interpolationLevel, std::vector<M3DSpoke>* crestSpokes);
 
-    char* mVarFileDir;
-    int   mInterpolationLevel;
-    int   mSpokeType; // 0-upSide 1-downSide 2-crest spoke
-    int   mTotalDimensions;
-    int   mIterationCounter;
-    M3DQuadFigure*    mShiftingQuadFig;
-    std::vector<double> mSubdivisions; // get subdivision ( 2D array) according to interpolation level
-    std::vector<std::string> mInputSreps;
-    std::vector<M3DQuadFigure *> mQuadFigList; //holding the input sreps. Reading in before iteration.
-    std::vector<vtkSmartPointer<vtkSRep> > mSrepFigList; // hoding srepfig, used for crest spoke interpolate.
+    // Description: generate vtk srep data structure
+    // Input: quad figure
+    // Output: vtk srep
+    void generateVtkSrep(M3DQuadFigure* quadfig, vtkSmartPointer<vtkSRep>& srepfig);
+private:
+    M3DObject* mSreps;
+    std::vector<M3DSpoke> mSpokesAfterInterp; // all spokes after interpolation
+    int mFigureIndex = 0; // The figure user want to optimize, currently have only one
 };
 
 #endif /* M3DNEWUOAOPTIMIZER_H */
