@@ -306,6 +306,7 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
     // measure sum square of distance from implied boundary to expected image boundary
     SimilarityComputer similarityCompter;
     similarityCompter.setSrepModel(mSpokesAfterInterp);
+    similarityCompter.setTargetImage(mSignedDistanceImage);
 
     double imageMatch = 0.0;
     if(similarityCompter.compute(&imageMatch) == false)
@@ -320,10 +321,16 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
     objFunctionValue = w_ImageMatch * imageMatch + w_sradPenalty * sradPenalty;
     return objFunctionValue;
 }
-double M3DNewuoaOptimizer::operator() (double *coeff) {
-        double cost = 0.0;
-        cost = this->getObjectiveFunctionValue(coeff, 15, 1);
-        return cost;
+double M3DNewuoaOptimizer::operator() (double *coeff)
+{
+    double cost = 0.0;
+    cost = this->getObjectiveFunctionValue(coeff, 15, 1);
+    return cost;
+}
+
+void M3DNewuoaOptimizer::setImage(ImageDistanceMap* imageDistanceMap)
+{
+    mSignedDistanceImage = imageDistanceMap;
 }
 
 void M3DNewuoaOptimizer::setObject(M3DObject* sreps)
@@ -333,9 +340,9 @@ void M3DNewuoaOptimizer::setObject(M3DObject* sreps)
 /* Main entry of optimizer */
 int M3DNewuoaOptimizer::perform()
 {
-    if(mSreps == NULL)
+    if(mSreps == NULL || mSignedDistanceImage == NULL)
     {
-        std::cout << "[Error]object is empty in perform function" << std::endl;
+        std::cout << "[Error]object or signed distance image is empty in perform function" << std::endl;
         return -1;
     }
     

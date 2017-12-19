@@ -16,6 +16,7 @@
 
 
 class M3DQuadFigure;
+class ImageDistanceMap;
 
 class M3DNewuoaOptimizer : public OptimizerBase
 {
@@ -43,6 +44,10 @@ public:
     // Each object might contain multiple figures
     // Each figure is an srep. But currently each object has only one srep
     void setObject(M3DObject* sreps);
+
+    // Description: Set signed distance image related to srep model
+    // Input: signed distance image
+    void setImage(ImageDistanceMap* imageDistanceMap);
 private:
     double computeSradPenalty();
     
@@ -61,9 +66,10 @@ private:
     // Output: vtk srep
     void generateVtkSrep(M3DQuadFigure* quadfig, vtkSmartPointer<vtkSRep>& srepfig);
 private:
-    M3DObject* mSreps;
-    std::vector<M3DSpoke> mSpokesAfterInterp; // all spokes after interpolation
-    int mFigureIndex = 0; // The figure user want to optimize, currently have only one
+    M3DObject*              mSreps;
+    ImageDistanceMap*       mSignedDistanceImage;
+    std::vector<M3DSpoke>   mSpokesAfterInterp; // all spokes after interpolation
+    int                     mFigureIndex = 0; // The figure user want to optimize, currently have only one
 };
 
 #endif /* M3DNEWUOAOPTIMIZER_H */
