@@ -107,6 +107,8 @@ m3d
   #----------------------------------------------------------------------------
 
   #---------------------------------------------------------------------------
+  add_executable(optimize testNewuoa.cpp)
+  target_link_libraries(optimize ${${LIBRARY_NAME}_LINK_LIBRARIES})
 ENDIF ( BUILD_${LIBRARY_NAME} )
 
 

@@ -6,6 +6,7 @@
 #include "SimilarityComputer.h"
 #include "M3DSpoke.h"
 #include "ImageDistanceMap.h"
+#include "toolsfunc.h"
 
 SimilarityComputer::SimilarityComputer():
     mDistanceImage(NULL){}
@@ -17,7 +18,7 @@ void SimilarityComputer::setTargetImage(ImageDistanceMap* target)
 
 void SimilarityComputer::setSrepModel(std::vector<M3DSpoke>& spokes)
 {
-    mSpokes.assign(spokes);
+    mSpokes = spokes;
 }
 
 bool SimilarityComputer::compute(double *similarityMeasure)
@@ -53,7 +54,6 @@ bool SimilarityComputer::compute(double *similarityMeasure)
     {
         double distance = fabs(mDistanceImage->getDistance(surfacePoints[i]) - dilationFactor);
 
-        double distance = 0.0;
         if(distance > max_dist)
         {
             max_dist = distance;
@@ -78,6 +78,6 @@ bool SimilarityComputer::compute(double *similarityMeasure)
 	MatchUtility::avg_dist = avg_dist;
 	MatchUtility::avg_dist_squared = match;
     
-    similarityMeasure = match;
+    *similarityMeasure = match;
     return true;
 }

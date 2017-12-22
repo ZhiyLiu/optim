@@ -302,8 +302,11 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
     // TODO: should read from config file
     double w_ImageMatch = 9999;
     double w_sradPenalty = 1.0;
-    
-    // measure sum square of distance from implied boundary to expected image boundary
+
+    // 1.1 Interpolate spokes
+    interpolateSRep(&mSpokesAfterInterp);
+
+    // 1.2 measure sum square of distance from implied boundary to expected image boundary
     SimilarityComputer similarityCompter;
     similarityCompter.setSrepModel(mSpokesAfterInterp);
     similarityCompter.setTargetImage(mSignedDistanceImage);
@@ -346,10 +349,7 @@ int M3DNewuoaOptimizer::perform()
         return -1;
     }
     
-    // 1. Interpolate spokes
-    interpolateSRep(&mSpokesAfterInterp);
-
-    // 2. optimization
+    // optimization
     M3DFigure* figure = mSreps->getFigurePtr(mFigureIndex);
     int spokeCount = figure->getSpokeCount();
     double *coeffOfLength = new double[spokeCount];  // optimize length's coefficients instead of length itself, to avoid negative length output by newuoa
