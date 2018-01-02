@@ -302,6 +302,7 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
     // TODO: should read from config file
     double w_ImageMatch = 9999;
     double w_sradPenalty = 1.0;
+    double w_srepModelPenalty = 99;  // may be too large, was 10
 
     // 1.1 Interpolate spokes
     interpolateSRep(&mSpokesAfterInterp);
@@ -321,7 +322,14 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
     // 2. measure how far from regular srep model
     double sradPenalty = computeSradPenalty();
 
-    objFunctionValue = w_ImageMatch * imageMatch + w_sradPenalty * sradPenalty;
+    // 3. spoke model penalty
+    DistanceType distType = (enum DistanceType) (int) tuningWt(BpSpokeDistanceType);
+    double spokeModelpenalty = mSreps->dist2FromObject(mSreps->loadedObject(),
+				mFigureIndex, distType);
+
+    objFunctionValue = w_ImageMatch * imageMatch + w_sradPenalty * sradPenalty
+        + w_srepModelPenalty * spokeModelpenalty;
+    
     return objFunctionValue;
 }
 double M3DNewuoaOptimizer::operator() (double *coeff)
