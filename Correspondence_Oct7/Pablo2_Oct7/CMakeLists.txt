@@ -242,5 +242,5 @@ ADD_SUBDIRECTORY(data)
 ADD_SUBDIRECTORY(install)
 #==================================
 
-
+  set(CMAKE_BUILD_TYPE Debug)
 

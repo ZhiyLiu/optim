@@ -18,7 +18,7 @@
 class M3DQuadFigure;
 class ImageDistanceMap;
 
-class M3DNewuoaOptimizer : public OptimizerBase
+class M3DNewuoaOptimizer
 {
 public:
     M3DNewuoaOptimizer();
@@ -38,7 +38,8 @@ public:
     // Each object might contain multiple figures
     // Each figure is an srep. But currently each object has only one srep
     // return: error code
-    int perform();
+    // output: s-rep model at optimum
+    int perform(M3DObject* outputModel);
 
     // Set object want to optimize
     // Each object might contain multiple figures

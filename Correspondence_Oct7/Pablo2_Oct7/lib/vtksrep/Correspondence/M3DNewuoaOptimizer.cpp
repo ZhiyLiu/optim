@@ -341,7 +341,7 @@ void M3DNewuoaOptimizer::setObject(M3DObject* sreps)
     mSreps = sreps;
 }
 /* Main entry of optimizer */
-int M3DNewuoaOptimizer::perform()
+int M3DNewuoaOptimizer::perform(M3DObject* outputModel)
 {
     if(mSreps == NULL || mSignedDistanceImage == NULL)
     {
@@ -360,6 +360,7 @@ int M3DNewuoaOptimizer::perform()
     min_newuoa(spokeCount,coeffOfLength,*this,0.1, 0.000001, 30000);
 
     // coeffOfLength here is variable at optimum
+    outputModel = mSreps;
     delete[] coeffOfLength;
     return 0;
 
