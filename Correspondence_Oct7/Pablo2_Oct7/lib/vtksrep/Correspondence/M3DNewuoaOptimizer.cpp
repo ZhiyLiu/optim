@@ -182,8 +182,8 @@ void M3DNewuoaOptimizer::generateVtkSrep(M3DQuadFigure* quadfig, vtkSmartPointer
     srepfig->SetPoints(hubpos);
     srepfig->SetPolys(cellarray);
     srepfig->SetAllSpokes(allspokes);
-//    srepfig->SetAllSpokesRadius(allradius);
-    //srepfig->SetGridTopolgyIds(pointsIds);
+    srepfig->SetAllRadius(allradius);
+//    srepfig->SetGridTopolgyIds(pointsIds);
 
     for(unsigned i = 0; i < pointsIds.size(); i++){
         pointsIds[i].clear();
@@ -215,15 +215,14 @@ void M3DNewuoaOptimizer::interpolateCrestSpokes(int interpolationLevel, std::vec
     vtkSmartPointer<vtkSRepInterpolateCrestSpokesQuartic> interpolatecrestspokes = vtkSmartPointer<vtkSRepInterpolateCrestSpokesQuartic>::New();
     interpolatecrestspokes->SetInput(srepfig);
     interpolatecrestspokes->SetInterpolationLevel(interpolationLevel);
-    interpolatecrestspokes->SetAtomId(vtkAtomId);
+//    interpolatecrestspokes->SetAtomId(vtkAtomId);
 
-    interpolatecrestspokes->SetGamma_t(1);
-    interpolatecrestspokes->SetGamma_theta(1);
+//    interpolatecrestspokes->SetGamma_t(1);
+//    interpolatecrestspokes->SetGamma_theta(1);
 
     interpolatecrestspokes->SetSpokeType(vtkSRep::CREST_SPOKE);
-    
-    interpolatecrestspokes->Update();
 
+    interpolatecrestspokes->Update();
     vtkSRep* srepcrest = interpolatecrestspokes->GetSRepOutput();
 
 
@@ -327,6 +326,8 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
     double spokeModelpenalty = mSreps->dist2FromObject(mSreps->loadedObject(),
 				mFigureIndex, distType);
 
+    // 4. image normal match
+//    double imageNormalMatch = 
     objFunctionValue = w_ImageMatch * imageMatch + w_sradPenalty * sradPenalty
         + w_srepModelPenalty * spokeModelpenalty;
     
