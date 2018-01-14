@@ -104,6 +104,6 @@ int main(int argc, char** argv)
 
     M3DObjectFile objectFile;
     objectFile.write("out.m3d", *modelAfterOptimizer);
-    delete modelAfterOptimizer;
+    // delete modelAfterOptimizer;
     return 0;
 }

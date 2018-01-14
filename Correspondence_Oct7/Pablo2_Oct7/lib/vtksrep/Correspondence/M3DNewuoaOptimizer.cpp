@@ -244,12 +244,20 @@ void M3DNewuoaOptimizer::interpolateCrestSpokes(int interpolationLevel, std::vec
 
 }
 
+int iterNum = 0;
 /* Update spoke properties after each optimization */
 void M3DNewuoaOptimizer::updateFigure(const double *coeff, int figureId)
 {
     try
     {
+        std::cout << "Updating figure id: " << figureId << ", after the " << iterNum++ << "th iteration" << std::endl;
+        
         M3DFigure* figure = mSreps->getFigurePtr(figureId);
+        int spokeCount = figure->getSpokeCount();
+        for(int iSpoke = 0; iSpoke < spokeCount; ++iSpoke)
+        {
+            std::cout << "The length of the " << iSpoke + 1 << "th spoke is:" << exp(coeff[iSpoke]) << std::endl;
+        }
         int primitiveCount = figure->getPrimitiveCount();
         for(int i = 0; i < primitiveCount; ++i)
         {
@@ -299,9 +307,9 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
 
     // 1. Image match
     // TODO: should read from config file
-    double w_ImageMatch = 9999;
+    double w_ImageMatch = 9.0;
     double w_sradPenalty = 1.0;
-    double w_srepModelPenalty = 99;  // may be too large, was 10
+    double w_srepModelPenalty = 9.0;  // may be too large, was 10
 
     // 1.1 Interpolate spokes
     interpolateSRep(&mSpokesAfterInterp);
