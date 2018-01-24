@@ -51,25 +51,13 @@ public:
     void setImage(ImageDistanceMap* imageDistanceMap);
 private:
     double computeSradPenalty();
-    
-    void interpolateSRep(std::vector<M3DSpoke> *outputSpokes);
-    
+
      // update a figure after each optimization 
     void updateFigure(const double *coeff, int figureId);
-    
-    // Description: interpolate crest spokes
-    // Input: interpolation level
-    // Output: crestSpokes
-    void interpolateCrestSpokes(int interpolationLevel, std::vector<M3DSpoke>* crestSpokes);
 
-    // Description: generate vtk srep data structure
-    // Input: quad figure
-    // Output: vtk srep
-    void generateVtkSrep(M3DQuadFigure* quadfig, vtkSmartPointer<vtkSRep>& srepfig);
 private:
     M3DObject*              mSreps;
     ImageDistanceMap*       mSignedDistanceImage;
-    std::vector<M3DSpoke>   mSpokesAfterInterp; // all spokes after interpolation
     int                     mFigureIndex = 0; // The figure user want to optimize, currently have only one
 };
 

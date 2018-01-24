@@ -102,8 +102,5 @@ int main(int argc, char** argv)
     M3DObject* modelAfterOptimizer = new M3DObject;
     optimizer.perform(modelAfterOptimizer);
 
-    M3DObjectFile objectFile;
-    objectFile.write("out.m3d", *modelAfterOptimizer);
-    // delete modelAfterOptimizer;
     return 0;
 }

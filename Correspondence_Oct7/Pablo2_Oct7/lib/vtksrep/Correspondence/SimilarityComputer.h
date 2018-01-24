@@ -7,9 +7,16 @@
 #define _SIMILARITYCOMPUTER_H_
 
 #include <vector>
+#include <string>
+#include "vtksrep.h"
+#include <vtkSmartPointer.h>
 
-class M3DSpoke;
+class M3DObject;
 class ImageDistanceMap;
+class M3DSpoke;
+class M3DQuadFigure;
+class M3DQuadPrimitive;
+class M3DFigure;
 
 class SimilarityComputer {
 public:
@@ -21,7 +28,9 @@ public:
 
     // Description: srep model want to compare to target image above
     // Input: all spokes after interpolation
-    void setSrepModel(std::vector<M3DSpoke>& spokes);
+    void setSrepModel(M3DObject* spokes);
+
+    void setTargetFigureIndex(int figureId);
 
     // Description: start to compute similarity measure
     // Output: similarity measure
@@ -29,9 +38,37 @@ public:
     bool compute(double *similarityMeasure);
 
 private:
+    // Description: interpolate around a spoke
+    // Input: figure, quadAtom, atomId, spokeId
+    // Output: neighbor spokes
+    void getRelevantSpokes(M3DFigure* figure, M3DQuadPrimitive* quadAtom, int atomId, int spokeId, std::vector<M3DSpoke*>* outSpokes);
+
+    // Description: interpolate crest spokes
+    // Input: interpolation level
+    // Output: crestSpokes
+    void GetCrestSpokes(vtkSmartPointer<vtkSRep> srepfig, int level, vector<M3DSpoke*>& spokes, bool istube = false, vtkIdType atomId = -1, int spokeId = -1);
+
+    // Description: generate vtk srep data structure
+    // Input: figure which needs interpolation
+    // Input: u/v 
+    // Output: new spoke in the middle of the quad
+    M3DSpoke* interpolateSpoke(M3DFigure *figure, double u, double v, int side);
+    
+    // Description: generate vtk srep data structure
+    // Input: quad figure
+    // Output: vtk srep
+    // Return: vtk id
+    vtkIdType GetVtkSrepFig(M3DFigure* figure, vtkSmartPointer<vtkSRep>& srepfig, int atomId=-1);
+
+    // Description: get sum of squared distance between spokes and image
+    double getSSD(std::vector<M3DSpoke*>& spokes);
+private:
     ImageDistanceMap* mDistanceImage;
-    std::vector<M3DSpoke> mSpokes; // spokes after interpolation
+    M3DObject*        mSreps; // spokes after interpolation
+    int               mFigureIndex;
 };
+
+
 
 #endif
 
