@@ -108,6 +108,7 @@ m3d
 
   #---------------------------------------------------------------------------
   add_executable(optimize testNewuoa.cpp)
+  add_executable(toy testDemo.cpp)
   target_link_libraries(optimize ${${LIBRARY_NAME}_LINK_LIBRARIES})
   set(CMAKE_BUILD_TYPE Debug)
 ENDIF ( BUILD_${LIBRARY_NAME} )

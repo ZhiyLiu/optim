@@ -70,6 +70,11 @@ void SimilarityComputer::setTargetFigureIndex(int figureId)
     mFigureIndex = figureId;
 }
 
+void SimilarityComputer::setFigure(M3DQuadFigure* f)
+{
+    mFigure = f;
+}
+
 bool SimilarityComputer::compute(double *similarityMeasure)
 {
     // step 1: validate data
@@ -83,7 +88,7 @@ bool SimilarityComputer::compute(double *similarityMeasure)
     toolsfunc tools;
 
     // step 2: for each spoke, compute image match nearby interpolated neighbors.
-    M3DFigure* figure = mSreps->getFigurePtr(mFigureIndex);
+    M3DFigure* figure = mFigure;
     int spokeCount = figure->getSpokeCount();
     // get all the spokes
     int primitiveCount = figure->getPrimitiveCount();
@@ -107,7 +112,9 @@ bool SimilarityComputer::compute(double *similarityMeasure)
 
         double topDistance = getSSD(topNeighbors);
         double botDistance = getSSD(botNeighbors);
-        totalDistance = topDistance + botDistance;
+        totalDistance = max(totalDistance, topDistance);
+        totalDistance = max(totalDistance, botDistance);
+//        totalDistance += topDistance + botDistance;
 
         topNeighbors.clear();
         botNeighbors.clear();
@@ -122,11 +129,16 @@ bool SimilarityComputer::compute(double *similarityMeasure)
 
             std::vector<M3DSpoke*> endNeighbors;
             getRelevantSpokes(figure, quadAtom, i, 2, &endNeighbors);
-            totalDistance += getSSD(endNeighbors);
+            double endDistance = getSSD(endNeighbors);
+            totalDistance = max(totalDistance, endDistance);
 
             endNeighbors.clear();
         }
 
+        if(totalDistance > 148)
+        {
+            int temp = 1;
+        }
     }
 
     *similarityMeasure = totalDistance;
@@ -271,7 +283,7 @@ void SimilarityComputer::getRelevantSpokes(M3DFigure* f, M3DQuadPrimitive* quadA
             }
         }
 
-        if(dynamic_cast<M3DQuadEndPrimitive*>(quadAtom) != 0){
+        if(spokeId == 2){
             vtkSmartPointer<vtkSRep> srepfig = vtkSmartPointer<vtkSRep>::New();
             vtkIdType vtkAtomId = GetVtkSrepFig(figure, srepfig);
             GetCrestSpokes(srepfig, 2, *outSpokes,false, vtkAtomId, spokeId);

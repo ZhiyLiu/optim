@@ -3,7 +3,7 @@
  * Zhiyuan Liu
  * 2017.11
  */
-#include "M3DNewuoaOptimizer.h"
+#include "M3DSpokeLengthOptimizer.h"
 #include <ctime>
 #include <iostream>
 #include <exception>
@@ -15,10 +15,10 @@
 #include "SimilarityComputer.h"
 #include "M3DObjectFile.h"
 
-M3DNewuoaOptimizer::M3DNewuoaOptimizer()
+M3DSpokeLengthOptimizer::M3DSpokeLengthOptimizer()
     :mSreps(NULL){}
 
-M3DNewuoaOptimizer::M3DNewuoaOptimizer(M3DObject* sreps)
+M3DSpokeLengthOptimizer::M3DSpokeLengthOptimizer(M3DObject* sreps)
 {
     if(sreps != NULL)
     {
@@ -26,7 +26,7 @@ M3DNewuoaOptimizer::M3DNewuoaOptimizer(M3DObject* sreps)
     }
 }
 
-double M3DNewuoaOptimizer::computeSradPenalty()
+double M3DSpokeLengthOptimizer::computeSradPenalty()
 {
     double sradPenalty = 0.0;
     // assume figure is quad figure
@@ -38,7 +38,7 @@ double M3DNewuoaOptimizer::computeSradPenalty()
 
 int iterNum = 0;
 /* Update spoke properties after each optimization */
-void M3DNewuoaOptimizer::updateFigure(const double *coeff, int figureId)
+void M3DSpokeLengthOptimizer::updateFigure(const double *coeff, int figureId)
 {
     try
     {
@@ -119,7 +119,7 @@ void M3DNewuoaOptimizer::updateFigure(const double *coeff, int figureId)
     }
 }
 /* Compute the total entropy. */
-double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double w1, double w2)
+double M3DSpokeLengthOptimizer::getObjectiveFunctionValue(const double *coeff, double w1, double w2)
 {
     // input coeff from newuoa is the coeff of length. it could be positive or negative
 
@@ -165,25 +165,25 @@ double M3DNewuoaOptimizer::getObjectiveFunctionValue(const double *coeff, double
     
     return objFunctionValue;
 }
-double M3DNewuoaOptimizer::operator() (double *coeff)
+double M3DSpokeLengthOptimizer::operator() (double *coeff)
 {
     double cost = 0.0;
     cost = this->getObjectiveFunctionValue(coeff, 15, 1);
     return cost;
 }
 
-void M3DNewuoaOptimizer::setImage(ImageDistanceMap* imageDistanceMap)
+void M3DSpokeLengthOptimizer::setImage(ImageDistanceMap* imageDistanceMap)
 {
     mSignedDistanceImage = imageDistanceMap;
 }
 
-void M3DNewuoaOptimizer::setObject(M3DObject* sreps)
+void M3DSpokeLengthOptimizer::setObject(M3DObject* sreps)
 {
     mSreps = sreps;
 }
 
 /* Main entry of optimizer */
-int M3DNewuoaOptimizer::perform(M3DObject* outputModel)
+int M3DSpokeLengthOptimizer::perform(M3DObject* outputModel)
 {
     if(mSreps == NULL || mSignedDistanceImage == NULL)
     {

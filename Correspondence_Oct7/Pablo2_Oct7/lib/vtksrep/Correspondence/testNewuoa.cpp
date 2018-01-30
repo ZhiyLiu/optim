@@ -1,5 +1,5 @@
 #include <iostream>
-#include "M3DNewuoaOptimizer.h"
+#include "M3DSpokeLengthOptimizer.h"
 //#include "itkImage.h"
 //#include "itkImageFileReader.h"
 #include "ImageDistanceMap.h"
@@ -91,7 +91,7 @@ int main(int argc, char** argv)
     Image3D* image3D = readImage(imagePath);
     ImageDistanceMap* binaryDistanceMap = new ImageDistanceMap(image3D);
     binaryDistanceMap->fromImage3D(image3D);
-    M3DNewuoaOptimizer optimizer;
+    M3DSpokeLengthOptimizer optimizer;
 
     // read model
     M3DObject* object = readModel(modelName);

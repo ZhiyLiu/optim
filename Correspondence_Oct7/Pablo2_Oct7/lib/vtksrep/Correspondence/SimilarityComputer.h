@@ -32,6 +32,8 @@ public:
 
     void setTargetFigureIndex(int figureId);
 
+    void setFigure(M3DQuadFigure* figure);
+
     // Description: start to compute similarity measure
     // Output: similarity measure
     // Returns: true if succeeded, otherwise false
@@ -66,6 +68,7 @@ private:
     ImageDistanceMap* mDistanceImage;
     M3DObject*        mSreps; // spokes after interpolation
     int               mFigureIndex;
+    M3DQuadFigure*    mFigure;
 };
 
 
