@@ -53,8 +53,16 @@
 	}
 
 SimilarityComputer::SimilarityComputer():
-    mDistanceImage(NULL){}
+    mDistanceImage(NULL), mFigure(NULL){}
 
+SimilarityComputer::~SimilarityComputer()
+{
+    if(mFigure != NULL)
+    {
+        delete mFigure;
+        mFigure = NULL;
+    }
+}
 void SimilarityComputer::setTargetImage(ImageDistanceMap* target)
 {
     mDistanceImage = target;
@@ -72,7 +80,12 @@ void SimilarityComputer::setTargetFigureIndex(int figureId)
 
 void SimilarityComputer::setFigure(M3DQuadFigure* f)
 {
-    mFigure = f;
+    if(mFigure != NULL)
+    {
+        delete mFigure;
+        mFigure = NULL;
+    }
+    mFigure = new M3DQuadFigure(*f);
 }
 
 bool SimilarityComputer::compute(double *similarityMeasure)
@@ -88,7 +101,7 @@ bool SimilarityComputer::compute(double *similarityMeasure)
     toolsfunc tools;
 
     // step 2: for each spoke, compute image match nearby interpolated neighbors.
-    M3DFigure* figure = mFigure;
+    M3DFigure* figure = mSreps->getFigurePtr(mFigureIndex);
     int spokeCount = figure->getSpokeCount();
     // get all the spokes
     int primitiveCount = figure->getPrimitiveCount();
@@ -112,9 +125,9 @@ bool SimilarityComputer::compute(double *similarityMeasure)
 
         double topDistance = getSSD(topNeighbors);
         double botDistance = getSSD(botNeighbors);
-        totalDistance = max(totalDistance, topDistance);
-        totalDistance = max(totalDistance, botDistance);
-//        totalDistance += topDistance + botDistance;
+//        totalDistance = max(totalDistance, topDistance);
+//        totalDistance = max(totalDistance, botDistance);
+        totalDistance += topDistance + botDistance;
 
         topNeighbors.clear();
         botNeighbors.clear();
@@ -130,7 +143,8 @@ bool SimilarityComputer::compute(double *similarityMeasure)
             std::vector<M3DSpoke*> endNeighbors;
             getRelevantSpokes(figure, quadAtom, i, 2, &endNeighbors);
             double endDistance = getSSD(endNeighbors);
-            totalDistance = max(totalDistance, endDistance);
+            // totalDistance = max(totalDistance, endDistance);
+            totalDistance+= endDistance;
 
             endNeighbors.clear();
         }

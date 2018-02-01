@@ -21,6 +21,7 @@ class M3DFigure;
 class SimilarityComputer {
 public:
     SimilarityComputer();
+    ~SimilarityComputer();
 
     // Description: Target image want to compare
     // Input: Signed distance image

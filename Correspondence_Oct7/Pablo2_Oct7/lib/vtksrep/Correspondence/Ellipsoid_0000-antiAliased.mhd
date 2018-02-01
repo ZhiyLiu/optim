@@ -1,0 +1,10 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = False
+Offset = 0 0 0 
+ElementSpacing = 0.0234375 0.0234375 0.0234375 
+DimSize = 128 128 128 
+ElementNumberOfChannels = 1
+ElementType = MET_USHORT
+ElementDataFile = Ellipsoid_0000-antiAliased.raw
