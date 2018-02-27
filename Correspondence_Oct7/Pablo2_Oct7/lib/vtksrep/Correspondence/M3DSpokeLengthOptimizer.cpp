@@ -145,7 +145,8 @@ double M3DSpokeLengthOptimizer::getObjectiveFunctionValue(const double *coeff, d
     similarityCompter.setTargetImage(mSignedDistanceImage);
 
     double imageMatch = 0.0;
-    if(similarityCompter.compute(&imageMatch) == false)
+    double normalMatch = 0.0;
+    if(similarityCompter.compute(&imageMatch, &normalMatch) == false)
     {
         std::cout << "[Error]Error encountered when compute similarity measure" << std::endl;
         return -999.0;

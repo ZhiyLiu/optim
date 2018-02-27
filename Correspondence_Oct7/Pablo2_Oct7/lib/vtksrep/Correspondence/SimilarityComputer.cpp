@@ -12,46 +12,6 @@
 #include "M3DAtomPredictorQuad.h"
 #include "M3DObjectFile.h"
 
-	double h1(double s)
-	{
-		return 2*(s * s * s) - 3*(s * s) + 1;
-	}
-
-	double h1p(double s)
-	{
-		return 6*(s * s) - 6*(s);
-	}
-
-	double h2(double s)
-	{
-		return -2*(s * s * s) + 3*(s * s);
-	}
-
-	double h2p(double s)
-	{
-		return -6*(s * s) + 6*(s);
-	}
-
-	double h3(double s)
-	{
-		return (s * s * s) - 2*(s * s) + s;		
-	}
-
-	double h3p(double s)
-	{
-		return 3*(s * s) - 4*(s) + 1;
-	}
-
-	double h4(double s)
-	{
-		return (s * s * s) - (s * s);
-	}
-
-	double h4p(double s)
-	{
-		return 3*(s * s) - 2*(s);
-	}
-
 SimilarityComputer::SimilarityComputer():
     mDistanceImage(NULL), mFigure(NULL){}
 
@@ -88,7 +48,34 @@ void SimilarityComputer::setFigure(M3DQuadFigure* f)
     mFigure = new M3DQuadFigure(*f);
 }
 
-bool SimilarityComputer::compute(double *similarityMeasure)
+double SimilarityComputer::getSpokeNormalMatch(std::vector<M3DSpoke*>& spokes)
+{
+    double result = 0.0;
+    for(int i = 0; i < spokes.size(); ++i)
+    {
+        Vector3D gradDir = mDistanceImage->getGradDistance(spokes[i]->getB());
+        Vector3D spokeDir = spokes[i]->getU();
+        spokeDir.normalize();
+        gradDir.normalize();
+        double dotProduct = spokeDir * gradDir;
+
+        if(dotProduct < -1)
+        {
+            dotProduct = -1;
+        }
+        else if(dotProduct > 1)
+        {
+            dotProduct = 1;
+        }
+        result += dotProduct;
+//        result += acos(dotProduct) ;
+    }
+
+    result /= spokes.size();
+    return result;
+}
+
+bool SimilarityComputer::compute(double *similarityMeasure, double *normalMatch)
 {
     // step 1: validate data
     if(mDistanceImage == NULL)
@@ -106,6 +93,7 @@ bool SimilarityComputer::compute(double *similarityMeasure)
     // get all the spokes
     int primitiveCount = figure->getPrimitiveCount();
     double totalDistance = 0.0;
+    double totalNormalMatch = 0.0;
     for(int i = 0; i < primitiveCount; ++i)
     {
         // The i-th primitive
@@ -129,6 +117,10 @@ bool SimilarityComputer::compute(double *similarityMeasure)
 //        totalDistance = max(totalDistance, botDistance);
         totalDistance += topDistance + botDistance;
 
+        double topNormalMatch = getSpokeNormalMatch(topNeighbors) * R0;
+        double botNormalMatch = getSpokeNormalMatch(botNeighbors) * R1;
+        totalNormalMatch += topNormalMatch + botNormalMatch;
+        
         topNeighbors.clear();
         botNeighbors.clear();
         M3DQuadEndPrimitive* endPrimitive = dynamic_cast<M3DQuadEndPrimitive*>(currentPrimitive);

@@ -36,9 +36,10 @@ public:
     void setFigure(M3DQuadFigure* figure);
 
     // Description: start to compute similarity measure
-    // Output: similarity measure
+    // Output: imageMatch term: image distance
+    // Output: image normal match term
     // Returns: true if succeeded, otherwise false
-    bool compute(double *similarityMeasure);
+    bool compute(double *imageDist, double *normalMatch);
 
 private:
     // Description: interpolate around a spoke
@@ -65,6 +66,50 @@ private:
 
     // Description: get sum of squared distance between spokes and image
     double getSSD(std::vector<M3DSpoke*>& spokes);
+
+        // Description: get sum of squared distance between spokes and image
+    double getSpokeNormalMatch(std::vector<M3DSpoke*>& spokes);
+
+	double h1(double s)
+	{
+		return 2*(s * s * s) - 3*(s * s) + 1;
+	}
+
+	double h1p(double s)
+	{
+		return 6*(s * s) - 6*(s);
+	}
+
+	double h2(double s)
+	{
+		return -2*(s * s * s) + 3*(s * s);
+	}
+
+	double h2p(double s)
+	{
+		return -6*(s * s) + 6*(s);
+	}
+
+	double h3(double s)
+	{
+		return (s * s * s) - 2*(s * s) + s;		
+	}
+
+	double h3p(double s)
+	{
+		return 3*(s * s) - 4*(s) + 1;
+	}
+
+	double h4(double s)
+	{
+		return (s * s * s) - (s * s);
+	}
+
+	double h4p(double s)
+	{
+		return 3*(s * s) - 2*(s);
+	}
+
 private:
     ImageDistanceMap* mDistanceImage;
     M3DObject*        mSreps; // spokes after interpolation
