@@ -74,8 +74,7 @@ private:
     //  all the rotation relating to each spoke. indexed by primitive index as well as the side.
     // For different sides: 0 - top; 1- bottom; 2 - end(if any)
     std::vector<Rotation>               mRotations;
-    // for each spoke ,there are 4 elements stored in this set;
-    std::vector<double>                 mQuaternionSet;
+
     ImageDistanceMap*                   mSignedDistanceImage;
     int                                 mFigureIndex = 0; // The figure user want to optimize, currently have only one
 };

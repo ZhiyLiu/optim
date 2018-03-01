@@ -120,7 +120,7 @@ bool SimilarityComputer::compute(double *similarityMeasure, double *normalMatch)
         double topNormalMatch = getSpokeNormalMatch(topNeighbors) * R0;
         double botNormalMatch = getSpokeNormalMatch(botNeighbors) * R1;
         totalNormalMatch += topNormalMatch + botNormalMatch;
-        
+
         topNeighbors.clear();
         botNeighbors.clear();
         M3DQuadEndPrimitive* endPrimitive = dynamic_cast<M3DQuadEndPrimitive*>(currentPrimitive);
@@ -138,16 +138,14 @@ bool SimilarityComputer::compute(double *similarityMeasure, double *normalMatch)
             // totalDistance = max(totalDistance, endDistance);
             totalDistance+= endDistance;
 
+            totalNormalMatch += getSpokeNormalMatch(endNeighbors) * r;
             endNeighbors.clear();
         }
 
-        if(totalDistance > 148)
-        {
-            int temp = 1;
-        }
     }
 
     *similarityMeasure = totalDistance;
+    *normalMatch = totalNormalMatch;
     return true;
 }
 double SimilarityComputer::getSSD(std::vector<M3DSpoke*>& spokes)
