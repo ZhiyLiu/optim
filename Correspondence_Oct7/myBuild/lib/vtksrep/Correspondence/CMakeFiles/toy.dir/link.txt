@@ -1,0 +1,1 @@
+/usr/bin/c++      -Wno-deprecated  -ftemplate-depth-50 -Wall -Wno-deprecated -msse2 -g      CMakeFiles/toy.dir/testDemo.cpp.o  -o ../../../toy  -L/playpen/software/itk_build/bin -rdynamic 

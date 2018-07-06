@@ -1,0 +1,80 @@
+# lkid - binary pablo script
+scriptVersion = 20050117.09;
+
+# FORMAT
+# Lines take the form:  [KEY = VALUE;][#COMMENT]
+#  (where [] indicates optional content)
+# White space is allowed before/after any token.
+# Supports both windows and unix end-of-line charsets.
+# Supports windows-style pathnames.
+# See 'pablo -pd' or Pablo User Manual
+
+## 1) DATA
+
+# image must be binary (0 or 1), have cubic voxels, and be in raw3 format
+# model = meanAtOrigin.m3d;
+tileSurfaceLevel = 3;
+dilationVoxels   = 0;
+
+## 2) INITIALIZATION STAGE
+doMethodOfMoments             = 7;      # bitflags: 1=translate 2=scale 4=rotate
+
+## 3) FIGURE STAGE
+figureResetModelBefore        = 0;		# [0,1]
+figureIterations              = 0;		# 0 disables whole stage except reset
+figureSurfaceLevel            = 3;		# [0-3]
+figureImageMatch              = 0;		# orig. 10	
+figureLandmarkMatch           = 0;		# orig. 10
+figureModelMatch              = 0;		# orig. 6
+figureCurvinessPenalty        = 0;
+figureRSradPenalty            = 0;
+figureImageNormalMatch        = 0;	# xiaojie
+figureImagePlaneOrienAtEnd    = 0;  	#xiaojie
+figureImageVertexMatch 		  = 0; 		# xiaojie
+
+##    3a) VIA SIMILARITY & SCALE
+figureDoScale                 = 0;		# [0,1]
+
+##    3b) VIA SIMILARITY AND PGA
+figureMahalanobisMatch        = 0;		# 0 disables the stage
+figureMaxPGAModes             = 15;
+
+## 4) ATOM STAGE
+atomResetModelBefore          = 0;		# [0,1]
+atomIterations                = 0;     # orig. 40
+atomSurfaceLevel              = 2;		# [0-3] orig 3
+atomAverageNeighborMatch      = 10000;	# orig 10000 make grid size regular
+atomImageMatch                = 100000;	# orig 10 how well it matches to the boundary
+atomLandmarkMatch             = 0;		# was 10000
+atomModelMatch                = 10;	# may be too high, was 10 how far from initial model
+atomCurvinessPenalty 	      = 0;
+atomRSradPenalty              = 100000; # was 10-20
+atomImageNormalMatch	      = 100;   	# Xiaojie spokes orthogonal
+atomImagePlaneOrienAtEnd      = 100;  	# xiaojie penalty term for crest spokes
+atomImageVertexMatch 	      = 0; 		# xiaojie
+
+SRepDoNormalAdjustments       = 1;
+
+## 5) SREP STAGE
+sRepResetModelBefore          = 0;		# [0,1]
+sRepIterations                = 100;    # 237 same as # of spokes
+sRepSurfaceLevel              = 3;		# [0-3] orig 3
+sRepAverageNeighborMatch      = 9999;	    # orig 10000
+sRepImageMatch                = 9999;	# orig 10
+sRepModelMatch                = 99;	    # may be too high, was 10
+sRepRSradPenalty              = 99;     # was 10-20
+sRepImageNormalMatch	      = 0;   	# Xiaojie
+sRepImagePlaneOrienAtEnd      = 0;  	# xiaojie
+sRepImageVertexMatch	      = 0;		# xiaojie
+sRepRadiusMatch 	      	  = 0; 	    # dibyendu
+sRepAtomRestrictMovement      = 0;		# dibyendu
+sRepThetaFactor               = 0;       # 0 means no angle change
+sRepScaleFactor               = 1;      # 0 means no length change
+
+RSradPenaltyNorm              = 8.0;
+RSradPenaltyThreshold         = 0.9;
+spokeIterations               = 0;  # do not change
+
+weightMatchAtEnds         = 1;
+WeightNormalMatchAtEndMidSpoke = 5; #xiaojie
+saveDistanceVectors	      = 0;

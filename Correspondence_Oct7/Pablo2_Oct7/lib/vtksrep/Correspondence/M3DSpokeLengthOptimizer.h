@@ -59,6 +59,9 @@ private:
     M3DObject*              mSreps;
     ImageDistanceMap*       mSignedDistanceImage;
     std::vector<double>     mOriginalRadii;
+    double                  mWtImageMatch;
+    double                  mWtSpokeModel;
+    double                  mWtSradPenalty;
     int                     mFigureIndex = 0; // The figure user want to optimize, currently have only one
 };
 

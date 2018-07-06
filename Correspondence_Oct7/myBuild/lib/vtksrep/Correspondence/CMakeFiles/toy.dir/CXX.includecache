@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/newuoa.h
+math.h
+-
+algorithm
+-
+
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/testDemo.cpp
+newuoa.h
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/newuoa.h
+

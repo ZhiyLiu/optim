@@ -16,7 +16,8 @@
 #include "SimilarityComputer.h"
 #include "M3DObjectFile.h"
 //#include "quaternion.h"
-
+#define PI 3.1415926
+#define RATIO 180/PI
  M3DSpokeAngleOptimizer::M3DSpokeAngleOptimizer()
      :mSreps(NULL){
 
@@ -42,18 +43,22 @@ double M3DSpokeAngleOptimizer::computeSradPenalty()
 }
 
 int iterNum = 0;
+
 void M3DSpokeAngleOptimizer::updateSpokeDir(const double *coeff, int spokeIndex, Vector3D& dir)
 {
     int baseAddr = spokeIndex * 3;
     double x = coeff[baseAddr];
     double y = coeff[baseAddr+1];
     double z = coeff[baseAddr+2];
-    
+
     Vector3D newDir(x, y, z);
     newDir.normalize();
     dir.normalize();
     double dotProduct = newDir * dir;
-    if(acos(dotProduct) > 30)
+    dotProduct = dotProduct > 1 ? 1.0 : dotProduct;
+    dotProduct = dotProduct < -1 ? -1.0:dotProduct;
+    double theta = acos(dotProduct) * RATIO;
+    if(theta > 30)
     {
         return;
     }
@@ -80,7 +85,13 @@ void M3DSpokeAngleOptimizer::updateFigure(const double *coeff, int figureId)
         std::cout << "Updating figure id: " << figureId << ", after the " << iterNum++ << "th iteration" << std::endl;
 
         M3DFigure* figure = mSreps->getFigurePtr(figureId);
+        M3DQuadPrimitive* quadAtom = dynamic_cast<M3DQuadPrimitive*>(figure->getPrimitivePtr(25));
 
+        Vector3D U0 = quadAtom->getU0();
+        updateSpokeDir(coeff, 0, U0);
+        quadAtom->setU0(U0);
+
+/*
         int primitiveCount = figure->getPrimitiveCount();
         int spokeIndex = 0;
         for(int i = 0; i < primitiveCount; ++i)
@@ -138,6 +149,7 @@ void M3DSpokeAngleOptimizer::updateFigure(const double *coeff, int figureId)
                 spokeIndex += 3;
             }
         }
+*/
     }
     catch(std::exception& e)
     {
@@ -286,7 +298,7 @@ void M3DSpokeAngleOptimizer::recoverSrep()
     {
         M3DPrimitive* currentPrimitive = figure->getPrimitivePtr(i);
         M3DQuadPrimitive* quadAtom = dynamic_cast<M3DQuadPrimitive*>(currentPrimitive);
-        int baseAddr = spokeIndex * 3;
+        int baseAddr = spokeIndex; // mOrigDirs store direction vector3D for each spoke
         quadAtom->setU0(mOrigDirs[baseAddr]);
         quadAtom->setU1(mOrigDirs[baseAddr+1]);
 
@@ -356,8 +368,12 @@ int M3DSpokeAngleOptimizer::perform(M3DObject* outputModel)
         spokeIndex += 2;
     }
 
-    min_newuoa(spokeCount*3, coeffArray, *this, 0.8, 0.001, 5000);
+//    min_newuoa(spokeCount*3, coeffArray, *this, 0.2, 0.001, 500);
+    double tempCoeff[3];
+    int baseAddr = 68*3; // spokeIndex * 3
+    tempCoeff[0] = coeffArray[baseAddr]; tempCoeff[1] = coeffArray[baseAddr + 1]; tempCoeff[2] = coeffArray[baseAddr + 2];
 
+    min_newuoa(3, tempCoeff, *this, 0.2, 0.001, 300);
     M3DObjectFile objectFile;
     objectFile.write("out.m3d", *mSreps);
 

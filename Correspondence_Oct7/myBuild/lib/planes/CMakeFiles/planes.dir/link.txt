@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../libplanes.a  CMakeFiles/planes.dir/src/CutPlanes.cpp.o CMakeFiles/planes.dir/src/drawAtomCut.cpp.o CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o CMakeFiles/planes.dir/src/genCutPlanes.cpp.o
+/usr/bin/ranlib ../../libplanes.a

@@ -6,6 +6,9 @@
 #include "M3DSpokeLengthOptimizer.h"
 #include <ctime>
 #include <iostream>
+#include <stdlib.h>
+#include <sstream>
+#include <fstream>
 #include <exception>
 #include "newuoa.h"
 #include "toolsfunc.h"
@@ -131,14 +134,6 @@ double M3DSpokeLengthOptimizer::getObjectiveFunctionValue(const double *coeff, d
     // coeff are now lengths of spokes
 
     // 1. Image match
-    // TODO: should read from config file
-    double w_ImageMatch = 9.0;
-    double w_sradPenalty = 1.0;
-    double w_srepModelPenalty = 9.0;  // may be too large, was 10
-
-    // 1.1 Interpolate spokes
-
-    // 1.2 measure sum square of distance from implied boundary to expected image boundary
     SimilarityComputer similarityCompter;
     similarityCompter.setSrepModel(mSreps);
     similarityCompter.setTargetFigureIndex(mFigureIndex);
@@ -162,8 +157,9 @@ double M3DSpokeLengthOptimizer::getObjectiveFunctionValue(const double *coeff, d
 
     // 4. image normal match
 //    double imageNormalMatch = 
-    objFunctionValue = w_ImageMatch * imageMatch + w_sradPenalty * sradPenalty
-                                                     + w_srepModelPenalty * spokeModelpenalty;
+    objFunctionValue = mWtImageMatch * imageMatch;// + mWtSradPenalty * sradPenalty
+    // + mWtSpokeModel * spokeModelpenalty;
+    std::cout << "image match: " << imageMatch << std::endl;
     recoverFigure(mFigureIndex);
     return objFunctionValue;
 }
@@ -249,8 +245,33 @@ int M3DSpokeLengthOptimizer::perform(M3DObject* outputModel)
         }
 
     }
+
+    // read parameters from config file
+    double newuoaParams[6];
+    std::ifstream infile("/playpen/workspace/newuoa/Correspondence_Oct7/myBuild/newuoa.config");
+    if(!infile.is_open())
+    {
+        std::cerr << "Failed to open config file: newuoa.config." << std::endl;
+        return -1;
+    }
+
+    std::string line;
+    std::getline(infile, line);
+    int i = 0;
+    while (std::getline(infile, line))
+    {
+        std::istringstream iss(line);
+        newuoaParams[i] = atof(line.c_str());
+        i++;
+        std::getline(infile,line);
+    }
+
+    infile.close();
+    mWtImageMatch = newuoaParams[3];
+    mWtSpokeModel = newuoaParams[4];
+    mWtSradPenalty = newuoaParams[5];
     const clock_t begin_time = clock();
-    min_newuoa(spokeCount,coeffOfLength,*this,0.5, 0.0001, 900);
+    min_newuoa(spokeCount,coeffOfLength,*this,newuoaParams[0], newuoaParams[1], newuoaParams[2]);
 
     // update figure with final coeff without recoverFigure
     int spokeId = 0;

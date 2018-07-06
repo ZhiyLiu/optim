@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../../libSRepVisualization.a  CMakeFiles/SRepVisualization.dir/vtksreptogridlayout.cpp.o CMakeFiles/SRepVisualization.dir/vtksrepvisuprimitives.cpp.o
+/usr/bin/ranlib ../../../libSRepVisualization.a

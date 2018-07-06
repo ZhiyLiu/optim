@@ -113,9 +113,11 @@ bool SimilarityComputer::compute(double *similarityMeasure, double *normalMatch)
 
         double topDistance = getSSD(topNeighbors);
         double botDistance = getSSD(botNeighbors);
-//        totalDistance = max(totalDistance, topDistance);
-//        totalDistance = max(totalDistance, botDistance);
         totalDistance += topDistance + botDistance;
+//        std::vector<M3DSpoke*> topArray, botArray; // solution that assume angles are correct
+//        topArray.push_back(new M3DSpoke(X,U0, R0));
+//        botArray.push_back(new M3DSpoke(X,U1, R1));
+//        totalDistance = getSSD(topArray) + getSSD(botArray);
 
         double topNormalMatch = getSpokeNormalMatch(topNeighbors) * R0;
         double botNormalMatch = getSpokeNormalMatch(botNeighbors) * R1;

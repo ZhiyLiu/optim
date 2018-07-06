@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../../libSRep.a  CMakeFiles/SRep.dir/vtktransformsrepfilter.cxx.o CMakeFiles/SRep.dir/vtksrep.cpp.o
+/usr/bin/ranlib ../../../libSRep.a
