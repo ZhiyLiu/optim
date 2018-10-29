@@ -207,6 +207,10 @@ double M3DNEWUOAOptimizer::getObjectiveFunctionValue(const double *coeff, double
     // normal match: the larger, the better
     objFunctionValue =  w_ImageMatch * imageDist + w_NormalPenalty * normalMatch + w_sradPenalty * sradPenalty ;
 
+    if(iterNum3 == 1)
+    {
+        std::cout << "Adjust weights to balance between imageDist:" << imageDist << ", normalMatch:" << normalMatch << ", and sradPenalty:" << sradPenalty << std::endl;
+    }
     recoverSrep();
     // finally, we will get the minimum of objective function value
     return objFunctionValue;
@@ -330,8 +334,8 @@ int M3DNEWUOAOptimizer::perform(M3DObject* outputModel)
     mWtSradPenalty = newuoaParams[10];
     mWtNormalPenalty = newuoaParams[11];
 
-    min_newuoa(spokeCount*4, coeffArray, *this, 0.01, 0.0001, 2000);
-//    min_newuoa(spokeCount*4, coeffArray, *this, newuoaParams[6], newuoaParams[7], newuoaParams[8]);
+//    min_newuoa(spokeCount*4, coeffArray, *this, 0.01, 0.0001, 2000);
+    min_newuoa(spokeCount*4, coeffArray, *this, newuoaParams[6], newuoaParams[7], newuoaParams[8]);
     // update figure last time
     updateFigure(coeffArray, mFigureIndex);
 
