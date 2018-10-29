@@ -6,8 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/PlanIm/include/getopt.h
-
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/PlanIm/include/unistd.h
 stdlib.h
 -
@@ -169,7 +167,7 @@ stddef.h
 -
 bits/confname.h
 -
-getopt.h
+bits/getopt_posix.h
 -
 bits/unistd.h
 -

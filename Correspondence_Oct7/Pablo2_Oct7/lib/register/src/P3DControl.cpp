@@ -4,7 +4,6 @@
 //#include <stdlib.h>
 //#include <crtdbg.h>
 // -----------------------------------
-
 // dibyendu
 #include <iomanip>
 
@@ -49,6 +48,11 @@
 #include "M3DQuadInterpolator.h"
 #include "M3DSubfigureTransformation.h"
 #include "M3DFigureTreeNode.h"
+
+#include "M3DSpokeLengthOptimizer.h"
+#include "M3DSpokeAngleOptimizer.h"
+#include "M3DNEWUOAOptimizer.h"
+
 #include "DistanceMap3D.h"
 #include "utility.h"
 #include "BYU.h"
@@ -10460,3 +10464,68 @@ bool P3DControl::align(const char * pointsFile, const char * modelFile,
 	return true;
 }
 
+void P3DControl::optAll(const char *filename)
+{
+    if(object == NULL || filename == "")
+    {
+        return;
+    }
+    AllImageIO imageFile;
+    Image3D* image3D = imageFile.read(filename);
+    ImageDistanceMap* binaryDistanceMap = new ImageDistanceMap(image3D);
+    binaryDistanceMap->fromImage3D(image3D);
+    M3DNEWUOAOptimizer optimizer;
+
+    optimizer.setImage(binaryDistanceMap);
+    optimizer.setObject(object);
+
+    optimizer.perform(object);
+    object->setModified(true);
+
+    delete binaryDistanceMap;
+}
+
+void P3DControl::optAngle(const char* filename)
+{
+    if(object == NULL || filename == "")
+    {
+        return;
+    }
+
+    AllImageIO imageFile;
+    Image3D* image3D = imageFile.read(filename);
+    ImageDistanceMap* binaryDistanceMap = new ImageDistanceMap(image3D);
+    binaryDistanceMap->fromImage3D(image3D);
+    //M3DSpokeLengthOptimizer optimizer;
+    M3DSpokeAngleOptimizer optimizer;
+
+    optimizer.setImage(binaryDistanceMap);
+    optimizer.setObject(object);
+
+    optimizer.perform(object);
+    object->setModified(true);
+
+    delete binaryDistanceMap;
+}
+void P3DControl::optLength(const char* filename)
+{
+    if(object == NULL || filename == "")
+    {
+        return;
+    }
+
+    AllImageIO imageFile;
+    Image3D* image3D = imageFile.read(filename);
+    ImageDistanceMap* binaryDistanceMap = new ImageDistanceMap(image3D);
+    binaryDistanceMap->fromImage3D(image3D);
+    M3DSpokeLengthOptimizer optimizer;
+    //M3DSpokeAngleOptimizer optimizer;
+
+    optimizer.setImage(binaryDistanceMap);
+    optimizer.setObject(object);
+
+    optimizer.perform(object);
+    object->setModified(true);
+
+    delete binaryDistanceMap;
+}

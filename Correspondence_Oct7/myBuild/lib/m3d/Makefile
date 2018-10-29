@@ -30,10 +30,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -63,19 +63,19 @@ edit_cache/fast: edit_cache
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -P cmake_install.cmake
 .PHONY : install
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local
 
 # Special rule for the target install/local
@@ -85,7 +85,7 @@ install/local/fast: install/local
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip
 
 # Special rule for the target install/strip
@@ -104,7 +104,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target package
 package: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && /usr/bin/cpack --config ./CPackConfig.cmake
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && /playpen/software/cmake-2.8.12-Linux-i386/bin/cpack --config ./CPackConfig.cmake
 .PHONY : package
 
 # Special rule for the target package
@@ -114,7 +114,7 @@ package/fast: package
 # Special rule for the target package_source
 package_source:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && /usr/bin/cpack --config ./CPackSourceConfig.cmake /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CPackSourceConfig.cmake
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && /playpen/software/cmake-2.8.12-Linux-i386/bin/cpack --config ./CPackSourceConfig.cmake /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CPackSourceConfig.cmake
 .PHONY : package_source
 
 # Special rule for the target package_source
@@ -124,7 +124,7 @@ package_source/fast: package_source
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -824,6 +824,30 @@ src/M3DInterpolater.cpp.s:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DInterpolater.cpp.s
 .PHONY : src/M3DInterpolater.cpp.s
 
+src/M3DNEWUOAOptimizer.o: src/M3DNEWUOAOptimizer.cpp.o
+.PHONY : src/M3DNEWUOAOptimizer.o
+
+# target to build an object file
+src/M3DNEWUOAOptimizer.cpp.o:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DNEWUOAOptimizer.cpp.o
+.PHONY : src/M3DNEWUOAOptimizer.cpp.o
+
+src/M3DNEWUOAOptimizer.i: src/M3DNEWUOAOptimizer.cpp.i
+.PHONY : src/M3DNEWUOAOptimizer.i
+
+# target to preprocess a source file
+src/M3DNEWUOAOptimizer.cpp.i:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DNEWUOAOptimizer.cpp.i
+.PHONY : src/M3DNEWUOAOptimizer.cpp.i
+
+src/M3DNEWUOAOptimizer.s: src/M3DNEWUOAOptimizer.cpp.s
+.PHONY : src/M3DNEWUOAOptimizer.s
+
+# target to generate assembly for a file
+src/M3DNEWUOAOptimizer.cpp.s:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DNEWUOAOptimizer.cpp.s
+.PHONY : src/M3DNEWUOAOptimizer.cpp.s
+
 src/M3DObject.o: src/M3DObject.cpp.o
 .PHONY : src/M3DObject.o
 
@@ -1208,6 +1232,54 @@ src/M3DSpoke.cpp.s:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DSpoke.cpp.s
 .PHONY : src/M3DSpoke.cpp.s
 
+src/M3DSpokeAngleOptimizer.o: src/M3DSpokeAngleOptimizer.cpp.o
+.PHONY : src/M3DSpokeAngleOptimizer.o
+
+# target to build an object file
+src/M3DSpokeAngleOptimizer.cpp.o:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DSpokeAngleOptimizer.cpp.o
+.PHONY : src/M3DSpokeAngleOptimizer.cpp.o
+
+src/M3DSpokeAngleOptimizer.i: src/M3DSpokeAngleOptimizer.cpp.i
+.PHONY : src/M3DSpokeAngleOptimizer.i
+
+# target to preprocess a source file
+src/M3DSpokeAngleOptimizer.cpp.i:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DSpokeAngleOptimizer.cpp.i
+.PHONY : src/M3DSpokeAngleOptimizer.cpp.i
+
+src/M3DSpokeAngleOptimizer.s: src/M3DSpokeAngleOptimizer.cpp.s
+.PHONY : src/M3DSpokeAngleOptimizer.s
+
+# target to generate assembly for a file
+src/M3DSpokeAngleOptimizer.cpp.s:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DSpokeAngleOptimizer.cpp.s
+.PHONY : src/M3DSpokeAngleOptimizer.cpp.s
+
+src/M3DSpokeLengthOptimizer.o: src/M3DSpokeLengthOptimizer.cpp.o
+.PHONY : src/M3DSpokeLengthOptimizer.o
+
+# target to build an object file
+src/M3DSpokeLengthOptimizer.cpp.o:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DSpokeLengthOptimizer.cpp.o
+.PHONY : src/M3DSpokeLengthOptimizer.cpp.o
+
+src/M3DSpokeLengthOptimizer.i: src/M3DSpokeLengthOptimizer.cpp.i
+.PHONY : src/M3DSpokeLengthOptimizer.i
+
+# target to preprocess a source file
+src/M3DSpokeLengthOptimizer.cpp.i:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DSpokeLengthOptimizer.cpp.i
+.PHONY : src/M3DSpokeLengthOptimizer.cpp.i
+
+src/M3DSpokeLengthOptimizer.s: src/M3DSpokeLengthOptimizer.cpp.s
+.PHONY : src/M3DSpokeLengthOptimizer.s
+
+# target to generate assembly for a file
+src/M3DSpokeLengthOptimizer.cpp.s:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/M3DSpokeLengthOptimizer.cpp.s
+.PHONY : src/M3DSpokeLengthOptimizer.cpp.s
+
 src/M3DTubeEndPrimitive.o: src/M3DTubeEndPrimitive.cpp.o
 .PHONY : src/M3DTubeEndPrimitive.o
 
@@ -1543,6 +1615,30 @@ src/SimTransShapeSpace.s: src/SimTransShapeSpace.cpp.s
 src/SimTransShapeSpace.cpp.s:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/SimTransShapeSpace.cpp.s
 .PHONY : src/SimTransShapeSpace.cpp.s
+
+src/SimilarityComputer.o: src/SimilarityComputer.cpp.o
+.PHONY : src/SimilarityComputer.o
+
+# target to build an object file
+src/SimilarityComputer.cpp.o:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/SimilarityComputer.cpp.o
+.PHONY : src/SimilarityComputer.cpp.o
+
+src/SimilarityComputer.i: src/SimilarityComputer.cpp.i
+.PHONY : src/SimilarityComputer.i
+
+# target to preprocess a source file
+src/SimilarityComputer.cpp.i:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/SimilarityComputer.cpp.i
+.PHONY : src/SimilarityComputer.cpp.i
+
+src/SimilarityComputer.s: src/SimilarityComputer.cpp.s
+.PHONY : src/SimilarityComputer.s
+
+# target to generate assembly for a file
+src/SimilarityComputer.cpp.s:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/m3d/CMakeFiles/m3d.dir/build.make lib/m3d/CMakeFiles/m3d.dir/src/SimilarityComputer.cpp.s
+.PHONY : src/SimilarityComputer.cpp.s
 
 src/SimilarityTransform3D.o: src/SimilarityTransform3D.cpp.o
 .PHONY : src/SimilarityTransform3D.o
@@ -1880,6 +1976,9 @@ help:
 	@echo "... src/M3DInterpolater.o"
 	@echo "... src/M3DInterpolater.i"
 	@echo "... src/M3DInterpolater.s"
+	@echo "... src/M3DNEWUOAOptimizer.o"
+	@echo "... src/M3DNEWUOAOptimizer.i"
+	@echo "... src/M3DNEWUOAOptimizer.s"
 	@echo "... src/M3DObject.o"
 	@echo "... src/M3DObject.i"
 	@echo "... src/M3DObject.s"
@@ -1928,6 +2027,12 @@ help:
 	@echo "... src/M3DSpoke.o"
 	@echo "... src/M3DSpoke.i"
 	@echo "... src/M3DSpoke.s"
+	@echo "... src/M3DSpokeAngleOptimizer.o"
+	@echo "... src/M3DSpokeAngleOptimizer.i"
+	@echo "... src/M3DSpokeAngleOptimizer.s"
+	@echo "... src/M3DSpokeLengthOptimizer.o"
+	@echo "... src/M3DSpokeLengthOptimizer.i"
+	@echo "... src/M3DSpokeLengthOptimizer.s"
 	@echo "... src/M3DTubeEndPrimitive.o"
 	@echo "... src/M3DTubeEndPrimitive.i"
 	@echo "... src/M3DTubeEndPrimitive.s"
@@ -1970,6 +2075,9 @@ help:
 	@echo "... src/SimTransShapeSpace.o"
 	@echo "... src/SimTransShapeSpace.i"
 	@echo "... src/SimTransShapeSpace.s"
+	@echo "... src/SimilarityComputer.o"
+	@echo "... src/SimilarityComputer.i"
+	@echo "... src/SimilarityComputer.s"
 	@echo "... src/SimilarityTransform3D.o"
 	@echo "... src/SimilarityTransform3D.i"
 	@echo "... src/SimilarityTransform3D.s"

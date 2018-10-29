@@ -26,10 +26,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =

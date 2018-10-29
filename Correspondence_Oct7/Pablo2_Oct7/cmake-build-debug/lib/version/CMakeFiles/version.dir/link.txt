@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../libversion.a  CMakeFiles/version.dir/src/version.cpp.o
+/usr/bin/ranlib ../../libversion.a

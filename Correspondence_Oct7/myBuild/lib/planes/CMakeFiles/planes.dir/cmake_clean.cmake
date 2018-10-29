@@ -1,8 +1,8 @@
 FILE(REMOVE_RECURSE
   "CMakeFiles/planes.dir/src/CutPlanes.cpp.o"
-  "CMakeFiles/planes.dir/src/drawAtomCut.cpp.o"
-  "CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o"
   "CMakeFiles/planes.dir/src/genCutPlanes.cpp.o"
+  "CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o"
+  "CMakeFiles/planes.dir/src/drawAtomCut.cpp.o"
   "../../libplanes.pdb"
   "../../libplanes.a"
 )

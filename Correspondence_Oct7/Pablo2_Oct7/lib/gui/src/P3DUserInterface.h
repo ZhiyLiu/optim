@@ -273,6 +273,13 @@ private:
   static void cb_PGA(Fl_Menu_*, void*);
   void cb_CPNS_i(Fl_Menu_*, void*);
   static void cb_CPNS(Fl_Menu_*, void*);
+
+  void cb_optAngle_i(Fl_Menu_*, void*);
+  static void cb_optAngle(Fl_Menu_*, void*);
+  void cb_optLength_i(Fl_Menu_*, void*);
+  static void cb_optLength(Fl_Menu_*, void*);
+  void cb_optAll_i(Fl_Menu_*, void*);
+  static void cb_optAll(Fl_Menu_*, void*);
 public:
   static Fl_Menu_Item *toolsMenuPCA_Deformation;
 private:

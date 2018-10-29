@@ -80,6 +80,7 @@ public:
     char * copyName() const;
     void setName(const char * newName);
 
+    void drawNormal();
     int getFigureCount() const { return figures.size(); }
     int getPrimitiveCount() const;
     int getLandmarkCount() const;

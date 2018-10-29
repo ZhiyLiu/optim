@@ -481,6 +481,11 @@ public:
 	void enableCPNSDeformationWindow();
 	void disableCPNSDeformationWindow();
 
+    // Zhiyuan Liu
+    void optLength();//optimize srep using NEWUOA
+    void optAngle();//optimize srep using NEWUOA
+    void optAll(); // optimize both length and angle by NEWUOA
+
 	// PCA Deformation Interface
 	void initPCADeform();
 	void pcaDeform();

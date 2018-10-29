@@ -26,10 +26,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -52,124 +52,9 @@ include lib/gui/CMakeFiles/gui.dir/progress.make
 # Include the compile flags for this target's objects.
 include lib/gui/CMakeFiles/gui.dir/flags.make
 
-lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerUI.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerUI.cpp
-
-lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerUI.cpp > CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.i
-
-lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerUI.cpp -o CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.s
-
-lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.requires
-
-lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.provides
-
-lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o
-
-lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/shortstop.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_2)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/shortstop.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/shortstop.cpp
-
-lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/shortstop.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/shortstop.cpp > CMakeFiles/gui.dir/src/shortstop.cpp.i
-
-lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/shortstop.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/shortstop.cpp -o CMakeFiles/gui.dir/src/shortstop.cpp.s
-
-lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.requires
-
-lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.provides
-
-lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o
-
-lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_3)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/button_labels.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp
-
-lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/button_labels.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp > CMakeFiles/gui.dir/src/button_labels.cpp.i
-
-lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/button_labels.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp -o CMakeFiles/gui.dir/src/button_labels.cpp.s
-
-lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.requires
-
-lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.provides
-
-lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o
-
-lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_4)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp
-
-lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp > CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.i
-
-lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp -o CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.s
-
-lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.requires
-
-lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.provides
-
-lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterfaceCallback.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_5)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterfaceCallback.cpp
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterfaceCallback.cpp > CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.i
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterfaceCallback.cpp -o CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.s
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.requires
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.provides
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o
-
 lib/gui/CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
 lib/gui/CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DDisplayGlobals.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DDisplayGlobals.cpp
 
@@ -190,78 +75,32 @@ lib/gui/CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o.provides: lib/gui/CMakeFi
 
 lib/gui/CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o
 
-lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/LogManagerChart.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_7)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/LogManagerChart.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/LogManagerChart.cpp
+lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_2)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp
 
-lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/LogManagerChart.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/LogManagerChart.cpp > CMakeFiles/gui.dir/src/LogManagerChart.cpp.i
+lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/deleteUserInterface.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp > CMakeFiles/gui.dir/src/deleteUserInterface.cpp.i
 
-lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/LogManagerChart.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/LogManagerChart.cpp -o CMakeFiles/gui.dir/src/LogManagerChart.cpp.s
+lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/deleteUserInterface.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp -o CMakeFiles/gui.dir/src/deleteUserInterface.cpp.s
 
-lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.requires
 
-lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.provides
+lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.provides
 
-lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_8)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.cpp
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/P3DUserInterface.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.cpp > CMakeFiles/gui.dir/src/P3DUserInterface.cpp.i
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/P3DUserInterface.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.cpp -o CMakeFiles/gui.dir/src/P3DUserInterface.cpp.s
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.requires
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.provides
-
-lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o
-
-lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_9)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/menu.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp
-
-lib/gui/CMakeFiles/gui.dir/src/menu.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/menu.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp > CMakeFiles/gui.dir/src/menu.cpp.i
-
-lib/gui/CMakeFiles/gui.dir/src/menu.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/menu.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp -o CMakeFiles/gui.dir/src/menu.cpp.s
-
-lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.requires
-
-lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.provides
-
-lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o
+lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o
 
 lib/gui/CMakeFiles/gui.dir/src/pablo.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
 lib/gui/CMakeFiles/gui.dir/src/pablo.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/pablo.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/pablo.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/pablo.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/pablo.cpp
 
@@ -284,7 +123,7 @@ lib/gui/CMakeFiles/gui.dir/src/pablo.cpp.o.provides.build: lib/gui/CMakeFiles/gu
 
 lib/gui/CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
 lib/gui/CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Plot3DWindowWrapper.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_11)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Plot3DWindowWrapper.cpp
 
@@ -305,9 +144,32 @@ lib/gui/CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o.provides: lib/gui/CMake
 
 lib/gui/CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o
 
+lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_5)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp
+
+lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp > CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.i
+
+lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp -o CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.s
+
+lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.requires
+
+lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.provides
+
+lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o
+
 lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
 lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DView.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_12)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/P3DView.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DView.cpp
 
@@ -327,6 +189,144 @@ lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o.provides: lib/gui/CMakeFiles/gui.di
 .PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o.provides
 
 lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o
+
+lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_7)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/button_labels.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp
+
+lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/button_labels.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp > CMakeFiles/gui.dir/src/button_labels.cpp.i
+
+lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/button_labels.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp -o CMakeFiles/gui.dir/src/button_labels.cpp.s
+
+lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.requires
+
+lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.provides
+
+lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o
+
+lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_8)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/menu.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp
+
+lib/gui/CMakeFiles/gui.dir/src/menu.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/menu.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp > CMakeFiles/gui.dir/src/menu.cpp.i
+
+lib/gui/CMakeFiles/gui.dir/src/menu.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/menu.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp -o CMakeFiles/gui.dir/src/menu.cpp.s
+
+lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.requires
+
+lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.provides
+
+lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o
+
+lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Fl_Aspect_Ratio_Group.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_9)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Fl_Aspect_Ratio_Group.cpp
+
+lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Fl_Aspect_Ratio_Group.cpp > CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.i
+
+lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Fl_Aspect_Ratio_Group.cpp -o CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.s
+
+lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.requires
+
+lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.provides
+
+lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o
+
+lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/shortstop.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_10)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/shortstop.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/shortstop.cpp
+
+lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/shortstop.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/shortstop.cpp > CMakeFiles/gui.dir/src/shortstop.cpp.i
+
+lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/shortstop.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/shortstop.cpp -o CMakeFiles/gui.dir/src/shortstop.cpp.s
+
+lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.requires
+
+lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.provides
+
+lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o
+
+lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerUI.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_11)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerUI.cpp
+
+lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerUI.cpp > CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.i
+
+lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerUI.cpp -o CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.s
+
+lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.requires
+
+lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.provides
+
+lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o
+
+lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/LogManagerChart.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_12)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/LogManagerChart.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/LogManagerChart.cpp
+
+lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/LogManagerChart.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/LogManagerChart.cpp > CMakeFiles/gui.dir/src/LogManagerChart.cpp.i
+
+lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/LogManagerChart.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/LogManagerChart.cpp -o CMakeFiles/gui.dir/src/LogManagerChart.cpp.s
+
+lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.requires
+
+lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.provides
+
+lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o
 
 lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
 lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerCallback.cpp
@@ -351,88 +351,88 @@ lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o.provides: lib/gui/CMa
 
 lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o
 
-lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterfaceCallback.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_14)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterfaceCallback.cpp
 
-lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/deleteUserInterface.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp > CMakeFiles/gui.dir/src/deleteUserInterface.cpp.i
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterfaceCallback.cpp > CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.i
 
-lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/deleteUserInterface.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp -o CMakeFiles/gui.dir/src/deleteUserInterface.cpp.s
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterfaceCallback.cpp -o CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.s
 
-lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.requires
 
-lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.provides
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.provides
 
-lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o
 
-lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
-lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Fl_Aspect_Ratio_Group.cpp
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o: lib/gui/CMakeFiles/gui.dir/flags.make
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_15)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Fl_Aspect_Ratio_Group.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.cpp
 
-lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Fl_Aspect_Ratio_Group.cpp > CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.i
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/gui.dir/src/P3DUserInterface.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.cpp > CMakeFiles/gui.dir/src/P3DUserInterface.cpp.i
 
-lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/Fl_Aspect_Ratio_Group.cpp -o CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.s
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/gui.dir/src/P3DUserInterface.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/gui && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.cpp -o CMakeFiles/gui.dir/src/P3DUserInterface.cpp.s
 
-lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.requires:
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.requires:
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.requires
 
-lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.requires
-	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.provides.build
-.PHONY : lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.provides
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.provides: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.requires
+	$(MAKE) -f lib/gui/CMakeFiles/gui.dir/build.make lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.provides.build
+.PHONY : lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.provides
 
-lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o
+lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.provides.build: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o
 
 # Object files for target gui
 gui_OBJECTS = \
-"CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o" \
-"CMakeFiles/gui.dir/src/shortstop.cpp.o" \
-"CMakeFiles/gui.dir/src/button_labels.cpp.o" \
-"CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o" \
-"CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o" \
 "CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o" \
-"CMakeFiles/gui.dir/src/LogManagerChart.cpp.o" \
-"CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o" \
-"CMakeFiles/gui.dir/src/menu.cpp.o" \
+"CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o" \
 "CMakeFiles/gui.dir/src/pablo.cpp.o" \
 "CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o" \
+"CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o" \
 "CMakeFiles/gui.dir/src/P3DView.cpp.o" \
+"CMakeFiles/gui.dir/src/button_labels.cpp.o" \
+"CMakeFiles/gui.dir/src/menu.cpp.o" \
+"CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o" \
+"CMakeFiles/gui.dir/src/shortstop.cpp.o" \
+"CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o" \
+"CMakeFiles/gui.dir/src/LogManagerChart.cpp.o" \
 "CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o" \
-"CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o" \
-"CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o"
+"CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o" \
+"CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o"
 
 # External object files for target gui
 gui_EXTERNAL_OBJECTS =
 
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o
 libgui.a: lib/gui/CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o
 libgui.a: lib/gui/CMakeFiles/gui.dir/src/pablo.cpp.o
 libgui.a: lib/gui/CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o
 libgui.a: lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o
-libgui.a: lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o
 libgui.a: lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o
+libgui.a: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o
 libgui.a: lib/gui/CMakeFiles/gui.dir/build.make
 libgui.a: lib/gui/CMakeFiles/gui.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX static library ../../libgui.a"
@@ -443,21 +443,21 @@ libgui.a: lib/gui/CMakeFiles/gui.dir/link.txt
 lib/gui/CMakeFiles/gui.dir/build: libgui.a
 .PHONY : lib/gui/CMakeFiles/gui.dir/build
 
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.requires
 lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/P3DDisplayGlobals.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.requires
 lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/pablo.cpp.o.requires
 lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/Plot3DWindowWrapper.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/movable_Fl_Window.cpp.o.requires
 lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/P3DView.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o.requires
-lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/deleteUserInterface.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/button_labels.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/menu.cpp.o.requires
 lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/Fl_Aspect_Ratio_Group.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/shortstop.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerUI.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/LogManagerChart.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/OptVisualizerCallback.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterfaceCallback.cpp.o.requires
+lib/gui/CMakeFiles/gui.dir/requires: lib/gui/CMakeFiles/gui.dir/src/P3DUserInterface.cpp.o.requires
 .PHONY : lib/gui/CMakeFiles/gui.dir/requires
 
 lib/gui/CMakeFiles/gui.dir/clean:

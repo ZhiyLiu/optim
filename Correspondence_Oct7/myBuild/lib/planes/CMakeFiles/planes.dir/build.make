@@ -26,10 +26,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -75,28 +75,28 @@ lib/planes/CMakeFiles/planes.dir/src/CutPlanes.cpp.o.provides: lib/planes/CMakeF
 
 lib/planes/CMakeFiles/planes.dir/src/CutPlanes.cpp.o.provides.build: lib/planes/CMakeFiles/planes.dir/src/CutPlanes.cpp.o
 
-lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o: lib/planes/CMakeFiles/planes.dir/flags.make
-lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/drawAtomCut.cpp
+lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o: lib/planes/CMakeFiles/planes.dir/flags.make
+lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/genCutPlanes.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_2)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/planes.dir/src/drawAtomCut.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/drawAtomCut.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/planes.dir/src/genCutPlanes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/genCutPlanes.cpp
 
-lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/planes.dir/src/drawAtomCut.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/drawAtomCut.cpp > CMakeFiles/planes.dir/src/drawAtomCut.cpp.i
+lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/planes.dir/src/genCutPlanes.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/genCutPlanes.cpp > CMakeFiles/planes.dir/src/genCutPlanes.cpp.i
 
-lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/planes.dir/src/drawAtomCut.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/drawAtomCut.cpp -o CMakeFiles/planes.dir/src/drawAtomCut.cpp.s
+lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/planes.dir/src/genCutPlanes.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/genCutPlanes.cpp -o CMakeFiles/planes.dir/src/genCutPlanes.cpp.s
 
-lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.requires:
-.PHONY : lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.requires
+lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.requires:
+.PHONY : lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.requires
 
-lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.provides: lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.requires
-	$(MAKE) -f lib/planes/CMakeFiles/planes.dir/build.make lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.provides.build
-.PHONY : lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.provides
+lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.provides: lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.requires
+	$(MAKE) -f lib/planes/CMakeFiles/planes.dir/build.make lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.provides.build
+.PHONY : lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.provides
 
-lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.provides.build: lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o
+lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.provides.build: lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o
 
 lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o: lib/planes/CMakeFiles/planes.dir/flags.make
 lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/P3DCutPlaneView.cpp
@@ -121,43 +121,43 @@ lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o.provides: lib/planes/
 
 lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o.provides.build: lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o
 
-lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o: lib/planes/CMakeFiles/planes.dir/flags.make
-lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/genCutPlanes.cpp
+lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o: lib/planes/CMakeFiles/planes.dir/flags.make
+lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/drawAtomCut.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_4)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/planes.dir/src/genCutPlanes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/genCutPlanes.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/planes.dir/src/drawAtomCut.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/drawAtomCut.cpp
 
-lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/planes.dir/src/genCutPlanes.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/genCutPlanes.cpp > CMakeFiles/planes.dir/src/genCutPlanes.cpp.i
+lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/planes.dir/src/drawAtomCut.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/drawAtomCut.cpp > CMakeFiles/planes.dir/src/drawAtomCut.cpp.i
 
-lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/planes.dir/src/genCutPlanes.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/genCutPlanes.cpp -o CMakeFiles/planes.dir/src/genCutPlanes.cpp.s
+lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/planes.dir/src/drawAtomCut.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/planes && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/planes/src/drawAtomCut.cpp -o CMakeFiles/planes.dir/src/drawAtomCut.cpp.s
 
-lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.requires:
-.PHONY : lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.requires
+lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.requires:
+.PHONY : lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.requires
 
-lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.provides: lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.requires
-	$(MAKE) -f lib/planes/CMakeFiles/planes.dir/build.make lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.provides.build
-.PHONY : lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.provides
+lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.provides: lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.requires
+	$(MAKE) -f lib/planes/CMakeFiles/planes.dir/build.make lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.provides.build
+.PHONY : lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.provides
 
-lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.provides.build: lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o
+lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.provides.build: lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o
 
 # Object files for target planes
 planes_OBJECTS = \
 "CMakeFiles/planes.dir/src/CutPlanes.cpp.o" \
-"CMakeFiles/planes.dir/src/drawAtomCut.cpp.o" \
+"CMakeFiles/planes.dir/src/genCutPlanes.cpp.o" \
 "CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o" \
-"CMakeFiles/planes.dir/src/genCutPlanes.cpp.o"
+"CMakeFiles/planes.dir/src/drawAtomCut.cpp.o"
 
 # External object files for target planes
 planes_EXTERNAL_OBJECTS =
 
 libplanes.a: lib/planes/CMakeFiles/planes.dir/src/CutPlanes.cpp.o
-libplanes.a: lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o
-libplanes.a: lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o
 libplanes.a: lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o
+libplanes.a: lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o
+libplanes.a: lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o
 libplanes.a: lib/planes/CMakeFiles/planes.dir/build.make
 libplanes.a: lib/planes/CMakeFiles/planes.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX static library ../../libplanes.a"
@@ -169,9 +169,9 @@ lib/planes/CMakeFiles/planes.dir/build: libplanes.a
 .PHONY : lib/planes/CMakeFiles/planes.dir/build
 
 lib/planes/CMakeFiles/planes.dir/requires: lib/planes/CMakeFiles/planes.dir/src/CutPlanes.cpp.o.requires
-lib/planes/CMakeFiles/planes.dir/requires: lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.requires
-lib/planes/CMakeFiles/planes.dir/requires: lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o.requires
 lib/planes/CMakeFiles/planes.dir/requires: lib/planes/CMakeFiles/planes.dir/src/genCutPlanes.cpp.o.requires
+lib/planes/CMakeFiles/planes.dir/requires: lib/planes/CMakeFiles/planes.dir/src/P3DCutPlaneView.cpp.o.requires
+lib/planes/CMakeFiles/planes.dir/requires: lib/planes/CMakeFiles/planes.dir/src/drawAtomCut.cpp.o.requires
 .PHONY : lib/planes/CMakeFiles/planes.dir/requires
 
 lib/planes/CMakeFiles/planes.dir/clean:

@@ -1,0 +1,45 @@
+%% This function normalize feature vectors of linking structure
+%% each column of feature_mat contains links from 3 object in this case
+%% dimPerLink is predefined value: the dimension of one single link
+function normalizedFeature = normalizeLinkingFeature(feature_mat, dimPerLink)
+
+normalizedFeature = [];
+
+%% deal with position
+nSamples = size(feature_mat, 2);
+nLinks = size(feature_mat, 1) / dimPerLink;
+
+position_mat = ones(nLinks, 3, nSamples);
+for i = 1: nLinks
+    for j = 1:3
+        position_mat(i, j, :) = feature_mat(3*(i-1) + j, :);
+    end
+end
+
+% centering
+meanOfXYZ = mean(position_mat, 1); % column 1 = x coordinate; 2=y; 3=z
+cposition = position_mat - repmat(meanOfXYZ, [nLinks, 1, 1]); %centering
+
+sscarryPDM = sqrt(sum(sum(cposition.^2))); % for each sample, compute the standard deviation
+
+
+% divide by variance
+% sphmatPDM = position part of the CPNS data (translated + scaled)
+% this is the input to the PNS program for the SHAPE part    
+nPositions = 3 * nLinks;
+sphmatPDM = zeros( nPositions, nSamples );
+spharrayPDM = zeros( nSpokes, 3, nSamples );
+
+for i = 1 : nSamples,
+    spharrayPDM(:,:,i) = cposition(:,:,i)/sscarryPDM(1,1,i);
+    sphmatPDM(:,i) = reshape(spharrayPDM(:,:,i)', nLinks * 3, 1 );
+end
+
+% ------------------ Shape analysis via PNS ------------------  
+
+% compute PNS
+[ZShape PNSShape] = PNSmain( sphmatPDM, 1, 0.05, 100 );  %add default parameters values.
+
+disp('PNS computed for skeletal position of links') ;
+
+end

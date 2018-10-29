@@ -107,10 +107,10 @@ m3d
   #----------------------------------------------------------------------------
 
   #---------------------------------------------------------------------------
-  add_executable(optimizeLength OptimizeLength.cpp)
-  add_executable(optimizeAngle OptimizeAngle.cpp)
-  target_link_libraries(optimizeLength ${${LIBRARY_NAME}_LINK_LIBRARIES})
-  target_link_libraries(optimizeAngle ${${LIBRARY_NAME}_LINK_LIBRARIES})
+  #add_executable(optimizeLength OptimizeLength.cpp)
+  #add_executable(optimizeAngle OptimizeAngle.cpp)
+  #target_link_libraries(optimizeLength ${${LIBRARY_NAME}_LINK_LIBRARIES})
+  #target_link_libraries(optimizeAngle ${${LIBRARY_NAME}_LINK_LIBRARIES})
   set(CMAKE_BUILD_TYPE Debug)
 ENDIF ( BUILD_${LIBRARY_NAME} )
 

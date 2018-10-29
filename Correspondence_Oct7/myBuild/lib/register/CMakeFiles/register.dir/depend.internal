@@ -7590,7 +7590,6 @@ lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o
  /playpen/software/vtk/Filtering/vtkPointSet.h
  /playpen/software/vtk/Filtering/vtkPolyData.h
  /playpen/software/vtk_build/vtkConfigure.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/PlanIm/include/getopt.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/PlanIm/include/unistd.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/include/AllImageIO.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/include/ControlKeys.h
@@ -7615,6 +7614,7 @@ lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigure.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigureStats.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigureTreeNode.h
+ /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObjectFile.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPGA.h
@@ -7627,6 +7627,8 @@ lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadInterpolator.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadPrimitive.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DSpoke.h
+ /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DSpokeAngleOptimizer.h
+ /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DSpokeLengthOptimizer.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeFigure.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h

@@ -238,7 +238,7 @@ int Tuning::indexByLongName(const char * name) const
 #ifdef _WIN32
 		if (_stricmp(name, v[i].longName) == 0)
 #else
-		if (strcasecmp(name, v[i].longName) == 0)
+//		if (strcasecmp(name, v[i].longName) == 0)
 #endif
 			return i;
 	}

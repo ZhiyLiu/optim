@@ -827,8 +827,8 @@ model.figure[0].primitive[2][6].x 0.56750000000000000
 model.figure[0].primitive[2][6].y 0.56014600000000003
 model.figure[0].primitive[2][6].z 0.50000000000000000
 model.figure[0].primitive[2][7].r[0] 0.09308089999999999
-model.figure[0].primitive[2][7].ux[0] 0.58865326747042490
-model.figure[0].primitive[2][7].uy[0] 0.55752683259677516
+model.figure[0].primitive[2][7].ux[0] 0.74900688738888421
+model.figure[0].primitive[2][7].uy[0] -0.31038286198341447
 model.figure[0].primitive[2][7].uz[0] -0.58536400000000000
 model.figure[0].primitive[2][7].r[1] 0.09308089999999999
 model.figure[0].primitive[2][7].ux[1] 0.36258800000000002

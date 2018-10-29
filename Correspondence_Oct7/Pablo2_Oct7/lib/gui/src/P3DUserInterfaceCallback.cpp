@@ -326,7 +326,6 @@ const char * baseName(const char * filename)
 	return slash + 1;
 }
 
-
 // These global functions are call-backs used in P3DControl to
 // pass information to the Script Display Code below.  They are
 // set in P3DUserInterfaceCallback::startInteractive(), which
@@ -10959,6 +10958,53 @@ void P3DUserInterfaceCallback::startModelTileSlideShow()
     changeModelSlideShow();
     update();
 }
+void P3DUserInterfaceCallback::optAngle()
+{
+    Fl_File_Chooser fc("/playpen/workspace/newuoa/Correspondence_Oct7/myBuild", "*.mhd", Fl_File_Chooser::MULTI, "Select the reference image:");
+    fc.callback(NULL);
+
+    fc.show();
+    while (fc.shown())
+        Fl::wait();
+
+    const char * filename = fc.value(1);
+    fc.hide();
+    std::cout << "inpute image: "<< filename << std::endl;
+    userInterface->control->optAngle(filename);
+    update();
+}
+void P3DUserInterfaceCallback::optAll()
+{
+    Fl_File_Chooser fc("/playpen/workspace/newuoa/Correspondence_Oct7/myBuild", "*.mhd", Fl_File_Chooser::MULTI, "Select the reference image:");
+    fc.callback(NULL);
+
+    fc.show();
+    while (fc.shown())
+        Fl::wait();
+
+    //const char * filename = fc.value(1);
+    const char *filename = "/playpen/workspace/newuoa/Correspondence_Oct7/myBuild/tempOut-antiAliased.mhd\0";
+    std::cout << "inpute image: "<< filename << std::endl;
+    userInterface->control->optAll(filename);
+    update();
+}
+
+void P3DUserInterfaceCallback::optLength()
+{
+    Fl_File_Chooser fc("/playpen/workspace/newuoa/Correspondence_Oct7/myBuild", "*.mhd", Fl_File_Chooser::MULTI, "Select the reference image:");
+    fc.callback(NULL);
+
+    fc.show();
+    while (fc.shown())
+        Fl::wait();
+
+    const char * filename = fc.value(1);
+    fc.hide();
+    std::cout << "inpute image: "<< filename << std::endl;
+    userInterface->control->optLength(filename);
+    update();
+}
+
 
 
 /////////////////  MODEL SLIDE SHOW

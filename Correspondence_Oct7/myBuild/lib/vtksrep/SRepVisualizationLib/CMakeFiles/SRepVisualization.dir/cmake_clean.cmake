@@ -1,6 +1,6 @@
 FILE(REMOVE_RECURSE
-  "CMakeFiles/SRepVisualization.dir/vtksreptogridlayout.cpp.o"
   "CMakeFiles/SRepVisualization.dir/vtksrepvisuprimitives.cpp.o"
+  "CMakeFiles/SRepVisualization.dir/vtksreptogridlayout.cpp.o"
   "../../../libSRepVisualization.pdb"
   "../../../libSRepVisualization.a"
 )

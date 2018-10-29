@@ -507,6 +507,27 @@ void P3DUserInterface::cb_CPNS(Fl_Menu_* o, void* v) {
   ((P3DUserInterface*)(o->parent()->user_data()))->cb_CPNS_i(o,v);
 }
 
+void P3DUserInterface::cb_optAngle(Fl_Menu_* o, void* v) {
+  ((P3DUserInterface*)(o->parent()->user_data()))->cb_optAngle_i(o,v);
+}
+void P3DUserInterface::cb_optAngle_i(Fl_Menu_*, void*) {
+  callback->optAngle();
+}
+
+void P3DUserInterface::cb_optAll(Fl_Menu_* o, void* v) {
+  ((P3DUserInterface*)(o->parent()->user_data()))->cb_optAll_i(o,v);
+}
+void P3DUserInterface::cb_optAll_i(Fl_Menu_*, void*) {
+  callback->optAll();
+}
+
+void P3DUserInterface::cb_optLength(Fl_Menu_* o, void* v) {
+  ((P3DUserInterface*)(o->parent()->user_data()))->cb_optLength_i(o,v);
+}
+void P3DUserInterface::cb_optLength_i(Fl_Menu_*, void*) {
+  callback->optLength();
+}
+
 void P3DUserInterface::cb_toolsMenuPCA_Deformation_i(Fl_Menu_*, void*) {
   callback->initPCADeform();
 }
@@ -702,6 +723,9 @@ Fl_Menu_Item P3DUserInterface::menu_menuBar[] = {
  {"About Pablo", 0,  (Fl_Callback*)P3DUserInterface::cb_About, 0, 0, FL_NORMAL_LABEL, 0, 12, 0},
  {0,0,0,0,0,0,0,0,0},
  {"&Tools", 0,  0, 0, 64, FL_NORMAL_LABEL, 5, 12, 0},
+ {"Optimize Angle and Radii", 0,  (Fl_Callback*)P3DUserInterface::cb_optAll, 0, 0, FL_NORMAL_LABEL, 0, 12, 0},
+ {"Optimize Angle of s-rep", 0,  (Fl_Callback*)P3DUserInterface::cb_optAngle, 0, 0, FL_NORMAL_LABEL, 0, 12, 0},
+ {"Optimize Length of s-rep", 0,  (Fl_Callback*)P3DUserInterface::cb_optLength, 0, 0, FL_NORMAL_LABEL, 0, 12, 0},
  {"Run Binary Pablo Script", 0,  (Fl_Callback*)P3DUserInterface::cb_runScriptMenuItem, 0, 0, FL_NORMAL_LABEL, 0, 12, 0},
  {"Output Histogram...", 0,  (Fl_Callback*)P3DUserInterface::cb_Output, 0, 0, FL_NORMAL_LABEL, 0, 12, 0},
  {"Export to POV-Ray...", 0,  (Fl_Callback*)P3DUserInterface::cb_Export2, 0, 128, FL_NORMAL_LABEL, 0, 12, 0},

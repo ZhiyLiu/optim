@@ -286,6 +286,15 @@ public:
     // Redoes the previous undone transformation operation
     bool redo();
 
+    // optimize angle srep with NEWUOA
+    void optAngle(const char* filename);
+
+    // optimize angle and length of spokes in srep with NEWUOA
+    void optAll(const char* filename);
+
+    // optimize length srep with NEWUOA
+    void optLength(const char* filename);
+
     // Set the world coordinate positions of the image planes
     void setXCutPlanePos(double pos) { imagePlanes.setXCutPlaneWorldPos(pos); }
     void setYCutPlanePos(double pos) { imagePlanes.setYCutPlaneWorldPos(pos); }

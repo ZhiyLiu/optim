@@ -30,10 +30,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -63,19 +63,19 @@ edit_cache/fast: edit_cache
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -P cmake_install.cmake
 .PHONY : install
 
 # Special rule for the target install
 install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
-	/usr/bin/cmake -P cmake_install.cmake
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local
 
 # Special rule for the target install/local
@@ -85,7 +85,7 @@ install/local/fast: install/local
 # Special rule for the target install/strip
 install/strip: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip
 
 # Special rule for the target install/strip
@@ -104,7 +104,7 @@ list_install_components/fast: list_install_components
 # Special rule for the target package
 package: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && /usr/bin/cpack --config ./CPackConfig.cmake
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && /playpen/software/cmake-2.8.12-Linux-i386/bin/cpack --config ./CPackConfig.cmake
 .PHONY : package
 
 # Special rule for the target package
@@ -114,7 +114,7 @@ package/fast: package
 # Special rule for the target package_source
 package_source:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && /usr/bin/cpack --config ./CPackSourceConfig.cmake /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CPackSourceConfig.cmake
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && /playpen/software/cmake-2.8.12-Linux-i386/bin/cpack --config ./CPackSourceConfig.cmake /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CPackSourceConfig.cmake
 .PHONY : package_source
 
 # Special rule for the target package_source
@@ -124,7 +124,7 @@ package_source/fast: package_source
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/usr/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -175,82 +175,6 @@ Correspondence: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/rule
 Correspondence/fast:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build
 .PHONY : Correspondence/fast
-
-# Convenience name for target.
-lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/rule:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f CMakeFiles/Makefile2 lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/rule
-.PHONY : lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/rule
-
-# Convenience name for target.
-optimizeAngle: lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/rule
-.PHONY : optimizeAngle
-
-# fast build rule for target.
-optimizeAngle/fast:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/build
-.PHONY : optimizeAngle/fast
-
-# Convenience name for target.
-lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/rule:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f CMakeFiles/Makefile2 lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/rule
-.PHONY : lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/rule
-
-# Convenience name for target.
-optimizeLength: lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/rule
-.PHONY : optimizeLength
-
-# fast build rule for target.
-optimizeLength/fast:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/build
-.PHONY : optimizeLength/fast
-
-M3DSpokeAngleOptimizer.o: M3DSpokeAngleOptimizer.cpp.o
-.PHONY : M3DSpokeAngleOptimizer.o
-
-# target to build an object file
-M3DSpokeAngleOptimizer.cpp.o:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeAngleOptimizer.cpp.o
-.PHONY : M3DSpokeAngleOptimizer.cpp.o
-
-M3DSpokeAngleOptimizer.i: M3DSpokeAngleOptimizer.cpp.i
-.PHONY : M3DSpokeAngleOptimizer.i
-
-# target to preprocess a source file
-M3DSpokeAngleOptimizer.cpp.i:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeAngleOptimizer.cpp.i
-.PHONY : M3DSpokeAngleOptimizer.cpp.i
-
-M3DSpokeAngleOptimizer.s: M3DSpokeAngleOptimizer.cpp.s
-.PHONY : M3DSpokeAngleOptimizer.s
-
-# target to generate assembly for a file
-M3DSpokeAngleOptimizer.cpp.s:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeAngleOptimizer.cpp.s
-.PHONY : M3DSpokeAngleOptimizer.cpp.s
-
-M3DSpokeLengthOptimizer.o: M3DSpokeLengthOptimizer.cpp.o
-.PHONY : M3DSpokeLengthOptimizer.o
-
-# target to build an object file
-M3DSpokeLengthOptimizer.cpp.o:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeLengthOptimizer.cpp.o
-.PHONY : M3DSpokeLengthOptimizer.cpp.o
-
-M3DSpokeLengthOptimizer.i: M3DSpokeLengthOptimizer.cpp.i
-.PHONY : M3DSpokeLengthOptimizer.i
-
-# target to preprocess a source file
-M3DSpokeLengthOptimizer.cpp.i:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeLengthOptimizer.cpp.i
-.PHONY : M3DSpokeLengthOptimizer.cpp.i
-
-M3DSpokeLengthOptimizer.s: M3DSpokeLengthOptimizer.cpp.s
-.PHONY : M3DSpokeLengthOptimizer.s
-
-# target to generate assembly for a file
-M3DSpokeLengthOptimizer.cpp.s:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeLengthOptimizer.cpp.s
-.PHONY : M3DSpokeLengthOptimizer.cpp.s
 
 M3DSpokeLengthOptimizer2D.o: M3DSpokeLengthOptimizer2D.cpp.o
 .PHONY : M3DSpokeLengthOptimizer2D.o
@@ -306,7 +230,6 @@ OptimizeAngle.o: OptimizeAngle.cpp.o
 # target to build an object file
 OptimizeAngle.cpp.o:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/OptimizeAngle.cpp.o
 .PHONY : OptimizeAngle.cpp.o
 
 OptimizeAngle.i: OptimizeAngle.cpp.i
@@ -315,7 +238,6 @@ OptimizeAngle.i: OptimizeAngle.cpp.i
 # target to preprocess a source file
 OptimizeAngle.cpp.i:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.i
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/OptimizeAngle.cpp.i
 .PHONY : OptimizeAngle.cpp.i
 
 OptimizeAngle.s: OptimizeAngle.cpp.s
@@ -324,7 +246,6 @@ OptimizeAngle.s: OptimizeAngle.cpp.s
 # target to generate assembly for a file
 OptimizeAngle.cpp.s:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.s
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeAngle.dir/OptimizeAngle.cpp.s
 .PHONY : OptimizeAngle.cpp.s
 
 OptimizeLength.o: OptimizeLength.cpp.o
@@ -333,7 +254,6 @@ OptimizeLength.o: OptimizeLength.cpp.o
 # target to build an object file
 OptimizeLength.cpp.o:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeLength.cpp.o
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/OptimizeLength.cpp.o
 .PHONY : OptimizeLength.cpp.o
 
 OptimizeLength.i: OptimizeLength.cpp.i
@@ -342,7 +262,6 @@ OptimizeLength.i: OptimizeLength.cpp.i
 # target to preprocess a source file
 OptimizeLength.cpp.i:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeLength.cpp.i
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/OptimizeLength.cpp.i
 .PHONY : OptimizeLength.cpp.i
 
 OptimizeLength.s: OptimizeLength.cpp.s
@@ -351,7 +270,6 @@ OptimizeLength.s: OptimizeLength.cpp.s
 # target to generate assembly for a file
 OptimizeLength.cpp.s:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeLength.cpp.s
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeLength.dir/OptimizeLength.cpp.s
 .PHONY : OptimizeLength.cpp.s
 
 RegularityEntropy.o: RegularityEntropy.cpp.o
@@ -377,30 +295,6 @@ RegularityEntropy.s: RegularityEntropy.cpp.s
 RegularityEntropy.cpp.s:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/RegularityEntropy.cpp.s
 .PHONY : RegularityEntropy.cpp.s
-
-SimilarityComputer.o: SimilarityComputer.cpp.o
-.PHONY : SimilarityComputer.o
-
-# target to build an object file
-SimilarityComputer.cpp.o:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/SimilarityComputer.cpp.o
-.PHONY : SimilarityComputer.cpp.o
-
-SimilarityComputer.i: SimilarityComputer.cpp.i
-.PHONY : SimilarityComputer.i
-
-# target to preprocess a source file
-SimilarityComputer.cpp.i:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/SimilarityComputer.cpp.i
-.PHONY : SimilarityComputer.cpp.i
-
-SimilarityComputer.s: SimilarityComputer.cpp.s
-.PHONY : SimilarityComputer.s
-
-# target to generate assembly for a file
-SimilarityComputer.cpp.s:
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/SimilarityComputer.cpp.s
-.PHONY : SimilarityComputer.cpp.s
 
 SimilarityComputer2D.o: SimilarityComputer2D.cpp.o
 .PHONY : SimilarityComputer2D.o
@@ -1062,17 +956,9 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
-	@echo "... optimizeAngle"
-	@echo "... optimizeLength"
 	@echo "... package"
 	@echo "... package_source"
 	@echo "... rebuild_cache"
-	@echo "... M3DSpokeAngleOptimizer.o"
-	@echo "... M3DSpokeAngleOptimizer.i"
-	@echo "... M3DSpokeAngleOptimizer.s"
-	@echo "... M3DSpokeLengthOptimizer.o"
-	@echo "... M3DSpokeLengthOptimizer.i"
-	@echo "... M3DSpokeLengthOptimizer.s"
 	@echo "... M3DSpokeLengthOptimizer2D.o"
 	@echo "... M3DSpokeLengthOptimizer2D.i"
 	@echo "... M3DSpokeLengthOptimizer2D.s"
@@ -1088,9 +974,6 @@ help:
 	@echo "... RegularityEntropy.o"
 	@echo "... RegularityEntropy.i"
 	@echo "... RegularityEntropy.s"
-	@echo "... SimilarityComputer.o"
-	@echo "... SimilarityComputer.i"
-	@echo "... SimilarityComputer.s"
 	@echo "... SimilarityComputer2D.o"
 	@echo "... SimilarityComputer2D.i"
 	@echo "... SimilarityComputer2D.s"

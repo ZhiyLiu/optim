@@ -26,10 +26,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E remove -f
+RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -52,51 +52,51 @@ include lib/register/CMakeFiles/register.dir/progress.make
 # Include the compile flags for this target's objects.
 include lib/register/CMakeFiles/register.dir/flags.make
 
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAProblem.cpp
+lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DVoxelOptimizer.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_1)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAProblem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DVoxelOptimizer.cpp
 
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAProblem.cpp > CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.i
+lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DVoxelOptimizer.cpp > CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAProblem.cpp -o CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.s
+lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DVoxelOptimizer.cpp -o CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o
+lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepOptimizer.cpp
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureTransformation.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_2)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepOptimizer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureTransformation.cpp
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepOptimizer.cpp > CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.i
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureTransformation.cpp > CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.s
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureTransformation.cpp -o CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o
 
 lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
 lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationOptimizer.cpp
@@ -121,262 +121,9 @@ lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o.
 
 lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_4)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAProblem.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAProblem.cpp > CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAProblem.cpp -o CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OptimizerBase.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_5)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/OptimizerBase.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OptimizerBase.cpp
-
-lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/OptimizerBase.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OptimizerBase.cpp > CMakeFiles/register.dir/src/OptimizerBase.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/OptimizerBase.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OptimizerBase.cpp -o CMakeFiles/register.dir/src/OptimizerBase.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_6)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeProblem.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeProblem.cpp > CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeProblem.cpp -o CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DUndoList.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_7)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/P3DUndoList.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DUndoList.cpp
-
-lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/P3DUndoList.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DUndoList.cpp > CMakeFiles/register.dir/src/P3DUndoList.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/P3DUndoList.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DUndoList.cpp -o CMakeFiles/register.dir/src/P3DUndoList.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_8)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityOptimizer.cpp > CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityOptimizer.cpp -o CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/LandmarkDeformation.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_9)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/LandmarkDeformation.cpp
-
-lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/LandmarkDeformation.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/LandmarkDeformation.cpp > CMakeFiles/register.dir/src/LandmarkDeformation.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/LandmarkDeformation.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/LandmarkDeformation.cpp -o CMakeFiles/register.dir/src/LandmarkDeformation.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Trackball.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_10)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/Trackball.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Trackball.cpp
-
-lib/register/CMakeFiles/register.dir/src/Trackball.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/Trackball.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Trackball.cpp > CMakeFiles/register.dir/src/Trackball.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/Trackball.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/Trackball.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Trackball.cpp -o CMakeFiles/register.dir/src/Trackball.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureTransformation.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_11)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureTransformation.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureTransformation.cpp > CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureTransformation.cpp -o CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DTubeSimilarityPGAProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_12)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DTubeSimilarityPGAProblem.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DTubeSimilarityPGAProblem.cpp > CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DTubeSimilarityPGAProblem.cpp -o CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/DistanceToPointSetFunction.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_13)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/DistanceToPointSetFunction.cpp
-
-lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/DistanceToPointSetFunction.cpp > CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/DistanceToPointSetFunction.cpp -o CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_14)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAProblem.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAProblem.cpp > CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAProblem.cpp -o CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o
-
 lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
 lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FitUnlabeledPoints.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_15)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FitUnlabeledPoints.cpp
 
@@ -397,32 +144,262 @@ lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o.provides: lib/
 
 lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DControl.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_16)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/P3DControl.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DControl.cpp
+lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Anastruct.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_5)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/Anastruct.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Anastruct.cpp
 
-lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/P3DControl.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DControl.cpp > CMakeFiles/register.dir/src/P3DControl.cpp.i
+lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/Anastruct.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Anastruct.cpp > CMakeFiles/register.dir/src/Anastruct.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/P3DControl.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DControl.cpp -o CMakeFiles/register.dir/src/P3DControl.cpp.s
+lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/Anastruct.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Anastruct.cpp -o CMakeFiles/register.dir/src/Anastruct.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o
+lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DtoPovray.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_6)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DtoPovray.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DtoPovray.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DtoPovray.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DtoPovray.cpp > CMakeFiles/register.dir/src/M3DtoPovray.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DtoPovray.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DtoPovray.cpp -o CMakeFiles/register.dir/src/M3DtoPovray.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_7)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationProblem.cpp > CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationProblem.cpp -o CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSOptimizer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_8)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSOptimizer.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSOptimizer.cpp > CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureOptimizer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_9)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureOptimizer.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureOptimizer.cpp > CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DTubeSimilarityPGAProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_10)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DTubeSimilarityPGAProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DTubeSimilarityPGAProblem.cpp > CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DTubeSimilarityPGAProblem.cpp -o CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Trackball.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_11)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/Trackball.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Trackball.cpp
+
+lib/register/CMakeFiles/register.dir/src/Trackball.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/Trackball.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Trackball.cpp > CMakeFiles/register.dir/src/Trackball.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/Trackball.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/Trackball.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Trackball.cpp -o CMakeFiles/register.dir/src/Trackball.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_12)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSProblem.cpp > CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSProblem.cpp -o CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OptimizerBase.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_13)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/OptimizerBase.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OptimizerBase.cpp
+
+lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/OptimizerBase.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OptimizerBase.cpp > CMakeFiles/register.dir/src/OptimizerBase.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/OptimizerBase.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OptimizerBase.cpp -o CMakeFiles/register.dir/src/OptimizerBase.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/readOldObjectFile.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_14)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/readOldObjectFile.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/readOldObjectFile.cpp
+
+lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/readOldObjectFile.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/readOldObjectFile.cpp > CMakeFiles/register.dir/src/readOldObjectFile.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/readOldObjectFile.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/readOldObjectFile.cpp -o CMakeFiles/register.dir/src/readOldObjectFile.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_15)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSRepProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepProblem.cpp > CMakeFiles/register.dir/src/M3DSRepProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSRepProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepProblem.cpp -o CMakeFiles/register.dir/src/M3DSRepProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o
 
 lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
 lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_17)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_16)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAOptimizer.cpp
 
@@ -443,120 +420,143 @@ lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o.pro
 
 lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/MakeOptimizationVideo.cpp
+lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_17)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationProblem.cpp > CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationProblem.cpp -o CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureOptimizer.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_18)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/MakeOptimizationVideo.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureOptimizer.cpp
 
-lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/MakeOptimizationVideo.cpp > CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.i
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureOptimizer.cpp > CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/MakeOptimizationVideo.cpp -o CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.s
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureOptimizer.cpp -o CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureProblem.cpp
+lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OctTreeTauBand.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_19)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureProblem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OctTreeTauBand.cpp
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureProblem.cpp > CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.i
+lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/OctTreeTauBand.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OctTreeTauBand.cpp > CMakeFiles/register.dir/src/OctTreeTauBand.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureProblem.cpp -o CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.s
+lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/OctTreeTauBand.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OctTreeTauBand.cpp -o CMakeFiles/register.dir/src/OctTreeTauBand.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o
+lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAOptimizer.cpp
+lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeProblem.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_20)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAOptimizer.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeProblem.cpp
 
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAOptimizer.cpp > CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.i
+lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeProblem.cpp > CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.s
+lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeProblem.cpp -o CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o
+lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DFigureElongater.cpp
+lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepOptimizer.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_21)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DFigureElongater.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepOptimizer.cpp
 
-lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DFigureElongater.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DFigureElongater.cpp > CMakeFiles/register.dir/src/M3DFigureElongater.cpp.i
+lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepOptimizer.cpp > CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DFigureElongater.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DFigureElongater.cpp -o CMakeFiles/register.dir/src/M3DFigureElongater.cpp.s
+lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o
+lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationProblem.cpp
+lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/LandmarkDeformation.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_22)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationProblem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/LandmarkDeformation.cpp
 
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationProblem.cpp > CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.i
+lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/LandmarkDeformation.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/LandmarkDeformation.cpp > CMakeFiles/register.dir/src/LandmarkDeformation.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationProblem.cpp -o CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.s
+lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/LandmarkDeformation.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/LandmarkDeformation.cpp -o CMakeFiles/register.dir/src/LandmarkDeformation.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o
+lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o
 
 lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
 lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityProblem.cpp
@@ -581,55 +581,32 @@ lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o.
 
 lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResidueCPNSProblem.cpp
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationProblem.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_24)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResidueCPNSProblem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationProblem.cpp
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResidueCPNSProblem.cpp > CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.i
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationProblem.cpp > CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResidueCPNSProblem.cpp -o CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.s
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationProblem.cpp -o CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/ImagePlanes.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_25)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/ImagePlanes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/ImagePlanes.cpp
-
-lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/ImagePlanes.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/ImagePlanes.cpp > CMakeFiles/register.dir/src/ImagePlanes.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/ImagePlanes.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/ImagePlanes.cpp -o CMakeFiles/register.dir/src/ImagePlanes.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o
 
 lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
 lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_26)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_25)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureProblem.cpp
 
@@ -649,6 +626,29 @@ lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o.provides: lib
 .PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o.provides
 
 lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/DistanceToPointSetFunction.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_26)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/DistanceToPointSetFunction.cpp
+
+lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/DistanceToPointSetFunction.cpp > CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/DistanceToPointSetFunction.cpp -o CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o
 
 lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
 lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DBoundingSphere.cpp
@@ -673,469 +673,32 @@ lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o.provides: lib/r
 
 lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepProblem.cpp
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAOptimizer.cpp
 	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_28)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepProblem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAOptimizer.cpp
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSRepProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepProblem.cpp > CMakeFiles/register.dir/src/M3DSRepProblem.cpp.i
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAOptimizer.cpp > CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.i
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSRepProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSRepProblem.cpp -o CMakeFiles/register.dir/src/M3DSRepProblem.cpp.s
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.s
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.requires
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.provides
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.provides
 
-lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_29)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureOptimizer.cpp > CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSubfigureOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_30)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSOptimizer.cpp > CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_31)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAOptimizer.cpp > CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAOptimizer.cpp -o CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Anastruct.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_32)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/Anastruct.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Anastruct.cpp
-
-lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/Anastruct.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Anastruct.cpp > CMakeFiles/register.dir/src/Anastruct.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/Anastruct.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/Anastruct.cpp -o CMakeFiles/register.dir/src/Anastruct.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_33)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAOptimizer.cpp > CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAOptimizer.cpp -o CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_34)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAProblem.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAProblem.cpp > CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAProblem.cpp -o CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/readOldObjectFile.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_35)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/readOldObjectFile.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/readOldObjectFile.cpp
-
-lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/readOldObjectFile.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/readOldObjectFile.cpp > CMakeFiles/register.dir/src/readOldObjectFile.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/readOldObjectFile.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/readOldObjectFile.cpp -o CMakeFiles/register.dir/src/readOldObjectFile.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FunctionExplorer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_36)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/FunctionExplorer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FunctionExplorer.cpp
-
-lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/FunctionExplorer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FunctionExplorer.cpp > CMakeFiles/register.dir/src/FunctionExplorer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/FunctionExplorer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FunctionExplorer.cpp -o CMakeFiles/register.dir/src/FunctionExplorer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_37)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationProblem.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationProblem.cpp > CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityElongationProblem.cpp -o CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_38)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureOptimizer.cpp > CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureOptimizer.cpp -o CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_39)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSProblem.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSProblem.cpp > CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityCPNSProblem.cpp -o CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_40)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeOptimizer.cpp > CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DVoxelOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_41)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DVoxelOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DVoxelOptimizer.cpp > CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DVoxelOptimizer.cpp -o CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DtoPovray.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_42)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DtoPovray.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DtoPovray.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DtoPovray.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DtoPovray.cpp > CMakeFiles/register.dir/src/M3DtoPovray.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DtoPovray.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DtoPovray.cpp -o CMakeFiles/register.dir/src/M3DtoPovray.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OctTreeTauBand.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_43)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OctTreeTauBand.cpp
-
-lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/OctTreeTauBand.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OctTreeTauBand.cpp > CMakeFiles/register.dir/src/OctTreeTauBand.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/OctTreeTauBand.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/OctTreeTauBand.cpp -o CMakeFiles/register.dir/src/OctTreeTauBand.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_44)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationOptimizer.cpp > CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationOptimizer.cpp -o CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationOptimizer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_45)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationOptimizer.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationOptimizer.cpp > CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationOptimizer.cpp -o CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationProblem.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_46)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationProblem.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationProblem.cpp > CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationProblem.cpp -o CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o
-
-lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
-lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DPrimitiveCorrector.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_47)
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DPrimitiveCorrector.cpp
-
-lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.i"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DPrimitiveCorrector.cpp > CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.i
-
-lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.s"
-	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DPrimitiveCorrector.cpp -o CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.s
-
-lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.requires:
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.requires
-
-lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.requires
-	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.provides.build
-.PHONY : lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.provides
-
-lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o
 
 lib/register/CMakeFiles/register.dir/src/PCA.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
 lib/register/CMakeFiles/register.dir/src/PCA.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/PCA.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_48)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_29)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/PCA.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/PCA.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/PCA.cpp
 
@@ -1156,108 +719,545 @@ lib/register/CMakeFiles/register.dir/src/PCA.cpp.o.provides: lib/register/CMakeF
 
 lib/register/CMakeFiles/register.dir/src/PCA.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/PCA.cpp.o
 
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_30)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAProblem.cpp > CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResiduePGAProblem.cpp -o CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_31)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAProblem.cpp > CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAProblem.cpp -o CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DUndoList.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_32)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/P3DUndoList.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DUndoList.cpp
+
+lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/P3DUndoList.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DUndoList.cpp > CMakeFiles/register.dir/src/P3DUndoList.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/P3DUndoList.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DUndoList.cpp -o CMakeFiles/register.dir/src/P3DUndoList.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DControl.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_33)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/P3DControl.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DControl.cpp
+
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/P3DControl.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DControl.cpp > CMakeFiles/register.dir/src/P3DControl.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/P3DControl.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/P3DControl.cpp -o CMakeFiles/register.dir/src/P3DControl.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/MakeOptimizationVideo.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_34)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/MakeOptimizationVideo.cpp
+
+lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/MakeOptimizationVideo.cpp > CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/MakeOptimizationVideo.cpp -o CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeOptimizer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_35)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeOptimizer.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeOptimizer.cpp > CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSpokeOptimizer.cpp -o CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_36)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAProblem.cpp > CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DSimilarityPGAProblem.cpp -o CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DPrimitiveCorrector.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_37)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DPrimitiveCorrector.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DPrimitiveCorrector.cpp > CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DPrimitiveCorrector.cpp -o CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_38)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureProblem.cpp > CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigureProblem.cpp -o CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationOptimizer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_39)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationOptimizer.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationOptimizer.cpp > CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DDeformationOptimizer.cpp -o CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResidueCPNSProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_40)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResidueCPNSProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResidueCPNSProblem.cpp > CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DMainFigResidueCPNSProblem.cpp -o CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAProblem.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_41)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAProblem.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAProblem.cpp > CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAProblem.cpp -o CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationOptimizer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_42)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationOptimizer.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationOptimizer.cpp > CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationOptimizer.cpp -o CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FunctionExplorer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_43)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/FunctionExplorer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FunctionExplorer.cpp
+
+lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/FunctionExplorer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FunctionExplorer.cpp > CMakeFiles/register.dir/src/FunctionExplorer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/FunctionExplorer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/FunctionExplorer.cpp -o CMakeFiles/register.dir/src/FunctionExplorer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DFigureElongater.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_44)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DFigureElongater.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DFigureElongater.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DFigureElongater.cpp > CMakeFiles/register.dir/src/M3DFigureElongater.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DFigureElongater.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DFigureElongater.cpp -o CMakeFiles/register.dir/src/M3DFigureElongater.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityOptimizer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_45)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityOptimizer.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityOptimizer.cpp > CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationSimilarityOptimizer.cpp -o CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/ImagePlanes.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_46)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/ImagePlanes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/ImagePlanes.cpp
+
+lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/ImagePlanes.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/ImagePlanes.cpp > CMakeFiles/register.dir/src/ImagePlanes.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/ImagePlanes.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/ImagePlanes.cpp -o CMakeFiles/register.dir/src/ImagePlanes.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAOptimizer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_47)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAOptimizer.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAOptimizer.cpp > CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DRegistrationPGAOptimizer.cpp -o CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o: lib/register/CMakeFiles/register.dir/flags.make
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAOptimizer.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_48)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAOptimizer.cpp
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAOptimizer.cpp > CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.i
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/register && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/src/M3DAdaptiveRegistrationPGAOptimizer.cpp -o CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.s
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.requires:
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.requires
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.provides: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.requires
+	$(MAKE) -f lib/register/CMakeFiles/register.dir/build.make lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.provides.build
+.PHONY : lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.provides
+
+lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.provides.build: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o
+
 # Object files for target register
 register_OBJECTS = \
-"CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o" \
-"CMakeFiles/register.dir/src/OptimizerBase.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o" \
-"CMakeFiles/register.dir/src/P3DUndoList.cpp.o" \
-"CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o" \
-"CMakeFiles/register.dir/src/Trackball.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o" \
-"CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o" \
-"CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o" \
-"CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o" \
-"CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o" \
-"CMakeFiles/register.dir/src/P3DControl.cpp.o" \
-"CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o" \
-"CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o" \
-"CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o" \
-"CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o" \
-"CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o" \
-"CMakeFiles/register.dir/src/ImagePlanes.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o" \
-"CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/Anastruct.cpp.o" \
-"CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o" \
-"CMakeFiles/register.dir/src/readOldObjectFile.cpp.o" \
-"CMakeFiles/register.dir/src/FunctionExplorer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o" \
-"CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o" \
-"CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o" \
 "CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o" \
+"CMakeFiles/register.dir/src/Anastruct.cpp.o" \
 "CMakeFiles/register.dir/src/M3DtoPovray.cpp.o" \
-"CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o" \
-"CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o" \
-"CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o" \
+"CMakeFiles/register.dir/src/Trackball.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o" \
+"CMakeFiles/register.dir/src/OptimizerBase.cpp.o" \
+"CMakeFiles/register.dir/src/readOldObjectFile.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o" \
 "CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o" \
+"CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o" \
+"CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o" \
+"CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/PCA.cpp.o" \
+"CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o" \
+"CMakeFiles/register.dir/src/P3DUndoList.cpp.o" \
+"CMakeFiles/register.dir/src/P3DControl.cpp.o" \
+"CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o" \
 "CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o" \
-"CMakeFiles/register.dir/src/PCA.cpp.o"
+"CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o" \
+"CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/FunctionExplorer.cpp.o" \
+"CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o" \
+"CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/ImagePlanes.cpp.o" \
+"CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o" \
+"CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o"
 
 # External object files for target register
 register_EXTERNAL_OBJECTS =
 
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o
 libregister.a: lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o
 libregister.a: lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o
 libregister.a: lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o
-libregister.a: lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o
 libregister.a: lib/register/CMakeFiles/register.dir/src/PCA.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o
+libregister.a: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o
 libregister.a: lib/register/CMakeFiles/register.dir/build.make
 libregister.a: lib/register/CMakeFiles/register.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX static library ../../libregister.a"
@@ -1268,54 +1268,54 @@ libregister.a: lib/register/CMakeFiles/register.dir/link.txt
 lib/register/CMakeFiles/register.dir/build: libregister.a
 .PHONY : lib/register/CMakeFiles/register.dir/build
 
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.requires
 lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DVoxelOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSubfigureTransformation.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/FitUnlabeledPoints.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/Anastruct.cpp.o.requires
 lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DtoPovray.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSubfigureOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DTubeSimilarityPGAProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/Trackball.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityCPNSProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/OptimizerBase.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/readOldObjectFile.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSRepProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAOptimizer.cpp.o.requires
 lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DDeformationProblem.cpp.o.requires
-lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigureOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/OctTreeTauBand.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSpokeProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSRepOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/LandmarkDeformation.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityElongationProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSubfigureProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/DistanceToPointSetFunction.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DBoundingSphere.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAOptimizer.cpp.o.requires
 lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/PCA.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigResiduePGAProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/P3DUndoList.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/MakeOptimizationVideo.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSpokeOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DSimilarityPGAProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DPrimitiveCorrector.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigureProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DDeformationOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DMainFigResidueCPNSProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAProblem.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/FunctionExplorer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DFigureElongater.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationSimilarityOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/ImagePlanes.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DRegistrationPGAOptimizer.cpp.o.requires
+lib/register/CMakeFiles/register.dir/requires: lib/register/CMakeFiles/register.dir/src/M3DAdaptiveRegistrationPGAOptimizer.cpp.o.requires
 .PHONY : lib/register/CMakeFiles/register.dir/requires
 
 lib/register/CMakeFiles/register.dir/clean:

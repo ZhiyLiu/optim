@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../../libvtkpowercrust.a  CMakeFiles/vtkpowercrust.dir/vtkPowerCrustSurfaceReconstruction.cxx.o
+/usr/bin/ranlib ../../../libvtkpowercrust.a

@@ -58,16 +58,16 @@ ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unsp
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include/SRepInterpolation" TYPE FILE FILES
-    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolatecrestspokes.h"
-    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/minimizecurvaturefunction.h"
+    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtkquadmeshtotriangularmesh.h"
     "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtkinterpolatecurve.h"
-    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolator.h"
     "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolatecrestspokesquartic.h"
     "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolatemedialspokes.h"
-    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolatemedialsheet.h"
-    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtkquadmeshtotriangularmesh.h"
+    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/minimizecurvaturefunction.h"
+    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolator.h"
+    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolatecrestspokes.h"
     "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolatemedialspokeshermite.h"
     "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolatemedialcrestcurve.h"
+    "/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepInterpolationLib/vtksrepinterpolatemedialsheet.h"
     "/playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/SRepInterpolationLib/SRepInterpolation_EXPORT.h"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")

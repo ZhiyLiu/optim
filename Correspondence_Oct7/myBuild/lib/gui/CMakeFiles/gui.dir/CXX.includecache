@@ -1368,8 +1368,6 @@ vtkCellLinks.h
 
 /playpen/software/vtk_build/vtkConfigure.h
 
-/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/PlanIm/include/getopt.h
-
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/PlanIm/include/unistd.h
 stdlib.h
 -
@@ -1505,6 +1503,10 @@ movable_Fl_Window.h
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.h
 OptVisualizerCallback.h
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/OptVisualizerCallback.h
+
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DDisplayGlobals.cpp
+P3DDisplayGlobals.h
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DDisplayGlobals.h
 
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DDisplayGlobals.h
 M3DDisplayGlobals.h
@@ -1782,6 +1784,14 @@ Trackball.h
 
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/bp_splash.xpm
 
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.cpp
+FL/Fl.H
+-
+FL/fl_draw.H
+-
+iostream
+-
+
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/button_labels.h
 
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/deleteUserInterface.cpp
@@ -1789,6 +1799,10 @@ P3DUserInterface.h
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/P3DUserInterface.h
 
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/make_windows.h
+
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.cpp
+menu.h
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.h
 
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/menu.h
 FL/Fl.H
@@ -1838,6 +1852,18 @@ FL/fl_draw.H
 FL/fl_ask.H
 -
 stdlib.h
+-
+
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.cpp
+stdlib.h
+-
+FL/Fl_Window.H
+-
+movable_Fl_Window.h
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.h
+iostream
+-
+assert.h
 -
 
 /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/gui/src/movable_Fl_Window.h
@@ -2897,7 +2923,7 @@ stddef.h
 -
 bits/confname.h
 -
-getopt.h
+bits/getopt_posix.h
 -
 bits/unistd.h
 -

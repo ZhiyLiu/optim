@@ -1,0 +1,57 @@
+/playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7
+-- * SHARE_REL_PATH   =share
+-- * DOC_REL_PATH     =doc
+-- * BBS_REL_PATH     =
+-- * DATA_REL_PATH    =
+-- ===============================================
+-- ===============================================
+-- Setting up deduced pathes:
+-- * BBTK_BBDOC_REL_PATH   =
+-- * BBTK_DOXYGEN_REL_PATH =
+-- * EXECUTABLE_OUTPUT_PATH=/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/cmake-build-debug/
+-- * LIBRARY_OUTPUT_PATH   =/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/cmake-build-debug/
+-- ===============================================
+-- A library with BLAS API found.
+-- A library with BLAS API found.
+-- A library with LAPACK API found.
+-- * Added definition -Dgui_EXPORT_SYMBOLS
+-- Library Install Path lib64/gui
+-- * Added definition -DImageIO_EXPORT_SYMBOLS
+-- Library Install Path lib64/ImageIO
+-- * Added definition -Dm3d_EXPORT_SYMBOLS
+-- Library Install Path lib64/m3d
+-- * Added definition -Dmatch_EXPORT_SYMBOLS
+-- Library Install Path lib64/match
+-- * Added definition -Dpaul_code_EXPORT_SYMBOLS
+-- Library Install Path lib64/paul_code
+-- * Added definition -Dplanes_EXPORT_SYMBOLS
+-- Library Install Path lib64/planes
+-- * Added definition -Dregister_EXPORT_SYMBOLS
+-- Library Install Path lib64/register
+-- * Added definition -Dseurat_EXPORT_SYMBOLS
+-- Library Install Path lib64/seurat
+-- * Added definition -Dversion_EXPORT_SYMBOLS
+-- Library Install Path lib64/version
+-- * Added definition -Dzlib_EXPORT_SYMBOLS
+-- Library Install Path lib64/zlib
+-- * Added definition -Dflvw-1.0_EXPORT_SYMBOLS
+-- Library Install Path lib64/flvw-1.0
+-- * Added definition -DSRepInterpolation_EXPORT_SYMBOLS
+-- Library Install Path lib64/SRepInterpolation
+-- * Added definition -DSRep_EXPORT_SYMBOLS
+-- Library Install Path lib64/SRep
+-- * Added definition -DSRepIO_EXPORT_SYMBOLS
+-- Library Install Path lib64/SRepIO
+-- * Added definition -DSRepVisualization_EXPORT_SYMBOLS
+-- Library Install Path lib64/SRepVisualization
+-- * Added definition -Dcalquantum_EXPORT_SYMBOLS
+-- Library Install Path lib64/calquantum
+-- * Added definition -DCorrespondence_EXPORT_SYMBOLS
+-- Library Install Path lib64/Correspondence
+-- * Added definition -DVisualization_EXPORT_SYMBOLS
+-- Library Install Path lib64/Visualization
+-- * Added definition -Dvtkpowercrust_EXPORT_SYMBOLS
+-- Library Install Path lib64/vtkpowercrust
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/cmake-build-debug

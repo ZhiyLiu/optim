@@ -7589,7 +7589,6 @@ lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/software/vtk
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/software/vtk/Filtering/vtkPointSet.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/software/vtk/Filtering/vtkPolyData.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/software/vtk_build/vtkConfigure.h
-lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/PlanIm/include/getopt.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/PlanIm/include/unistd.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/include/AllImageIO.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/include/ControlKeys.h
@@ -7614,6 +7613,7 @@ lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/ne
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigure.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigureStats.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigureTreeNode.h
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObjectFile.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPGA.h
@@ -7626,6 +7626,8 @@ lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/ne
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadInterpolator.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadPrimitive.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DSpoke.h
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DSpokeAngleOptimizer.h
+lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DSpokeLengthOptimizer.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeFigure.h
 lib/register/CMakeFiles/register.dir/src/P3DControl.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h

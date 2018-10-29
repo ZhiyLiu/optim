@@ -1,3 +1,4 @@
+# the changed spoke is 68 th spoke if read normally, it belongs to primitive[2][7] 25th primitive and U0
 model {
    figureCount = 1;
    modelType = -1;
@@ -500,10 +501,10 @@ model {
          r[2] = 0.09439590000000000;
          selected = 1;
          type = EndPrimitive;
-         ux[0] = 0.58865326747042490;
+         ux[0] = 0.74900688738888421;
          ux[1] = 0.36258800000000002;
          ux[2] = 0.51644199999999996;
-         uy[0] = 0.55752683259677516;
+         uy[0] = -0.31038286198341447;
          uy[1] = 0.72517500000000001;
          uy[2] = 0.85632200000000003;
          uz[0] = -0.58536400000000000;

@@ -398,6 +398,14 @@ void M3DObject::setName(const char * newName)
     (*nameCount)++;
 }
 
+void M3DObject::drawNormal()
+{
+    int indexPrim = 25;
+    M3DPrimitive *p = this->getPrimitivePtr(0, indexPrim);
+    M3DQuadPrimitive* quadAtom = dynamic_cast<M3DQuadPrimitive*>(p);
+
+}
+
 void M3DObject::setPGAStats(M3DPGAStats * pgaStats, bool keep) {
 	if (pga_stats == pgaStats)
 		return;

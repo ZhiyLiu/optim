@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../../libcalquantum.a  CMakeFiles/calquantum.dir/calMainFuc.cpp.o CMakeFiles/calquantum.dir/calquantum.cpp.o
+/usr/bin/ranlib ../../../libcalquantum.a
