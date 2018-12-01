@@ -35,7 +35,7 @@ RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 EQUALS = =
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+CMAKE_EDIT_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/ccmake
 
 # The top-level source directory on which CMake was run.
 CMAKE_SOURCE_DIR = /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7
@@ -52,9 +52,32 @@ include lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/progress.make
 # Include the compile flags for this target's objects.
 include lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 
+lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
+lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_1)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx
+
+lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.i"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx > CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.i
+
+lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.s"
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx -o CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.s
+
+lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o.requires:
+.PHONY : lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o.requires
+
+lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o.provides: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o.requires
+	$(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o.provides.build
+.PHONY : lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o.provides
+
+lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o.provides.build: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o
+
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidestandardspokes.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidestandardspokes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/slidestandardspokes.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_1)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidestandardspokes.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/slidestandardspokes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/slidestandardspokes.cpp
 
@@ -77,7 +100,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidestandardspokes.cpp
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeAngle.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_2)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_3)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeAngle.cpp
 
@@ -100,7 +123,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o.pro
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/movespokes.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/movespokes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/movespokes.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_3)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_4)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/movespokes.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/movespokes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/movespokes.cpp
 
@@ -123,7 +146,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/movespokes.cpp.o.provid
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/procrustes.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/procrustes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/procrustes.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_4)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_5)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/procrustes.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/procrustes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/procrustes.cpp
 
@@ -146,7 +169,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/procrustes.cpp.o.provid
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/RegularityEntropy.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/RegularityEntropy.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/RegularityEntropy.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_5)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_6)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/RegularityEntropy.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/RegularityEntropy.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/RegularityEntropy.cpp
 
@@ -169,7 +192,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/RegularityEntropy.cpp.o
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/generate2dSrep.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/generate2dSrep.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/generate2dSrep.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_6)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_7)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/generate2dSrep.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/generate2dSrep.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/generate2dSrep.cpp
 
@@ -192,7 +215,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/generate2dSrep.cpp.o.pr
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/thinplatesplinesrep.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/thinplatesplinesrep.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/thinplatesplinesrep.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_7)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_8)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/thinplatesplinesrep.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/thinplatesplinesrep.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/thinplatesplinesrep.cpp
 
@@ -215,7 +238,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/thinplatesplinesrep.cpp
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/regularityentropy.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/regularityentropy.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/regularityentropy.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_8)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_9)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/regularityentropy.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/regularityentropy.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/regularityentropy.cpp
 
@@ -238,7 +261,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/regularityentropy.cpp.o
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/SimilarityComputer2D.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/SimilarityComputer2D.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/SimilarityComputer2D.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_9)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_10)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/SimilarityComputer2D.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/SimilarityComputer2D.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/SimilarityComputer2D.cpp
 
@@ -261,7 +284,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/SimilarityComputer2D.cp
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/alignsrep.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/alignsrep.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/alignsrep.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_10)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_11)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/alignsrep.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/alignsrep.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/alignsrep.cpp
 
@@ -284,7 +307,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/alignsrep.cpp.o.provide
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeLengthOptimizer2D.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeLengthOptimizer2D.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/M3DSpokeLengthOptimizer2D.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_11)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_12)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeLengthOptimizer2D.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/M3DSpokeLengthOptimizer2D.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/M3DSpokeLengthOptimizer2D.cpp
 
@@ -307,7 +330,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/M3DSpokeLengthOptimizer
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/thinplatesplinepdmtosrep.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/thinplatesplinepdmtosrep.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/thinplatesplinepdmtosrep.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_12)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_13)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/thinplatesplinepdmtosrep.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/thinplatesplinepdmtosrep.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/thinplatesplinepdmtosrep.cpp
 
@@ -330,7 +353,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/thinplatesplinepdmtosre
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/testDemo.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/testDemo.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/testDemo.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_13)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_14)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/testDemo.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/testDemo.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/testDemo.cpp
 
@@ -353,7 +376,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/testDemo.cpp.o.provides
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/visualization.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/visualization.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/visualization.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_14)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_15)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/visualization.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/visualization.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/visualization.cpp
 
@@ -376,7 +399,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/visualization.cpp.o.pro
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/oneplusonecostfunction.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/oneplusonecostfunction.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/oneplusonecostfunction.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_15)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_16)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/oneplusonecostfunction.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/oneplusonecostfunction.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/oneplusonecostfunction.cpp
 
@@ -399,7 +422,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/oneplusonecostfunction.
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeLength.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeLength.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeLength.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_16)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_17)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeLength.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/OptimizeLength.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeLength.cpp
 
@@ -422,7 +445,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeLength.cpp.o.pr
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/NormalMatchComputer.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/NormalMatchComputer.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/NormalMatchComputer.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_17)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_18)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/NormalMatchComputer.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/NormalMatchComputer.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/NormalMatchComputer.cpp
 
@@ -445,7 +468,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/NormalMatchComputer.cpp
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/toolsfunc.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/toolsfunc.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/toolsfunc.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_18)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_19)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/toolsfunc.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/toolsfunc.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/toolsfunc.cpp
 
@@ -468,7 +491,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/toolsfunc.cpp.o.provide
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/calcrestregularityfeatures.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/calcrestregularityfeatures.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/calcrestregularityfeatures.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_19)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_20)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/calcrestregularityfeatures.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/calcrestregularityfeatures.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/calcrestregularityfeatures.cpp
 
@@ -491,7 +514,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/calcrestregularityfeatu
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/optimizationusingnewuoa.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/optimizationusingnewuoa.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/optimizationusingnewuoa.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_20)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_21)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/optimizationusingnewuoa.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/optimizationusingnewuoa.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/optimizationusingnewuoa.cpp
 
@@ -514,7 +537,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/optimizationusingnewuoa
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/quadfigattribution.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/quadfigattribution.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/quadfigattribution.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_21)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_22)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/quadfigattribution.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/quadfigattribution.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/quadfigattribution.cpp
 
@@ -537,7 +560,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/quadfigattribution.cpp.
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/uvmap.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/uvmap.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/uvmap.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_22)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_23)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/uvmap.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/uvmap.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/uvmap.cpp
 
@@ -560,7 +583,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/uvmap.cpp.o.provides.bu
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/shiftedsrep.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/shiftedsrep.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/shiftedsrep.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_23)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_24)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/shiftedsrep.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/shiftedsrep.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/shiftedsrep.cpp
 
@@ -583,7 +606,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/shiftedsrep.cpp.o.provi
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/cost_function.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/cost_function.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/cost_function.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_24)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_25)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/cost_function.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/cost_function.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/cost_function.cpp
 
@@ -606,7 +629,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/cost_function.cpp.o.pro
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/srepprocrustes.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/srepprocrustes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/srepprocrustes.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_25)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_26)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/srepprocrustes.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/srepprocrustes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/srepprocrustes.cpp
 
@@ -629,7 +652,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/srepprocrustes.cpp.o.pr
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/correspondenceevaluation.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/correspondenceevaluation.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/correspondenceevaluation.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_26)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_27)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/correspondenceevaluation.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/correspondenceevaluation.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/correspondenceevaluation.cpp
 
@@ -652,7 +675,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/correspondenceevaluatio
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/matlabengine.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/matlabengine.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/matlabengine.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_27)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_28)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/matlabengine.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/matlabengine.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/matlabengine.cpp
 
@@ -675,7 +698,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/matlabengine.cpp.o.prov
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/weightedprocrustes.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/weightedprocrustes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/weightedprocrustes.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_28)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_29)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/weightedprocrustes.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/weightedprocrustes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/weightedprocrustes.cpp
 
@@ -698,7 +721,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/weightedprocrustes.cpp.
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidecrestspokes.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidecrestspokes.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/slidecrestspokes.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_29)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_30)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidecrestspokes.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/slidecrestspokes.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/slidecrestspokes.cpp
 
@@ -721,7 +744,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidecrestspokes.cpp.o.
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/samplesreppoints.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/samplesreppoints.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/samplesreppoints.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_30)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_31)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/samplesreppoints.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/samplesreppoints.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/samplesreppoints.cpp
 
@@ -744,7 +767,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/samplesreppoints.cpp.o.
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/calregularityfeatures.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/calregularityfeatures.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/calregularityfeatures.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_31)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_32)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/calregularityfeatures.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/calregularityfeatures.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/calregularityfeatures.cpp
 
@@ -767,7 +790,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/calregularityfeatures.c
 
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/objectivefunction.cpp.o: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/flags.make
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/objectivefunction.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/objectivefunction.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_32)
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles $(CMAKE_PROGRESS_33)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/objectivefunction.cpp.o"
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/lib/vtksrep/Correspondence && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/Correspondence.dir/objectivefunction.cpp.o -c /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/objectivefunction.cpp
 
@@ -790,6 +813,7 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/objectivefunction.cpp.o
 
 # Object files for target Correspondence
 Correspondence_OBJECTS = \
+"CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o" \
 "CMakeFiles/Correspondence.dir/slidestandardspokes.cpp.o" \
 "CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o" \
 "CMakeFiles/Correspondence.dir/movespokes.cpp.o" \
@@ -826,6 +850,7 @@ Correspondence_OBJECTS = \
 # External object files for target Correspondence
 Correspondence_EXTERNAL_OBJECTS =
 
+libCorrespondence.a: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o
 libCorrespondence.a: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidestandardspokes.cpp.o
 libCorrespondence.a: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o
 libCorrespondence.a: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/movespokes.cpp.o
@@ -868,6 +893,7 @@ libCorrespondence.a: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/li
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build: libCorrespondence.a
 .PHONY : lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build
 
+lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/requires: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o.requires
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/requires: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/slidestandardspokes.cpp.o.requires
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/requires: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o.requires
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/requires: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/movespokes.cpp.o.requires

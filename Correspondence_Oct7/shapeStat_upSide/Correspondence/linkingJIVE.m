@@ -99,8 +99,8 @@ saveFeatures2CSV(spokes_reordered, links_reordered);
 close all;
 data1 = spokes_reordered; %spokes_normalized;%spokes_interested;
 data2 = links_reordered; %links_normalized; %links_interested;
-AJIVEPreVisualMJ({data1},{[2 5 9]},20,{'Inner-object: [2 5 9]'}) ;
-AJIVEPreVisualMJ({data2},{[2 5 9]},20,{'Inter-object: [2 5 9]'}) ;
+AJIVEPreVisualMJ({data1},{[2 4 6]},113,{'Inner-object: [2 4 6]'}) ;
+AJIVEPreVisualMJ({data2},{[2 4 6]},113,{'Inter-object: [2 4 6]'}) ;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 close all;
 
@@ -108,11 +108,10 @@ close all;
 caBlocks=[];
 caBlocks{1} = data1 ;
 caBlocks{2} = data2 ;
-vRank = [4 4];
+vRank = [4 6];
 caDataSetNames = {'Inner-object' 'Inter-object'} ;
 paramstruct = struct('dataname',{caDataSetNames}, ...
                            'nresample',1000, ...
-                           'legendcellstr', legend_str,...
                            'ioutput',[1 1 1 1 1 1 1 1 1]) ;
 outstruct = AJIVEMainMJ(caBlocks,vRank,paramstruct);
 

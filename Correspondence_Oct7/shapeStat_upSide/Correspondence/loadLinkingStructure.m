@@ -1,9 +1,12 @@
 % read linking structure and parse into a column vector( 68*3-dimensional, then return this
 % vector
 % input: single s-rep file path
-function f = loadLinkingStructure(file_path, file_name)
-    data_file = fullfile(file_path, file_name);
-    
+% output: p, u, r, linklength, linkto, linkvector
+function f = loadLinkingStructure(varargin)%file_path, file_name, exclude_link_to=0)
+    args={'','',0};
+    args(1:nargin) = varargin; %file_path, file_name, exclude_link_to=0/1
+    data_file = fullfile(args{1}, args{2});
+    exclude_link_to = args{3};
     fid = fopen(data_file, 'r');
     f = [];
     nObjs = 0;
@@ -110,9 +113,11 @@ function f = loadLinkingStructure(file_path, file_name)
         end
         
         %%%%%%%%%%%%%%%%%%%% Additional link information %%%%%%%%%%%%%
-        res = regexp(tline, '\<linkTo = (?<val>-?\d+\.?(\d+)?);', 'names');
-        if size(res) ~= 0
-            f = [f; str2num(res.val)];
+        if exclude_link_to == 0
+            res = regexp(tline, '\<linkTo = (?<val>-?\d+\.?(\d+)?);', 'names');
+            if size(res) ~= 0
+                f = [f; str2num(res.val)];
+            end
         end
         
         % parse each figure (obj) in the configuration

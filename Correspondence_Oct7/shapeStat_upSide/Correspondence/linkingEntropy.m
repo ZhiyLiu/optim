@@ -24,17 +24,24 @@ addpath( genpath( fullfile( pwd, 'Smoothing' ) ) );
 %% 1. collect all links from 10 cases, each case relates to 1 column
 clear all;
 close all;
-s_reps = ['/playpen/workspace/demo_multiobject/180215';
-    '/playpen/workspace/demo_multiobject/223443';
-    '/playpen/workspace/demo_multiobject/225196';
-    '/playpen/workspace/demo_multiobject/402809';
-    '/playpen/workspace/demo_multiobject/549967';
-    '/playpen/workspace/demo_multiobject/622437';
-    '/playpen/workspace/demo_multiobject/721965';
-    '/playpen/workspace/demo_multiobject/730231';
-    '/playpen/workspace/demo_multiobject/802785';
-    '/playpen/workspace/demo_multiobject/867237'];
+data_path = '/playpen/workspace/demo_multiobject/';
+s_reps = ['180215';
+    '223443';
+    '225196';
+    '402809';
+    '549967';
+    '622437';
+    '721965';
+    '730231';
+    '802785';
+    '867237'];
 
+% s_reps = ['107524'; '141335'; '145680'; '180215';'223443';'225196';'236316';'252848';'315149';'323623';
+%           '339961'; '359973'; '360222'; '365557';'402809';'429591';'482642';'490181';'513330';'549587';
+%           '549967'; '589344'; '618672'; '622437';'631202';'638999';'641078';'660372';'691501';'699209';
+%           '713824'; '721965'; '730231'; '755016';'792210';'793001';'802785';'810313';'812952';'813346';
+%           '889945'; '895096'; '910593'; '915717';'931663';'938659';'950194';'961753';'967950';'974849';
+%           '822794'; '833557'; '841812'; '842426';'867237';'876501';'879873'];
 % 12-dimensional(purlz+linkTo) links and 68 links per object
 % each column consists of feature vector per configuration(3 objects)
 dimPerLink = 12;
@@ -45,7 +52,7 @@ feature_mat = [];
 disp(['Loading features from all linking structures...']);
 fileName = 'middle_linking_structure.m3d';
 for i = 1 : size(s_reps, 1)
-    s_rep_path = s_reps(i, :);
+    s_rep_path = fullfile(data_path,s_reps(i, :));
     feature_vector = loadLinkingStructure(s_rep_path, fileName);
     feature_mat = [feature_mat, feature_vector];
 
@@ -54,18 +61,18 @@ end
 % load 1st 'diseased' linkinking structure
 % fileName = 'diseased_linking_structure.m3d';
 % for i = 1 : size(s_reps, 1)
-%     s_rep_path = s_reps(i, :);
+%     s_rep_path = fullfile(data_path,s_reps(i, :));
 %     feature_vector = loadLinkingStructure(s_rep_path,fileName);
 %     feature_mat = [feature_mat, feature_vector];
 % end
 
 % load 2nd 'diseased' linkinking structure
-% fileName = 'diseased_linking_2.m3d';
-% for i = 1 : size(s_reps, 1)
-%     s_rep_path = s_reps(i, :);
-%     feature_vector = loadLinkingStructure(s_rep_path,fileName);
-%     feature_mat = [feature_mat, feature_vector];
-% end
+fileName = 'diseased_linking_2.m3d';
+for i = 1 : size(s_reps, 1)
+    s_rep_path = fullfile(data_path,s_reps(i, :));
+    feature_vector = loadLinkingStructure(s_rep_path,fileName);
+    feature_mat = [feature_mat, feature_vector];
+end
 
 %% 2. select those links who always link to the same object
 disp(['Selecting links to the same object among the population...']);
@@ -75,11 +82,11 @@ saveIDList('/playpen/workspace/demo_multiobject/selected_links.txt', idList);
 
 
 % Subtract spoke length from link length
-index_spoke_length = 7;
-index_link_length = 8;
-for i = 1:length(idList)
-    links_interested((i-1)*dimPerLink + index_link_length, :) = links_interested((i-1)*dimPerLink + index_link_length, :) - links_interested((i-1)*dimPerLink + index_spoke_length, :);
-end
+% index_spoke_length = 7;
+% index_link_length = 8;
+% for i = 1:length(idList)
+%     links_interested((i-1)*dimPerLink + index_link_length, :) = links_interested((i-1)*dimPerLink + index_link_length, :) - links_interested((i-1)*dimPerLink + index_spoke_length, :);
+% end
 
 %% 3. euclideanize feature matrix
 disp(['Commensurating and composing Z matrix...']);

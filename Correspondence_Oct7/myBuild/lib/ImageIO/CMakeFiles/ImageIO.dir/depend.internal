@@ -841,30 +841,6 @@ lib/ImageIO/CMakeFiles/ImageIO.dir/src/ImageIO.cpp.o
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/zlib/include/zlib.h
  /usr/include/unistd.h
 lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/include/AllImageIO.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/test/testIO.cpp
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/include/ControlKeys.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/ControlParms.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/ControlParmsAccess.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Image3D.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DEndPrimitive.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPrimitive.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadPrimitive.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DSpoke.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Mathdefs.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Quat.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/SimilarityTransform3D.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Vector2D.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Vector3D.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/VectorND.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/control_parms_defaults.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/utility.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/paul_code/include/Registry.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/paul_code/include/libs.h
- /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/paul_code/include/matrix.h
 lib/ImageIO/CMakeFiles/ImageIO.dir/utilities/src/BasicException.cpp.o
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/utilities/include/BasicException.h
  /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/utilities/include/Debugging.h

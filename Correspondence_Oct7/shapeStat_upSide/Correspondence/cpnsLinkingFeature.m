@@ -2,7 +2,7 @@
 %%% each column of feature_mat contains links from 3 object in this case
 %%% dimPerLink is predefined value: the dimension of one single link
 %%% the structure of link is defined as purlin, namely: 
-%%% (px, py, pz, ux, uy, uz, r, l, i, nx, ny, nz)
+%%% input (px, py, pz, ux, uy, uz, r, l, i, nx, ny, nz)
 function cpnsLinkingFeature(feature_mat, dimPerLink)
 
 %% Normalize position

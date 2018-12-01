@@ -1,0 +1,24 @@
+# radius of trust region (step size of NEWUOA)
+0.05
+# end criterion
+0.0001
+# iteration limits
+200
+# weight of image match term
+1000
+#weight of normal match penalty
+100000
+#weight of sradPenalty
+10
+# The following are for optimizing angles. 1. step size
+0.001
+# end criterion
+0.001
+# iteration limits
+5000
+# weights of image match term
+0.00001
+# weight of srad penalty
+2000
+# weight of normal penalty
+50

@@ -840,30 +840,6 @@ lib/ImageIO/CMakeFiles/ImageIO.dir/src/ImageIO.cpp.o: /playpen/workspace/newuoa/
 lib/ImageIO/CMakeFiles/ImageIO.dir/src/ImageIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/zlib/include/zlib.h
 lib/ImageIO/CMakeFiles/ImageIO.dir/src/ImageIO.cpp.o: /usr/include/unistd.h
 
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/include/AllImageIO.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/test/testIO.cpp
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/include/ControlKeys.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/ControlParms.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/ControlParmsAccess.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Image3D.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DEndPrimitive.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPrimitive.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadPrimitive.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DSpoke.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Mathdefs.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Quat.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/SimilarityTransform3D.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Vector2D.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/Vector3D.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/VectorND.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/control_parms_defaults.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/utility.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/paul_code/include/Registry.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/paul_code/include/libs.h
-lib/ImageIO/CMakeFiles/ImageIO.dir/test/testIO.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/paul_code/include/matrix.h
 
 lib/ImageIO/CMakeFiles/ImageIO.dir/utilities/src/BasicException.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/utilities/include/BasicException.h
 lib/ImageIO/CMakeFiles/ImageIO.dir/utilities/src/BasicException.cpp.o: /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/ImageIO/utilities/include/Debugging.h

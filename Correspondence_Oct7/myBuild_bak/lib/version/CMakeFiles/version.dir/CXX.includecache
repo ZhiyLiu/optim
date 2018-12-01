@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/version/src/version.cpp
+iostream
+-
+fstream
+-
+strstream
+-
+string
+-
+string.h
+-
+stdlib.h
+-
+limits.h
+-
+

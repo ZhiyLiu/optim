@@ -83,6 +83,10 @@ IF ( BUILD_${LIBRARY_NAME} )
 
   #
   #----------------------------------------------------------------------------
+
+  #add_executable(optimizeSrep src/OptimizeSrep.cpp)
+  #target_link_libraries(optimizeSrep ${${LIBRARY_NAME}_LINK_LIBRARIES})
+
   set(CMAKE_BUILD_TYPE Debug)
   #---------------------------------------------------------------------------
 ENDIF ( BUILD_${LIBRARY_NAME} )

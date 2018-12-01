@@ -1,4 +1,5 @@
 FILE(REMOVE_RECURSE
+  "CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o"
   "CMakeFiles/Correspondence.dir/slidestandardspokes.cpp.o"
   "CMakeFiles/Correspondence.dir/OptimizeAngle.cpp.o"
   "CMakeFiles/Correspondence.dir/movespokes.cpp.o"

@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<VTKFile type="PolyData" version="0.1" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <PolyData>
+    <Piece NumberOfPoints="27" NumberOfVerts="0" NumberOfLines="0" NumberOfStrips="0" NumberOfPolys="16">
+      <PointData Scalars="spokeLength" Vectors="spokeDirection">
+        <DataArray type="Float64" Name="spokeDirection" NumberOfComponents="3" format="ascii" RangeMin="0.99999943353" RangeMax="1.000000371">
+          -0.517664 -0.582372 -0.626791 -0.362588 -0.725175 -0.585364
+          -0.231393 -0.795281 -0.560343 -0.112898 -0.829625 -0.546788
+          0 -0.840066 -0.542484 0.112898 -0.829625 -0.546788
+          0.231393 -0.795281 -0.560343 0.362588 -0.725175 -0.585364
+          0.517664 -0.582372 -0.626791 -0.718278 0 -0.695756
+          -0.415976 0 -0.909376 -0.244316 0 -0.969696
+          -0.114699 0 -0.9934 0 0 -1
+          0.114699 0 -0.9934 0.244316 0 -0.969696
+          0.415976 0 -0.909376 0.718278 0 -0.695756
+          -0.517664 0.582372 -0.626791 -0.362588 0.725175 -0.585364
+          -0.231393 0.795281 -0.560343 -0.112898 0.829625 -0.546788
+          0 0.840066 -0.542484 0.112898 0.829625 -0.546788
+          0.231393 0.795281 -0.560343 0.362588 0.725175 -0.585364
+          0.517664 0.582372 -0.626791
+          <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
+            <Value index="0">
+              0.99999943353
+            </Value>
+            <Value index="1">
+              1.000000371
+            </Value>
+          </InformationKey>
+        </DataArray>
+        <DataArray type="Float64" Name="spokeLength" format="ascii" RangeMin="0.0783123" RangeMax="0.125">
+          0.0869289 0.0930809 0.0972372 0.0996478 0.100438 0.0996478
+          0.0972372 0.0930809 0.0869289 0.0783123 0.101418 0.115117
+          0.122604 0.125 0.122604 0.115117 0.101418 0.0783123
+          0.0869289 0.0930809 0.0972372 0.0996478 0.100438 0.0996478
+          0.0972372 0.0930809 0.0869289
+        </DataArray>
+      </PointData>
+      <CellData>
+      </CellData>
+      <Points>
+        <DataArray type="Float64" Name="Points" NumberOfComponents="3" format="ascii" RangeMin="0.77162192207" RangeMax="0.97325565115">
+          0.365 0.460625 0.5 0.39875 0.4475 0.5
+          0.4325 0.439854 0.5 0.46625 0.435701 0.5
+          0.5 0.434375 0.5 0.53375 0.435701 0.5
+          0.5675 0.439854 0.5 0.60125 0.4475 0.5
+          0.635 0.460625 0.5 0.33125 0.5 0.5
+          0.373438 0.5 0.5 0.415625 0.5 0.5
+          0.457813 0.5 0.5 0.5 0.5 0.5
+          0.542187 0.5 0.5 0.584375 0.5 0.5
+          0.626563 0.5 0.5 0.66875 0.5 0.5
+          0.365 0.539375 0.5 0.39875 0.5525 0.5
+          0.4325 0.560146 0.5 0.46625 0.564299 0.5
+          0.5 0.565625 0.5 0.53375 0.564299 0.5
+          0.5675 0.560146 0.5 0.60125 0.5525 0.5
+          0.635 0.539375 0.5
+          <InformationKey name="L2_NORM_RANGE" location="vtkDataArray" length="2">
+            <Value index="0">
+              0.77162192207
+            </Value>
+            <Value index="1">
+              0.97325565115
+            </Value>
+          </InformationKey>
+        </DataArray>
+      </Points>
+      <Verts>
+        <DataArray type="Int64" Name="connectivity" format="ascii" RangeMin="0" RangeMax="19">
+        </DataArray>
+        <DataArray type="Int64" Name="offsets" format="ascii" RangeMin="21" RangeMax="21">
+        </DataArray>
+      </Verts>
+      <Lines>
+        <DataArray type="Int64" Name="connectivity" format="ascii" RangeMin="0" RangeMax="19">
+        </DataArray>
+        <DataArray type="Int64" Name="offsets" format="ascii" RangeMin="21" RangeMax="21">
+        </DataArray>
+      </Lines>
+      <Strips>
+        <DataArray type="Int64" Name="connectivity" format="ascii" RangeMin="0" RangeMax="19">
+        </DataArray>
+        <DataArray type="Int64" Name="offsets" format="ascii" RangeMin="21" RangeMax="21">
+        </DataArray>
+      </Strips>
+      <Polys>
+        <DataArray type="Int64" Name="connectivity" format="ascii" RangeMin="0" RangeMax="19">
+          0 9 10 1 1 10
+          11 2 2 11 12 3
+          3 12 13 4 4 13
+          14 5 5 14 15 6
+          6 15 16 7 7 16
+          17 8 9 18 19 10
+          10 19 20 11 11 20
+          21 12 12 21 22 13
+          13 22 23 14 14 23
+          24 15 15 24 25 16
+          16 25 26 17
+        </DataArray>
+        <DataArray type="Int64" Name="offsets" format="ascii" RangeMin="21" RangeMax="21">
+          4 8 12 16 20 24
+          28 32 36 40 44 48
+          52 56 60 64
+        </DataArray>
+      </Polys>
+    </Piece>
+  </PolyData>
+</VTKFile>

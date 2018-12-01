@@ -345,3 +345,77 @@ int M3DNEWUOAOptimizer::perform(M3DObject* outputModel)
     return 0;
 
 }
+int M3DNEWUOAOptimizer::perform(M3DObject* outputModel, double wtImageMatch, double wtNormalPenalty, double wtSradPenalty, double stepSize, double endCriterion, int maxIterations, const char* outputFileName)
+{
+    if(mSreps == NULL || mSignedDistanceImage == NULL)
+    {
+        std::cout << "[Error]object or signed distance image is empty in perform function" << std::endl;
+        return -1;
+    }
+
+    // optimization
+    M3DFigure* figure = mSreps->getFigurePtr(mFigureIndex);
+    // initialize quaternions
+    int primitiveCount = figure->getPrimitiveCount();
+    int spokeCount = figure->getSpokeCount();
+    double coeffArray[spokeCount * 4];
+    int spokeIndex = 0;
+    for(int i = 0; i < primitiveCount; ++i)
+    {
+        // The i-th primitive
+        M3DPrimitive* currentPrimitive = figure->getPrimitivePtr(i);
+        M3DQuadPrimitive* quadAtom = dynamic_cast<M3DQuadPrimitive*>(currentPrimitive);
+
+        Vector3D U0 = quadAtom->getU0();
+        Vector3D U1 = quadAtom->getU1();
+
+        U0.normalize();
+        U1.normalize();
+        mOrigDirs.push_back(U0);
+        mOrigDirs.push_back(U1);
+        mOrigLength.push_back(quadAtom->getR0());
+        mOrigLength.push_back(quadAtom->getR1());
+
+        int baseAddr = spokeIndex * 4;
+        coeffArray[baseAddr] = U0.getX();
+        coeffArray[baseAddr+1] = U0.getY();
+        coeffArray[baseAddr+2] = U0.getZ();
+        coeffArray[baseAddr+3] = 0; // initially, the power of the exponential is 0
+
+        coeffArray[baseAddr+4] = U1.getX();
+        coeffArray[baseAddr+5] = U1.getY();
+        coeffArray[baseAddr+6] = U1.getZ();
+        coeffArray[baseAddr+7] = 0;
+
+        M3DQuadEndPrimitive* endPrimitive = dynamic_cast<M3DQuadEndPrimitive*>(currentPrimitive);
+
+        if(endPrimitive != NULL)
+        {
+            Vector3D UEnd = endPrimitive->getUEnd();
+            mOrigDirs.push_back(UEnd);
+            mOrigLength.push_back(endPrimitive->getREnd());
+            coeffArray[baseAddr+8] = UEnd.getX();
+            coeffArray[baseAddr+9] = UEnd.getY();
+            coeffArray[baseAddr+10] = UEnd.getZ();
+            coeffArray[baseAddr+11] = 0;
+            spokeIndex += 1;
+        }
+        spokeIndex += 2;
+    }
+
+    mWtImageMatch = wtImageMatch;
+    mWtSradPenalty = wtSradPenalty;
+    mWtNormalPenalty = wtNormalPenalty;
+
+//    min_newuoa(spokeCount*4, coeffArray, *this, 0.01, 0.0001, 2000);
+    min_newuoa(spokeCount*4, coeffArray, *this, stepSize, endCriterion, maxIterations);
+    // update figure last time
+    updateFigure(coeffArray, mFigureIndex);
+
+    // output file
+    M3DObjectFile objectFile;
+    objectFile.write(outputFileName, *mSreps);
+    return 0;
+
+
+}

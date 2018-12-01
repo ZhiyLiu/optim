@@ -75,6 +75,8 @@ SET ( ${EXE_NAME}_LINK_LIBRARIES
 #----------------------------------------------------------------------------
 # CREATES AND INSTALLS THE EXE
 CREA_ADD_EXECUTABLE( ${EXE_NAME} )
+#add_executable(optimizeSrep OptimizeSrep.cpp)
+#target_link_libraries(optimizeSrep ${${EXE_NAME}_LINK_LIBRARIES})
 
 IF(WIN32)
 	SET(IGNORE_LIBRARY_FLAGS
@@ -154,6 +156,9 @@ SET ( ${EXE_NAME}_LINK_LIBRARIES
 #-------------BUILD_IMAGE2DISTANCEMAP---------------------------------------------------------------
 # CREATES AND INSTALLS THE EXE
 CREA_ADD_EXECUTABLE( ${EXE_NAME} )
-
 ENDIF(BUILD_ANTIALIAS)
+
+### ----------------Build NEWUOA optimizer
+
+
 

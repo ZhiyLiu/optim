@@ -39,7 +39,7 @@ RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 EQUALS = =
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+CMAKE_EDIT_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/ccmake
 
 # The top-level source directory on which CMake was run.
 CMAKE_SOURCE_DIR = /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7
@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /playpen/workspace/newuoa/Correspondence_Oct7/myBuild
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -384,6 +384,19 @@ Correspondence/fast:
 .PHONY : Correspondence/fast
 
 #=============================================================================
+# Target rules for targets named optimizeSrep
+
+# Build rule for target.
+optimizeSrep: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 optimizeSrep
+.PHONY : optimizeSrep
+
+# fast build rule for target.
+optimizeSrep/fast:
+	$(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build
+.PHONY : optimizeSrep/fast
+
+#=============================================================================
 # Target rules for targets named Visualization
 
 # Build rule for target.
@@ -453,6 +466,7 @@ help:
 	@echo "... SRepVisualization"
 	@echo "... calquantum"
 	@echo "... Correspondence"
+	@echo "... optimizeSrep"
 	@echo "... Visualization"
 	@echo "... vtkpowercrust"
 	@echo "... bin_pablo"

@@ -39,7 +39,7 @@ RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 EQUALS = =
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+CMAKE_EDIT_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/ccmake
 
 # The top-level source directory on which CMake was run.
 CMAKE_SOURCE_DIR = /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7
@@ -53,7 +53,7 @@ CMAKE_BINARY_DIR = /playpen/workspace/newuoa/Correspondence_Oct7/myBuild
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/playpen/software/cmake-2.8.12-Linux-i386/bin/ccmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -176,6 +176,20 @@ Correspondence/fast:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build
 .PHONY : Correspondence/fast
 
+# Convenience name for target.
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/rule:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f CMakeFiles/Makefile2 lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/rule
+.PHONY : lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/rule
+
+# Convenience name for target.
+optimizeSrep: lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/rule
+.PHONY : optimizeSrep
+
+# fast build rule for target.
+optimizeSrep/fast:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build
+.PHONY : optimizeSrep/fast
+
 M3DSpokeLengthOptimizer2D.o: M3DSpokeLengthOptimizer2D.cpp.o
 .PHONY : M3DSpokeLengthOptimizer2D.o
 
@@ -271,6 +285,33 @@ OptimizeLength.s: OptimizeLength.cpp.s
 OptimizeLength.cpp.s:
 	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeLength.cpp.s
 .PHONY : OptimizeLength.cpp.s
+
+OptimizeSrep.o: OptimizeSrep.cxx.o
+.PHONY : OptimizeSrep.o
+
+# target to build an object file
+OptimizeSrep.cxx.o:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/OptimizeSrep.cxx.o
+.PHONY : OptimizeSrep.cxx.o
+
+OptimizeSrep.i: OptimizeSrep.cxx.i
+.PHONY : OptimizeSrep.i
+
+# target to preprocess a source file
+OptimizeSrep.cxx.i:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.i
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/OptimizeSrep.cxx.i
+.PHONY : OptimizeSrep.cxx.i
+
+OptimizeSrep.s: OptimizeSrep.cxx.s
+.PHONY : OptimizeSrep.s
+
+# target to generate assembly for a file
+OptimizeSrep.cxx.s:
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.s
+	cd /playpen/workspace/newuoa/Correspondence_Oct7/myBuild && $(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/OptimizeSrep.cxx.s
+.PHONY : OptimizeSrep.cxx.s
 
 RegularityEntropy.o: RegularityEntropy.cpp.o
 .PHONY : RegularityEntropy.o
@@ -956,6 +997,7 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
+	@echo "... optimizeSrep"
 	@echo "... package"
 	@echo "... package_source"
 	@echo "... rebuild_cache"
@@ -971,6 +1013,9 @@ help:
 	@echo "... OptimizeLength.o"
 	@echo "... OptimizeLength.i"
 	@echo "... OptimizeLength.s"
+	@echo "... OptimizeSrep.o"
+	@echo "... OptimizeSrep.i"
+	@echo "... OptimizeSrep.s"
 	@echo "... RegularityEntropy.o"
 	@echo "... RegularityEntropy.i"
 	@echo "... RegularityEntropy.s"

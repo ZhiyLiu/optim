@@ -1,0 +1,423 @@
+[  4%] Built target zlib
+[  8%] Built target flvw-1.0
+[  9%] Built target SRep
+[ 14%] Built target paul_code
+[ 15%] Built target planes
+[ 16%] Built target version
+[ 19%] Built target SRepInterpolation
+[ 26%] Built target seurat
+[ 27%] Built target SRepVisualization
+[ 27%] Built target calquantum
+[ 27%] Built target vtkpowercrust
+[ 46%] Built target ImageIO
+[ 67%] Built target m3d
+[ 72%] Built target match
+[ 76%] Built target gui
+[ 90%] Built target register
+[ 90%] Built target bin_pablo
+[ 90%] Built target SRepIO
+[ 91%] Built target Visualization
+Scanning dependencies of target Correspondence
+[ 91%] Building CXX object lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/OptimizeSrep.cxx.o
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:5:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning (disable:4786)
+ ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:41:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning(disable:4786)
+ ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:202:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:9:1: warning: "/*" within comment [-Wcomment]
+ /*    hasmember()
+ ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:10:1: warning: "/*" within comment [-Wcomment]
+ /*    insert()
+ ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:11:1: warning: "/*" within comment [-Wcomment]
+ /*    del()
+ ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:12:1: warning: "/*" within comment [-Wcomment]
+ /*    clear()
+ ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:13:1: warning: "/*" within comment [-Wcomment]
+ /*   are O(1) time.              */
+ ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPrimitive.h:395:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigure.h:6,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:8,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h: In constructor ‘M3DTubePrimitive::M3DTubePrimitive()’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:453:12: warning: ‘M3DTubePrimitive::d’ will be initialized after [-Wreorder]
+     double d;
+            ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:438:20: warning:   ‘std::vector<double> M3DTubePrimitive::sr’ [-Wreorder]
+     vector<double> sr;
+                    ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:15:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive() : baseAtom(false), d(0.0), sr(DEFAULT_NUMBER_OF_SPOKES, 0.0 ), U2(1,0,0), U0(0,1,0) {}
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h: In constructor ‘M3DTubePrimitive::M3DTubePrimitive(double, double, double, double, double*, const Vector3D&, const Vector3D&, int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:453:12: warning: ‘M3DTubePrimitive::d’ will be initialized after [-Wreorder]
+     double d;
+            ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:438:20: warning:   ‘std::vector<double> M3DTubePrimitive::sr’ [-Wreorder]
+     vector<double> sr;
+                    ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:18:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive(double x0, double x1, double x2, double _d,
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:448:14: warning: ‘M3DTubePrimitive::U0’ will be initialized after [-Wreorder]
+     Vector3D U0;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:443:14: warning:   ‘Vector3D M3DTubePrimitive::U2’ [-Wreorder]
+     Vector3D U2;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:18:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive(double x0, double x1, double x2, double _d,
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h: In constructor ‘M3DTubePrimitive::M3DTubePrimitive(const Vector3D&, double, double*, const Vector3D&, const Vector3D&, int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:453:12: warning: ‘M3DTubePrimitive::d’ will be initialized after [-Wreorder]
+     double d;
+            ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:438:20: warning:   ‘std::vector<double> M3DTubePrimitive::sr’ [-Wreorder]
+     vector<double> sr;
+                    ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:25:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive(const Vector3D& X, double _d,
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:448:14: warning: ‘M3DTubePrimitive::U0’ will be initialized after [-Wreorder]
+     Vector3D U0;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:443:14: warning:   ‘Vector3D M3DTubePrimitive::U2’ [-Wreorder]
+     Vector3D U2;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:25:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive(const Vector3D& X, double _d,
+     ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DEndPrimitive.h:81:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPrimitive.h:397,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigure.h:6,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:8,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h: In constructor ‘M3DTubeEndPrimitive::M3DTubeEndPrimitive(double, double, double, double, double, double*, const Vector3D&, const Vector3D&, int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:15:24: warning: base ‘M3DTubePrimitive’ will be initialized after [-Wreorder]
+   M3DPrimitive(x0,x1,x2) {
+                        ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:15:24: warning:   base ‘M3DPrimitive’ [-Wreorder]
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:10:5: warning:   when initialized here [-Wreorder]
+     M3DTubeEndPrimitive(double x0, double x1, double x2,
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h: In constructor ‘M3DTubeEndPrimitive::M3DTubeEndPrimitive(const Vector3D&, double, double, double*, const Vector3D&, const Vector3D&, int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:24:17: warning: base ‘M3DTubePrimitive’ will be initialized after [-Wreorder]
+   M3DPrimitive(X) {
+                 ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:24:17: warning:   base ‘M3DPrimitive’ [-Wreorder]
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:19:5: warning:   when initialized here [-Wreorder]
+     M3DTubeEndPrimitive(const Vector3D &X,
+     ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DEndPrimitive.h:82:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPrimitive.h:397,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigure.h:6,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:8,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h: In constructor ‘M3DQuadEndPrimitive::M3DQuadEndPrimitive()’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:8:63: warning: base ‘M3DQuadPrimitive’ will be initialized after [-Wreorder]
+         : M3DQuadPrimitive(), M3DEndPrimitive(), M3DPrimitive() {}
+                                                               ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:8:63: warning:   base ‘M3DEndPrimitive’ [-Wreorder]
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:7:5: warning:   when initialized here [-Wreorder]
+     M3DQuadEndPrimitive() 
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:8:63: warning: base ‘M3DEndPrimitive’ will be initialized after [-Wreorder]
+         : M3DQuadPrimitive(), M3DEndPrimitive(), M3DPrimitive() {}
+                                                               ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:8:63: warning:   base ‘M3DPrimitive’ [-Wreorder]
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:7:5: warning:   when initialized here [-Wreorder]
+     M3DQuadEndPrimitive() 
+     ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h: In member function ‘M3DFigureTreeNode* M3DObject::getFigureTreeRoot(int) const’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:126:33: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         if(figureTrees.size() > treeId)
+                                 ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:13:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepLib/vtksrep.h: In member function ‘void vtkSRep::SetSpokes(vtkIdType, vtkSRep::VectorVNLType)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepLib/vtksrep.h:136:40: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         for(int i = 0; i < spokes.size(); i++){
+                                        ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepLib/vtksrep.h: In member function ‘void vtkSRep::SetSpokesRadius(vtkIdType, vtkSRep::VectorDoubleType)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepLib/vtksrep.h:149:40: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         for(int i = 0; i < radius.size(); i++){
+                                        ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:0:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h: At global scope:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:81:56: warning: non-static data member initializers only available with -std=c++11 or -std=gnu++11 [enabled by default]
+     int                                 mFigureIndex = 0; // The figure user want to optimize, currently have only one
+                                                        ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:254:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Diatomgrid.h:34:9: warning: declaration ‘class M3DFigure’ does not declare anything [enabled by default]
+ class ::M3DFigure;
+         ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Subdivsurf.h:89:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:309,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Subdivsurf.h: In member function ‘int& ThallCode::Tileneighbors::operator[](int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Subdivsurf.h:105:45: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   assert( val < sizeof(neighbors)/sizeof(int) && val >= 0);
+                                             ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:336:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Mesh.h: In constructor ‘ThallCode::Mesh::Mesh()’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Mesh.h:34:14: warning: ‘ThallCode::Mesh::fig_grid’ will be initialized after [-Wreorder]
+  Diatomgrid *fig_grid;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Mesh.h:30:6: warning:   ‘int ThallCode::Mesh::npolys’ [-Wreorder]
+  int npolys;
+      ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Mesh.h:41:5: warning:   when initialized here [-Wreorder]
+     Mesh() : v_list(NULL), pi_list(NULL), fig_grid(NULL),
+     ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h: At global scope:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:363:18: warning: declaration ‘class ThallCode::Diatomgrid’ does not declare anything [enabled by default]
+ class ThallCode::Diatomgrid;
+                  ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:364:18: warning: declaration ‘class ThallCode::CCSubdivsurf’ does not declare anything [enabled by default]
+ class ThallCode::CCSubdivsurf;
+                  ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:366:18: warning: declaration ‘class ThallCode::Tileneighbors’ does not declare anything [enabled by default]
+ class ThallCode::Tileneighbors;
+                  ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:367:18: warning: declaration ‘class ThallCode::QuadMesh’ does not declare anything [enabled by default]
+ class ThallCode::QuadMesh;
+                  ^
+Linking CXX static library ../../../libCorrespondence.a
+[100%] Built target Correspondence
+Scanning dependencies of target optimizeSrep
+[100%] Building CXX object lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/OptimizeSrep.cxx.o
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:5:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning (disable:4786)
+ ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:41:0: warning: ignoring #pragma warning  [-Wunknown-pragmas]
+ #pragma warning(disable:4786)
+ ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:202:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:9:1: warning: "/*" within comment [-Wcomment]
+ /*    hasmember()
+ ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:10:1: warning: "/*" within comment [-Wcomment]
+ /*    insert()
+ ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:11:1: warning: "/*" within comment [-Wcomment]
+ /*    del()
+ ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:12:1: warning: "/*" within comment [-Wcomment]
+ /*    clear()
+ ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/PseudoSet.h:13:1: warning: "/*" within comment [-Wcomment]
+ /*   are O(1) time.              */
+ ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPrimitive.h:395:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigure.h:6,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:8,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h: In constructor ‘M3DTubePrimitive::M3DTubePrimitive()’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:453:12: warning: ‘M3DTubePrimitive::d’ will be initialized after [-Wreorder]
+     double d;
+            ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:438:20: warning:   ‘std::vector<double> M3DTubePrimitive::sr’ [-Wreorder]
+     vector<double> sr;
+                    ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:15:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive() : baseAtom(false), d(0.0), sr(DEFAULT_NUMBER_OF_SPOKES, 0.0 ), U2(1,0,0), U0(0,1,0) {}
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h: In constructor ‘M3DTubePrimitive::M3DTubePrimitive(double, double, double, double, double*, const Vector3D&, const Vector3D&, int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:453:12: warning: ‘M3DTubePrimitive::d’ will be initialized after [-Wreorder]
+     double d;
+            ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:438:20: warning:   ‘std::vector<double> M3DTubePrimitive::sr’ [-Wreorder]
+     vector<double> sr;
+                    ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:18:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive(double x0, double x1, double x2, double _d,
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:448:14: warning: ‘M3DTubePrimitive::U0’ will be initialized after [-Wreorder]
+     Vector3D U0;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:443:14: warning:   ‘Vector3D M3DTubePrimitive::U2’ [-Wreorder]
+     Vector3D U2;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:18:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive(double x0, double x1, double x2, double _d,
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h: In constructor ‘M3DTubePrimitive::M3DTubePrimitive(const Vector3D&, double, double*, const Vector3D&, const Vector3D&, int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:453:12: warning: ‘M3DTubePrimitive::d’ will be initialized after [-Wreorder]
+     double d;
+            ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:438:20: warning:   ‘std::vector<double> M3DTubePrimitive::sr’ [-Wreorder]
+     vector<double> sr;
+                    ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:25:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive(const Vector3D& X, double _d,
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:448:14: warning: ‘M3DTubePrimitive::U0’ will be initialized after [-Wreorder]
+     Vector3D U0;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:443:14: warning:   ‘Vector3D M3DTubePrimitive::U2’ [-Wreorder]
+     Vector3D U2;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubePrimitive.h:25:5: warning:   when initialized here [-Wreorder]
+     M3DTubePrimitive(const Vector3D& X, double _d,
+     ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DEndPrimitive.h:81:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPrimitive.h:397,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigure.h:6,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:8,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h: In constructor ‘M3DTubeEndPrimitive::M3DTubeEndPrimitive(double, double, double, double, double, double*, const Vector3D&, const Vector3D&, int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:15:24: warning: base ‘M3DTubePrimitive’ will be initialized after [-Wreorder]
+   M3DPrimitive(x0,x1,x2) {
+                        ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:15:24: warning:   base ‘M3DPrimitive’ [-Wreorder]
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:10:5: warning:   when initialized here [-Wreorder]
+     M3DTubeEndPrimitive(double x0, double x1, double x2,
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h: In constructor ‘M3DTubeEndPrimitive::M3DTubeEndPrimitive(const Vector3D&, double, double, double*, const Vector3D&, const Vector3D&, int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:24:17: warning: base ‘M3DTubePrimitive’ will be initialized after [-Wreorder]
+   M3DPrimitive(X) {
+                 ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:24:17: warning:   base ‘M3DPrimitive’ [-Wreorder]
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DTubeEndPrimitive.h:19:5: warning:   when initialized here [-Wreorder]
+     M3DTubeEndPrimitive(const Vector3D &X,
+     ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DEndPrimitive.h:82:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DPrimitive.h:397,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DFigure.h:6,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:8,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h: In constructor ‘M3DQuadEndPrimitive::M3DQuadEndPrimitive()’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:8:63: warning: base ‘M3DQuadPrimitive’ will be initialized after [-Wreorder]
+         : M3DQuadPrimitive(), M3DEndPrimitive(), M3DPrimitive() {}
+                                                               ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:8:63: warning:   base ‘M3DEndPrimitive’ [-Wreorder]
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:7:5: warning:   when initialized here [-Wreorder]
+     M3DQuadEndPrimitive() 
+     ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:8:63: warning: base ‘M3DEndPrimitive’ will be initialized after [-Wreorder]
+         : M3DQuadPrimitive(), M3DEndPrimitive(), M3DPrimitive() {}
+                                                               ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:8:63: warning:   base ‘M3DPrimitive’ [-Wreorder]
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DQuadEndPrimitive.h:7:5: warning:   when initialized here [-Wreorder]
+     M3DQuadEndPrimitive() 
+     ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/register/include/OptimizerBase.h:5:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:12,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h: In member function ‘M3DFigureTreeNode* M3DObject::getFigureTreeRoot(int) const’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DObject.h:126:33: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         if(figureTrees.size() > treeId)
+                                 ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:13:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepLib/vtksrep.h: In member function ‘void vtkSRep::SetSpokes(vtkIdType, vtkSRep::VectorVNLType)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepLib/vtksrep.h:136:40: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         for(int i = 0; i < spokes.size(); i++){
+                                        ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepLib/vtksrep.h: In member function ‘void vtkSRep::SetSpokesRadius(vtkIdType, vtkSRep::VectorDoubleType)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/SRepLib/vtksrep.h:149:40: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+         for(int i = 0; i < radius.size(); i++){
+                                        ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:7:0:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h: At global scope:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/m3d/include/M3DNEWUOAOptimizer.h:81:56: warning: non-static data member initializers only available with -std=c++11 or -std=gnu++11 [enabled by default]
+     int                                 mFigureIndex = 0; // The figure user want to optimize, currently have only one
+                                                        ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:254:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Diatomgrid.h:34:9: warning: declaration ‘class M3DFigure’ does not declare anything [enabled by default]
+ class ::M3DFigure;
+         ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Subdivsurf.h:89:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:309,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Subdivsurf.h: In member function ‘int& ThallCode::Tileneighbors::operator[](int)’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Subdivsurf.h:105:45: warning: comparison between signed and unsigned integer expressions [-Wsign-compare]
+   assert( val < sizeof(neighbors)/sizeof(int) && val >= 0);
+                                             ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:336:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Mesh.h: In constructor ‘ThallCode::Mesh::Mesh()’:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Mesh.h:34:14: warning: ‘ThallCode::Mesh::fig_grid’ will be initialized after [-Wreorder]
+  Diatomgrid *fig_grid;
+              ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Mesh.h:30:6: warning:   ‘int ThallCode::Mesh::npolys’ [-Wreorder]
+  int npolys;
+      ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Mesh.h:41:5: warning:   when initialized here [-Wreorder]
+     Mesh() : v_list(NULL), pi_list(NULL), fig_grid(NULL),
+     ^
+In file included from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/DistanceMap3D.h:9:0,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/match/include/ImageDistanceMap.h:4,
+                 from /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/vtksrep/Correspondence/OptimizeSrep.cxx:10:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h: At global scope:
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:363:18: warning: declaration ‘class ThallCode::Diatomgrid’ does not declare anything [enabled by default]
+ class ThallCode::Diatomgrid;
+                  ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:364:18: warning: declaration ‘class ThallCode::CCSubdivsurf’ does not declare anything [enabled by default]
+ class ThallCode::CCSubdivsurf;
+                  ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:366:18: warning: declaration ‘class ThallCode::Tileneighbors’ does not declare anything [enabled by default]
+ class ThallCode::Tileneighbors;
+                  ^
+/playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7/lib/seurat/include/Shapedepend.h:367:18: warning: declaration ‘class ThallCode::QuadMesh’ does not declare anything [enabled by default]
+ class ThallCode::QuadMesh;
+                  ^
+Linking CXX executable ../../../optimizeSrep
+[100%] Built target optimizeSrep

@@ -10982,8 +10982,8 @@ void P3DUserInterfaceCallback::optAll()
     while (fc.shown())
         Fl::wait();
 
-    //const char * filename = fc.value(1);
-    const char *filename = "/playpen/workspace/newuoa/Correspondence_Oct7/myBuild/tempOut-antiAliased.mhd\0";
+    const char * filename = fc.value(1);
+    //const char *filename = "/playpen/workspace/newuoa/Correspondence_Oct7/myBuild/tempOut-antiAliased.mhd\0";
     std::cout << "inpute image: "<< filename << std::endl;
     userInterface->control->optAll(filename);
     update();

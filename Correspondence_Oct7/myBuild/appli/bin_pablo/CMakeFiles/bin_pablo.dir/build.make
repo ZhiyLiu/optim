@@ -35,7 +35,7 @@ RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 EQUALS = =
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+CMAKE_EDIT_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/ccmake
 
 # The top-level source directory on which CMake was run.
 CMAKE_SOURCE_DIR = /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7
@@ -118,10 +118,10 @@ bin_pablo: /playpen/software/fltk_build/lib/libfltk.a
 bin_pablo: /usr/lib/x86_64-linux-gnu/libm.so
 bin_pablo: libImageIO.a
 bin_pablo: libpaul_code.a
-bin_pablo: /usr/lib/libblas.so
-bin_pablo: /usr/lib/liblapack.so
-bin_pablo: /usr/lib/libblas.so
-bin_pablo: /usr/lib/liblapack.so
+bin_pablo: /usr/lib/x86_64-linux-gnu/libblas.so
+bin_pablo: /usr/lib/x86_64-linux-gnu/liblapack.so
+bin_pablo: /usr/lib/x86_64-linux-gnu/libblas.so
+bin_pablo: /usr/lib/x86_64-linux-gnu/liblapack.so
 bin_pablo: /usr/lib/x86_64-linux-gnu/libGLU.so
 bin_pablo: /usr/lib/x86_64-linux-gnu/libGL.so
 bin_pablo: /usr/lib/x86_64-linux-gnu/libSM.so

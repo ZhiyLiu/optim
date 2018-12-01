@@ -47,7 +47,7 @@ RM = /playpen/software/cmake-2.8.12-Linux-i386/bin/cmake -E remove -f
 EQUALS = =
 
 # The program to use to edit the cache.
-CMAKE_EDIT_COMMAND = /usr/bin/ccmake
+CMAKE_EDIT_COMMAND = /playpen/software/cmake-2.8.12-Linux-i386/bin/ccmake
 
 # The top-level source directory on which CMake was run.
 CMAKE_SOURCE_DIR = /playpen/workspace/newuoa/Correspondence_Oct7/Pablo2_Oct7
@@ -141,7 +141,7 @@ all: lib/gui/CMakeFiles/gui.dir/all
 
 # Build rule for subdir invocation for target.
 lib/gui/CMakeFiles/gui.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 60
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 61
 	$(MAKE) -f CMakeFiles/Makefile2 lib/gui/CMakeFiles/gui.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/gui/CMakeFiles/gui.dir/rule
@@ -294,7 +294,7 @@ all: lib/match/CMakeFiles/match.dir/all
 
 # Build rule for subdir invocation for target.
 lib/match/CMakeFiles/match.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 33
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 34
 	$(MAKE) -f CMakeFiles/Makefile2 lib/match/CMakeFiles/match.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/match/CMakeFiles/match.dir/rule
@@ -334,7 +334,7 @@ lib/paul_code/preinstall:
 lib/paul_code/CMakeFiles/paul_code.dir/all:
 	$(MAKE) -f lib/paul_code/CMakeFiles/paul_code.dir/build.make lib/paul_code/CMakeFiles/paul_code.dir/depend
 	$(MAKE) -f lib/paul_code/CMakeFiles/paul_code.dir/build.make lib/paul_code/CMakeFiles/paul_code.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles  69 70 71 72
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles  69 70 71 72 73
 	@echo "Built target paul_code"
 .PHONY : lib/paul_code/CMakeFiles/paul_code.dir/all
 
@@ -344,7 +344,7 @@ all: lib/paul_code/CMakeFiles/paul_code.dir/all
 
 # Build rule for subdir invocation for target.
 lib/paul_code/CMakeFiles/paul_code.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 5
 	$(MAKE) -f CMakeFiles/Makefile2 lib/paul_code/CMakeFiles/paul_code.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/paul_code/CMakeFiles/paul_code.dir/rule
@@ -384,7 +384,7 @@ lib/planes/preinstall:
 lib/planes/CMakeFiles/planes.dir/all:
 	$(MAKE) -f lib/planes/CMakeFiles/planes.dir/build.make lib/planes/CMakeFiles/planes.dir/depend
 	$(MAKE) -f lib/planes/CMakeFiles/planes.dir/build.make lib/planes/CMakeFiles/planes.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles  73 74
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles  74
 	@echo "Built target planes"
 .PHONY : lib/planes/CMakeFiles/planes.dir/all
 
@@ -394,7 +394,7 @@ all: lib/planes/CMakeFiles/planes.dir/all
 
 # Build rule for subdir invocation for target.
 lib/planes/CMakeFiles/planes.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 lib/planes/CMakeFiles/planes.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/planes/CMakeFiles/planes.dir/rule
@@ -451,7 +451,7 @@ all: lib/register/CMakeFiles/register.dir/all
 
 # Build rule for subdir invocation for target.
 lib/register/CMakeFiles/register.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 77
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 79
 	$(MAKE) -f CMakeFiles/Makefile2 lib/register/CMakeFiles/register.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/register/CMakeFiles/register.dir/rule
@@ -777,7 +777,7 @@ lib/vtksrep/SRepLib/preinstall:
 lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/all:
 	$(MAKE) -f lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/build.make lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/depend
 	$(MAKE) -f lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/build.make lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles  29
 	@echo "Built target SRep"
 .PHONY : lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/all
 
@@ -787,7 +787,7 @@ all: lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/all
 
 # Build rule for subdir invocation for target.
 lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 1
 	$(MAKE) -f CMakeFiles/Makefile2 lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/rule
@@ -835,7 +835,7 @@ lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/all: lib/vtksrep/SRepInterpolationLi
 lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/all: lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/all
 	$(MAKE) -f lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/build.make lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/depend
 	$(MAKE) -f lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/build.make lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles  29
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 
 	@echo "Built target SRepIO"
 .PHONY : lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/all
 
@@ -845,7 +845,7 @@ all: lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/all
 
 # Build rule for subdir invocation for target.
 lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 78
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 79
 	$(MAKE) -f CMakeFiles/Makefile2 lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/rule
@@ -968,10 +968,12 @@ clean: lib/vtksrep/calquantum/CMakeFiles/calquantum.dir/clean
 
 # Convenience name for "all" pass in the directory.
 lib/vtksrep/Correspondence/all: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/all
+lib/vtksrep/Correspondence/all: lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all
 .PHONY : lib/vtksrep/Correspondence/all
 
 # Convenience name for "clean" pass in the directory.
 lib/vtksrep/Correspondence/clean: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/clean
+lib/vtksrep/Correspondence/clean: lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/clean
 .PHONY : lib/vtksrep/Correspondence/clean
 
 # Convenience name for "preinstall" pass in the directory.
@@ -995,7 +997,7 @@ all: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/all
 
 # Build rule for subdir invocation for target.
 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 88
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 90
 	$(MAKE) -f CMakeFiles/Makefile2 lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/rule
@@ -1011,6 +1013,53 @@ lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/clean:
 
 # clean rule for target.
 clean: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/clean
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir
+
+# All Build rule for target.
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/ImageIO/CMakeFiles/ImageIO.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/m3d/CMakeFiles/m3d.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/match/CMakeFiles/match.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/paul_code/CMakeFiles/paul_code.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/register/CMakeFiles/register.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/seurat/CMakeFiles/seurat.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/zlib/CMakeFiles/zlib.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/vtksrep/SRepInterpolationLib/CMakeFiles/SRepInterpolation.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/vtksrep/SRepVisualizationLib/CMakeFiles/SRepVisualization.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/vtksrep/calquantum/CMakeFiles/calquantum.dir/all
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all: lib/vtksrep/Correspondence/CMakeFiles/Correspondence.dir/all
+	$(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/depend
+	$(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 
+	@echo "Built target optimizeSrep"
+.PHONY : lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all
+
+# Include target in all.
+all: lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 90
+	$(MAKE) -f CMakeFiles/Makefile2 lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
+.PHONY : lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/rule
+
+# Convenience name for target.
+optimizeSrep: lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/rule
+.PHONY : optimizeSrep
+
+# clean rule for target.
+lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/clean:
+	$(MAKE) -f lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/build.make lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/clean
+.PHONY : lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/clean
+
+# clean rule for target.
+clean: lib/vtksrep/Correspondence/CMakeFiles/optimizeSrep.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -1040,13 +1089,13 @@ lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/register/CMakeFi
 lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/seurat/CMakeFiles/seurat.dir/all
 lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/zlib/CMakeFiles/zlib.dir/all
 lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/vtksrep/SRepInterpolationLib/CMakeFiles/SRepInterpolation.dir/all
-lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/all
 lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/all
+lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/vtksrep/SRepIOLib/CMakeFiles/SRepIO.dir/all
 lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/vtksrep/SRepVisualizationLib/CMakeFiles/SRepVisualization.dir/all
 lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all: lib/vtksrep/calquantum/CMakeFiles/calquantum.dir/all
 	$(MAKE) -f lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/build.make lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/depend
 	$(MAKE) -f lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/build.make lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles  34
 	@echo "Built target Visualization"
 .PHONY : lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all
 
@@ -1056,7 +1105,7 @@ all: lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all
 
 # Build rule for subdir invocation for target.
 lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 79
+	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 81
 	$(MAKE) -f CMakeFiles/Makefile2 lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 0
 .PHONY : lib/vtksrep/Visualization/CMakeFiles/Visualization.dir/rule
@@ -1179,7 +1228,7 @@ appli/bin_pablo/CMakeFiles/bin_pablo.dir/all: lib/vtksrep/SRepInterpolationLib/C
 appli/bin_pablo/CMakeFiles/bin_pablo.dir/all: lib/vtksrep/SRepLib/CMakeFiles/SRep.dir/all
 	$(MAKE) -f appli/bin_pablo/CMakeFiles/bin_pablo.dir/build.make appli/bin_pablo/CMakeFiles/bin_pablo.dir/depend
 	$(MAKE) -f appli/bin_pablo/CMakeFiles/bin_pablo.dir/build.make appli/bin_pablo/CMakeFiles/bin_pablo.dir/build
-	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles  34
+	$(CMAKE_COMMAND) -E cmake_progress_report /playpen/workspace/newuoa/Correspondence_Oct7/myBuild/CMakeFiles 
 	@echo "Built target bin_pablo"
 .PHONY : appli/bin_pablo/CMakeFiles/bin_pablo.dir/all
 

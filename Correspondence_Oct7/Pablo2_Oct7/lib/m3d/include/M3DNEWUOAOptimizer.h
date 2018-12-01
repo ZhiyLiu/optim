@@ -39,6 +39,14 @@ public:
     // output: s-rep model at optimum
     int perform(M3DObject* outputModel);
 
+    // This function support run the optimizer in command line
+    // As opposed to get parameters from config file, which is done in anther perform function,
+    // this function receive all user defined parameters from terminal
+    // Input: parameters with "wt" means weight for each penalty
+    // Input: newuoa parameters such as stepSize, endCriterion, maxNumberOfIterations
+    // Input: whole path of output file name
+    int perform(M3DObject* outputModel, double wtImageMatch, double wtNormalPenalty, double wtSradPenalty, double stepSize, double endCriterion, int maxIterations, const char* outputFileName);
+
     // Set object want to optimize
     // Each object might contain multiple figures
     // Each figure is an srep. But currently each object has only one srep

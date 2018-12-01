@@ -47,7 +47,7 @@ void report(Image3D * image)
 	cout << endl;
 }
 
-int main()
+int mainI()
 {
 //	char in_filename[] = "../../../../data/pat/plan_im";
 	char in_filename[] = "../../../../../data/3106.fr01.pim";
