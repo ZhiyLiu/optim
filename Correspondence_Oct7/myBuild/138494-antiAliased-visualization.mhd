@@ -1,0 +1,10 @@
+ObjectType = Image
+NDims = 3
+BinaryData = True
+BinaryDataByteOrderMSB = False
+Offset = 0 0 0 
+ElementSpacing = 0.005 0.005 0.005 
+DimSize = 200 200 200 
+ElementNumberOfChannels = 1
+ElementType = MET_FLOAT
+ElementDataFile = 138494-antiAliased-visualization.raw

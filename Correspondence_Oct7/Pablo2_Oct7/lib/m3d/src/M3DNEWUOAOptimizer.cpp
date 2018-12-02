@@ -1,5 +1,7 @@
 #include "M3DNEWUOAOptimizer.h"
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <exception>
 #include "newuoa.h"
 #include "toolsfunc.h"
@@ -12,7 +14,7 @@
 
 M3DNEWUOAOptimizer::M3DNEWUOAOptimizer()
 {
-
+    mLogFile = NULL;
 }
 void M3DNEWUOAOptimizer::setImage(ImageDistanceMap* imageDistanceMap)
 {
@@ -207,6 +209,12 @@ double M3DNEWUOAOptimizer::getObjectiveFunctionValue(const double *coeff, double
     // normal match: the larger, the better
     objFunctionValue =  w_ImageMatch * imageDist + w_NormalPenalty * normalMatch + w_sradPenalty * sradPenalty ;
 
+    // log the result
+    if(mLogFile != NULL)
+    {
+        fprintf(mLogFile, "\nIteration:[%d]", iterNum3);
+    }
+
     if(iterNum3 == 1)
     {
         std::cout << "Adjust weights to balance between imageDist:" << imageDist << ", normalMatch:" << normalMatch << ", and sradPenalty:" << sradPenalty << std::endl;
@@ -345,7 +353,14 @@ int M3DNEWUOAOptimizer::perform(M3DObject* outputModel)
     return 0;
 
 }
-int M3DNEWUOAOptimizer::perform(M3DObject* outputModel, double wtImageMatch, double wtNormalPenalty, double wtSradPenalty, double stepSize, double endCriterion, int maxIterations, const char* outputFileName)
+void M3DNEWUOAOptimizer::setLogFilePtr(FILE* logFile)
+{
+    mLogFile = logFile;
+}
+
+int M3DNEWUOAOptimizer::perform(M3DObject* outputModel, double wtImageMatch, double wtNormalPenalty,
+                                double wtSradPenalty, double stepSize, double endCriterion,
+                                int maxIterations, const char* outputFileName)
 {
     if(mSreps == NULL || mSignedDistanceImage == NULL)
     {

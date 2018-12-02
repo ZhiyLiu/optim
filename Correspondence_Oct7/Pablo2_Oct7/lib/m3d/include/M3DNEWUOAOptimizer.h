@@ -45,7 +45,14 @@ public:
     // Input: parameters with "wt" means weight for each penalty
     // Input: newuoa parameters such as stepSize, endCriterion, maxNumberOfIterations
     // Input: whole path of output file name
-    int perform(M3DObject* outputModel, double wtImageMatch, double wtNormalPenalty, double wtSradPenalty, double stepSize, double endCriterion, int maxIterations, const char* outputFileName);
+    int perform(M3DObject* outputModel, double wtImageMatch,
+                double wtNormalPenalty, double wtSradPenalty,
+                double stepSize, double endCriterion,
+                int maxIterations, const char* outputFileName);
+
+
+    // set the pointer to log file
+    void setLogFilePtr(FILE *logFile);
 
     // Set object want to optimize
     // Each object might contain multiple figures
@@ -68,6 +75,7 @@ private:
     void recoverSrep();
 
 private:
+    FILE*                               mLogFile;
     M3DObject*                          mSreps;
     std::vector<Vector3D>               mOrigDirs;
     std::vector<double>                 mOrigLength;
